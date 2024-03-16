@@ -1,0 +1,261 @@
+# ===================================================================
+# Version：7.0.0，主题已升级，配置文件内容还在摸索尝试中
+# Hexo 主站配置
+# Hexo Configuration
+## Docs: https://hexo.io/docs/configuration.html
+## Source: https://github.com/hexojs/hexo/
+# ===================================================================
+
+# -------------------------------------------------------------------
+# 友情提示：配置项分为网站（Hexo）主站配置和主题（默认为 landscape ）配置
+# 主站配置文件：根目录下的 _config.yml
+# 主题配置：例如使用 next 主题，根目录下配置 _config.next.yml
+# -------------------------------------------------------------------
+
+# Site
+# 配置效果请戳：https://blog.cnwangk.top/
+# 备用地址：https://cnwangk.github.io/
+# 网站主站设置
+# 参考 hexo 官方文档：https://hexo.io/zh-cn/docs/configuration.html
+title: 龙腾万里sky的博客
+subtitle: '养得胸中一种恬静'
+description: '技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向'
+keywords:                      # 网站的关键词，支持多个关键词。
+author: 龙腾万里sky             # 作者（你的昵称） 
+language: zh-CN                # 设置网站显示语言，language:zh-CN，显示中文
+timezone: 'Asia/Shanghai'      # 时区，国内推荐设置 timezone: 'Asia/Shanghai' ，亚洲/上海
+
+# search
+# 配置本地搜索，主站配置 hexo config 
+# 需要安装插件：$ npm install hexo-generator-searchdb --save
+# 详细配置请参考：https://theme-next.js.org/docs/third-party-services/search-services.html#Local-Search
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
+
+# -------------------------------------------------------------------
+# 扩展
+# Extensions
+## Plugins: https://hexo.io/plugins/
+## Themes: https://hexo.io/themes/
+# -------------------------------------------------------------------
+# 初次安装 hexo，默认配置主题为：theme: landscape
+# 主站配置选择主题，个人通过 npm install hexo-theme-next --save 形式安装
+# 配置方式是，theme: next
+#theme: fluid
+theme: next
+#theme: hexo-theme-next
+#theme: landscape
+
+
+# 生成 sitemap
+# npm install hexo-generator-sitemap --save
+# npm install hexo-generator-baidu-sitemap --save
+sitemap:
+  path: sitemap.xml
+# baidusitemap:
+#   path: baidusitemap.xml
+
+
+# 文章 URL 设置规则
+# URL
+## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
+#url: https://cnwangk.github.io/
+#config: https://hexo.io/zh-cn/docs/permalinks
+url: https://blog.cnwangk.top/
+permalink: :year/:month/:day/:title/
+# permalink: :year/:month/:title/
+# permalink: :category/:title/
+permalink_defaults:
+pretty_urls:
+  trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
+  trailing_html: true # Set to false to remove trailing '.html' from permalinks
+
+
+# 网站资源目录
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+schedule_dir: schedule
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+
+# 文章相关配置
+# Writing
+new_post_name: :title.md # 新文章的文件名称
+default_layout: post     # 预设布局
+auto_spacing: false      # 在中文和英文之间加入空格
+titlecase: false         # 把标题转换为 title case
+external_link:           # 在新标签中打开链接
+  enable: true           # 在新标签中打开链接，默认 true
+  field: site            # 对整个网站（site）生效或仅对文章（post）生效
+  exclude: ''            # 需要排除的域名。主域名和子域名如 www 需分别配置
+filename_case: 0         # 把文件名称转换为 (1) 小写或 (2) 大写 
+render_drafts: false     # 显示草稿，默认 false
+post_asset_folder: false  # post_asset_folder 文章资源文件夹 相对路径引用的标签插件
+# 使用 Markdown 嵌入图片 
+# marked:
+#   prependRoot: true
+#   postAsset: true
+relative_link: false    # 把链接改为与根目录的相对位址
+future: true  # future 显示未来的文章 default:true
+
+# 代码块的设置, 请参考 Highlight.js 进行设置
+# 注意：某些主题可能做了改造，需要禁用主站 PrismJS 配置，代码块的设置, 请参考 PrismJS 进行设置
+# https://hexo.io/zh-cn/docs/syntax-highlight#Highlight-js
+# https://hexo.io/zh-cn/docs/syntax-highlight#PrismJS
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: false
+  tab_replace: ''
+  wrap: true
+  hljs: false
+prismjs:       # 代码块的设置, 请参考 PrismJS 进行设置
+  enable: false
+  preprocess: true
+  line_number: true
+  tab_replace: ''
+
+
+# 首页设置
+# Home page setting
+# path: Root path for your blogs index page. (default = '')
+# per_page: Posts displayed per page. (0 = disable pagination)
+# order_by: Posts order. (Order by date descending by default)
+index_generator:
+  path: ''
+  per_page: 5         # 每页显示文章数量
+  order_by: -date     # 按时间先后顺序排序
+
+
+# 类别和标签配置
+# Category & Tag
+# default_category：默认分类，默认值 uncategorized
+# category_map：分类别名
+# tag_map： 标签别名 
+default_category: uncategorized
+category_map:
+tag_map:
+
+
+# Metadata elements
+## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
+meta_generator: true    # Meta generator 标签。 值为 false 时 Hexo 不会在头部插入该标签
+
+
+# 日期、时间设置（文章生成时间）
+# Date / Time format
+## Hexo uses Moment.js to parse and display date
+## You can customize the date format as defined in
+## http://momentjs.com/docs/#/displaying/format/
+date_format: YYYY-MM-DD   # 日期格式
+time_format: HH:mm:ss     # 时间格式
+## updated_option supports 'mtime', 'date', 'empty'
+updated_option: 'mtime'   # 当 Front Matter 中没有指定 updated 时 updated 的取值
+
+# 分页
+# Pagination
+## Set per_page to 0 to disable pagination
+per_page: 10             # 每页显示的文章量 (0 = 关闭分页功能)，默认 10
+pagination_dir: page     # 分页目录
+
+
+
+# 设置包含（include）、排除（exclude）、忽略（ignore）哪些文件
+# Include / Exclude file(s)
+## include:/exclude: options only apply to the 'source/' folder
+# include: Hexo 默认会不包括 source/ 下的文件和文件夹（包括名称以下划线和 . 开头的文件和文件夹，Hexo 的 _posts 和 _data 等目录除外）。
+# include: 通过设置此字段将使 Hexo 处理他们并将它们复制到 source 目录下。
+# exclude: Hexo 不包括 source/ 下的这些文件和目录
+# ignore: Hexo 会忽略整个 Hexo 项目下的这些文件夹或文件
+include:
+exclude:
+ignore:
+
+# -------------------------------------------------------------------
+# 安装：npm install hexo-bilibili-bangumi  --save
+# 仓库地址：https://github.com/HCLonely/hexo-bilibili-bangumi
+# 注意：我设置了二级菜单，同时需要 path 值。默认不填 path 即可。
+# -------------------------------------------------------------------
+bangumi: # 追番设置
+  enable: true
+  source: bili
+  bgmInfoSource: 'bgmApi'
+  path: '/happy/bangumis/index.html'
+  vmid: '26787954'
+  title: '追番列表'
+  quote: '一入编程深似海，从此节操是路人！'
+  show: 1
+  lazyload: false
+  srcValue: '__image__'
+  lazyloadAttrName: 'data-src=__image__'
+  loading:
+  showMyComment: false
+  pagination: false
+  metaColor:
+  color:
+  webp:
+  progress:
+  extraOrder:
+  proxy:
+    host: ''
+    port: ''
+  extra_options:
+    key: value
+cinema: # 追剧设置
+  enable: true
+  path: '/happy/cinemas/index.html'
+  vmid: '26787954'
+  title: '追剧列表'
+  quote: '一入编程深似海，从此节操是路人！'
+  show: 1
+  lazyload: false
+  srcValue: '__image__'
+  lazyloadAttrName: 'data-src=__image__'
+  loading:
+  metaColor:
+  color:
+  webp:
+  progress:
+  extraOrder:
+  extra_options:
+    key: value
+
+# -------------------------------------------------------------------
+# 一键发布至 github 仓库，需要安装插件：hexo-deployer-git
+# Deployment
+# npm install hexo-deployer-git --save
+## Docs: https://hexo.io/docs/one-command-deployment
+# -------------------------------------------------------------------
+deploy:
+  type: git
+  #repo: https://github.com/cnwangk/cnwangk.github.io
+  repo: git@github.com:cnwangk/cnwangk.github.io.git
+  branch: gh-pages
+  #message: hexo 版本升级为 v7.1.1 && hexo-theme-next 升级为 v8.19.2
+
+
+# 中文链接转拼音
+# 插件1： https://github.com/rozbo/hexo-abbrlink   仓库近期还在活跃
+# 插件2： https://github.com/viko16/hexo-permalink-pinyin    仓库有一段时间没更新了
+
+
+# 压缩静态资源：css | js | html
+# gulp
+# npm install hexo-minify --save  有插件冲突，可能需要禁用某些插件功能
+# npm install hexo-clean-css --save
+# npm install html-minifier-terser --save
+
+
+# 二次元看板娘，根据个人喜好添加
+# npm install --save hexo-helper-live2d
+# 原始仓库地址：https://github.com/EYHN/hexo-helper-live2d
+# 活跃仓库地址：https://github.com/stevenjoezhang/live2d-widget

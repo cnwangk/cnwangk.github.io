@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="在公众号龙腾万里sky回复软件实施即可获取一份本人精心自制的 PDF 和 markdown 文档各一份，不定期更新优化。 tips：图片资源可能被防盗链（寄）了，可以右键属性复制地址在地址栏查看哈。 关于软件实施工程师的面试题，我个人也总结了一些，仅供参考。需要对主流 DBMS 厂商发行的数据库软件，例如Oracle、MySQL、SQLserver以及国产数据库DM（达梦）有所了解，并能够熟练部">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="关于软件实施工程师的面试题有哪些">
+<meta property="og:url" content="https://blog.cnwangk.top/2021/04/10/%E5%85%B3%E4%BA%8E%E8%BD%AF%E4%BB%B6%E5%AE%9E%E6%96%BD%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E6%9C%89%E5%93%AA%E4%BA%9B/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="在公众号龙腾万里sky回复软件实施即可获取一份本人精心自制的 PDF 和 markdown 文档各一份，不定期更新优化。 tips：图片资源可能被防盗链（寄）了，可以右键属性复制地址在地址栏查看哈。 关于软件实施工程师的面试题，我个人也总结了一些，仅供参考。需要对主流 DBMS 厂商发行的数据库软件，例如Oracle、MySQL、SQLserver以及国产数据库DM（达梦）有所了解，并能够熟练部">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-079db56e755389da684ce3bf3bc97639_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-914cf3237466828ca86c1fc5c0e95859_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-72efcd33bf0a5748030e7d59acad35b8_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-f5b3e393cf2d2c725c93019697565105_720w.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-cfc821bf8960b7f5c1c1afd0404c4311_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-7c0b347a3d3dc7497b5c0e8f32f0d072_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-39bd7ad849a97beb59613307d40e39d6_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-27a2aa471b15ae2f21cc7728e24f2234_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-7c0b347a3d3dc7497b5c0e8f32f0d072_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-39bd7ad849a97beb59613307d40e39d6_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-27a2aa471b15ae2f21cc7728e24f2234_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-c15e66dfc14ff080fd8c18ea138a10b3_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-452ddad079e267cd8387125785a48d24_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-acbab784eeb89cc782f28fee3453e5ea_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-a6e42a6f238bbbe5b24138b26afd7da3_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-5144c538b7e24fca3dda1b19220a8ac1_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-ba4d1c900d14575898a3c06e0892664c_720w.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-72ae91cba338da80016185f2ef4e838d_720w.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-966e5e1e6dd29137523b6e4d1e7fe96b_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-eb554715c58a97a991c5987d7c2979d9_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-695aef955c3beb159f7375812d3e6955_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-954cb8821e12f1073ba56b4e30b6ca08_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-df9292e0397c6c43f077f27006188f65_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-c6c3c9de591b2b68788800c4df5a0570_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-1b510464f4d8cfdbe06dad782536e437_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-e6f8edf0ee7313afea2faec60b145482_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-1205bf0c5c16feb398d66ee32d0e73a8_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-44b57b0fceb0fa7331e98e530ce75273_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-783fb79aa18da526e65a557ff13eabca_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-364830e3c022d55a1deeee36511f7b3d_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-d5414b4a5c9ada1feb11b2437fcfa9bc_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-661dc6a81845ee60c7ffff4f6c94e567_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-ffb4e83709041555270aed2f89c25929_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-85124edfb8c24e6abea7fe753e2eb186_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-0e9ecfb4ebc8242e07f2596d93000fd0_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-5015266f6d342af5448e72acb2d82a3b_720w.jpg">
+<meta property="article:published_time" content="2021-04-10T14:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-15T15:44:38.981Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="SQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic3.zhimg.com/80/v2-079db56e755389da684ce3bf3bc97639_720w.jpg">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2021/04/10/%E5%85%B3%E4%BA%8E%E8%BD%AF%E4%BB%B6%E5%AE%9E%E6%96%BD%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E6%9C%89%E5%93%AA%E4%BA%9B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2021/04/10/%E5%85%B3%E4%BA%8E%E8%BD%AF%E4%BB%B6%E5%AE%9E%E6%96%BD%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E6%9C%89%E5%93%AA%E4%BA%9B/","path":"2021/04/10/关于软件实施工程师的面试题有哪些/","title":"关于软件实施工程师的面试题有哪些"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>关于软件实施工程师的面试题有哪些 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%AE%E7%B5%AE%E5%8F%A8%E5%8F%A8"><span class="nav-number">1.</span> <span class="nav-text">絮絮叨叨</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E3%80%8A%E8%BD%AF%E4%BB%B6%E5%AE%9E%E6%96%BD%E9%9D%A2%E8%AF%95%E5%AE%9E%E9%99%85%E6%96%B9%E6%A1%88%E7%AF%87%E3%80%8B"><span class="nav-number">2.</span> <span class="nav-text">第一部分《软件实施面试实际方案篇》</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%BD%AF%E4%BB%B6%E5%AE%9E%E6%96%BD%E9%9D%A2%E8%AF%95%E4%B8%93%E4%B8%9A%E6%8A%80%E8%83%BD%E8%AF%95%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">一、软件实施面试专业技能试题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-%E7%90%86%E8%AE%BA%E6%80%9D%E8%80%83%E9%A2%98"><span class="nav-number">2.1.1.</span> <span class="nav-text">01 理论思考题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-SQL%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E9%A2%98"><span class="nav-number">2.1.2.</span> <span class="nav-text">02 SQL实际操作题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81SQL%E4%B8%AD%E7%9A%84%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2%E5%9B%BE%E8%A7%A3"><span class="nav-number">2.2.</span> <span class="nav-text">二、SQL中的联合查询图解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%86%85%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.2.1.</span> <span class="nav-text">1、内连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%B7%A6%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.2.2.</span> <span class="nav-text">2、左外连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%8F%B3%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.2.3.</span> <span class="nav-text">3、右外连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%8F%AF%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">2.2.4.</span> <span class="nav-text">4、可参考资料</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%E3%80%8A%E9%9D%A2%E8%AF%95%E8%BF%9B%E9%98%B6%EF%BC%8C%E5%AE%9E%E9%99%85%E5%B7%A5%E4%BD%9C%E7%AF%87%E3%80%8B"><span class="nav-number">3.</span> <span class="nav-text">第二部分《面试进阶，实际工作篇》</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="nav-number">3.1.</span> <span class="nav-text">三、联合查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="nav-number">3.1.1.</span> <span class="nav-text">1、联合查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1%E3%80%81MySQL%E4%B8%AD%E7%9A%84%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.1、MySQL中的联合查询示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2%E3%80%81Oracle%E4%B8%AD%E7%9A%84%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.1.3.</span> <span class="nav-text">1.2、Oracle中的联合查询示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2"><span class="nav-number">3.1.4.</span> <span class="nav-text">2、分页查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1%E3%80%81MySQL%E7%9A%84%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%E4%BD%BF%E7%94%A8limit%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">3.1.5.</span> <span class="nav-text">2.1、MySQL的分页查询使用limit关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2%E3%80%81Oracle%E7%9A%84%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%E4%BD%BF%E7%94%A8rownum%E4%BC%AA%E5%88%97"><span class="nav-number">3.1.6.</span> <span class="nav-text">2.2、Oracle的分页查询使用rownum伪列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0%EF%BC%88Aggregate%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">四、聚合函数（Aggregate）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%B8%B8%E8%A7%81%E7%9A%84%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.1.</span> <span class="nav-text">1、常见的聚合函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E7%9D%80%E9%87%8D%E6%8E%8C%E6%8F%A1%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.2.</span> <span class="nav-text">2、着重掌握的函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81SQL%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86"><span class="nav-number">3.3.</span> <span class="nav-text">五、SQL核心知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">3.3.1.</span> <span class="nav-text">1、函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="nav-number">3.3.2.</span> <span class="nav-text">2、触发器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">3.3.3.</span> <span class="nav-text">3、存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%85%B8%E5%9E%8B%E7%9A%84%E7%A4%BA%E4%BE%8Bsakila%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.3.4.</span> <span class="nav-text">4、典型的示例sakila数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81SQL%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA"><span class="nav-number">3.4.</span> <span class="nav-text">六、SQL查漏补缺</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#END-%E8%8E%AB%E9%97%AE%E6%94%B6%E8%8E%B7%EF%BC%8C%E4%BD%86%E9%97%AE%E8%80%95%E8%80%98"><span class="nav-number">4.</span> <span class="nav-text">END 莫问收获，但问耕耘</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/02/18/MySQL%E5%92%8COracle%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2%E4%BB%A5%E5%8F%8A%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0/" rel="bookmark">
+        <time class="popular-posts-time">2022-02-18</time>
+        <br>
+      MySQL和Oracle联合查询以及聚合函数
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2021/04/10/%E5%85%B3%E4%BA%8E%E8%BD%AF%E4%BB%B6%E5%AE%9E%E6%96%BD%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E6%9C%89%E5%93%AA%E4%BA%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="关于软件实施工程师的面试题有哪些 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于软件实施工程师的面试题有哪些
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-10 22:00:00" itemprop="dateCreated datePublished" datetime="2021-04-10T22:00:00+08:00">2021-04-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-15 23:44:38" itemprop="dateModified" datetime="2024-03-15T23:44:38+08:00">2024-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%9D%A2%E7%BB%8F/" itemprop="url" rel="index"><span itemprop="name">面经</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>22 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img data-src="https://pic3.zhimg.com/80/v2-079db56e755389da684ce3bf3bc97639_720w.jpg" alt="img"></p>
+<p>在公众号<strong>龙腾万里sky</strong>回复<strong>软件实施</strong>即可获取一份本人精心自制的 PDF 和 markdown 文档各一份，不定期更新优化。</p>
+<p><strong>tips</strong>：图片资源可能被防盗链（寄）了，可以<strong>右键属性复制地址在地址栏查看</strong>哈。</p>
+<p>关于软件实施工程师的面试题，我个人也总结了一些，<strong>仅供参考</strong>。需要对<strong>主流 <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3NlYXJjaD9xPURCTVMmc2VhcmNoX3NvdXJjZT1FbnRpdHkmaHlicmlkX3NlYXJjaF9zb3VyY2U9RW50aXR5Jmh5YnJpZF9zZWFyY2hfZXh0cmE9JTdCJTIyc291cmNlVHlwZSUyMjolMjJhbnN3ZXIlMjIsJTIyc291cmNlSWQlMjI6MjI5MTE2NjE5MCU3RA==">DBMS<i class="fa fa-external-link-alt"></i></span> 厂商发行的数据库软件，例如Oracle、MySQL、<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3NlYXJjaD9xPVNRTHNlcnZlciZzZWFyY2hfc291cmNlPUVudGl0eSZoeWJyaWRfc2VhcmNoX3NvdXJjZT1FbnRpdHkmaHlicmlkX3NlYXJjaF9leHRyYT0lN0IlMjJzb3VyY2VUeXBlJTIyOiUyMmFuc3dlciUyMiwlMjJzb3VyY2VJZCUyMjoyMjkxMTY2MTkwJTdE">SQLserver<i class="fa fa-external-link-alt"></i></span>以及国产数据库DM（达梦）</strong>有所了解，并能够熟练部署运用。</p>
+<p>如果具备一些服务器方面的知识，比如[Windows Server ](<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3NlYXJjaD9xPVdpbmRvd3M=">https://www.zhihu.com/search?q=Windows<i class="fa fa-external-link-alt"></i></span> Server &amp;search_source&#x3D;Entity&amp;hybrid_search_source&#x3D;Entity&amp;hybrid_search_extra&#x3D;{“sourceType”%3A”answer”%2C”sourceId”%3A2291166190})和 Linux 服务器相关知识。<strong>熟悉 Linux 基本维护是加分项</strong>，这里所说熟悉指至少熟练运用 Linux 基本命令与常用命令，软件管理部署，基本权限，系统维护。</p>
+<span id="more"></span>
+
+<h1 id="絮絮叨叨"><a href="#絮絮叨叨" class="headerlink" title="絮絮叨叨"></a>絮絮叨叨</h1><p>说实话，目前软件实施这个行业资料稀缺，也很缺人才，体系还不够成熟。在小公司，你可能会身兼数职，比如配合开发工程师进行测试，也有可能承担部分运维方面的工作。以至于某招聘网站出现了开发运维测试实施工程师这种岗位。</p>
+<p>本人之前从事 Java web 后端开发，后来转向了软件实施行业，深知这个行业很缺人。发展方向，可以朝着<strong>项目管理</strong>方向提升自我，比如利用空余时间考一个**软考高项<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3NlYXJjaD9xPSVFNCVCRiVBMSVFNiU4MSVBRiVFNyVCMyVCQiVFNyVCQiU5RiVFOSVBMSVCOSVFNyU5QiVBRSVFNyVBRSVBMSVFNyU5MCU4NiVFNSVCOCU4OCZzZWFyY2hfc291cmNlPUVudGl0eSZoeWJyaWRfc2VhcmNoX3NvdXJjZT1FbnRpdHkmaHlicmlkX3NlYXJjaF9leHRyYT0lN0IlMjJzb3VyY2VUeXBlJTIyOiUyMmFuc3dlciUyMiwlMjJzb3VyY2VJZCUyMjoyMjkxMTY2MTkwJTdE">信息系统项目管理师<i class="fa fa-external-link-alt"></i></span><strong>、</strong>项目管理专业人士认证(PMP)**。</p>
+<p>个人目前有几个项目的现场实施经验，也与许多人打过交道。关于面试这方面，出题也差不多。<strong>如果是医疗行业，也许使用微软的那一套比较多</strong>。更注重的是临时应变能力和 [SQL ](<span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3NlYXJjaD9xPVNRTA==">https://www.zhihu.com/search?q=SQL<i class="fa fa-external-link-alt"></i></span> &amp;search_source&#x3D;Entity&amp;hybrid_search_source&#x3D;Entity&amp;hybrid_search_extra&#x3D;{“sourceType”%3A”answer”%2C”sourceId”%3A2291166190})的运用能力，以及对项目实施布控的周期预估和控制。</p>
+<p>如果你有实际项目经验，基本上不会遇到笔试题。一般情况先与HR交谈，然后可能会与项目经理或者工程部主管进行沟通。<strong>下面给出一个面试复盘进行参考</strong>：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80OTQxMTYxODk=">面试复盘：软件实施工程师，顿悟试岗期美其名曰岗前培训<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="第一部分《软件实施面试实际方案篇》"><a href="#第一部分《软件实施面试实际方案篇》" class="headerlink" title="第一部分《软件实施面试实际方案篇》"></a>第一部分《软件实施面试实际方案篇》</h1><h2 id="一、软件实施面试专业技能试题"><a href="#一、软件实施面试专业技能试题" class="headerlink" title="一、软件实施面试专业技能试题"></a>一、软件实施面试专业技能试题</h2><h3 id="01-理论思考题"><a href="#01-理论思考题" class="headerlink" title="01 理论思考题"></a>01 理论思考题</h3><p><strong>1、作为一名软件实施工程师，你的职责是什么？该岗位需要具备什么样的能力？</strong> </p>
+<p><strong>解答</strong>：</p>
+<ol>
+<li>推广公司的产品，现场为客户实施安装。</li>
+<li>熟悉公司的产品，现场对客户进行培训。</li>
+</ol>
+<p><strong>2、你熟悉的远程方式有哪些？各种方法应该怎么配置？</strong> </p>
+<p><strong>解答</strong>：</p>
+<ol>
+<li>Windows：常见的QQ远程桌面，或者用QQ办公版TIM。</li>
+<li>或者采取有远程桌面功能的软件，或者其它OA办公系统。最终达到预期目标，采用远程协助达成客户需求。</li>
+</ol>
+<p><strong>win10还有自带的远程桌面</strong> </p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-914cf3237466828ca86c1fc5c0e95859_720w.jpg" alt="img"></p>
+<p><strong>开启远程桌面协助</strong> </p>
+<p><img data-src="https://pic2.zhimg.com/80/v2-72efcd33bf0a5748030e7d59acad35b8_720w.jpg" alt="img"></p>
+<p>快捷键<strong>win + r</strong>打开任务输入<strong>mstsc</strong>命令打开远程桌面。</p>
+<p><img data-src="https://pic2.zhimg.com/80/v2-f5b3e393cf2d2c725c93019697565105_720w.jpg" alt="img"></p>
+<p><strong>关于远程桌面补充一些个人工作中使用过的。</strong></p>
+<p>有桌面也有服务器版，个人主要在Windows平台使用：</p>
+<ol>
+<li><strong>向日葵</strong></li>
+<li><strong>ToDesk</strong></li>
+<li><strong>TeamViewer</strong></li>
+</ol>
+<p>目前个人更趋向于ToDesk，更轻更快，体验友好一些。</p>
+<p><strong>云端远程桌面，个人主要在Linux平台使用：</strong></p>
+<ol>
+<li><strong>UltraVNC</strong></li>
+<li><strong>VNC-Viewer（realVNC）</strong></li>
+</ol>
+<p><strong>Linux发行版操作系统使用ssh远程连接</strong>：</p>
+<ol>
+<li><strong>Xshell</strong>（个人版免费使用）；</li>
+<li>SecureCRT（收费）；</li>
+<li><strong>Putty</strong>（免费）；</li>
+<li><strong>tabby</strong>（开源的多终端集合）； </li>
+<li><strong>FinalShell：这款优势带有监控cpu和内存使用情况图形化界面。</strong></li>
+</ol>
+<p>方式方法有很多，只要能实现ssh连接的终端工具。</p>
+<p><strong>文件传输工具：WinSCP-5.11.2-Setup。</strong> </p>
+<p><img data-src="https://pic4.zhimg.com/80/v2-cfc821bf8960b7f5c1c1afd0404c4311_720w.jpg" alt="img"></p>
+<p><strong>3、在你进行实施的过程中，公司制作的一款软件系统缺少某一项功能，而且公司也明确表示不会再为系统做任何的修改或添加任何的功能，而客户也坚决要求需要这一项功能!对于实施人员来说，应该怎么去合理妥善处理这个问题?</strong></p>
+<p><strong>解答</strong>：</p>
+<ol>
+<li>首先看用户要求合不合理，不合理就坚决退还需求，如果需求合理，可以申请二次开发，需要考虑公司的利益。</li>
+<li>然后综合考虑客户的重量级，对客户强调合同成本，外加某一项功能需要耗费的人力物力是需要付出额外的成本的。</li>
+<li>最后考虑第三方软件补助。</li>
+</ol>
+<p><strong>4、如销售签有一外地客户，要求实施人员在客户现场一周内完成所有项目实施，而标准实施一般为期一个月，针对以上情况实施人员应该如何应对?</strong> </p>
+<p><strong>解答</strong>：</p>
+<ol>
+<li>标准实施为一个月，那就按签订的合同行事。</li>
+<li>然后考虑这个项目一周完成，在当前的人力和时间成本下是否可行。</li>
+<li>如果想加快进度可以与公司沟通，额外派人，与客户客户协商额外的劳动成本。</li>
+</ol>
+<p><strong>5、在项目实施过程中，使用者对产品提出了适合自己习惯的修改意见，但多个使用者相互矛盾，应该如何去处理?</strong></p>
+<p><strong>解答</strong>：</p>
+<p>采用求同存异法。</p>
+<ol>
+<li>对于客户的意见，我们实施人员应该有自己的实施方案。</li>
+<li>当使用者意见出现不一致时候，引导客户内部意见达到统一和用户经过沟通确认后，找到切实可行的方案，双方认可并达成共识。</li>
+</ol>
+<p><strong>6、系统启动后，不能连接数据库，可能是哪些方面的原因?</strong> </p>
+<p><strong>解答</strong>：</p>
+<ol>
+<li>检查网络原因；</li>
+<li>检查数据库服务是否启动；</li>
+<li>数据库文件是否被破坏；</li>
+<li>数据库端口号问题（防火墙是否放通）</li>
+</ol>
+<p><strong>7、如果有一个不太懂电脑的客户，你应该采取什么样的方法去教他用公司的软件产品?</strong> </p>
+<p><strong>解答</strong>：首先教客户熟悉基本的电脑操作，然后参考相关文档操作，实际根据软件的复杂程度去教会客户熟悉使用公司产品。遵循由易到难，简单的可以直接教会客户熟悉运用。复杂的一步一步是jio印。</p>
+<p><strong>也可以做其它的补足</strong>：</p>
+<ol>
+<li>制作ppt；</li>
+<li>图文操作文档；</li>
+<li>录制视频。</li>
+</ol>
+<p><strong>8、针对于已有5年以上的客户，其产生的历史数据可以怎么处理?</strong></p>
+<p><strong>解答</strong>：</p>
+<ol>
+<li>综合考虑客户的重量级；</li>
+<li>重量级客户，提前计划，做好用户数据的备份。一切从公司的利益考虑。</li>
+</ol>
+<p><strong>9、一般数据库若出现日志满了，会出现什么情况，是否还能使用?</strong> </p>
+<p><strong>解答</strong>：</p>
+<ol>
+<li>只能执行查询等读取操作。不能执行修改，备份等写操作，原因是任何写操作都要记录日志。</li>
+<li>数据库本就是需要承载读写操作的，也就是说基本上处于不能使用的状态。</li>
+</ol>
+<h3 id="02-SQL实际操作题"><a href="#02-SQL实际操作题" class="headerlink" title="02 SQL实际操作题"></a>02 SQL实际操作题</h3><p><strong>10、已知A、B两表A.id&#x3D;B.AID请分别写出内外链接的sql语句，并说明区别?</strong> </p>
+<p><strong>解答</strong>：</p>
+<ol>
+<li>内连接关键字 <code>inner join on</code>；内连接取A和B的交集公共部分。</li>
+<li>外连接关键字：<code>left join on</code>，<code>right join on</code>。外连接分左外连接和右外连接，左外连接以左表为主，右外连接以右表为主。</li>
+<li>参考下图，以数学集合的思想来思考更加清晰明了。</li>
+</ol>
+<p><strong>注意</strong>：外连接是可以省略 <code>outer</code> 关键字的，例如：左外连接 <code>left outer join</code> 简写为 <code>left join</code>，右外连接同理，后面配合 <code>on</code> 关键字。</p>
+<h2 id="二、SQL中的联合查询图解"><a href="#二、SQL中的联合查询图解" class="headerlink" title="二、SQL中的联合查询图解"></a>二、SQL中的联合查询图解</h2><h3 id="1、内连接"><a href="#1、内连接" class="headerlink" title="1、内连接"></a>1、内连接</h3><p>内连接：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> <span class="keyword">on</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-7c0b347a3d3dc7497b5c0e8f32f0d072_720w.jpg" alt="img"></p>
+<h3 id="2、左外连接"><a href="#2、左外连接" class="headerlink" title="2、左外连接"></a>2、左外连接</h3><p>左外连接：省略掉了 outer，下同。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">left</span> <span class="keyword">join</span> <span class="keyword">on</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic1.zhimg.com/80/v2-39bd7ad849a97beb59613307d40e39d6_720w.jpg" alt="img"></p>
+<h3 id="3、右外连接"><a href="#3、右外连接" class="headerlink" title="3、右外连接"></a>3、右外连接</h3><p>右外连接：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">right</span> <span class="keyword">join</span> <span class="keyword">on</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-27a2aa471b15ae2f21cc7728e24f2234_720w.jpg" alt="img"></p>
+<p>关联查询有 6 种，常用的两种，内连接和外连接。个人实际工作中内连接使用更多，具体视工作情况而定。这里不做详细说明，网上教程很多，可以自行参考。</p>
+<h3 id="4、可参考资料"><a href="#4、可参考资料" class="headerlink" title="4、可参考资料"></a>4、可参考资料</h3><p>菜鸟教程直通车：<span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS9teXNxbC9teXNxbC1qb2luLmh0bWw=">https://www.runoob.com/mysql/mysql-join.html<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>面试了几家招软件实施的，基本上前几道笔试题是考量你的现场应变能力，后几道笔试题是考量你对SQL的运用，关联查询这方面的试题居多</strong>。软件实施一般是需要去固定的场所驻场的，需要有自己的一套方案，做到心中有数，在现场不至于慌慌张张。也需要结合现场的实际情况，灵活变通运用。这个行业是需要靠时间累积行业经验，不是一蹴而就。</p>
+<p><strong>————————–更新后的补充————————–</strong></p>
+<h1 id="第二部分《面试进阶，实际工作篇》"><a href="#第二部分《面试进阶，实际工作篇》" class="headerlink" title="第二部分《面试进阶，实际工作篇》"></a>第二部分《面试进阶，实际工作篇》</h1><p>之前一些实际SQL操作，我直接引用了别人一些教程链接，发现在打广告就删掉了。引用菜鸟教程依旧保留，毕竟这货干净简洁。</p>
+<p>思来想去，还是自己重新补充一些，毕竟Oracle方面的教程都比较久远了。以后可能不会像这样将具体内容更新进来了，会以链接形式发自己的面经和时间工作经验总结。当然，此次更新的内容也将以单篇发布出来。</p>
+<p><strong>官方提供的sakila和world数据库</strong>，官网下载地址已经提供，可以下载进行参考学习。</p>
+<p><strong>sakila-db数据库包含三个文件</strong>：</p>
+<ul>
+<li>sakila-schema.sql：数据库表结构</li>
+<li>sakila-data.sql：数据库示例模拟数据</li>
+<li>sakila.mwb：数据库物理模型，在MySQL workbench中可以打开查看。</li>
+</ul>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubXlzcWwuY29tL2RvY3Mvc2FraWxhLWRiLnppcA==">https://downloads.mysql.com/docs/sakila-db.zip<i class="fa fa-external-link-alt"></i></span> </p>
+</blockquote>
+<p><strong>world-db数据库</strong>，表结构与data数据包含在一起：</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubXlzcWwuY29tL2RvY3Mvd29ybGQtZGIuemlw">https://downloads.mysql.com/docs/world-db.zip<i class="fa fa-external-link-alt"></i></span> </p>
+</blockquote>
+<p>Oracle11g安装后自带有scott用户，可以用来练习。主要用到的是EMP和DEPT表，想起了当年用Java的ssh框架写的第一个CURD的demo示例就是Oracle的这两张表，因为这两表有关联关系。</p>
+<ul>
+<li>EMP：员工表；</li>
+<li>DEPT：部门表；</li>
+</ul>
+<p><strong>我的测试环境基于</strong>：</p>
+<ul>
+<li>操作系统：Windows10；</li>
+<li>数据库：MySQL8.0.28和Oracle11g；</li>
+<li>使用查询工具：MySQL8.0自带命令行以及Oracle自带的SQLplus；</li>
+<li>第三方工具SQLyog和PLSQL Developer。</li>
+</ul>
+<h2 id="三、联合查询"><a href="#三、联合查询" class="headerlink" title="三、联合查询"></a>三、联合查询</h2><p><strong>图解联合查询</strong></p>
+<p><strong>内连接</strong>：统计的内容是table1和table2的重合部分。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> <span class="keyword">on</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-7c0b347a3d3dc7497b5c0e8f32f0d072_720w.jpg" alt="img"></p>
+<p><strong>左外连接</strong>：可以省略掉outer，统计的内容是以table1为主的部分。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">left</span> <span class="keyword">outer</span> <span class="keyword">join</span> <span class="keyword">on</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic1.zhimg.com/80/v2-39bd7ad849a97beb59613307d40e39d6_720w.jpg" alt="img"></p>
+<p><strong>右外连接</strong>：同样可以省略掉outer，统计的内容是以table2为主的部分。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">right</span> <span class="keyword">outer</span> <span class="keyword">join</span> <span class="keyword">on</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-27a2aa471b15ae2f21cc7728e24f2234_720w.jpg" alt="img"></p>
+<h3 id="1、联合查询"><a href="#1、联合查询" class="headerlink" title="1、联合查询"></a>1、联合查询</h3><h3 id="1-1、MySQL中的联合查询示例"><a href="#1-1、MySQL中的联合查询示例" class="headerlink" title="1.1、MySQL中的联合查询示例"></a>1.1、MySQL中的联合查询示例</h3><ul>
+<li>inner join on：内连接</li>
+<li>right join on：右外连接</li>
+<li>left join on：左外连接</li>
+</ul>
+<p>MySQL中的内连接查询关键字：inner join on，只作为演示，就不执行explain执行计划去判断执行效率了。小小的建议，在测试这些个联合查询的时候，可以不用带太多的过滤条件看看三种联合查询的区别。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c.`ID`,c.`CountryCode`,cl.`CountryCode`,cl.`<span class="keyword">Language</span>` </span><br><span class="line"><span class="keyword">FROM</span> world.`city` c <span class="keyword">INNER</span> <span class="keyword">JOIN</span> world.`countrylanguage` cl </span><br><span class="line"><span class="keyword">ON</span> c.`CountryCode`<span class="operator">=</span>cl.`CountryCode` <span class="keyword">WHERE</span> c.`ID`<span class="operator">&gt;</span><span class="number">120</span> <span class="keyword">AND</span> c.`ID` LIMIT <span class="number">0</span>,<span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic2.zhimg.com/80/v2-c15e66dfc14ff080fd8c18ea138a10b3_720w.jpg" alt="img"></p>
+<p>MySQL中的左外连接查询查询关键字：LEFT OUTER JOIN</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c.`ID`,c.`Name`,c.`CountryCode`,cl.`IsOfficial`,cl.`CountryCode`,cl.`<span class="keyword">Language</span>` </span><br><span class="line"><span class="keyword">FROM</span> world.`city` c <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> world.`countrylanguage` cl </span><br><span class="line"><span class="keyword">ON</span> c.`CountryCode`<span class="operator">=</span>cl.`CountryCode` LIMIT <span class="number">0</span>,<span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-452ddad079e267cd8387125785a48d24_720w.jpg" alt="img"></p>
+<p>MySQL中的右外连接查询关键字：RIGHT OUTER JOIN</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c.`ID`,c.`Name`,c.`CountryCode`,cl.`IsOfficial`,cl.`CountryCode`,cl.`<span class="keyword">Language</span>` </span><br><span class="line"><span class="keyword">FROM</span> world.`city` c <span class="keyword">RIGHT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> world.`countrylanguage` cl </span><br><span class="line"><span class="keyword">ON</span> c.`CountryCode`<span class="operator">=</span>cl.`CountryCode` LIMIT <span class="number">0</span>,<span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-acbab784eeb89cc782f28fee3453e5ea_720w.jpg" alt="img"></p>
+<h3 id="1-2、Oracle中的联合查询示例"><a href="#1-2、Oracle中的联合查询示例" class="headerlink" title="1.2、Oracle中的联合查询示例"></a>1.2、Oracle中的联合查询示例</h3><p>主要以SCOTT用户作为示例，查看SCOTT用户下有哪些表，这种方式需要以dba管理员身份运行SQL语句查询：</p>
+<p>ower代表了用户名，所以直接查找SCOTT用户，TABLE_NAME：代表了表名。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> t.OWNER,t.TABLE_NAME,t.TABLESPACE_NAME <span class="keyword">from</span> dba_tables t <span class="keyword">where</span> t.OWNER<span class="operator">=</span><span class="string">&#x27;SCOTT&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic1.zhimg.com/80/v2-a6e42a6f238bbbe5b24138b26afd7da3_720w.jpg" alt="img"></p>
+<p>Oracle中的联合查询，同样以员工表（emp）和部门表（dept）进行演示操作。</p>
+<p><strong>Oracle中的内连接</strong>：inner join on</p>
+<p>根据部门编号进行关联查询，进行分页查询，每页显示5条数据：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.ename,e.empno,d.deptno,d.dname <span class="keyword">from</span> scott.emp e </span><br><span class="line"><span class="keyword">inner</span> <span class="keyword">join</span> scott.dept d <span class="keyword">on</span> e.deptno<span class="operator">=</span>d.deptno <span class="keyword">where</span> rownum<span class="operator">&lt;=</span><span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic2.zhimg.com/80/v2-5144c538b7e24fca3dda1b19220a8ac1_720w.jpg" alt="img"></p>
+<p><strong>左外连接</strong>：left outer join on</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.ename,e.empno,d.deptno,d.dname <span class="keyword">from</span> scott.emp e </span><br><span class="line"><span class="keyword">left</span> <span class="keyword">outer</span> <span class="keyword">join</span> scott.dept d <span class="keyword">on</span> e.deptno<span class="operator">=</span>d.deptno <span class="keyword">where</span> rownum<span class="operator">&lt;=</span><span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic2.zhimg.com/80/v2-ba4d1c900d14575898a3c06e0892664c_720w.jpg" alt="img"></p>
+<p><strong>右外连接</strong>：right outer join on</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.ename,e.empno,d.deptno,d.dname <span class="keyword">from</span> scott.emp e </span><br><span class="line"><span class="keyword">right</span> <span class="keyword">outer</span> <span class="keyword">join</span> scott.dept d <span class="keyword">on</span> e.deptno<span class="operator">=</span>d.deptno <span class="keyword">where</span> rownum<span class="operator">&lt;=</span><span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic4.zhimg.com/80/v2-72ae91cba338da80016185f2ef4e838d_720w.jpg" alt="img"></p>
+<p><strong>全连接</strong>：full join on</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.ename,e.empno,d.deptno,d.dname <span class="keyword">from</span> scott.emp e </span><br><span class="line"><span class="keyword">full</span> <span class="keyword">join</span> scott.dept d <span class="keyword">on</span> e.deptno<span class="operator">=</span>d.deptno <span class="keyword">where</span> rownum<span class="operator">&lt;=</span><span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic4.zhimg.com/80/v2-966e5e1e6dd29137523b6e4d1e7fe96b_720w.jpg" alt="img"></p>
+<p><strong>组合查询</strong>：union</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.ename,e.empno <span class="keyword">from</span> scott.emp e <span class="keyword">where</span> rownum<span class="operator">&lt;=</span><span class="number">5</span> <span class="keyword">union</span> <span class="keyword">select</span> e.ename,e.empno <span class="keyword">from</span> scott.emp e  </span><br><span class="line"><span class="keyword">where</span> e.ename <span class="keyword">like</span> <span class="string">&#x27;%ARC%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic1.zhimg.com/80/v2-eb554715c58a97a991c5987d7c2979d9_720w.jpg" alt="img"></p>
+<p><strong>组合查询</strong>：union all</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e.ename,e.empno <span class="keyword">from</span> scott.emp e <span class="keyword">where</span> rownum<span class="operator">&lt;=</span><span class="number">5</span> <span class="keyword">union</span> <span class="keyword">all</span> <span class="keyword">select</span> e.ename,e.empno <span class="keyword">from</span> scott.emp e  </span><br><span class="line"><span class="keyword">where</span> e.ename <span class="keyword">like</span> <span class="string">&#x27;%ARC%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic1.zhimg.com/80/v2-695aef955c3beb159f7375812d3e6955_720w.jpg" alt="img"></p>
+<p><strong>union和union all</strong>是有区别的，我列举的例子进行了模糊匹配，没演示出来效果。使用union all后DBMS不会取消重复的行。</p>
+<p><strong>去掉后面的like条件，使用union统计的数据为14行，使用union all统计的数据为19行</strong>，其实不难理解，all就是全部。</p>
+<h3 id="2、分页查询"><a href="#2、分页查询" class="headerlink" title="2、分页查询"></a>2、分页查询</h3><h3 id="2-1、MySQL的分页查询使用limit关键字"><a href="#2-1、MySQL的分页查询使用limit关键字" class="headerlink" title="2.1、MySQL的分页查询使用limit关键字"></a>2.1、MySQL的分页查询使用limit关键字</h3><p><strong>tips</strong>：Windows中CMD命令窗口使用color a即可调用出黑色背景绿色字体，color f0则是快速调出白色背景黑色字体哟！</p>
+<p>护眼色：R：181    G：230    B：181</p>
+<p><strong>示例</strong>：使用world数据库中city表进行演示分页查询，<strong>通过desc展示数据结构</strong>，尤其是配合开发进行联调的时候很常用：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">desc</span> world.city;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic2.zhimg.com/80/v2-954cb8821e12f1073ba56b4e30b6ca08_720w.jpg" alt="img"></p>
+<p><strong>查询world数据库中的city表前5条数据</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> city limit <span class="number">0</span>,<span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic1.zhimg.com/80/v2-df9292e0397c6c43f077f27006188f65_720w.jpg" alt="img"></p>
+<h3 id="2-2、Oracle的分页查询使用rownum伪列"><a href="#2-2、Oracle的分页查询使用rownum伪列" class="headerlink" title="2.2、Oracle的分页查询使用rownum伪列"></a>2.2、Oracle的分页查询使用rownum伪列</h3><p>同样使用desc关键字查询emp表结构：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SQL</span><span class="operator">&gt;</span> <span class="keyword">desc</span> scott.emp;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic1.zhimg.com/80/v2-c6c3c9de591b2b68788800c4df5a0570_720w.jpg" alt="img"></p>
+<p><strong>分页查询示例</strong>：使用rownum关键字进行演示Oracle中的分页查询。</p>
+<p>查询scott用户中emp（员工表）的员工empno：编号、ename：员工姓名以及伪列rowid，只查询前5条数据：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SQL</span><span class="operator">&gt;</span> <span class="keyword">select</span> t.rowid,t.empno,t.ename <span class="keyword">from</span> scott.emp t <span class="keyword">where</span> rownum <span class="operator">&lt;=</span><span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-1b510464f4d8cfdbe06dad782536e437_720w.jpg" alt="img"></p>
+<p><strong>Oracle进行分页查询常用方式一</strong>，查询第6~11数据通过嵌套子查询，使用到关键字rownum和where：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 统计emp数据总条目数</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> scott.emp;  </span><br><span class="line"><span class="comment">-- 查询第6~11数据通过嵌套子查询，使用到关键字rownum和where</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> (<span class="keyword">select</span> scott.emp.empno,rownum r <span class="keyword">from</span> scott.emp <span class="keyword">Where</span> rownum<span class="operator">&lt;=</span><span class="number">11</span>)<span class="keyword">where</span> r<span class="operator">&gt;=</span><span class="number">6</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Oracle进行分页查询常用方式二，先进行order by排序，再分页查询</strong>，查询第6~11数据：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 先进行排序</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span>  emp e <span class="keyword">order</span> <span class="keyword">by</span> e.empno <span class="keyword">Desc</span>;</span><br><span class="line"><span class="comment">-- 再进行分页</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> (<span class="keyword">select</span> e.<span class="operator">*</span>,rownum r_num <span class="keyword">from</span>(<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> scott.emp e <span class="keyword">order</span> <span class="keyword">by</span> e.empno <span class="keyword">desc</span> )e)b <span class="keyword">where</span> b.r_num <span class="keyword">between</span> <span class="number">6</span> <span class="keyword">and</span> <span class="number">11</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="四、聚合函数（Aggregate）"><a href="#四、聚合函数（Aggregate）" class="headerlink" title="四、聚合函数（Aggregate）"></a>四、聚合函数（Aggregate）</h2><p>下面所讲的函数大多数标准SQL数据库是支持的，但也要依据实际情况做测试验证，个人主要验证的是MySQL和Oracle。</p>
+<p><strong>重点</strong>：count、sum函数在我们如果要迁移数据的时候，避免不了需要手动去统计求和对比迁移前后数据的一致性。</p>
+<h3 id="1、常见的聚合函数"><a href="#1、常见的聚合函数" class="headerlink" title="1、常见的聚合函数"></a>1、常见的聚合函数</h3><p><strong>介绍几个聚合函数</strong>：</p>
+<ul>
+<li>count函数用于统计条目数；</li>
+<li>sum函数用于求和；</li>
+<li>substr函数用于截取；</li>
+<li>avg函数用于取平均值；</li>
+<li>max函数用于取最大值；</li>
+<li>min函数用于取最小值。</li>
+</ul>
+<p>如下则演示同时使用多个函数，查询Oracle数据库scott用户的emp表：</p>
+<p><strong>查询出来的结果</strong>：count统计员工总数，sum求和所有员工的薪水总额，avg统计所有员工平均薪水，substr则是截取到小数点后两位数。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- count:统计条目数,sum:求和,substr:截取,avg:取平均值</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>), <span class="built_in">sum</span>(t.sal), substr(<span class="built_in">avg</span>(t.sal), <span class="number">0</span>, <span class="number">7</span>) <span class="keyword">from</span> scott.emp t;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-e6f8edf0ee7313afea2faec60b145482_720w.jpg" alt="img"></p>
+<p><strong>返回平均值avg</strong>，一般配合substr关键字去截取，通过计算保留小数点后两位。</p>
+<p>统计某公司员工的平均薪资：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- avg:取平均值</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">avg</span>(t.sal) <span class="keyword">from</span> scott.emp t;</span><br><span class="line"><span class="keyword">select</span> substr(<span class="built_in">avg</span>(t.sal), <span class="number">0</span>, <span class="number">7</span>) <span class="keyword">from</span> scott.emp t;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-1205bf0c5c16feb398d66ee32d0e73a8_720w.jpg" alt="img"></p>
+<p><strong>返回统计行数count</strong></p>
+<p>统计某公司员工总数：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 统计函数count:统计emp表条目数量14</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> scott.emp;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-44b57b0fceb0fa7331e98e530ce75273_720w.jpg" alt="img"></p>
+<p><strong>返回总数（求和）sum</strong>，sum函数一般会配合decode函数使用。上面的黑色背景看久了眼睛累，特意换了一种护眼色。字体颜色就没有特意更换，字体稍微点大了一丢丢，看的更舒服。</p>
+<p>统计某公司所有员工薪资总和：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 求和函数sum的使用</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">sum</span>(t.sal) <span class="keyword">from</span> scott.emp t;</span><br><span class="line"><span class="comment">-- 配合decode函数使用</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">sum</span>(decode(ename, <span class="string">&#x27;SMITH&#x27;</span>, sal, <span class="number">0</span>)) SMITH,<span class="built_in">sum</span>(decode(ename, <span class="string">&#x27;ALLEN&#x27;</span>, sal, <span class="number">0</span>)) ALLEN,</span><br><span class="line">       <span class="built_in">sum</span>(decode(ename, <span class="string">&#x27;WARD&#x27;</span>, sal, <span class="number">0</span>)) WARD,<span class="built_in">sum</span>(decode(ename, <span class="string">&#x27;JONES&#x27;</span>, sal, <span class="number">0</span>)) JONES,</span><br><span class="line">       <span class="built_in">sum</span>(decode(ename, <span class="string">&#x27;MARTIN&#x27;</span>, sal, <span class="number">0</span>)) MARTIN,<span class="built_in">sum</span>(decode(ename, <span class="string">&#x27;BLAKE&#x27;</span>, sal, <span class="number">0</span>)) BLAKE,</span><br><span class="line">       <span class="built_in">sum</span>(decode(ename, <span class="string">&#x27;CLARK&#x27;</span>, sal, <span class="number">0</span>)) CLARK,<span class="built_in">sum</span>(decode(ename, <span class="string">&#x27;SCOTT&#x27;</span>, sal, <span class="number">0</span>)) SCOTT,</span><br><span class="line">       <span class="built_in">sum</span>(decode(ename, <span class="string">&#x27;KING&#x27;</span>, sal, <span class="number">0</span>)) KING,<span class="built_in">sum</span>(decode(ename, <span class="string">&#x27;TURNER&#x27;</span>, sal, <span class="number">0</span>)) TURNER</span><br><span class="line"><span class="keyword">from</span> scott.emp;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic1.zhimg.com/80/v2-783fb79aa18da526e65a557ff13eabca_720w.jpg" alt="img"></p>
+<p><strong>tips</strong>：count函数在工作中使用的很频繁，你不清楚某张表中有多少条记录，需要统计一下再处理。</p>
+<p><strong>返回最大值max</strong></p>
+<p>查看员工中薪水最高的那一位：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- max函数的使用</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">max</span>(t.sal) <span class="keyword">from</span> scott.emp t;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic1.zhimg.com/80/v2-364830e3c022d55a1deeee36511f7b3d_720w.jpg" alt="img"></p>
+<p><strong>返回最小值min</strong></p>
+<p>查看员工中薪水最低的那一位：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">min</span>(t.sal) <span class="keyword">from</span> scott.emp t;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-d5414b4a5c9ada1feb11b2437fcfa9bc_720w.jpg" alt="img"></p>
+<p><strong>Oracle中的rownum伪列</strong></p>
+<p>统计公司员工中的最后一条记录，通过rownum实现：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> t.sal <span class="keyword">from</span> scott.emp t <span class="keyword">where</span> rownum <span class="operator">&lt;=</span><span class="number">1</span>;</span><br><span class="line"><span class="keyword">select</span> t.sal <span class="keyword">from</span> scott.emp t <span class="keyword">where</span> rownum <span class="operator">&lt;=</span><span class="number">1</span> <span class="keyword">order</span> <span class="keyword">by</span> t.sal <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-661dc6a81845ee60c7ffff4f6c94e567_720w.jpg" alt="img"></p>
+<p><strong>MySQL中的分页limit关键字</strong></p>
+<p>通过limit关键字实现，根据sakila数据库中的actor（演员表）为例子返回最后三条记录，使用actor_id进行排序。</p>
+<p><strong>注意</strong>：<strong>limit属于MySQL扩展SQL92后的语法，在其它数据库中不能通用</strong>。Oracle的分页可以通过rownum来实现，上面也介绍了。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> t.`first_name`,t.`actor_id` <span class="keyword">FROM</span> sakila.`actor` t <span class="keyword">ORDER</span> <span class="keyword">BY</span> t.`actor_id` <span class="keyword">DESC</span> LIMIT <span class="number">0</span>,<span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-ffb4e83709041555270aed2f89c25929_720w.jpg" alt="img"></p>
+<h3 id="2、着重掌握的函数"><a href="#2、着重掌握的函数" class="headerlink" title="2、着重掌握的函数"></a>2、着重掌握的函数</h3><ul>
+<li>group by 函数用于分组；</li>
+<li>having 函数用于过滤，对分组后内容进行过滤。</li>
+</ul>
+<p><strong>group by函数</strong></p>
+<p>配合聚合函数sum使用，查询Oracle中scott用户下的emp表。使用group by进行分组，然后<strong>统计公司各部门员工的薪资</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> t.deptno, <span class="built_in">SUM</span>(t.sal) <span class="keyword">AS</span> sals <span class="keyword">FROM</span> scott.emp t <span class="keyword">GROUP</span> <span class="keyword">BY</span> t.deptno;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic3.zhimg.com/80/v2-85124edfb8c24e6abea7fe753e2eb186_720w.jpg" alt="img"></p>
+<p><strong>having函数</strong></p>
+<p><strong>区别</strong>：<code>having</code> 和 <code>where</code> 的区别在于，having 是对聚合后的结果进行条件的过滤，而 where 是在聚合前就对记录进行过滤。如果逻辑允许，应尽可能用 where 先过滤记录，由于结果集的减小，对聚合的效率明显提升。最后再依据逻辑判断是否用 having 再次过滤。</p>
+<p>配合聚合函数使用，Oracle中 的 scott 用户下 emp 与 dept 表。</p>
+<p>先对部门名称进行分组，然后使用having过滤出薪水总和大于10000的部门：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> d.dname, <span class="built_in">SUM</span>(e.sal) <span class="keyword">AS</span> sals <span class="keyword">FROM</span> scott.emp e</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> scott.dept d <span class="keyword">ON</span> e.deptno<span class="operator">=</span>d.deptno</span><br><span class="line"><span class="keyword">WHERE</span> e.deptno <span class="operator">&lt;</span> <span class="number">30</span> <span class="keyword">GROUP</span> <span class="keyword">BY</span> d.dname  <span class="keyword">HAVING</span> <span class="built_in">SUM</span>(e.sal) <span class="operator">&gt;</span> <span class="number">10000</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://pic2.zhimg.com/80/v2-0e9ecfb4ebc8242e07f2596d93000fd0_720w.jpg" alt="img"></p>
+<h2 id="五、SQL核心知识"><a href="#五、SQL核心知识" class="headerlink" title="五、SQL核心知识"></a>五、SQL核心知识</h2><p>凡事应以实际工作场景而定。个人的以一些理解仅仅是建议，最终的应用还需结合实际应用场景。软件实施对SQL的函数、触发器和存储过程没有太高的要求，但也需要会基本的运用。在某些特殊的场景下，使用这些SQL的核心知识将有助于提高我们的工作效率。</p>
+<h3 id="1、函数"><a href="#1、函数" class="headerlink" title="1、函数"></a>1、函数</h3><p><strong>函数关键字</strong>：FUNCTION</p>
+<p>使用第三方客户端工具新建函数，会自动生成一些模板：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$  <span class="comment">-- 声明关键字DELIMITER</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="comment">-- 创建函数的关键字create</span></span><br><span class="line">    <span class="comment">/*[DEFINER = &#123; user | CURRENT_USER &#125;]*/</span></span><br><span class="line">    <span class="keyword">FUNCTION</span> `study`.`stu_num`() <span class="comment">-- 设置函数名称</span></span><br><span class="line">    <span class="keyword">RETURNS</span> TYPE <span class="comment">-- 返回值的类型</span></span><br><span class="line">    <span class="comment">/*LANGUAGE SQL</span></span><br><span class="line"><span class="comment">    | [NOT] DETERMINISTIC</span></span><br><span class="line"><span class="comment">    | &#123; CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA &#125;</span></span><br><span class="line"><span class="comment">    | SQL SECURITY &#123; DEFINER | INVOKER &#125;</span></span><br><span class="line"><span class="comment">    | COMMENT &#x27;string&#x27;*/</span></span><br><span class="line">    <span class="keyword">BEGIN</span> <span class="comment">-- 开始业务逻辑</span></span><br><span class="line">    <span class="comment">-- &#123;业务逻辑区...&#125;</span></span><br><span class="line">    <span class="keyword">END</span>$$ <span class="comment">-- 结束标志</span></span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2、触发器"><a href="#2、触发器" class="headerlink" title="2、触发器"></a>2、触发器</h3><p><strong>触发器关键字</strong>：TRIGGER</p>
+<p>使用第三方客户端工具新建触发器，会自动生成一些模板：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line"><span class="keyword">CREATE</span>  <span class="comment">-- 创建触发器的关键字create</span></span><br><span class="line">    <span class="comment">/*[DEFINER = &#123; user | CURRENT_USER &#125;]*/</span></span><br><span class="line">    <span class="keyword">TRIGGER</span> `study`.`stu_insert` BEFORE<span class="operator">/</span>AFTER <span class="keyword">INSERT</span><span class="operator">/</span><span class="keyword">UPDATE</span><span class="operator">/</span><span class="keyword">DELETE</span></span><br><span class="line">    <span class="keyword">ON</span> `study`.`<span class="operator">&lt;</span><span class="keyword">Table</span> Name<span class="operator">&gt;</span>`</span><br><span class="line">    <span class="keyword">FOR</span> <span class="keyword">EACH</span> <span class="type">ROW</span> <span class="keyword">BEGIN</span> <span class="comment">-- 使用到for each循环</span></span><br><span class="line">    <span class="comment">-- &#123;业务逻辑区...&#125;</span></span><br><span class="line">    <span class="keyword">END</span>$$</span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3、存储过程"><a href="#3、存储过程" class="headerlink" title="3、存储过程"></a>3、存储过程</h3><p><strong>存储过程关键字</strong>：PROCEDURE</p>
+<p>支持完整事务的存储引擎，在保证数据的完整一致性情况下，尽可能多的使用commit事务提交。利用函数和存储过程一个好的示例，在MySQL中快速生成千万级别的数据大表进行测试就可以应用到，同时还能联想到测试性能。这是勾起我们学习的动力，一个比较好的方法。</p>
+<p><strong>使用第三方客户端工具新建存储过程</strong>，会自动生成一些模板：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line"><span class="keyword">CREATE</span></span><br><span class="line">    <span class="comment">/*[DEFINER = &#123; user | CURRENT_USER &#125;]*/</span></span><br><span class="line">    <span class="keyword">PROCEDURE</span> `study`.`insert_study`()</span><br><span class="line">    <span class="comment">/*LANGUAGE SQL</span></span><br><span class="line"><span class="comment">    | [NOT] DETERMINISTIC</span></span><br><span class="line"><span class="comment">    | &#123; CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA &#125;</span></span><br><span class="line"><span class="comment">    | SQL SECURITY &#123; DEFINER | INVOKER &#125;</span></span><br><span class="line"><span class="comment">    | COMMENT &#x27;string&#x27;*/</span></span><br><span class="line">    <span class="keyword">BEGIN</span></span><br><span class="line">    <span class="comment">-- &#123;业务逻辑区...&#125;</span></span><br><span class="line">    <span class="keyword">COMMIT</span>; <span class="comment">-- 支持完整事务的存储引擎,在保证数据的完整一致性情况下,尽可能多的使用commit事务提交</span></span><br><span class="line">    <span class="keyword">END</span>$$</span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、典型的示例sakila数据库"><a href="#4、典型的示例sakila数据库" class="headerlink" title="4、典型的示例sakila数据库"></a>4、典型的示例sakila数据库</h3><p>这是一个MySQL官方提供的拥有存储过程、触发器和函数示例的电影出租信息管理系统数据库。并且官方提供了EER模型，便于理解每张表之间的关联关系，可以使用MySQL workbench打开sakila.mwb进行参考学习。如果你能完整的看完这篇文档，你会发现在一开始我就提供了sakila数据库的官网下载地址。</p>
+<p><strong>sakila数据库视图</strong>：actor_info，演员信息视图</p>
+<p><strong>使用DESC关键字进行查看视图结构</strong>，这个关键字很实用哟。视图和表结构很像，以sakila中actor_info视图进行展示：</p>
+<p><img data-src="https://pic2.zhimg.com/80/v2-5015266f6d342af5448e72acb2d82a3b_720w.jpg" alt="img"></p>
+<p><strong>sakila数据库存储过程</strong>：film_in_stock，电影库存</p>
+<p>官方的一个示例：创建一个存储过程，声明了三个常量字段，然后分别赋值给演示字段，最后将找到的记录复制存到了p_film_count中。这里我为何说是复制呢？是因为使用到了SELECT … INTO关键字。</p>
+<p>函数、触发器和存储过程最主要的一块在BEGIN {业务逻辑区…} END这一块区域。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER $$</span><br><span class="line">USE `sakila`$$</span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">PROCEDURE</span> IF <span class="keyword">EXISTS</span> `film_in_stock`$$</span><br><span class="line"><span class="keyword">CREATE</span> DEFINER<span class="operator">=</span>`root`@`<span class="operator">%</span>` <span class="keyword">PROCEDURE</span> `film_in_stock`(<span class="keyword">IN</span> p_film_id <span class="type">INT</span>, <span class="keyword">IN</span> p_store_id <span class="type">INT</span>, <span class="keyword">OUT</span> p_film_count <span class="type">INT</span>)</span><br><span class="line">    <span class="keyword">READS</span> <span class="keyword">SQL</span> DATA</span><br><span class="line">    <span class="keyword">SQL</span> SECURITY INVOKER</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">     <span class="keyword">SELECT</span> inventory_id</span><br><span class="line">     <span class="keyword">FROM</span> inventory</span><br><span class="line">     <span class="keyword">WHERE</span> film_id <span class="operator">=</span> p_film_id</span><br><span class="line">     <span class="keyword">AND</span> store_id <span class="operator">=</span> p_store_id</span><br><span class="line">     <span class="keyword">AND</span> inventory_in_stock(inventory_id);</span><br><span class="line">     <span class="keyword">SELECT</span> FOUND_ROWS() <span class="keyword">INTO</span> p_film_count;</span><br><span class="line"><span class="keyword">END</span>$$</span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+
+<p>关于函数我就不列举MySQL官方提供的示例了。</p>
+<p><strong>给出一点小小的建议，感觉对你没啥作用可以忽略掉</strong>：首先快速熟悉语法使用，对官方的示例进行解读，然后运行验证。最后，书写一些简单的示例达到熟练运用目的。不要只停留在想要执行，而是立即执行并带着思考去看待问题。多问一个为什么，思考本质。</p>
+<p><strong>——————更新于2022-3-14——————</strong></p>
+<h2 id="六、SQL查漏补缺"><a href="#六、SQL查漏补缺" class="headerlink" title="六、SQL查漏补缺"></a>六、SQL查漏补缺</h2><ol>
+<li>SQL模糊匹配（like）</li>
+<li>SQL通配符</li>
+<li>SQL高级过滤</li>
+<li>show操作符（主要介绍MySQL中的用法）</li>
+</ol>
+<p><strong>更新文章</strong>：最近回顾以前工作，发现这些操作符也挺常用的。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80ODA3ODA5MzE=">SQL模糊匹配——通配符——高级过滤<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="END-莫问收获，但问耕耘"><a href="#END-莫问收获，但问耕耘" class="headerlink" title="END 莫问收获，但问耕耘"></a>END 莫问收获，但问耕耘</h1><p>终身学习，源于某一次面试的总结，结果停不下来了。以上也是对 SQL 常用联合查询以及聚合函数的一个总结，希望能对你的工作与学习有所帮助。善于总结，其乐不穷。<strong>好记性不如烂笔头</strong>，多收集自己第一次尝试的成果，收获也颇丰。<strong>你会发现，自己的知识宝库越来越丰富</strong>。</p>
+<p>静下心来，才发现原来不会的还有很多。</p>
+<p>一分耕耘，一分收获。</p>
+<p>多总结，你会发现，自己的知识宝库越来越丰富。</p>
+<p>以上总结，仅供参考！</p>
+<p>最后，希望这篇总结对你的学习和工作有些许帮助！</p>
+<p>—END—</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2021/04/10/%E5%85%B3%E4%BA%8E%E8%BD%AF%E4%BB%B6%E5%AE%9E%E6%96%BD%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E6%9C%89%E5%93%AA%E4%BA%9B/" title="关于软件实施工程师的面试题有哪些">https://blog.cnwangk.top/2021/04/10/关于软件实施工程师的面试题有哪些/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/SQL/" rel="tag"><i class="fa fa-tag"></i> SQL</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/08/%E8%A7%A3%E5%86%B3sublime-text%E6%89%93%E5%BC%80txt%E6%96%87%E4%BB%B6%E4%B9%B1%E7%A0%81%E4%BB%A5%E5%8F%8A%E8%A2%AB%E5%A2%99%E5%B9%B6%E7%A6%81%E6%AD%A2%E6%9B%B4%E6%96%B0%E6%8F%90%E7%A4%BA/" rel="prev" title="解决sublime-text打开txt文件乱码以及被墙并禁止更新提示">
+                  <i class="fa fa-angle-left"></i> 解决sublime-text打开txt文件乱码以及被墙并禁止更新提示
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/" rel="next" title="MySQL连接工具workbench">
+                  MySQL连接工具workbench <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2021/04/10/%E5%85%B3%E4%BA%8E%E8%BD%AF%E4%BB%B6%E5%AE%9E%E6%96%BD%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E6%9C%89%E5%93%AA%E4%BA%9B/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

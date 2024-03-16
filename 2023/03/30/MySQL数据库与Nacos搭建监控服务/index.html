@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="我相信有不少小伙伴已经用过eureka，那么问题来了，Nacos是个啥？ 看到这个标题，MySQL数据库与Nacos搭建监控服务，它们有什么关系么？ 其实是Nacos支持连接MySQL，内部已配置好数据源、连接池供我们使用。如果使用其它数据源（比如信创要求，使用达梦数据库比较多），可以通过插件形式适配，模仿MySQL实现方式。具体如何实现，可参考 Nacos 的 github issues。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="MySQL数据库与Nacos搭建监控服务">
+<meta property="og:url" content="https://blog.cnwangk.top/2023/03/30/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8ENacos%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="我相信有不少小伙伴已经用过eureka，那么问题来了，Nacos是个啥？ 看到这个标题，MySQL数据库与Nacos搭建监控服务，它们有什么关系么？ 其实是Nacos支持连接MySQL，内部已配置好数据源、连接池供我们使用。如果使用其它数据源（比如信创要求，使用达梦数据库比较多），可以通过插件形式适配，模仿MySQL实现方式。具体如何实现，可参考 Nacos 的 github issues。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/30/pp2dg74.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/22/ppdImUH.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/22/ppdImUH.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/22/ppdIlxP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/22/ppdIn5d.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/22/ppdIQ2t.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/22/ppdIM8I.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/22/ppdIN5j.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/22/ppdItaQ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/22/ppdIGqS.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/22/ppdIYVg.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/30/pp2dcBF.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/30/pp2dsXT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/30/pp2d6nU.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/22/ppdIKPA.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/22/ppdI3Kf.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/22/ppdI8r8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/23/ppwyHDs.png">
+<meta property="article:published_time" content="2023-03-30T14:15:05.000Z">
+<meta property="article:modified_time" content="2024-03-12T12:18:11.546Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="nacos">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/03/30/pp2dg74.png">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2023/03/30/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8ENacos%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2023/03/30/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8ENacos%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1/","path":"2023/03/30/MySQL数据库与Nacos搭建监控服务/","title":"MySQL数据库与Nacos搭建监控服务"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL数据库与Nacos搭建监控服务 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nacos%E9%83%A8%E7%BD%B2"><span class="nav-number">1.</span> <span class="nav-text">Nacos部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text">项目环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B"><span class="nav-number">1.2.</span> <span class="nav-text">快速开始</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nacos2-2-0%E7%89%88%E6%9C%AC%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E"><span class="nav-number">1.3.</span> <span class="nav-text">nacos2.2.0版本配置说明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">MySQL部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">安装方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux%E5%B9%B3%E5%8F%B0%EF%BC%88CentOS-Stream-9%EF%BC%89%E9%83%A8%E7%BD%B2MySQL"><span class="nav-number">2.2.</span> <span class="nav-text">Linux平台（CentOS-Stream-9）部署MySQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E9%98%B2%E7%81%AB%E5%A2%99%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7"><span class="nav-number">2.3.</span> <span class="nav-text">调试防火墙管理工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90"><span class="nav-number">2.4.</span> <span class="nav-text">MySQL用户权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL%E5%AF%BC%E5%85%A5mysql-schema%E8%84%9A%E6%9C%AC"><span class="nav-number">2.5.</span> <span class="nav-text">MySQL导入mysql-schema脚本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Springboot%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA"><span class="nav-number">3.</span> <span class="nav-text">Springboot项目构建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83-1"><span class="nav-number">3.1.</span> <span class="nav-text">项目环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA"><span class="nav-number">3.2.</span> <span class="nav-text">项目构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Nacos%E8%81%94%E5%8A%A8%E6%B5%8B%E8%AF%95"><span class="nav-number">3.3.</span> <span class="nav-text">Nacos联动测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nacos%E7%9B%91%E6%8E%A7%EF%BC%88%E6%8E%A7%E5%88%B6%E5%8F%B0%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">Nacos监控（控制台）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%BC%94%E7%A4%BA"><span class="nav-number">4.1.</span> <span class="nav-text">基本功能演示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8"><span class="nav-number">4.2.</span> <span class="nav-text">验证数据库表</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/" rel="bookmark">
+        <time class="popular-posts-time">2023-04-15</time>
+        <br>
+      SpringBoot应用集成微服务组件Nacos
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/04/19/Nacos-prometheus-grafana/" rel="bookmark">
+        <time class="popular-posts-time">2023-04-19</time>
+        <br>
+      Nacos prometheus grafana
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2023/03/30/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8ENacos%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MySQL数据库与Nacos搭建监控服务 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL数据库与Nacos搭建监控服务
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-30 22:15:05" itemprop="dateCreated datePublished" datetime="2023-03-30T22:15:05+08:00">2023-03-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-12 20:18:11" itemprop="dateModified" datetime="2024-03-12T20:18:11+08:00">2024-03-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">中间件</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>21 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a target="_blank" rel="noopener" href="https://imgse.com/i/pp2dg74"><img data-src="https://s1.ax1x.com/2023/03/30/pp2dg74.png" alt="pp2dg74.png"></a></p>
+<p>我相信有不少小伙伴已经用过eureka，那么问题来了，Nacos是个啥？</p>
+<p>看到这个标题，MySQL数据库与Nacos搭建监控服务，它们有什么关系么？</p>
+<p>其实是Nacos支持连接MySQL，内部已配置好数据源、连接池供我们使用。如果使用其它数据源（比如信创要求，使用达梦数据库比较多），可以通过插件形式适配，模仿MySQL实现方式。具体如何实现，可参考 Nacos 的 github issues。 </p>
+<span id="more"></span>
+
+
+<p><strong>MySQL是什么？</strong><br>一句话概括：一款社区活跃的开源数据库（database）软件，已被Oracle公司收购。</p>
+<p><strong>nacos是什么？</strong></p>
+<blockquote>
+<p>一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。</p>
+</blockquote>
+<p>nacos 官方文档：目前推荐2.x版本</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9uYWNvcy5pby96aC1jbi9kb2NzL3YyL3F1aWNrc3RhcnQvcXVpY2stc3RhcnQuaHRtbA==">https://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html<i class="fa fa-external-link-alt"></i></span></p>
+<p>nacos 样例<br><span class="exturl" data-url="aHR0cDovL2NvbnNvbGUubmFjb3MuaW8vbmFjb3MvaW5kZXguaHRtbCMvbG9naW4=">http://console.nacos.io/nacos/index.html#/login<i class="fa fa-external-link-alt"></i></span></p>
+<p>默认用户名与密码均为：nacos</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/22/ppdImUH.png" alt="ppdImUH"></p>
+<h3 id="Nacos部署"><a href="#Nacos部署" class="headerlink" title="Nacos部署"></a>Nacos部署</h3><h4 id="项目环境"><a href="#项目环境" class="headerlink" title="项目环境"></a>项目环境</h4><p>Nacos 依赖 <span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm9yYWNsZS5jb20vY2QvRTE5MTgyLTAxLzgyMC03ODUxL2luc3RfY2xpX2pka19qYXZhaG9tZV90Lw==">Java<i class="fa fa-external-link-alt"></i></span> 环境来运行。如果你是一名开发人员，或许需要准备如下环境：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLmFsaXl1bi5jb20vYXBhY2hlL21hdmVuL21hdmVuLTMvP3NwbT1hMmM2aC4yNTYwMzg2NC4wLjAuMWYwNDEzNmZvVkxIUlo=">Maven 3.2.x+<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS9qYXZhL3RlY2hub2xvZ2llcy9kb3dubG9hZHMvI2phdmE4">64 bit JDK1.8+<i class="fa fa-external-link-alt"></i></span></li>
+<li>64 bit OS，支持 Linux&#x2F;Unix&#x2F;Mac&#x2F;Windows，<strong>推荐选用 Linux&#x2F;Unix&#x2F;Mac</strong></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXQtc2NtLmNvbS9kb3dubG9hZHM=">Git 2.3.x<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>Git 版本不一定要与我保持一致，只要版本不是太老就行。</p>
+<p><strong>主要以Linux平台作为演示环境</strong>。关于nacos 的获取（发行包、源码包），可以前往github开源仓库。</p>
+<p>你可以通过<strong>源码</strong>和<strong>发行包</strong>两种方式来获取 Nacos。</p>
+<p><strong>个人推荐</strong>：下载发行包。关于版本，使用稳定版本（<strong>通常有GA标识</strong>），个人习惯使用官方推荐的上一个小版本。有特殊需求可以下载源码包，修改源码重新编译。</p>
+<p>从 Github 获取源码方式，使用<code>git clone</code>命令，<strong>值得注意的是你需要部署Git环境</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/alibaba/nacos.git</span><br><span class="line"><span class="built_in">cd</span> nacos/</span><br><span class="line">mvn -Prelease-nacos -Dmaven.test.skip=<span class="literal">true</span> clean install -U  </span><br><span class="line"><span class="built_in">ls</span> -al distribution/target/</span><br><span class="line">// change the <span class="variable">$version</span> to your actual path</span><br><span class="line"><span class="built_in">cd</span> distribution/target/nacos-server-<span class="variable">$version</span>/nacos/bin</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>nacos开源仓库</strong>：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvbmFjb3M=">https://github.com/alibaba/nacos<i class="fa fa-external-link-alt"></i></span></p>
+<p>目前 nacos 最新稳定版是 2.2.4：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvbmFjb3MvcmVsZWFzZXMvdGFnLzIuMi40">https://github.com/alibaba/nacos/releases/tag/2.2.4<i class="fa fa-external-link-alt"></i></span></p>
+<p>当你看到这篇博文时，nacos 最新稳定版可能已经更新到 2.2.4 或者更高的版本。</p>
+<p>下载很缓慢，可以使用在线工具箱加速，<span class="exturl" data-url="aHR0cHM6Ly93d3cubWludGltYXRlLmNuLw==">雨月空间站<i class="fa fa-external-link-alt"></i></span>（公共免费资源请适度使用）：<br><span class="exturl" data-url="aHR0cHM6Ly90b29sLm1pbnRpbWF0ZS5jbi9naC8=">https://tool.mintimate.cn/gh/<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>官方推荐版本为2.2.3</strong>：</p>
+<blockquote>
+<p>您可以在Nacos的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvbmFjb3MvcmVsZWFzZXM=">release notes<i class="fa fa-external-link-alt"></i></span>及<span class="exturl" data-url="aHR0cHM6Ly9uYWNvcy5pby96aC1jbi9ibG9nL2luZGV4Lmh0bWw=">博客<i class="fa fa-external-link-alt"></i></span>中找到每个版本支持的功能的介绍，当前推荐的稳定版本为2.2.3。</p>
+</blockquote>
+<h4 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h4><p><strong>解压nacos</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unzip nacos-server-<span class="variable">$version</span>.zip &amp; tar -zxvf nacos-server-<span class="variable">$version</span>.tar.gz</span><br><span class="line">unzip nacos-server-2.2.0.zip &amp; tar -zxvf nacos-server-2.2.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>$version指具体nacos版本号，比如具体版本：nacos-server-2.1.1。</p>
+</li>
+<li><p>Windows平台建议下载以 .zip结尾的压缩包：nacos-server-2.1.1.zip。</p>
+</li>
+<li><p>Linux平台建议下载以 .tar.gz 结尾的压缩包：nacos-server-2.1.1.tar.gz。</p>
+</li>
+</ul>
+<p><strong>修改配置文件</strong></p>
+<p>修改<code>conf</code>目录下的<code>application.properties</code>文件。</p>
+<p>设置其中的<code>nacos.core.auth.plugin.nacos.token.secret.key</code>值，详情可查看鉴权-自定义密钥：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9uYWNvcy5pby96aC1jbi9kb2NzL3YyL3BsdWdpbi9hdXRoLXBsdWdpbi5odG1s">https://nacos.io/zh-cn/docs/v2/plugin/auth-plugin.html<i class="fa fa-external-link-alt"></i></span></p>
+<blockquote>
+<p>注意，文档中的默认值<code>SecretKey012345678901234567890123456789012345678901234567890123456789</code>和<code>VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=</code>为公开默认值，可用于临时测试，实际使用时请<strong>务必</strong>更换为自定义的其他有效值。</p>
+</blockquote>
+<p><strong>启动服务</strong></p>
+<p>注：Nacos的运行需要以至少2C4g60g*3的机器配置下运行，集群模式3台双核CPU、4GB运行内存、60GB硬盘存储空间。</p>
+<p><strong>Linux平台以单机模式启动nacos服务</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh startup.sh -m standalone</span><br></pre></td></tr></table></figure>
+
+<p><strong>Windows平台以单机模式启动nacos服务</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">startup.cmd -m standalone</span><br></pre></td></tr></table></figure>
+
+<p>访问：<span class="exturl" data-url="aHR0cDovLzEyNy4wLjAuMTo4ODQ4L25hY29z">http://127.0.0.1:8848/nacos<i class="fa fa-external-link-alt"></i></span> 后，进入登录界面：</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/22/ppdImUH.png" alt="ppdImUH"></p>
+<p><strong>服务注册、发现以及配置管理</strong></p>
+<p><strong>服务注册</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST <span class="string">&#x27;http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=192.168.245.132&amp;port=8080&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li>serviceName：服务名</li>
+<li>ip：配置自己远程地址</li>
+<li>port：端口（外部访问需要放通）</li>
+</ul>
+<p><strong>服务发现</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET <span class="string">&#x27;http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>发布配置</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST <span class="string">&quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=HelloWorld&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li>dataId：数据Id。</li>
+<li>group：组名。</li>
+<li>content：发布配置输入的具体内容。</li>
+</ul>
+<p><strong>获取配置</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET <span class="string">&quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>控制台显示输出内容：HelloWorld，代表配置成功。</p>
+<p>关于curl命令教程，可以去curl官网（curl.se）找一找，还是很常用的。</p>
+<p><strong>关闭服务</strong></p>
+<p>Linux平台：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh shutdown.sh</span><br></pre></td></tr></table></figure>
+
+<p>Windows平台：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\shutdown.cmd</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="nacos2-2-0版本配置说明"><a href="#nacos2-2-0版本配置说明" class="headerlink" title="nacos2.2.0版本配置说明"></a>nacos2.2.0版本配置说明</h4><p><strong>以nacos2.2.0版本为示例说明</strong><br>nacos配置文件，支持配置文件存储到数据库（DB）中保存。如果没有开放mysql数据源相应设置，默认使用本地存储数据源。</p>
+<p>配置目录：<strong>\nacos-server-2.2.0\conf</strong>，文件清单，每个版本可能略微有所不同：</p>
+<ul>
+<li>application.properties</li>
+<li>application.properties.example</li>
+<li>derby-schema.sql</li>
+<li>mysql-schema.sql</li>
+<li>1.4.0-ipv6_support-update.sql</li>
+<li>cluster.conf.example</li>
+<li>nacos-logback.xml</li>
+</ul>
+<p><strong>配置基本说明</strong><br>以 .example 结尾，是示例配置，可供参考。以 update.sql 结尾的，则是sql更新脚本。</p>
+<p>application.properties是nacos基本配置，例如端口、ip、数据源等等可以在此配置中修改，cluster.conf.example 是集群配置示例，nacos-logback.xml是日志相关配置。</p>
+<p>mysql-schema.sql提供支持MySQL数据库SQL表结构，derby-schema.sql提供支持derby数据库SQL表结构。</p>
+<p>如果和我一样使用的是MySQL数据库，<strong>需要注意的配置文件是application.properties和mysql-schema.sql</strong>，记住后续用得上。</p>
+<p><strong>导入表结构</strong><br>新建数据库：库名命名为：nacos。编码最好指定为utf8mb4和utf8mb4_bin，避免导入后看到中文注释乱码。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> database nacos;</span><br></pre></td></tr></table></figure>
+
+<p>导入sql脚本到新建的库nacos中：mysql-schema.sql。库名并不是固定的，可以根据实际需求更改，比如nacos_config。如果你是从旧版本升级上来的，可能需要执行SQL脚本：<strong>1.4.0-ipv6_support-update.sql</strong>。</p>
+<p>上面聊到 nacos 可以在配置文件中配置数据源，当然必不可少，需要部署MySQL数据库。</p>
+<p>找到<strong>application.properties</strong>配置文件，配置MySQL数据源：</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/22/ppdIlxP.png"></p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### If use MySQL as datasource: </span></span><br><span class="line"><span class="attr">spring.datasource.platform</span>=<span class="string">mysql                                                                         </span></span><br><span class="line"><span class="comment">### Count of DB:                                                                                             </span></span><br><span class="line"><span class="attr">db.num</span>=<span class="string">1                                                                   </span></span><br><span class="line"><span class="comment">### Connect URL of DB:</span></span><br><span class="line"><span class="attr">db.url.0</span>=<span class="string">jdbc:mysql://192.168.245.132:3306/nacos?characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=UTC        </span></span><br><span class="line"><span class="attr">db.user.0</span>=<span class="string">root                                                                                            </span></span><br><span class="line"><span class="attr">db.password.0</span>=<span class="string">mypwd@123        </span></span><br></pre></td></tr></table></figure>
+
+<p>很奇怪的一个问题，第一次使用，只导入初始化sql脚本MySQL数据源：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream ~]<span class="comment"># cat /usr/local/nacos-2.2.0/conf/mysql-schema.sql | mysql -uroot -p nacos</span></span><br></pre></td></tr></table></figure>
+
+<p>nacos以单机模式启动：sh startup.sh -m standalone，启动无异常，正常访问。</p>
+<p>MySQL数据库已设置自启，排查数据库正常启动。第二天启动centos-stream-9，再次启动 nacos 服务，出现无法设置数据源，尝试屏蔽数据源配置文件，启动正常。猜测可能是初始化脚本出问题了，执行升级sql脚本：1.4.0-ipv6_support-update.sql，再次启动nacos服务正常。</p>
+<p>如果你和我一样，使用的是<strong>MySQL8.0.30</strong>版本数据库，可以参考。</p>
+<p>如果遇到 <strong>Public Key Retrieval is not allowed</strong>，可能还需要加上 <strong>&amp;allowPublicKeyRetrieval&#x3D;true</strong>。</p>
+<p>在github issues查找解决方案，提到可能是MySQL8.0.x设置时区的问题，将默认serverTimezone&#x3D;UTC修改为<strong>serverTimezone&#x3D;Asia&#x2F;Shanghai</strong>。</p>
+<p><strong>如果配置好MySQL，但还是遇到数据源无法找到，也许是数据库导入脚本没有升级，也许是数据库版本和时区问题</strong>。</p>
+<p>尝试重连，反复提醒 Public Key Retrieval 不被允许，反复提醒数据源没有设置。</p>
+<p>java.sql.SQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.</p>
+<p>Caused by: com.mysql.cj.exceptions.CJException: <strong>Public Key Retrieval is not allowed</strong></p>
+<p>Caused by: com.alibaba.nacos.api.exception.NacosException: Nacos Server did not start because dumpservice bean construction failure ：<strong>No DataSource set</strong></p>
+<p>Caused by: java.lang.IllegalStateException: <strong>No DataSource set</strong></p>
+<p>Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name ‘externalDumpService’: Invocation of init  method failed; nested exception is ErrCode:500, ErrMsg:Nacos Server did not start because dumpservice bean construction failure ：<strong>No DataSource set</strong></p>
+<p><strong>也有可能是MySQL版本问题和设置时区问题，连接配置做如下调整：</strong></p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### Connect URL of DB:</span></span><br><span class="line"><span class="attr">db.url.0</span>=<span class="string">jdbc:mysql://192.168.245.132:3306/nacos?characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode    =true&amp;allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai</span></span><br><span class="line"><span class="attr">db.user.0</span>=<span class="string">root</span></span><br><span class="line"><span class="attr">db.password.0</span>=<span class="string">mypwd@123</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>Linux终端执行命令导入升级脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /usr/local/nacos-2.2.0/conf/1.4.0-ipv6_support-update.sql | mysql -uroot -p nacos</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>问题排查</strong></p>
+<p><strong>关于nacos大部分问题</strong>，可以在官方仓库的 issues 找到解决方案：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvbmFjb3MvaXNzdWVz">https://github.com/alibaba/nacos/issues<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>总结配置数据源相关问题</strong>：</p>
+<ol>
+<li>导入初始化sql脚本缺失字段问题。</li>
+<li>使用数据源配置jdbc，数据库时区设置问题。</li>
+<li>MySQL8.0.x数据库默认密码使用缓存算法（caching_sha2_password）问题。</li>
+</ol>
+<h3 id="MySQL部署"><a href="#MySQL部署" class="headerlink" title="MySQL部署"></a>MySQL部署</h3><p>tips：下载注意使用带有GA（General Availability）标识，稳定版。</p>
+<p>实际工作中，使用比较多的是下载离线安装包。安装方式主要有如下几种分类：</p>
+<h4 id="安装方式"><a href="#安装方式" class="headerlink" title="安装方式"></a>安装方式</h4><p><strong>Windows平台</strong>：</p>
+<ol>
+<li>msi文件：直接双击进行安装，有可视化界面，安装较为容易，但不够灵活。</li>
+<li>归档包（archive）：以zip格式进行压缩，类似于Linux中的二进制包。比较灵活，只需几个命令即可安装服务和实例化。</li>
+<li>源码包（source package）：最灵活，可根据需求编译安装功能，难易度最高。</li>
+<li>docker形式安装：其实是在容器中安装。</li>
+</ol>
+<p><strong>Linux平台</strong>：</p>
+<ol>
+<li>rpm &amp; deb 包安装：最为简单，但不灵活，适合初学者使用。</li>
+<li>二进制包（binary package）：也称归档包（archive），编译好的源码包，比rpm包更灵活。个人认为是安装多个服务最佳选择。</li>
+<li>源码包（source package）：最灵活，可根据需求编译安装功能，难易度最高。</li>
+<li>docker形式安装：其实是在容器中安装。</li>
+</ol>
+<p>当然，MySQL同样支持macOS平台。</p>
+<p>你也可以使用MySQL的妹妹MariaDB替代MySQL，是很好的选择。</p>
+<p>由于测试使用，本人数据库使用比较新，MySQL8.0.30。说8.0新，其实也并不是很新，距离8.0第一个稳定版<span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjAvZW4vbmV3cy04LTAtMTEuaHRtbA==">Changes in MySQL 8.0.11 (2018-04-19, General Availability)<i class="fa fa-external-link-alt"></i></span>快5年了。</p>
+<p>目前市面上主要以MySQL5.7为主，离停止维护不远了，未来应该会逐渐升级为MySQL8.0.x。看到官网将MySQL5.6文档页面转移了，已停止版本更新。</p>
+<p><strong>Windows 平台</strong></p>
+<p>此处省略安装过程，请参考个人公众号以及站内的博文<a href="https://blog.cnwangk.top/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">《MySQL 8.0.33 简易安装教程》</a> ，有详细说明。</p>
+<h4 id="Linux平台（CentOS-Stream-9）部署MySQL"><a href="#Linux平台（CentOS-Stream-9）部署MySQL" class="headerlink" title="Linux平台（CentOS-Stream-9）部署MySQL"></a>Linux平台（CentOS-Stream-9）部署MySQL</h4><p>此处我只演示<strong>Linux平台（CentOS-Stream-9）</strong>其中最方便的一种部署方式。</p>
+<p><strong>Linux平台（CentOS-Stream-9）</strong></p>
+<p>通过RHEL系列自带的命令服务安装管理工具，yum与dnf二选一即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum -y install mysql-server-8.0.30</span><br><span class="line">dnf -y install mysql-server-8.0.30</span><br></pre></td></tr></table></figure>
+<p>安装后，查看mysql服务状态，默认服务名为mysqld.service。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysqld.service</span><br></pre></td></tr></table></figure>
+<p><strong>默认没有启动，手动启动 mysqld 服务</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld.service</span><br></pre></td></tr></table></figure>
+<p><strong>登录mysql字符命令行界面</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="调试防火墙管理工具"><a href="#调试防火墙管理工具" class="headerlink" title="调试防火墙管理工具"></a>调试防火墙管理工具</h4><p>如需远程登录，需要关闭防火墙相关服务，或者开放相应端口，个人建议采用开放相应端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=3306/tcp --permanent</span><br></pre></td></tr></table></figure>
+<p>由于MySQL默认端口3306可能被黑客利用通用扫描软件攻击，建议实际工作中进行修改。或者利用隧道转发功能。<br>如果只是在本地使用，改与不改并不影响。</p>
+<p><strong>重载firewalld服务</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="MySQL用户权限"><a href="#MySQL用户权限" class="headerlink" title="MySQL用户权限"></a>MySQL用户权限</h4><p><strong>设置开机自启</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> mysqld.service</span><br></pre></td></tr></table></figure>
+<p>查看mysqld服务状态：看到enabled代表设置为自启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysqld.service</span><br></pre></td></tr></table></figure>
+
+<p>如果使用第三方管理工具，需要开放相应用户权限才能登录MySQL：</p>
+<p><strong>修改用户密码</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;mypwd@123&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>创建用户root，主机地址%，匹配所有；如果是localhost，则只让本地使用，也可以是指定ip地址。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;mypwd@123&#x27;</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;mypwd@123&#x27;</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;192.168.245.132&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;mypwd@123&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>授权root用户所有权限（ALL），即可使远程登录。同样可以指定特定权限，只给查询（select）。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> <span class="keyword">WITH</span> <span class="keyword">GRANT</span> OPTION;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> <span class="keyword">WITH</span> <span class="keyword">GRANT</span> OPTION;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;192.168.245.132&#x27;</span> <span class="keyword">WITH</span> <span class="keyword">GRANT</span> OPTION;</span><br></pre></td></tr></table></figure>
+
+<p>如果遇到第三方工具连接提示密码插件规则不被支持问题：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED <span class="keyword">WITH</span> mysql_native_password <span class="keyword">BY</span> <span class="string">&#x27;mypwd@123&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>刷新权限</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<p>更多权限细化设置请参考MySQL8.0.x官方文档第6章节Security。关于权限控制和账号（用户）管理介绍很详细。</p>
+<blockquote>
+<p>6.2 Access Control and Account Management</p>
+</blockquote>
+<p>更多安装方式，你还可以参考个人持续更新的笔记：</p>
+<p><a href="https://blog.cnwangk.top/2023/03/15/MySQL8-0-x-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B">https://blog.cnwangk.top/2023/03/15/MySQL8-0-x-简易安装教程</a></p>
+<h4 id="MySQL导入mysql-schema脚本"><a href="#MySQL导入mysql-schema脚本" class="headerlink" title="MySQL导入mysql-schema脚本"></a>MySQL导入mysql-schema脚本</h4><p>下面，将演示数据库创建以及<strong>sql脚本导入</strong>。</p>
+<p><strong>登录</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql <span class="operator">-</span>uroot <span class="operator">-</span>p</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建数据库</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> database nacos;</span><br></pre></td></tr></table></figure>
+
+<p><strong>导入数据，执行sql脚本</strong></p>
+<p>关于数据导入，可以使用DB管理工具（MySQL workbench、DBeaver、SQLyog）连接导入，也可以使用cat或者zcat命令导入。</p>
+<p><strong>演示Linux平台使用cat命令导入sql脚本</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream ~]<span class="comment"># cat /usr/local/nacos-2.2.0/conf/mysql-schema.sql | mysql -uroot -p nacos</span></span><br></pre></td></tr></table></figure>
+
+<p>原本我也不知道这种用法，联想到以前使用过zabbix监控工具。灵机一动，我也可以将nacos的sql脚本这样导入数据库中。</p>
+<p><strong>查看nacos数据库表</strong>：验证是否导入成功</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> use nacos;</span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> tables;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Springboot项目构建"><a href="#Springboot项目构建" class="headerlink" title="Springboot项目构建"></a>Springboot项目构建</h3><p><strong>如果你只是想体验nacos简单用法，可以跳过springboot项目集成nacos微服务</strong>。</p>
+<p>如果你是软件实施、运维人员，可以关注nacos官方文档运维监控文档（运维指南）。</p>
+<p>介绍很详细，我也觉得我很啰嗦了，这已经属于开发范畴了。</p>
+<p><strong>目标</strong>：项目中集成nacos服务，使用nacos监控到打包好并正常运行服务健康情况。集成spring-cloud-starter-alibaba-nacos-discovery和spring-cloud-starter-alibaba-nacos-config。nacos-discovery是服务发现组件，nacos-config则是服务配置组件。</p>
+<h4 id="项目环境-1"><a href="#项目环境-1" class="headerlink" title="项目环境"></a>项目环境</h4><p><strong>需要准备的环境</strong>：</p>
+<ul>
+<li>Maven 3.6.3</li>
+<li>JDK17</li>
+<li>Linux环境（CentOS9-Stream）</li>
+</ul>
+<p><strong>Linux平台安装JDK</strong></p>
+<p>解压JDK</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf jdk-17.0.4.1_linux-x64_bin.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>配置全局环境变量：vim &#x2F;etc&#x2F;profile</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/usr/java/jdk17</span><br><span class="line">CLASS_PATH=.:<span class="variable">$JAVA_HOME</span>/jre/lib/rt.jar:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br><span class="line">PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME CLASS_PATH PATH</span><br></pre></td></tr></table></figure>
+
+<p>配置当前用户环境变量：<code>vim .bash_profile</code> 或者 <code>.bashrc</code>，加入配置全局变量我所列出的内容即可。</p>
+<p><strong>执行 source 命令立即生效</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>关于环境变量更多配置可参考个人公众号关于JDK17的介绍。</p>
+<p>验证版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Linux平台安装maven</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install maven</span><br></pre></td></tr></table></figure>
+
+<p>当然，你也可以到Maven官网下载打包好的二进制包，解压即可用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unzip apache-maven-3.6.3-bin.zip</span><br><span class="line"><span class="built_in">mv</span> apache-maven-3.6.3 /usr/local/</span><br></pre></td></tr></table></figure>
+
+<p>加入环境变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Maven Home</span></span><br><span class="line">MAVEN_HOME=/usr/local/apache-maven-3.6.3</span><br><span class="line">PATH=<span class="variable">$PATH</span>:<span class="variable">$MAVEN_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> MAVEN_HOME PATH</span><br></pre></td></tr></table></figure>
+
+<p><strong>执行source命令立即生效</strong>：source &#x2F;etc&#x2F;profile </p>
+<p><strong>查看版本</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream bin]<span class="comment"># mvn --version</span></span><br><span class="line">Apache Maven 3.6.3 (Red Hat 3.6.3-15)</span><br><span class="line">Maven home: /usr/share/maven</span><br><span class="line">Java version: 17.0.4.1, vendor: Oracle Corporation, runtime: /usr/java/jdk17</span><br><span class="line">Default locale: zh_CN, platform encoding: UTF-8</span><br><span class="line">OS name: <span class="string">&quot;linux&quot;</span>, version: <span class="string">&quot;5.14.0-148.el9.x86_64&quot;</span>, <span class="built_in">arch</span>: <span class="string">&quot;amd64&quot;</span>, family: <span class="string">&quot;unix&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>看到以上环境，证明你的Maven环境已经部署好了。</p>
+<p><strong>注意</strong>：默认Maven镜仓库地址很慢，需要更换，推荐阿里云镜像源。</p>
+<p>修改Maven配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream bin]<span class="comment"># vim /usr/share/maven/conf/settings.xml</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>修改默认本地仓库存放目录</strong>：找到 <strong>localRepository</strong>，将如下内容开放：</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/22/ppdIn5d.png"></p>
+<p>配置路径参考(Linux 平台)：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>/local/repo<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>配置路径参考(Windows 平台)：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>D:\Maven\repo<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>配置Maven阿里镜像地址</strong>，加入如下配置，**注意是在<code>&lt;mirrors&gt; &lt;/mirrors&gt;</code>加入子节点<code>&lt;mirror&gt;&lt;/mirror&gt;</code>**：</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/22/ppdIQ2t.png"></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>aliyunmaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 老版本url --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;url&gt;https://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 新版本url --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://maven.aliyun.com/repository/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span>        </span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>更多配置可以参考<span class="exturl" data-url="aHR0cHM6Ly9kZXZvcHMuYWxpeXVuLmNvbS8/Y2hhbm5lbD1tYXZlbi5hbGl5dW4=">阿里云云效<i class="fa fa-external-link-alt"></i></span> </p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kZXZvcHMuYWxpeXVuLmNvbS8/Y2hhbm5lbD1tYXZlbi5hbGl5dW4=">阿里云云效<i class="fa fa-external-link-alt"></i></span> 是企业级一站式 DevOps 平台，覆盖产品从需求到运营的研发全生命周期，其中云效也提供了免费、可靠的Maven私有仓库 <span class="exturl" data-url="aHR0cHM6Ly9wYWNrYWdlcy5hbGl5dW4uY29tLz9jaGFubmVsPW1hdmVuLmFsaXl1bg==">Packages<i class="fa fa-external-link-alt"></i></span> 和代码管理仓库 <span class="exturl" data-url="aHR0cHM6Ly9jb2RldXAuYWxpeXVuLmNvbS8/Y2hhbm5lbD1tYXZlbjJjb2RldXBfcGQ=">Codeup<i class="fa fa-external-link-alt"></i></span>，欢迎您体验使用。</p>
+<p>云效制品仓库 <span class="exturl" data-url="aHR0cHM6Ly9wYWNrYWdlcy5hbGl5dW4uY29tLz9jaGFubmVsPW1hdmVuLmFsaXl1bg==">Packages<i class="fa fa-external-link-alt"></i></span> 致力于帮助开发者统一管理各种开发语言在开发、构建过程中的依赖，构建成果（二进制制品）以及交付过程关键信息的重要组件。</p>
+<p>云效代码管理 <span class="exturl" data-url="aHR0cHM6Ly9jb2RldXAuYWxpeXVuLmNvbS8/Y2hhbm5lbD1tYXZlbjJjb2RldXBfcGQ=">Codeup<i class="fa fa-external-link-alt"></i></span> 是阿里云出品的一款企业级代码管理平台，提供代码托管、代码评审、代码扫描、代码度量等功能，不限人数、超大容量且免费使用，全方位保护代码资产，帮助团队实现安全、稳定、高效的研发管理。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="left">仓库名称</th>
+<th align="left">阿里云仓库地址</th>
+<th align="left">阿里云仓库地址(老版)</th>
+<th align="left">源地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">central</td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL3JlcG9zaXRvcnkvY2VudHJhbA==">https://maven.aliyun.com/repository/central<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL25leHVzL2NvbnRlbnQvcmVwb3NpdG9yaWVzL2NlbnRyYWw=">https://maven.aliyun.com/nexus/content/repositories/central<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9yZXBvMS5tYXZlbi5vcmcvbWF2ZW4yLw==">https://repo1.maven.org/maven2/<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+<tr>
+<td align="left">public</td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL3JlcG9zaXRvcnkvcHVibGlj">https://maven.aliyun.com/repository/public<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL25leHVzL2NvbnRlbnQvZ3JvdXBzL3B1YmxpYw==">https://maven.aliyun.com/nexus/content/groups/public<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left">central仓和jcenter仓的聚合仓</td>
+</tr>
+<tr>
+<td align="left">gradle-plugin</td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL3JlcG9zaXRvcnkvZ3JhZGxlLXBsdWdpbg==">https://maven.aliyun.com/repository/gradle-plugin<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL25leHVzL2NvbnRlbnQvcmVwb3NpdG9yaWVzL2dyYWRsZS1wbHVnaW4=">https://maven.aliyun.com/nexus/content/repositories/gradle-plugin<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9wbHVnaW5zLmdyYWRsZS5vcmcvbTIv">https://plugins.gradle.org/m2/<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+<tr>
+<td align="left">apache snapshots</td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL3JlcG9zaXRvcnkvYXBhY2hlLXNuYXBzaG90cw==">https://maven.aliyun.com/repository/apache-snapshots<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL25leHVzL2NvbnRlbnQvcmVwb3NpdG9yaWVzL2FwYWNoZS1zbmFwc2hvdHM=">https://maven.aliyun.com/nexus/content/repositories/apache-snapshots<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9yZXBvc2l0b3J5LmFwYWNoZS5vcmcvc25hcHNob3RzLw==">https://repository.apache.org/snapshots/<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+</tbody></table>
+<h4 id="项目构建"><a href="#项目构建" class="headerlink" title="项目构建"></a>项目构建</h4><p><strong>注意</strong>：如果使用IDE工具构建，注意springboot、spring cloud以及spring cloud alibaba版本对应关系。尽量使用阿里云云原生应用脚手架官网推荐的版本，有助于后期遇到问题排查。当然还有一个好处，选择组件时有中文说明，一目了然。</p>
+<p>如果你对于IDE工具使用，实在有困难，可以在线构建。</p>
+<p>两种在线脚手架构建方式：</p>
+<ul>
+<li>spring脚手架：<span class="exturl" data-url="aHR0cHM6Ly9zdGFydC5zcHJpbmcuaW8v">https://start.spring.io/<i class="fa fa-external-link-alt"></i></span></li>
+<li>阿里云云原生应用脚手架：<span class="exturl" data-url="aHR0cHM6Ly9zdGFydC5hbGl5dW4uY29tLw==">https://start.aliyun.com/<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>个人还是比较推荐使用阿里云云原生应用脚手架构建，便于在线选择nacos 等微服务相关组件。</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/22/ppdIM8I.png"></p>
+<p>springboot版本可以自己调试，目前已经支持springboot2.7.6和3.0.0配置。之前建议版本为springboot2.6.11，如果使用高版本，选择nacos相关组件时灰色的。</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/22/ppdIN5j.png"></p>
+<p>构建完成，如何打包成jar（目前使用比较多的可能是 jar 包形式）？少不了 JD K和 Maven 环境，参考环境准备步骤。老项目是有不少使用 war 包形式。</p>
+<p>解压下载好的springboot项目demo.zip</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unzip demo.zip</span><br><span class="line"><span class="built_in">cd</span> demo</span><br></pre></td></tr></table></figure>
+
+<p>执行Maven安装命令，这个过程可能有点缓慢，下载jar包越多，越耗时间：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream demo]<span class="comment"># mvn install</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果新建的是单体应用，在根目录找到application.properties配置文件，如果构建mvc架构应用，则在demo-start子项目找到application.properties，然后修改spring.cloud.nacos.config.server-addr与spring.cloud.nacos.discovery.server-addr的IP地址。</p>
+<p><strong>示例如下</strong>：</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/22/ppdItaQ.png"></p>
+<p>有点纳闷，也许是我本地环境问题，之前很少使用阿里脚手架构建项目。感觉使用阿里云云原生应用脚手架构建，会出现某些jar包（openfeign）找不到，使用Maven打包出现主清单文件找不到的问题。自己一步一步构建，添加微服务组件，配置nacos则是正常的。</p>
+<p>Maven打包遇到找不多依赖：</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/22/ppdIGqS.png"></p>
+<p><strong>示例如下，引入openfeign</strong>：</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/22/ppdIYVg.png"></p>
+<p><strong>如果不出意外，正常打包，可以使用 java -jar 执行jar服务</strong>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar demo-web/target/demo-web-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+
+<p>在nacos控制台服务管理可以监控到服务，比如我搭建测试环境，给应用区名称为：springboot-test。</p>
+<p>如果遇到控制台<strong>日志输出乱码</strong>的时候，此时不要慌，请冷静思考。</p>
+<p>当然有<strong>解决方案</strong>，那就是在控制台执行 <code>Java -jar</code> 命令时使用参数  <code>-Dfile.encoding</code> 指定固定的编码，比如 utf-8 。</p>
+<p>Windows 平台处理方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar -Dfile.encoding=utf-8 demo-1.0.jar &amp;</span><br></pre></td></tr></table></figure>
+
+<p>Linux 平台处理方式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">nohup</span> java -server -Xms256M -Xmx2048M -jar -Dfile.encoding=utf-8 demo-1.0.jar &amp;&gt; demo-1.0.l</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="Nacos联动测试"><a href="#Nacos联动测试" class="headerlink" title="Nacos联动测试"></a>Nacos联动测试</h4><p><strong>新建配置</strong>：springboot-test.properties</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/30/pp2dcBF.png"></p>
+<p><strong>配置详情</strong>：配置的比较随意，参考看看就行</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/30/pp2dsXT.png"></p>
+<p>当然，你也需要在controller层  Java 代码里加入如下匹配：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 使用动态配置获取测试 --BEGIN-- **/</span></span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;alibaba.config.discovery&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String discovery;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;alibaba.config.name&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@GetMapping(&quot;/getConfig&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getConfig</span><span class="params">()</span> &#123;</span><br><span class="line">		log.info(<span class="string">&quot;getConfig&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;getConfig&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span> + <span class="string">&quot;发现：&quot;</span> + discovery + <span class="string">&quot;&gt;&gt;&gt;服务名称：&quot;</span> + name;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;custom.config.find&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String find;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;custom.config.say&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String say;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@GetMapping(&quot;/meet&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">meet</span><span class="params">()</span> &#123;</span><br><span class="line">		log.info(<span class="string">&quot;meet&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;meet&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span> + <span class="string">&quot;偶遇老湿：&quot;</span> + find + <span class="string">&quot;&gt;&gt;&gt;你好：&quot;</span> + say;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"><span class="comment">/** 使用动态配置获取测试 --END-- **/</span></span><br></pre></td></tr></table></figure>
+
+<p>提供一种思路。可以根据业务情况而定，将多个配置封装到一个类里面，如下所示，新建CustomConf类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * desc:对象配置类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Value</span> </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Component</span> <span class="doctag">@ConfigurationProperties</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;custom&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CustomConf</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> Integer one;</span><br><span class="line">	<span class="keyword">private</span> Integer two;</span><br><span class="line">	<span class="keyword">private</span> Integer three;</span><br><span class="line">	<span class="keyword">private</span> String description;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 此处省略掉了 get set 方法，实际需要补上</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用到注解：</p>
+<ul>
+<li>@Value ：通常情况，使用注解取值。</li>
+<li>@Component ：加入注解，便于被扫描到。</li>
+<li>@ConfigurationProperties：引入配置，通过prefix指定配置前缀。</li>
+</ul>
+<p>在项目中注入：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> CustomConf custom;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/custom&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">custom</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot;[custom] &quot;</span> + custom;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>准备好集成nacos服务的jar包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream <span class="built_in">test</span>]<span class="comment"># ll springboot-nacos-cloud-0.0.1-SNAPSHOT.jar</span></span><br><span class="line">-rw-rw-r--. 1 kart kart 77534357  2月 12 18:44 springboot-nacos-cloud-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+
+<p><strong>运行服务</strong>：</p>
+<ul>
+<li>nohup：代表脱离终端运行</li>
+<li>&amp;：代表放入后台</li>
+<li><code>-Dspring.profiles.active=prod</code>：指定为生产环境</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream <span class="built_in">test</span>]<span class="comment"># nohup java -jar -Dspring.profiles.active=prod /opt/workspace/test/springboot-nacos-cloud-0.0.1-SNAPSHOT.jar  &gt; /opt/</span></span><br><span class="line">workspace/test/springboot-nacos.log 2&gt;&amp;1 &amp;</span><br><span class="line">[1] 4628</span><br></pre></td></tr></table></figure>
+
+<p>测试接口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.245.132:8082/t/getConfig</span><br></pre></td></tr></table></figure>
+
+<p>你也可以使用curl命令请求：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET http://192.168.245.132:8082/t/getConfig</span><br></pre></td></tr></table></figure>
+
+<p>得到输出结果：</p>
+<p>getConfig&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;发现：配置&gt;&gt;&gt;服务名称：nacos服务</p>
+<p>查看日志验证：</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/30/pp2d6nU.png"></p>
+<p>验证成功，getConfig日志打印出来了。</p>
+<h3 id="Nacos监控（控制台）"><a href="#Nacos监控（控制台）" class="headerlink" title="Nacos监控（控制台）"></a>Nacos监控（控制台）</h3><p>官方文档比我演示介绍要更详细，如果进一步使用，请参考官方文档（运维指南）。</p>
+<p><strong>控制台手册</strong>：<span class="exturl" data-url="aHR0cHM6Ly9uYWNvcy5pby96aC1jbi9kb2NzL2NvbnNvbGUtZ3VpZGUuaHRtbA==">https://nacos.io/zh-cn/docs/console-guide.html<i class="fa fa-external-link-alt"></i></span></p>
+<h4 id="基本功能演示"><a href="#基本功能演示" class="headerlink" title="基本功能演示"></a>基本功能演示</h4><p><strong>nacos 功能比较丰富</strong>：</p>
+<ul>
+<li>配置管理：动态更新配置、查看历史版本、监听查询；</li>
+<li>服务管理：查看、创建服务、查看订阅者列表；</li>
+<li>权限列表：管理用户、角色、权限配置；</li>
+<li>命名空间：默认保留空间（public）</li>
+<li>集群管理：管理各个节点。</li>
+</ul>
+<p><strong>登录mysql，切换到nacos数据库</strong>，查看原始users表只有一条数据，存储nacos用户。</p>
+<p>此处只演示一下连接上MySQL数据库后，在控制台左侧菜单栏找到权限控制，新建用户。</p>
+<p><strong>示例如下</strong>：</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/22/ppdIKPA.png"></p>
+<h4 id="验证数据库表"><a href="#验证数据库表" class="headerlink" title="验证数据库表"></a>验证数据库表</h4><p><strong>验证users表</strong>，发现多了一条数据，nacos_test成功存入到数据库，至此MySQL与nacos联动完成。</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/22/ppdI3Kf.png"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> users\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">username: nacos</span><br><span class="line">password: $<span class="number">2</span>a$<span class="number">10</span>$EuWPZHzz32dJN7jexM34MOeYirDdFAZm2kuWj7VEOJhhZkDrxfvUu</span><br><span class="line"> enabled: <span class="number">1</span></span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">2.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">username: nacos_test</span><br><span class="line">password: $<span class="number">2</span>a$<span class="number">10</span>$<span class="number">5</span>F3NOcu2TFgdrBH0Av2iUuxbV9qBDihjmRt06163y5FTvPrErkWKS</span><br><span class="line"> enabled: <span class="number">1</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>新增配置，对照数据库表</strong></p>
+<p><img data-src="https://s1.ax1x.com/2023/03/22/ppdI8r8.png"></p>
+<ul>
+<li>新增配置会保存在：nacos_config</li>
+<li>历史配置会保存在：his_config_info</li>
+<li>用户相关配置保存在：users</li>
+<li>角色相关配置保存在：roles</li>
+<li>权限相关配置保存在：permissions</li>
+</ul>
+<p>监控方法可以配合prometheus以及grafana使用。关于nacos更多用法，目前还在摸索中。</p>
+<p>下面这张流程图思路，可供参考：</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/23/ppwyHDs.png" alt="ppwyHDs"></p>
+<p><strong>参考资料</strong>：</p>
+<ol>
+<li>nacos2.x官方文档：<span class="exturl" data-url="aHR0cHM6Ly9uYWNvcy5pby96aC1jbi9kb2NzL3YyL3F1aWNrc3RhcnQvcXVpY2stc3RhcnQuaHRtbA==">https://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html<i class="fa fa-external-link-alt"></i></span></li>
+<li>nacos2.x github issues：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25hY29zLWdyb3VwL25hY29zLWRvY2tlci9pc3N1ZXMvMjUx">https://github.com/nacos-group/nacos-docker/issues/251<i class="fa fa-external-link-alt"></i></span></li>
+<li>MySQL8.0.x官方文档第6章节Security：<span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vOC4wL2VuL2FjY2Vzcy1jb250cm9sLmh0bWw=">https://dev.mysql.com/doc/refman/8.0/en/access-control.html<i class="fa fa-external-link-alt"></i></span></li>
+</ol>
+<p>最后，希望对你的工作有所帮助。如果觉得写得还不错，可以点个小小的赞。</p>
+<p>以上总结仅供参考。</p>
+<p>——END——</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2023/03/30/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8ENacos%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1/" title="MySQL数据库与Nacos搭建监控服务">https://blog.cnwangk.top/2023/03/30/MySQL数据库与Nacos搭建监控服务/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/nacos/" rel="tag"><i class="fa fa-tag"></i> nacos</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/26/npm%E5%88%87%E6%8D%A2%E9%95%9C%E5%83%8F%E6%BA%90/" rel="prev" title="npm切换镜像源">
+                  <i class="fa fa-angle-left"></i> npm切换镜像源
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/03/Linux-CentOS-Stream-9%E4%BD%BF%E7%94%A8htop%E5%91%BD%E4%BB%A4%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="next" title="Linux-CentOS-Stream-9使用htop命令监控服务器">
+                  Linux-CentOS-Stream-9使用htop命令监控服务器 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/03/30/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8ENacos%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

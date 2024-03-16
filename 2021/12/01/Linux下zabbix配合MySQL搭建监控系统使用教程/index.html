@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言本文主要介绍zabbix4.0在Redhat7系列的入门环境搭建，并记录搭建过程中的注意事项，偏向于实战。 距离我上次使用zabbix大概在3个月之前。当时也工作需要，公司用到了大数据看板需要配合zabbix做后台监控运维。 看过我之前发的文章，其实就会发现我写的基本上都是些与linux服务器相关的。基本上所有的环境都是Windows配合虚拟机使用linux发行版，比如Centos、Ubunt">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Linux下zabbix配合MySQL搭建监控系统使用教程">
+<meta property="og:url" content="https://blog.cnwangk.top/2021/12/01/Linux%E4%B8%8Bzabbix%E9%85%8D%E5%90%88MySQL%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="前言本文主要介绍zabbix4.0在Redhat7系列的入门环境搭建，并记录搭建过程中的注意事项，偏向于实战。 距离我上次使用zabbix大概在3个月之前。当时也工作需要，公司用到了大数据看板需要配合zabbix做后台监控运维。 看过我之前发的文章，其实就会发现我写的基本上都是些与linux服务器相关的。基本上所有的环境都是Windows配合虚拟机使用linux发行版，比如Centos、Ubunt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/501ff82854deda0e36a2fc8a7037bd00.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/6fd248827735f19507c4c13bd224aa18.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/9839c3a2f097b673ae12de53e21f0303.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/8730cb84cb3917bd31bc1e2fc1ea6d56.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/607b526c24707b914f4a42a96a1e70c8.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/c6788728ad13afddc57de9f964f609ff.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/e10f5548fa36e99bc35896aac49ecf4d.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/7b6055ee91822517b6fe9bcac7b7ef2c.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/8b9362a0069e169794e9e38ea2a13f0a.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/55caf0e66bff76e24b0f132508adc85c.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/bc3f34296e06f49929f05a17f1537077.png">
+<meta property="article:published_time" content="2021-11-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-28T13:36:51.356Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="zabbix">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/501ff82854deda0e36a2fc8a7037bd00.png">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2021/12/01/Linux%E4%B8%8Bzabbix%E9%85%8D%E5%90%88MySQL%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2021/12/01/Linux%E4%B8%8Bzabbix%E9%85%8D%E5%90%88MySQL%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/","path":"2021/12/01/Linux下zabbix配合MySQL搭建监控系统使用教程/","title":"Linux下zabbix配合MySQL搭建监控系统使用教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux下zabbix配合MySQL搭建监控系统使用教程 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85zabbix%E5%89%8D%E7%9A%84%E5%87%86%E5%A4%87"><span class="nav-number">2.1.</span> <span class="nav-text">一、安装zabbix前的准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E8%BD%AF%E4%BB%B6%E7%8E%AF%E5%A2%83"><span class="nav-number">2.1.1.</span> <span class="nav-text">1、软件环境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1%E3%80%81linux%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">1.1、linux服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E7%8E%AF%E5%A2%83"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">1.2、数据库环境</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BF%AE%E6%94%B9%E9%98%B2%E7%81%AB%E5%A2%99%E8%A7%84%E5%88%99"><span class="nav-number">2.2.</span> <span class="nav-text">二、修改防火墙规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%B8%B4%E6%97%B6%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">2.2.1.</span> <span class="nav-text">1、临时关闭防火墙</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%8A%A0%E5%85%A5zabbix%E5%88%B0%E9%98%B2%E7%81%AB%E5%A2%99%E8%A7%84%E5%88%99"><span class="nav-number">2.2.2.</span> <span class="nav-text">2、加入zabbix到防火墙规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%89%E8%A3%85zabbix"><span class="nav-number">2.3.</span> <span class="nav-text">三、安装zabbix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81zabbix-server%E6%9C%8D%E5%8A%A1%E5%AE%89%E8%A3%85"><span class="nav-number">2.3.1.</span> <span class="nav-text">1、zabbix-server服务安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81zabbix-proxy%E5%AE%89%E8%A3%85"><span class="nav-number">2.3.2.</span> <span class="nav-text">2、zabbix-proxy安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81zabbix-agent%E6%9C%8D%E5%8A%A1%E5%AE%89%E8%A3%85"><span class="nav-number">2.3.3.</span> <span class="nav-text">3、zabbix-agent服务安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%88%9B%E5%BB%BA%E7%BB%84%E4%B8%8E%E7%94%A8%E6%88%B7"><span class="nav-number">2.3.4.</span> <span class="nav-text">4、创建组与用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81selinux%E9%85%8D%E7%BD%AE-Redhat7%E7%B3%BB%E5%88%97"><span class="nav-number">2.3.5.</span> <span class="nav-text">5、selinux配置(Redhat7系列)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81zabbix%E5%89%8D%E7%AB%AF"><span class="nav-number">2.4.</span> <span class="nav-text">四、zabbix前端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E7%99%BB%E5%BD%95zabbix%E5%89%8D%E7%AB%AF"><span class="nav-number">2.4.1.</span> <span class="nav-text">1、登录zabbix前端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E7%95%8C%E9%9D%A2%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.4.2.</span> <span class="nav-text">2、界面介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E9%BB%98%E8%AE%A4%E7%AE%A1%E7%90%86%E5%91%98%E7%95%8C%E9%9D%A2"><span class="nav-number">2.4.3.</span> <span class="nav-text">1、默认管理员界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%99%AE%E9%80%9A%E7%AE%A1%E7%90%86%E5%91%98%E7%95%8C%E9%9D%A2"><span class="nav-number">2.4.4.</span> <span class="nav-text">2、普通管理员界面</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2021/12/01/Linux%E4%B8%8Bzabbix%E9%85%8D%E5%90%88MySQL%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux下zabbix配合MySQL搭建监控系统使用教程 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux下zabbix配合MySQL搭建监控系统使用教程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-01 00:00:00" itemprop="dateCreated datePublished" datetime="2021-12-01T00:00:00+08:00">2021-12-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-28 21:36:51" itemprop="dateModified" datetime="2023-05-28T21:36:51+08:00">2023-05-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">开发运维</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文主要介绍zabbix4.0在Redhat7系列的入门环境搭建，并记录搭建过程中的注意事项，偏向于实战。</p>
+<p>距离我上次使用zabbix大概在3个月之前。当时也工作需要，公司用到了大数据看板需要配合zabbix做后台监控运维。</p>
+<p>看过我之前发的文章，其实就会发现我写的基本上都是些与linux服务器相关的。基本上所有的环境都是Windows配合虚拟机使用linux发行版，比如Centos、Ubuntu还有国产化的银河麒麟以及统信UOS。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/501ff82854deda0e36a2fc8a7037bd00.png"></p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="一、安装zabbix前的准备"><a href="#一、安装zabbix前的准备" class="headerlink" title="一、安装zabbix前的准备"></a>一、安装zabbix前的准备</h2><h3 id="1、软件环境"><a href="#1、软件环境" class="headerlink" title="1、软件环境"></a>1、软件环境</h3><h4 id="1-1、linux服务器"><a href="#1-1、linux服务器" class="headerlink" title="1.1、linux服务器"></a>1.1、linux服务器</h4><p>推荐使用虚拟机+linux镜像，其次使用云服务器。我个人倾向Centos7或者Centos6，或者使用Ubuntu一样可行，选择自己熟悉的一款。</p>
+<h4 id="1-2、数据库环境"><a href="#1-2、数据库环境" class="headerlink" title="1.2、数据库环境"></a>1.2、数据库环境</h4><p>推荐安装MySQL5.6（MariaDB也行）或者以上版本。MySQL的安装参考网上教程，这里不做过多介绍。</p>
+<p><strong>可以参考菜鸟教程</strong>：<span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS9teXNxbC9teXNxbC1pbnN0YWxsLmh0bWw=">https://www.runoob.com/mysql/mysql-install.html<i class="fa fa-external-link-alt"></i></span></p>
+<p>MariaDB是MySQL的开源社区版，由MySQL创始人开发维护，所以测试安装MariaDB也是一样的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装MySQL</span></span><br><span class="line">wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm</span><br><span class="line">rpm -ivh mysql-community-release-el7-5.noarch.rpm</span><br><span class="line">yum update</span><br><span class="line">yum install mysql-server</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用yum命令安装MariaDB</span></span><br><span class="line">yum install mariadb-server mariadb </span><br><span class="line"></span><br><span class="line">MariaDB数据库的相关操作命令：</span><br><span class="line">(注意：centos6版本可用service命令替换systemctl)</span><br><span class="line"><span class="comment">#启动MariaDB</span></span><br><span class="line">systemctl start mariadb </span><br><span class="line"></span><br><span class="line"><span class="comment">#停止MariaDB </span></span><br><span class="line">systemctl stop mariadb </span><br><span class="line"></span><br><span class="line"><span class="comment">#重启MariaDB </span></span><br><span class="line">systemctl restart mariadb </span><br><span class="line"></span><br><span class="line"><span class="comment">#设置开机启动 </span></span><br><span class="line">systemctl <span class="built_in">enable</span> mariadb  </span><br></pre></td></tr></table></figure>
+
+<p><strong>登录命令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
+
+<p><strong>开放远程连接限制</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED BY <span class="string">&#x27;123456&#x27;</span> WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+
+<p><strong>修改用户密码</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> password <span class="keyword">for</span> root@localhost=password(<span class="string">&#x27;123456&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="二、修改防火墙规则"><a href="#二、修改防火墙规则" class="headerlink" title="二、修改防火墙规则"></a>二、修改防火墙规则</h2><p>既然使用了Redhat7系列，那就习惯使用systemd环境。</p>
+<h3 id="1、临时关闭防火墙"><a href="#1、临时关闭防火墙" class="headerlink" title="1、临时关闭防火墙"></a>1、临时关闭防火墙</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop iptables.service </span><br></pre></td></tr></table></figure>
+
+<h3 id="2、加入zabbix到防火墙规则"><a href="#2、加入zabbix到防火墙规则" class="headerlink" title="2、加入zabbix到防火墙规则"></a>2、加入zabbix到防火墙规则</h3><p>加入zabbix-server与zabbix-agent规则时，<strong>此时是在你已经安装好了zabbix服务为前提</strong>。</p>
+<p>通过命令查看zabbix服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看服务</span></span><br><span class="line">ps -aux | grep zabbix</span><br><span class="line">ps -aux | grep zabbix_server</span><br><span class="line">ps -aux | grep zabbix_agent</span><br><span class="line"><span class="comment">#或者</span></span><br><span class="line">ps -ef | grep zabbix</span><br><span class="line"><span class="comment">#查看端口</span></span><br><span class="line">netstat -tlunp | grep zabbix</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>说明</strong>：<code>--permanent</code>参数代表永久生效，不熟悉的命令，<strong>建议使用</strong><code>firewall-cmd --help</code>查看<strong>帮助命令</strong>。</p>
+<p>2.1、永久生效，加入zabbix-server与zabbix-agent</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-service=zabbix-agent --permanent </span><br><span class="line">firewall-cmd --zone=public --add-service=zabbix-server --permanent </span><br></pre></td></tr></table></figure>
+
+<p>2.2、开放80端口，zabbix前端访问默认使用80端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent </span><br></pre></td></tr></table></figure>
+
+<p>2.3、额外开放10050与10051，监控使用到</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=10050/tcp --permanent </span><br><span class="line">firewall-cmd --zone=public --add-port=10051/tcp --permanent </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="三、安装zabbix"><a href="#三、安装zabbix" class="headerlink" title="三、安装zabbix"></a>三、安装zabbix</h2><p>本人测试环境是Redhat系列Centos7.3配合MySQL5.6使用搭建zabbix监控系统。下面是官方文档，同样有中文版，如下：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemFiYml4LmNvbS9kb2N1bWVudGF0aW9uLzQuMC96aC9tYW51YWwvaW5zdGFsbGF0aW9uL2luc3RhbGxfZnJvbV9wYWNrYWdlcy9yaGVsX2NlbnRvcw==">https://www.zabbix.com/documentation/4.0/zh/manual/installation/install_from_packages&#x2F;rhel_centos<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="1、zabbix-server服务安装"><a href="#1、zabbix-server服务安装" class="headerlink" title="1、zabbix-server服务安装"></a>1、zabbix-server服务安装</h3><p>1.1、准备好官方提供的yum源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#编辑</span></span><br><span class="line">vim /etc/yum.repos.d/zabbix.repo</span><br><span class="line"><span class="comment">#加入如下内容</span></span><br><span class="line">[zabbix]</span><br><span class="line">name=Zabbix Official Repository - <span class="variable">$basearch</span></span><br><span class="line">baseurl=http://repo.zabbix.com/zabbix/4.0/rhel/7/<span class="variable">$basearch</span>/</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX-A14FE591</span><br><span class="line"></span><br><span class="line">[zabbix-non-supported]</span><br><span class="line">name=Zabbix Official Repository non-supported - <span class="variable">$basearch</span></span><br><span class="line">baseurl=http://repo.zabbix.com/non-supported/rhel/7/<span class="variable">$basearch</span>/</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ZABBIX</span><br><span class="line">gpgcheck=1</span><br></pre></td></tr></table></figure>
+
+
+
+<p> <strong>1.2、安装zabbix软件仓库</strong></p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh http://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装额外基础包</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager --<span class="built_in">enable</span> rhel-7-server-optional-rpms</span><br></pre></td></tr></table></figure>
+
+<p><strong>1.3、安装zabbix-server</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install zabbix-server-mysql</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、zabbix-proxy安装"><a href="#2、zabbix-proxy安装" class="headerlink" title="2、zabbix-proxy安装"></a>2、zabbix-proxy安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install zabbix-proxy-mysql</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装 Zabbix 前端</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install zabbix-web-mysql</span><br></pre></td></tr></table></figure>
+
+<p><strong>导入数据</strong>（MySQL数据库，事先创建好zabbix用户）</p>
+<p>注意了：一般安装第一个create.sql.gz就行，遇特殊需求安装第二个schema.sql.gz，安装时（zabbix）库名不要重复。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#对于zabbix-server</span></span><br><span class="line">zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p zabbix</span><br><span class="line"><span class="comment">#对于zabbix-proxy</span></span><br><span class="line">zcat /usr/share/doc/zabbix-proxy-mysql*/schema.sql.gz | mysql -uzabbix -p zabbix</span><br></pre></td></tr></table></figure>
+
+<p><strong>Zabbix server&#x2F;proxy 配置数据库</strong></p>
+<p>编辑zabbix_server.conf配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/zabbix/zabbix_server.conf</span><br></pre></td></tr></table></figure>
+
+<p>加入如下配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Zabbix</span></span><br><span class="line">DBHost=localhost</span><br><span class="line">DBName=zabbix</span><br><span class="line">DBUser=zabbix</span><br><span class="line">DBPassword=123456</span><br></pre></td></tr></table></figure>
+
+<p><strong>zabbix-server进程启用</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设置开机自启</span></span><br><span class="line">systemctl <span class="built_in">enable</span> zabbix-server</span><br><span class="line"><span class="comment">#启动服务</span></span><br><span class="line">systemctl start zabbix-server</span><br><span class="line"><span class="comment">#关闭服</span></span><br><span class="line">systemctl stop zabbix-server</span><br><span class="line"><span class="comment">#禁止开机启动</span></span><br><span class="line">systemctl <span class="built_in">disable</span> zabbix-server</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3、zabbix-agent服务安装"><a href="#3、zabbix-agent服务安装" class="headerlink" title="3、zabbix-agent服务安装"></a>3、zabbix-agent服务安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装zabbix-agent</span></span><br><span class="line">yum install zabbix-agent</span><br><span class="line"><span class="comment">#设置开机自启</span></span><br><span class="line">systemctl <span class="built_in">enable</span> zabbix-agent</span><br><span class="line"><span class="comment">#启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> zabbix-agent</span><br></pre></td></tr></table></figure>
+
+<p>同时启动用<code>zabbix-server zabbix-agent httpd</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> zabbix-server zabbix-agent httpd</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、创建组与用户"><a href="#4、创建组与用户" class="headerlink" title="4、创建组与用户"></a>4、创建组与用户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#组</span></span><br><span class="line">groupadd --system zabbix</span><br><span class="line"><span class="comment">#用户</span></span><br><span class="line">useradd --system -g zabbix -d /usr/lib/zabbix -s /sbin/nologin -c <span class="string">&quot;Zabbix 监控系统&quot;</span> zabbix</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、selinux配置-Redhat7系列"><a href="#5、selinux配置-Redhat7系列" class="headerlink" title="5、selinux配置(Redhat7系列)"></a>5、selinux配置(Redhat7系列)</h3><p>解除selinux对zabbix的限制</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setsebool -P httpd_can_connect_zabbix on</span><br><span class="line"><span class="comment">#如果数据库可以通过网络访问（在 PostgreSQL 情况下包括 &#x27;localhost&#x27;)，您也需要允许 Zabbix 前端连接到数据库：</span></span><br><span class="line">setsebool -P httpd_can_network_connect_db on</span><br></pre></td></tr></table></figure>
+
+<p>RHEL 7 之前的版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setsebool -P httpd_can_network_connect on</span><br><span class="line">setsebool -P zabbix_can_network on</span><br></pre></td></tr></table></figure>
+
+<p>待前端和 SELinux 配置完成后，<strong>需要重新启动 Apache web 服务器</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart httpd</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装完zabbix后</strong>，记得看<strong>第二步的防火墙规则</strong>，否则会影响前端的访问。</p>
+<h2 id="四、zabbix前端"><a href="#四、zabbix前端" class="headerlink" title="四、zabbix前端"></a>四、zabbix前端</h2><h3 id="1、登录zabbix前端"><a href="#1、登录zabbix前端" class="headerlink" title="1、登录zabbix前端"></a>1、登录zabbix前端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#IP地址换成你自己的本机或者远程IP</span></span><br><span class="line">http://192.168.245.131/zabbix</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：默认用户名是Admin，密码是zabbix。</p>
+<h3 id="2、界面介绍"><a href="#2、界面介绍" class="headerlink" title="2、界面介绍"></a>2、界面介绍</h3><p>首先建议将语言调成自己熟悉的，比如中文简体。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/6fd248827735f19507c4c13bd224aa18.png"></p>
+<h3 id="1、默认管理员界面"><a href="#1、默认管理员界面" class="headerlink" title="1、默认管理员界面"></a>1、默认管理员界面</h3><p>1.1、监测模块功能列表展示</p>
+<ul>
+<li>仪表板、问题、概览、web监测、最新数据</li>
+<li>图形、聚合图形、拓扑图、自动发现、服务</li>
+</ul>
+<p>其实，配置好后，用的最多的还是监控模块的仪表板功能，通过添加图形化界面，实时监控动态。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/9839c3a2f097b673ae12de53e21f0303.png"></p>
+<p>1.2、资产记录模块功能列表</p>
+<ul>
+<li>概览</li>
+<li>主机</li>
+</ul>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/8730cb84cb3917bd31bc1e2fc1ea6d56.png"></p>
+<p>1.3、报表模块功能列表</p>
+<ul>
+<li>系统信息、可用性报表</li>
+<li>触发器Top 100</li>
+<li>审计、动作日志、警报</li>
+</ul>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/607b526c24707b914f4a42a96a1e70c8.png"></p>
+<p>1.4、配置模块功能列表</p>
+<ul>
+<li>主机群组、模板、主机、动作</li>
+<li>关联项事件、自动发现、服务</li>
+</ul>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/c6788728ad13afddc57de9f964f609ff.png"></p>
+<p>1.5、管理模块功能列表</p>
+<ul>
+<li>一般、agent代理程序、认证、用户群组</li>
+<li>用户、报警没接类型、脚本、队列</li>
+</ul>
+<p><strong>值得注意的是，用户功能模块，可以配置多个用户，不同用户权限不一样</strong>。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/e10f5548fa36e99bc35896aac49ecf4d.png"></p>
+<p>1.6、切换用户，<strong>不同的用户（权限）看到的界面也会有所不同</strong>，如下会介绍普通管理员看到的界面。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/7b6055ee91822517b6fe9bcac7b7ef2c.png"></p>
+<h3 id="2、普通管理员界面"><a href="#2、普通管理员界面" class="headerlink" title="2、普通管理员界面"></a>2、普通管理员界面</h3><p>2.1、监测模块功能列表</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/8b9362a0069e169794e9e38ea2a13f0a.png"></p>
+<p>2.2、资产记录模块功能列表</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/55caf0e66bff76e24b0f132508adc85c.png"></p>
+<p>2.3、报表模块功能列表</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/bc3f34296e06f49929f05a17f1537077.png"></p>
+<p>此时，在进行对比，你会发现普通管理员监控到的界面功能相对比较少，大的模块也少了两个。</p>
+<p>以上就是本文此次对zabbix监控系统入门做的一个简单总结。</p>
+<p>当然，如果配合Java等后端开发语言进行使用，需要安装支撑Java的网关服务，官网也有介绍。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2021/12/01/Linux%E4%B8%8Bzabbix%E9%85%8D%E5%90%88MySQL%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="Linux下zabbix配合MySQL搭建监控系统使用教程">https://blog.cnwangk.top/2021/12/01/Linux下zabbix配合MySQL搭建监控系统使用教程/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/zabbix/" rel="tag"><i class="fa fa-tag"></i> zabbix</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/30/CentOS7%20Linux%20%E6%90%AD%E5%BB%BAMySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" rel="prev" title="CentOS7 Linux 搭建MySQL主从复制">
+                  <i class="fa fa-angle-left"></i> CentOS7 Linux 搭建MySQL主从复制
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/12/15/MySQL%E5%92%8COracle%E4%B8%BB%E6%B5%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E5%8D%83%E4%B8%87%E7%BA%A7%E5%88%AB%E6%95%B0%E6%8D%AE%E5%A4%A7%E8%A1%A8/" rel="next" title="MySQL和Oracle主流数据库如何生成千万级别数据大表">
+                  MySQL和Oracle主流数据库如何生成千万级别数据大表 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2021/12/01/Linux%E4%B8%8Bzabbix%E9%85%8D%E5%90%88MySQL%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

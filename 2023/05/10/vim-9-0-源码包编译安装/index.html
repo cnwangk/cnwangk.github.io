@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="当你看到本篇教程时，vim 可能已经更新到了 vim 9.1.x 或者更高版本。 在上一篇 《vim入门实战》 篇，我并没有介绍 Linux 平台源码包形式安装以及基础运用。  本篇教程，以源码包形式部署vim 9.0，演示 Rocky Linux 9 平台安装 vim 9.0.1523，目前最新版为vim 9.1.x。 如下演示均以 root 身份进行。为了安全考虑，默认禁用 root 用户远程">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="vim 9.0 源码包编译安装">
+<meta property="og:url" content="https://blog.cnwangk.top/2023/05/10/vim-9-0-%E6%BA%90%E7%A0%81%E5%8C%85%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="当你看到本篇教程时，vim 可能已经更新到了 vim 9.1.x 或者更高版本。 在上一篇 《vim入门实战》 篇，我并没有介绍 Linux 平台源码包形式安装以及基础运用。  本篇教程，以源码包形式部署vim 9.0，演示 Rocky Linux 9 平台安装 vim 9.0.1523，目前最新版为vim 9.1.x。 如下演示均以 root 身份进行。为了安全考虑，默认禁用 root 用户远程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2023/02/26/pp9CYh6.jpg">
+<meta property="article:published_time" content="2023-05-10T14:45:00.000Z">
+<meta property="article:modified_time" content="2024-02-15T13:55:42.858Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="vim">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/02/26/pp9CYh6.jpg">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2023/05/10/vim-9-0-%E6%BA%90%E7%A0%81%E5%8C%85%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2023/05/10/vim-9-0-%E6%BA%90%E7%A0%81%E5%8C%85%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/","path":"2023/05/10/vim-9-0-源码包编译安装/","title":"vim 9.0 源码包编译安装"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>vim 9.0 源码包编译安装 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#vim-9-0-%E9%83%A8%E7%BD%B2%E5%87%86%E5%A4%87%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">vim 9.0 部署准备环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vim-9-0-%E6%BA%90%E7%A0%81%E5%8C%85%E6%AD%A3%E5%BC%8F%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">vim 9.0  源码包正式部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vim-9-0-%E5%88%9D%E4%BD%93%E9%AA%8C"><span class="nav-number">3.</span> <span class="nav-text">vim 9.0 初体验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plug-vim-%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">plug-vim 安装插件</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/02/26/vim%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/" rel="bookmark">
+        <time class="popular-posts-time">2023-02-26</time>
+        <br>
+      vim入门实战
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2023/05/10/vim-9-0-%E6%BA%90%E7%A0%81%E5%8C%85%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="vim 9.0 源码包编译安装 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vim 9.0 源码包编译安装
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-10 22:45:00" itemprop="dateCreated datePublished" datetime="2023-05-10T22:45:00+08:00">2023-05-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-02-15 21:55:42" itemprop="dateModified" datetime="2024-02-15T21:55:42+08:00">2024-02-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>当你看到本篇教程时，vim 可能已经更新到了 vim <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ZpbS92aW0vdGFncw==">9.1.x<i class="fa fa-external-link-alt"></i></span> 或者更高版本。</p>
+<p>在上一篇 《vim入门实战》 篇，我并没有介绍 Linux 平台源码包形式安装以及基础运用。 </p>
+<p>本篇教程，以源码包形式部署vim 9.0，演示 Rocky Linux 9 平台安装 vim 9.0.1523，目前最新版为vim <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ZpbS92aW0vdGFncw==">9.1.x<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>如下演示均以 root 身份进行。为了安全考虑，默认禁用 root 用户远程ssh登录权限，以普通用户作为跳板切换为 root 用户。</p>
+<span id="more"></span>
+
+<h3 id="vim-9-0-部署准备环境"><a href="#vim-9-0-部署准备环境" class="headerlink" title="vim 9.0 部署准备环境"></a>vim 9.0 部署准备环境</h3><p>打包好的 Windows 和 Linux 平台 vim、nvim 安装包、PDF教程以及相关插件。</p>
+<p>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMVFXeVRuMUgyMEk3YzNLQkthWEtYUUE/cHdkPTg4ODg=">https://pan.baidu.com/s/1QWyTn1H20I7c3KBKaXKXQA?pwd=8888<i class="fa fa-external-link-alt"></i></span><br>提取码: 8888</p>
+<hr>
+<p>借助终端管理工具，通过 ssh 登录到终端管理界面（普通用户）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS D:\work&gt; ssh wzgy@192.168.245.133           </span><br><span class="line">wzgy@192.168.245.133<span class="string">&#x27;s password:</span></span><br></pre></td></tr></table></figure>
+<p>切换为 root 用户：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su root</span><br></pre></td></tr></table></figure>
+
+
+<p>获取 vim 9.0 源码包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/vim/vim/archive/refs/tags/v9.0.1523.tar.gz</span><br></pre></td></tr></table></figure>
+<p>如果没有安装 wget 工具，Rocky Linux 9 可以执行如下命令进行安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf -y install wget</span><br></pre></td></tr></table></figure>
+
+
+<p>安装前，确认环境，是否安装 make gcc cmake：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost soft]<span class="comment"># dnf -y install make gcc cmake</span></span><br></pre></td></tr></table></figure>
+<p>根据实际情况而定，可能有的源码包设定需要 cmake 编译。</p>
+<p>减少干扰，卸载 Rocky Linux 9 自带的 vim8：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost soft]<span class="comment"># dnf remove vim</span></span><br></pre></td></tr></table></figure>
+<p><strong>友情提示</strong>：实际工作中，你的硬件（CPU、内存、硬盘）不是无限大。以二进制包、源码包、rpm、deb包等等形式安装软件，保留其中一种即可。减少服务器资源争抢，便于管理维护。</p>
+<h3 id="vim-9-0-源码包正式部署"><a href="#vim-9-0-源码包正式部署" class="headerlink" title="vim 9.0  源码包正式部署"></a>vim 9.0  源码包正式部署</h3><p>正式部署vim9，首先解压 vim：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost soft]<span class="comment"># tar -zxvf v9.0.1523.tar.gz</span></span><br></pre></td></tr></table></figure>
+
+<p>进入 src 目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost soft]<span class="comment"># cd vim-9.0.1523/src/</span></span><br></pre></td></tr></table></figure>
+
+<p>编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost src]<span class="comment"># make</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>注意事项</strong>：看到提示别慌，仔细发现提醒需要  ncurses 依赖。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">checking <span class="keyword">for</span> tgetent()... configure: error: NOT FOUND!</span><br><span class="line">      You need to install a terminal library; <span class="keyword">for</span> example ncurses.</span><br><span class="line">      On Linux that would be the libncurses-dev package.</span><br><span class="line">      Or specify the name of the library with --with-tlib.</span><br><span class="line">Makefile:291: auto/config.mk: 没有那个文件或目录</span><br><span class="line">make: *** [Makefile:1972：auto/config.mk] 错误 1</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在 Rocky Linux 9.1 （RHEL9 系列应该均适用）中可以执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf -y install ncurses</span><br></pre></td></tr></table></figure>
+
+<p>如果提示：<br>软件包 ncurses-6.2-8.20210508.el9.x86_64 已安装。<br>依赖关系解决。<br>无需任何处理。<br>完毕！</p>
+<p><strong>再次执行</strong> dnf -y install ncurses-devel-6.2-8.20210508.el9：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf -y install ncurses-devel-6.2-8.20210508.el9</span><br></pre></td></tr></table></figure>
+
+<p>会继续安装如下两个库文件：<br>ncurses-c++-libs-6.2-8.20210508.el9.x86_64.rpm<br>ncurses-devel-6.2-8.20210508.el9.x86_64.rpm</p>
+<p>可能你会有疑问，实际过程中，如何判断安装包是哪一个 Linux 具体发行版本？其实可以根据安装包命名规则区分，可以看到以上安装包中都含有 el9 ，代表所处 Linux 发行版平台为 RHEL9 系列。</p>
+<p>继续编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost src]<span class="comment"># make</span></span><br></pre></td></tr></table></figure>
+
+<p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p>如果直接执行 vim：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim</span><br></pre></td></tr></table></figure>
+<p>输出结果：会进入一个含有 vim 当前版本以及维护人的信息。当然还含有公益广告，开源软件可以自行选择删除或者保留。</p>
+<h3 id="vim-9-0-初体验"><a href="#vim-9-0-初体验" class="headerlink" title="vim 9.0 初体验"></a>vim 9.0 初体验</h3><p>执行 vim file.txt 进行编辑，输入一段内容 hello vim 9.0.1523: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim test.txt</span><br></pre></td></tr></table></figure>
+<p>按下快捷键：i ，插入如下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">*</span><br><span class="line">**</span><br><span class="line">***</span><br><span class="line">*****</span><br><span class="line">*******</span><br><span class="line">*************************</span><br><span class="line">采用源码包形式编译安装！  </span><br><span class="line">hello vim 9.0.1523      </span><br><span class="line">*************************</span><br><span class="line">*******</span><br><span class="line">*****</span><br><span class="line">***</span><br><span class="line">**</span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+
+<p>test.txt 代表你需要编辑的文件。</p>
+<p>使用快捷键： a i o 即可插入内容，使用 :wq 进行保存并退出当前文件。</p>
+<p>终端展示输出文件 test.txt 内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> test.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果你有足够的英语词汇量，使用 vim 自带帮助命令效率会很高。</p>
+<p>继续编辑 test.txt 文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim test.txt</span><br></pre></td></tr></table></figure>
+<p>示例使用 vim 帮助命令，含义直接写入代码块注释中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:<span class="built_in">help</span>  		<span class="comment">#查看全局帮助命令文档</span></span><br><span class="line">:<span class="built_in">help</span> vs 	<span class="comment">#查看局部水平分屏命令文档</span></span><br><span class="line">:<span class="built_in">help</span> sp 	<span class="comment">#查看局部垂直分屏命令文档</span></span><br></pre></td></tr></table></figure>
+<p>关闭所有窗口，强制（加上!符号）不保存退出，使用快捷键： :qa!，保存退出所有窗口： :wqa 。<br>更多 vim 快捷键使用方法，可以在公众号或者站内搜索：vim入门实战。</p>
+<p>默认安装后相关配置文件路径：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost src]<span class="comment"># ls /usr/local/share/</span></span><br><span class="line">applications  info  man  vim</span><br></pre></td></tr></table></figure>
+
+<p>默认 vim 脚本文件路径：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span>  /usr/local/bin/vim</span><br></pre></td></tr></table></figure>
+<p>vim 脚本会去寻找 <code>defaults.vim</code>，默认所在路径：<code>/usr/local/share/vim/vim90/defaults.vim</code>，也就是源码包经过编译、安装后生成的文件。</p>
+<h3 id="plug-vim-安装插件"><a href="#plug-vim-安装插件" class="headerlink" title="plug-vim 安装插件"></a>plug-vim 安装插件</h3><p>初次使用，插件不在多，在于对你的操作有所提升。可以一步步尝试安装插件，对比哪些对你的日常工作有帮助。</p>
+<p>查看 Windows 平台 git 环境自带 vim 版本： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git --version &amp;&amp; vim --version | grep VIM</span><br><span class="line">git version 2.41.0.windows.1</span><br><span class="line">VIM - Vi IMproved 9.0 (2022 Jun 28, 编译于 Mar 13 2023 19:52:41)</span><br><span class="line">       defaults 文件: <span class="string">&quot;<span class="variable">$VIMRUNTIME</span>/defaults.vim&quot;</span></span><br><span class="line">         <span class="variable">$VIM</span> 预设值: <span class="string">&quot;/etc&quot;</span></span><br><span class="line">  <span class="variable">$VIMRUNTIME</span> 预设值: <span class="string">&quot;/usr/share/vim/vim90&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2p1bmVndW5uL3ZpbS1wbHVn">vim-plug<i class="fa fa-external-link-alt"></i></span> ：用于管理插件。比如我在 Windows 平台使用的 git 环境自带 vim，复制下载的 <code>plug.vim</code> 到<code>D:\software\Git\usr\share\vim\vim90\autoload\</code> 路径下即可。 </li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ByZXNlcnZpbS9uZXJkdHJlZQ==">NERDTree<i class="fa fa-external-link-alt"></i></span> ：用于增强目录树插件。</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3ByZXNlcnZpbS90YWdiYXI=">TagBar<i class="fa fa-external-link-alt"></i></span> ：用于显示标签插件（需要 ctags 支撑，Windows平台将 ctags.exe 文件置于vim根目录同级即可使用） 例如：个人解压后 gvim 路径：<code>D:\gvim_9.0.1075_x64\vim90\</code>，将 ctags.exe 放入 vim90 目录即可。如果你使用的是 nvim，可以将 ctags.exe  复制到 <code>\nvim-win64\bin\</code> 路径下。</li>
+</ul>
+<p><strong>友情提醒：</strong>如果你获取 ctags.exe 和 plug.vim 实在有困难，我已经上传了资源，可在文初和文末找到。</p>
+<p><strong>Rocky 9 Linux 平台如下操作</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim </span><br><span class="line">--directory-prefix=/usr/local/share/vim/vim90/autoload/</span><br></pre></td></tr></table></figure>
+
+<p>下载文件，如何指定保存路径？通过帮助文档查询：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># wget --help | grep &quot;保存文件&quot;</span></span><br><span class="line">  -P,  --directory-prefix=前缀     保存文件到 &lt;前缀&gt;/..</span><br></pre></td></tr></table></figure>
+
+<p>如果没有 wget 工具，请先安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf -y install wget</span><br></pre></td></tr></table></figure>
+
+<p>安装 vim-plug 插件后，加入如下内容即可安装 nerdtree 和 tagbar 插件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> number</span><br><span class="line">call plug<span class="comment">#begin()</span></span><br><span class="line">  Plug <span class="string">&#x27;preservim/nerdtree&#x27;</span></span><br><span class="line">  Plug <span class="string">&#x27;preservim/tagbar&#x27;</span></span><br><span class="line">call plug<span class="comment">#end()</span></span><br></pre></td></tr></table></figure>
+<p>个人认为，这两个插件还是很实用的，尤其是浏览代码。</p>
+<p>如果想 tagbar 正常运行，还需安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf -y install ctags</span><br></pre></td></tr></table></figure>
+
+<p>执行插件安装命令： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:PlugInstall</span><br></pre></td></tr></table></figure>
+<p>插件安装后，重启vim即可生效。</p>
+<p>安装插件效果展示，最左侧是nerdtree效果，最右侧是tagbar效果。</p>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim Test.java</span><br><span class="line">:NERDTree</span><br><span class="line">:Tagbar</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pp9CYh6"><img data-src="https://s1.ax1x.com/2023/02/26/pp9CYh6.jpg" alt="pp9CYh6.jpg"></a></p>
+<p>打包好的 Windows 和 Linux 平台 vim、nvim 安装包、PDF教程以及相关插件。</p>
+<p>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMVFXeVRuMUgyMEk3YzNLQkthWEtYUUE/cHdkPTg4ODg=">https://pan.baidu.com/s/1QWyTn1H20I7c3KBKaXKXQA?pwd=8888<i class="fa fa-external-link-alt"></i></span><br>提取码: 8888</p>
+<p>以上总结，仅供参考哟，希望对你的工作有所帮助！</p>
+<p>—END—</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2023/05/10/vim-9-0-%E6%BA%90%E7%A0%81%E5%8C%85%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/" title="vim 9.0 源码包编译安装">https://blog.cnwangk.top/2023/05/10/vim-9-0-源码包编译安装/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/vim/" rel="tag"><i class="fa fa-tag"></i> vim</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/05/08/Rocky-Linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85-neovim-%E5%92%8C-git/" rel="prev" title="Rocky Linux软件安装 neovim 和 git">
+                  <i class="fa fa-angle-left"></i> Rocky Linux软件安装 neovim 和 git
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" rel="next" title="Windows 11 和 Rocky 9 Linux 初体验 MySQL8.0.33 简易安装教程">
+                  Windows 11 和 Rocky 9 Linux 初体验 MySQL8.0.33 简易安装教程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/05/10/vim-9-0-%E6%BA%90%E7%A0%81%E5%8C%85%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

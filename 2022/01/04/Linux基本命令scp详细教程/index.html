@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="今天给大家带来的是linux中比较实用的命令scp。善用小技巧，解决工作中的痛点。掌握一门好的技术或者说一门好的艺术，最快捷的方式就是融入到工作中。 在工作的不断鞭策之下，我其实也想偷偷懒，有时候觉得怎样简单快捷怎样来。在某种特定的工作环境下，有些操作被限制死了，只能用传统的方式传输（比如定制的商业加密U盘、光盘刻录）。当你了解实际情况后，可能有更优解，你会寻求其它的突破口或者折中方案。 夸张的说">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Linux基本命令scp详细教程">
+<meta property="og:url" content="https://blog.cnwangk.top/2022/01/04/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4scp%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="今天给大家带来的是linux中比较实用的命令scp。善用小技巧，解决工作中的痛点。掌握一门好的技术或者说一门好的艺术，最快捷的方式就是融入到工作中。 在工作的不断鞭策之下，我其实也想偷偷懒，有时候觉得怎样简单快捷怎样来。在某种特定的工作环境下，有些操作被限制死了，只能用传统的方式传输（比如定制的商业加密U盘、光盘刻录）。当你了解实际情况后，可能有更优解，你会寻求其它的突破口或者折中方案。 夸张的说">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/86f00e907ac0dc393af8a29d971e5e44.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/c17370f5b672e835c61b27fc911367c5.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/2f9c2a44a940bdf328757266f4133e3e.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/78988b9516e846cad0995fd900aeb4ad.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/584d7c31e79d2a7a1efafa0e50f46c15.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/ed1a75fcc26ae3e820e03b991800f020.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/f3efce9a5f6bb71df4a38ccc4128918c.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/bc244269006c29b4b4599ab1f8a0f296.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/4ee8430484ae50eeab94a88f64413759.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/aefceec4c85229163b42c47105146c9c.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/d2c4eb30e326a7530a8f0eff7c37e2a3.png">
+<meta property="article:published_time" content="2022-01-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-28T13:50:00.749Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/86f00e907ac0dc393af8a29d971e5e44.png">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2022/01/04/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4scp%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2022/01/04/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4scp%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/","path":"2022/01/04/Linux基本命令scp详细教程/","title":"Linux基本命令scp详细教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux基本命令scp详细教程 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81SCP%E5%91%BD%E4%BB%A4%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">一、SCP命令简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、前世今生</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.2.</span> <span class="nav-text">二、测试环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%8E%92%E9%99%A4%E5%B9%B2%E6%89%B0%E5%9B%A0%E7%B4%A0"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、排除干扰因素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%BB%BA%E8%AE%AE"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、建议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%87%86%E5%A4%87%E7%8E%AF%E5%A2%83"><span class="nav-number">1.2.3.</span> <span class="nav-text">3、准备环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81SCP%E5%91%BD%E4%BB%A4%E8%AF%A6%E7%BB%86%E6%93%8D%E4%BD%9C%E8%AF%B4%E6%98%8E"><span class="nav-number">1.3.</span> <span class="nav-text">三、SCP命令详细操作说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E8%AF%AD%E6%B3%95"><span class="nav-number">1.3.1.</span> <span class="nav-text">1、语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90"><span class="nav-number">1.3.2.</span> <span class="nav-text">2、参数解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.3.3.</span> <span class="nav-text">3、应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1%E3%80%81%E6%9C%AC%E5%9C%B0%E5%88%B0%E8%BF%9C%E7%A8%8B"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">3.1、本地到远程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2%E3%80%81%E8%BF%9C%E7%A8%8B%E5%88%B0%E6%9C%AC%E5%9C%B0"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">3.2、远程到本地</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.3.4.</span> <span class="nav-text">4、注意事项</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/01/04/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4scp%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux基本命令scp详细教程 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux基本命令scp详细教程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-04 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-04T00:00:00+08:00">2022-01-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-28 21:50:00" itemprop="dateModified" datetime="2023-05-28T21:50:00+08:00">2023-05-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">开发运维</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>今天给大家带来的是linux中比较实用的命令scp。善用小技巧，解决工作中的痛点。<br>掌握一门好的技术或者说一门好的艺术，最快捷的方式就是融入到工作中。</p>
+<p>在工作的不断鞭策之下，我其实也想偷偷懒，有时候觉得怎样简单快捷怎样来。在某种特定的工作环境下，有些操作被限制死了，只能用传统的方式传输（比如定制的商业加密U盘、光盘刻录）。当你了解实际情况后，可能有更优解，你会寻求其它的突破口或者折中方案。</p>
+<p>夸张的说法，我用了1分钟熟悉了scp的用法，并直接运用于工作当中。然而，我教同事使用，他却花了远远不止10倍的时间。其中的小窍门，你知道是为啥吗？我的回答是：善用系统提供的帮助工具或者提示。<br><img data-src="https://img-blog.csdnimg.cn/img_convert/86f00e907ac0dc393af8a29d971e5e44.png"></p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="一、SCP命令简介"><a href="#一、SCP命令简介" class="headerlink" title="一、SCP命令简介"></a>一、SCP命令简介</h2><p>在Redhat系列可以使用帮助命令：<code>man scp</code>，快速上手，掌握使用方法。</p>
+<p>如下图使用<code>scp</code>或者<code>man scp</code>命令：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/c17370f5b672e835c61b27fc911367c5.png"></p>
+<h3 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h3><ul>
+<li><p><strong>NAME</strong>：scp — 安全复制(远程文件复制程序)</p>
+</li>
+<li><p>scp 在网络中的主机间进行文件复制。 它用 ssh(1) 来传输及验证数据，提供与 ssh(1)相同的安全保护。 它不象 rcp(1), scp 会根据需要询问口令。 在任何文件名中都可以包含主机名和用户名，用来指定从&#x2F;向该主机复制此文件。</p>
+</li>
+<li><p>Linux scp 命令主要用于 Linux 之间复制文件和目录。</p>
+</li>
+<li><p>scp 是 secure copy 的缩写, scp 是 linux 系统下基于 ssh 登陆进行安全的远程文件拷贝命令。</p>
+</li>
+<li><p>scp 是加密的，rcp 是不加密的，scp 是 rcp 的加强版。</p>
+</li>
+</ul>
+<h3 id="2、前世今生"><a href="#2、前世今生" class="headerlink" title="2、前世今生"></a>2、前世今生</h3><ul>
+<li><p>作者</p>
+<p>Timo Rinne <span class="exturl" data-url="bWFpbHRvOiYjeDc0OyYjeDcyOyYjeDY5OyYjeDQwOyYjMTA1OyYjMTA3OyYjeDY5OyYjeDJlOyYjeDY2OyYjMTA1Ow==">&#x74;&#x72;&#x69;&#x40;&#105;&#107;&#x69;&#x2e;&#x66;&#105;<i class="fa fa-external-link-alt"></i></span> 和 Tatu Ylonen <span class="exturl" data-url="bWFpbHRvOiYjeDc5OyYjeDZjOyYjeDZmOyYjeDQwOyYjOTk7JiN4NzM7JiM0NjsmI3g2ODsmI3g3NTsmI3g3NDsmI3gyZTsmIzEwMjsmI3g2OTs=">&#x79;&#x6c;&#x6f;&#x40;&#99;&#x73;&#46;&#x68;&#x75;&#x74;&#x2e;&#102;&#x69;<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>起源</p>
+<p>scp 基于University of California BSD 的 rcp(1) 源代码</p>
+</li>
+<li><p>参考<br>rcp(1)，sftp(1)， ssh(1)， ssh-add(1)，ssh-agent(1)，ssh-keygen(1)，ssh_config(5)，sshd(8)</p>
+</li>
+</ul>
+<h2 id="二、测试环境搭建"><a href="#二、测试环境搭建" class="headerlink" title="二、测试环境搭建"></a>二、测试环境搭建</h2><h3 id="1、排除干扰因素"><a href="#1、排除干扰因素" class="headerlink" title="1、排除干扰因素"></a>1、排除干扰因素</h3><ul>
+<li>防火墙规则</li>
+<li>所在用户的scp访问权限</li>
+<li>默认端口是否变更</li>
+</ul>
+<h3 id="2、建议"><a href="#2、建议" class="headerlink" title="2、建议"></a>2、建议</h3><p>可以租多台云服务器测试，按时计费那种（腾讯云或者阿里云）。</p>
+<p>个人建议：采用VMware虚拟机搭建两台linux服务环境进行测试学习。或者安装git，使用git bash测试scp传输文件。有人会问，你为啥不直接用WinSCP或者FileZilla传输。生活在于折腾，消磨时间呗。从Windows到linux也是一样的，当然这是本机搭建的VMware虚拟环境网络是打通的。不要问我为什么，问就是省money呗。</p>
+<h3 id="3、准备环境"><a href="#3、准备环境" class="headerlink" title="3、准备环境"></a>3、准备环境</h3><ul>
+<li>VMware虚拟机工具</li>
+<li>Redhat系列、Ubuntu或者国产银河麒麟</li>
+<li>系统环境：X86平台</li>
+<li>ssh远程工具<strong>xshell</strong>、SecureCRT、putty以及<strong>Git Bash</strong>等等，只要支持ssh远程连接的工具。</li>
+</ul>
+<p>这里可以看看利用Git Bash工具，从Windows本地传文件到搭建的linux服务器上。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/2f9c2a44a940bdf328757266f4133e3e.png"></p>
+<h2 id="三、SCP命令详细操作说明"><a href="#三、SCP命令详细操作说明" class="headerlink" title="三、SCP命令详细操作说明"></a>三、SCP命令详细操作说明</h2><h3 id="1、语法"><a href="#1、语法" class="headerlink" title="1、语法"></a>1、语法</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">usage: scp [-<span class="number">12346</span><span class="type">BCpqrv</span>] [-<span class="type">c</span> <span class="type">cipher</span>] [-<span class="type">F</span> <span class="type">ssh_config</span>] [-<span class="type">i</span> <span class="type">identity_file</span>]</span><br><span class="line">           [-<span class="type">l</span> <span class="type">limit</span>] [-<span class="type">o</span> <span class="type">ssh_option</span>] [-<span class="type">P</span> <span class="type">port</span>] [-<span class="type">S</span> <span class="type">program</span>]</span><br><span class="line">           [[<span class="type">user</span><span class="selector-tag">@</span>]<span class="type">host1</span>:]file1 ... [[<span class="type">user</span><span class="selector-tag">@</span>]<span class="type">host2</span>:]file2</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>简单来看</strong>：</p>
+<p>scp [可选参数] 本地文件 目标目录</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp /root/av/local_file.av  remote_username@ip:/root/av</span><br></pre></td></tr></table></figure>
+
+<p>scp [可选参数] 本地目录 目标目录</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp <span class="literal">-r</span> /root/av/  remote_username@ip:/root/</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h3 id="2、参数解析"><a href="#2、参数解析" class="headerlink" title="2、参数解析"></a>2、参数解析</h3><p>默认scp传输情况下，会显示传输的速率以及进度。</p>
+<p>只介绍部分，具体可以参考官方文档。常用的、重要的也就那么几个。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-1</td>
+<td>强制scp命令使用协议ssh1</td>
+</tr>
+<tr>
+<td>-2</td>
+<td>强制scp命令使用协议ssh2</td>
+</tr>
+<tr>
+<td>-4</td>
+<td>强制scp命令只使用IPv4寻址</td>
+</tr>
+<tr>
+<td>-6</td>
+<td>强制scp命令只使用IPv6寻址</td>
+</tr>
+<tr>
+<td>-B</td>
+<td>使用批处理模式（传输过程中不询问传输口令或短语）</td>
+</tr>
+<tr>
+<td>-C</td>
+<td>允许压缩。（将-C标志传递给ssh，从而打开压缩功能）</td>
+</tr>
+<tr>
+<td><strong>-p</strong></td>
+<td><strong>保留原文件的修改时间，访问时间和访问权限</strong></td>
+</tr>
+<tr>
+<td>-q</td>
+<td>不显示传输进度条</td>
+</tr>
+<tr>
+<td><strong>-r</strong></td>
+<td><strong>递归复制整个目录</strong></td>
+</tr>
+<tr>
+<td>-v</td>
+<td>详细方式显示输出。scp和ssh(1)会显示出整个过程的调试信息。这些信息用于调试连接，验证和配置问题</td>
+</tr>
+<tr>
+<td>-c cipher</td>
+<td>以cipher将数据传输进行加密，这个选项将直接传递给ssh</td>
+</tr>
+<tr>
+<td>-F ssh_config</td>
+<td>指定一个替代的ssh配置文件，此参数直接传递给ssh</td>
+</tr>
+<tr>
+<td>-i identity_file</td>
+<td>从指定文件中读取传输时使用的密钥文件，此参数直接传递给ssh</td>
+</tr>
+<tr>
+<td>-l limit</td>
+<td>限定用户所能使用的带宽，以Kbit&#x2F;s为单位</td>
+</tr>
+<tr>
+<td>-P port</td>
+<td><strong>注意此处是大写P</strong>, port是指定数据传输用到的端口号</td>
+</tr>
+<tr>
+<td>-S program</td>
+<td>指定加密传输时所使用的程序。此程序必须能够理解ssh(1)的选项</td>
+</tr>
+</tbody></table>
+<h3 id="3、应用场景"><a href="#3、应用场景" class="headerlink" title="3、应用场景"></a>3、应用场景</h3><p>一点小建议：如果不是很理解操作的意义。你可以这样看待：本机到服务器或者是服务器到到服务器，将其都看作是仓库，我需要将一壶油或一箱香飘飘者是转移到另一个仓库（目的地）。单件的时候，直接传一个过去；量大的时候，将其所在目录打包传输过去。操作方便快捷，只需要简单的几行命令搞定文件传输。</p>
+<p><strong>命令格式介绍</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#复制文件格式</span></span><br><span class="line">scp local_file remote_username@remote_ip:remote_directory </span><br><span class="line"><span class="comment">#或者 </span></span><br><span class="line">scp local_file remote_username@remote_ip:remote_file </span><br><span class="line"><span class="comment">#或者 </span></span><br><span class="line">scp local_file  remote_ip:remote_directory </span><br><span class="line"><span class="comment">#或者 </span></span><br><span class="line">scp local_file remote_ip:remote_file </span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>复制目录命令格式</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#复制命令格式</span></span><br><span class="line">scp <span class="literal">-r</span> local_directory remote_username@remote_ip:remote_directory </span><br><span class="line"><span class="comment">#或者 </span></span><br><span class="line">scp <span class="literal">-r</span> local_directory remote_ip:remote_directory </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-1、本地到远程"><a href="#3-1、本地到远程" class="headerlink" title="3.1、本地到远程"></a>3.1、本地到远程</h4><p>3.1.1、准备了两台Centos7服务器，已经设置好了静态IP</p>
+<p><strong>采用虚拟机搭建环境</strong></p>
+<ul>
+<li>ip：192.168.245.147</li>
+<li>ip：192.168.245.131</li>
+</ul>
+<p><strong>3.2.2、在147服务器上准备测试内容</strong></p>
+<p>下面举例子的内容，啊啊啊就不要多幻想哈。只是想骚一骚而已，哈哈哈！！！</p>
+<p>程序员都懂的，形象生动的sex教育片。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#新增一个av目录</span></span><br><span class="line">mkdir /root/av</span><br><span class="line"><span class="comment">#新增cangls文件并添加内容</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;cangls av&quot;</span> &gt; /root/av/cangls.av</span><br></pre></td></tr></table></figure>
+
+
+
+<p>3.2.3、<strong>指定用户名</strong></p>
+<p>个人推荐使用指定用户名，方便快捷。</p>
+<p><strong>a、传输文件</strong></p>
+<p>注意：<strong>第一次使用scp命令时会提示验证，输入yes即可通过</strong>。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#切记传输文件时，目标目录后面不要加/,否则会提示拒绝,这个习惯至今没改过来</span></span><br><span class="line">scp /root/av/cangls.av  root@<span class="number">192.168</span>.<span class="number">245.131</span>:/root</span><br></pre></td></tr></table></figure>
+
+<p><strong>传文件时，root目录后面的 &#x2F; 需要去掉，传输完成如下</strong></p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/78988b9516e846cad0995fd900aeb4ad.png"></p>
+<p><strong>b、验证</strong></p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/584d7c31e79d2a7a1efafa0e50f46c15.png"></p>
+<p><strong>传输文件并指定文件名</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#传输文件，指定文件名，注意看目标文件名改了方便区别</span></span><br><span class="line">scp /root/av/cangls.av  root@<span class="number">192.168</span>.<span class="number">245.131</span>:/root/test.av</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/ed1a75fcc26ae3e820e03b991800f020.png"></p>
+<p><strong>指定文件名并验证</strong></p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/f3efce9a5f6bb71df4a38ccc4128918c.png"></p>
+<p><strong>传输目录</strong>：加上参数-r</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#传输目录，需要加上-r参数</span></span><br><span class="line">scp <span class="literal">-r</span> /root/av/  root@<span class="number">192.168</span>.<span class="number">245.131</span>:/root/</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/bc244269006c29b4b4599ab1f8a0f296.png"></p>
+<p><strong>传输目录，到目标服务器验证</strong></p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/4ee8430484ae50eeab94a88f64413759.png"></p>
+<p>4、不指定用户名</p>
+<p>输入的时候需要手动输入用户名和密码。</p>
+<p><strong>传输文件并沿用原始文件名</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#传输文件，沿用原始文件名</span></span><br><span class="line">scp /root/av/cangls.av  <span class="number">192.168</span>.<span class="number">245.131</span>:/root</span><br></pre></td></tr></table></figure>
+
+<p><strong>传输文件，指定文件名</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#传输文件，指定文件名，注意看目标文件名改了方便区别</span></span><br><span class="line">scp /root/av/cangls.av  <span class="number">192.168</span>.<span class="number">245.131</span>:/root/test.av</span><br></pre></td></tr></table></figure>
+
+<p><strong>传输目录，需要加上-r参数</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#传输目录，需要加上-r参数</span></span><br><span class="line">scp <span class="literal">-r</span> /root/av/  <span class="number">192.168</span>.<span class="number">245.131</span>:/root/</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-2、远程到本地"><a href="#3-2、远程到本地" class="headerlink" title="3.2、远程到本地"></a>3.2、远程到本地</h4><p>从远程复制到本地，说白了就是需要知道远程的服务器IP以及用户名密码，反过来操作即可从远程取货物。换个角度思考就是原本从A端传到B端，此时从B端传到A端。前提是两端互通，不然会只进不出。</p>
+<p>3.2.1、从<strong>远程取cangls.av文件到本地</strong>的root目录下</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp root@<span class="number">192.168</span>.<span class="number">245.147</span>:/root/av/cangls.av /root</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/aefceec4c85229163b42c47105146c9c.png"></p>
+<p>3.2.2、从<strong>远程取av目录到本地</strong>的root目录下</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp <span class="literal">-r</span> root@<span class="number">192.168</span>.<span class="number">245.147</span>:/root/av/ /root/</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/d2c4eb30e326a7530a8f0eff7c37e2a3.png"></p>
+<h3 id="4、注意事项"><a href="#4、注意事项" class="headerlink" title="4、注意事项"></a>4、注意事项</h3><p>如果远程服务器防火墙有为scp命令设置了指定的端口，我们需要使用 -P 参数来设置命令的端口号，命令格式如下：<br>scp 命令使用指定端口号 6022</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#从远程服务器获取文件到本地，指定端口</span></span><br><span class="line">scp <span class="literal">-P</span> <span class="number">6022</span>  remote@ip:/usr/local/av.sh  /root</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用scp需要具备读取文件的权限，如果没有权限则无法传输</strong>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2022/01/04/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4scp%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="Linux基本命令scp详细教程">https://blog.cnwangk.top/2022/01/04/Linux基本命令scp详细教程/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/02/%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8Bgit%E5%92%8Cgitee%E4%BB%A5%E5%8F%8Agithub/" rel="prev" title="快速上手git和gitee以及github">
+                  <i class="fa fa-angle-left"></i> 快速上手git和gitee以及github
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/01/05/Linux%E9%85%8D%E7%BD%AE%E5%85%A8%E5%B1%80%E4%B8%8E%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" rel="next" title="Linux配置全局与当前用户环境变量">
+                  Linux配置全局与当前用户环境变量 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2022/01/04/Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4scp%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

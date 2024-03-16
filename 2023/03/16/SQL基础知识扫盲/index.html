@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="此篇总结是对之前发出的 SQL是什么 进行补充。 进入正题之前，我想聊聊其它的知识点，一点点思考。 学习某个技能点或者是新知识点时，可以尝试建立一项知识梳理体系，如下：  输入：可以照葫芦画瓢，亲自动手实践。 分析：有自己独立的分析和思考。 输出：产出的内容与预期进行对比。 札记：记录收获过程（手写或者以电子文档形式记录）。  这张流程图制作比较粗糙，权当梳理基本知识参考。 上面也谈到了，学习新知">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SQL基础知识扫盲">
+<meta property="og:url" content="https://blog.cnwangk.top/2023/03/16/SQL%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%89%AB%E7%9B%B2/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="此篇总结是对之前发出的 SQL是什么 进行补充。 进入正题之前，我想聊聊其它的知识点，一点点思考。 学习某个技能点或者是新知识点时，可以尝试建立一项知识梳理体系，如下：  输入：可以照葫芦画瓢，亲自动手实践。 分析：有自己独立的分析和思考。 输出：产出的内容与预期进行对比。 札记：记录收获过程（手写或者以电子文档形式记录）。  这张流程图制作比较粗糙，权当梳理基本知识参考。 上面也谈到了，学习新知">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/16/pp8KvDg.png">
+<meta property="article:published_time" content="2023-03-16T10:49:22.000Z">
+<meta property="article:modified_time" content="2023-07-24T06:07:21.639Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="SQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/03/16/pp8KvDg.png">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2023/03/16/SQL%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%89%AB%E7%9B%B2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2023/03/16/SQL%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%89%AB%E7%9B%B2/","path":"2023/03/16/SQL基础知识扫盲/","title":"SQL基础知识扫盲"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SQL基础知识扫盲 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%89%AB%E7%9B%B2"><span class="nav-number">1.</span> <span class="nav-text">SQL &amp; 数据库基础知识扫盲</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.0.1.</span> <span class="nav-text">SQL是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.0.2.</span> <span class="nav-text">数据库是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%BA%E8%BA%AB%E5%85%A5%E5%B1%80%EF%BC%8C%E5%AE%9E%E8%B7%B5%E5%87%BA%E7%9C%9F%E7%9F%A5"><span class="nav-number">1.0.3.</span> <span class="nav-text">挺身入局，实践出真知</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DBMS%E5%88%9D%E4%BD%93%E9%AA%8C"><span class="nav-number">2.</span> <span class="nav-text">DBMS初体验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL%EF%BC%9A%E5%88%9D%E4%BD%93%E9%AA%8C"><span class="nav-number">2.0.1.</span> <span class="nav-text">MySQL：初体验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Oracle%EF%BC%9A%E5%88%9D%E4%BD%93%E9%AA%8C"><span class="nav-number">2.0.2.</span> <span class="nav-text">Oracle：初体验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PostgreSQL%EF%BC%9A%E5%88%9D%E4%BD%93%E9%AA%8C"><span class="nav-number">2.0.3.</span> <span class="nav-text">PostgreSQL：初体验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.0.4.</span> <span class="nav-text">Demo示例</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/03/15/MySQL8-0-x-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" rel="bookmark">
+        <time class="popular-posts-time">2023-03-15</time>
+        <br>
+      MySQL8.0.x 简易安装教程
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" rel="bookmark">
+        <time class="popular-posts-time">2023-05-21</time>
+        <br>
+      Windows 11 和 Rocky 9 Linux 初体验 MySQL8.0.33 简易安装教程
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2023/03/16/SQL%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%89%AB%E7%9B%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SQL基础知识扫盲 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SQL基础知识扫盲
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-16 18:49:22" itemprop="dateCreated datePublished" datetime="2023-03-16T18:49:22+08:00">2023-03-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-07-24 14:07:21" itemprop="dateModified" datetime="2023-07-24T14:07:21+08:00">2023-07-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>14 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>此篇总结是对之前发出的 SQL是什么 进行补充。</p>
+<p>进入正题之前，我想聊聊其它的知识点，一点点思考。</p>
+<p>学习某个技能点或者是新知识点时，可以尝试建立一项知识梳理体系，如下：</p>
+<ol>
+<li><strong>输入</strong>：可以照葫芦画瓢，亲自动手实践。</li>
+<li><strong>分析</strong>：有自己独立的分析和思考。</li>
+<li><strong>输出</strong>：产出的内容与预期进行对比。</li>
+<li><strong>札记</strong>：记录收获过程（手写或者以电子文档形式记录）。</li>
+</ol>
+<p>这张流程图制作比较粗糙，权当梳理基本知识参考。</p>
+<p>上面也谈到了，学习新知识点。善于总结，可以使用流程图或者思维导图构建知识体系。</p>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/pp8KvDg"><img data-src="https://s1.ax1x.com/2023/03/16/pp8KvDg.png" alt="pp8KvDg.png"></a></p>
+<h1 id="SQL-数据库基础知识扫盲"><a href="#SQL-数据库基础知识扫盲" class="headerlink" title="SQL &amp; 数据库基础知识扫盲"></a>SQL &amp; 数据库基础知识扫盲</h1><p>一般而言，在日常工作交流中，大家所描述的SQL是标准SQL（Standardized SQL），非特指某一数据库厂商（DBMS）专有语言。</p>
+<h3 id="SQL是什么？"><a href="#SQL是什么？" class="headerlink" title="SQL是什么？"></a>SQL是什么？</h3><p>SQL必知必会这样描述到：</p>
+<p><strong>SQL</strong>（发音为字母S-Q-L或sequel）是Structure Query Language（<strong>结构化查询语言</strong>）的缩写。SQL是一种专业用于与数据库沟通交互的语言。</p>
+<p>与其他语言（比如英语或者Java、C、PHP这类编程语言）不一样，SQL中只有很少的词，这是有意而为。设计SQL的目的是便于完成一项任务，提供一种<strong>从数据库中读写数据的简单有效方法</strong>。</p>
+<p>用一句话总结：SQL是Structure Query Language（<strong>结构化查询语言</strong>）。</p>
+<p>维基百科这样描述到：</p>
+<ol>
+<li><p>全称是Structure Query Language（<strong>结构化查询语言</strong>）是一种<strong>特定目的编程语言</strong>，一般简称为<strong>SQL</strong>。</p>
+</li>
+<li><p><strong>用于管理关系数据库管理系统</strong>（RDBMS）。它是使用<strong>关系模型的数据库应用语言</strong>，由IBM在20世纪70年代开发出来，作为IBM数据库System R的原型关系语言，<strong>实现数据库中信息检索</strong>。</p>
+</li>
+<li><p>20世纪80年代初，美国国家标准学会（ANSI）开始着手定制SQL标准。最早的ANSI始于1986年，被称为SQL-86，在1987年成为国际标准化组织（ISO）标准。尽管SQL并非完全按照科德的关系模型设计，但其依然成为最为广泛运用的数据库语言。此后，这一标准经过了一系列的增订，加入了大量新特性。虽然有这一标准的存在，但大部分的SQL代码在不同的数据库系统中并不具有完全的跨平台性。</p>
+</li>
+</ol>
+<p>用我自己的经验总结概括：其实是将数据有规律地存放在特定容器中的一种结构化查询语言。</p>
+<p><strong>SQL有哪些优点呢</strong>？</p>
+<ol>
+<li>SQL不是某一特定数据库厂商专有语言。绝大多数流行的DBMS支持SQL，所以学习标准SQL可以让你和大多数数据库打交道。</li>
+<li>SQL简单易学。它的语句是有很强描述性的英语单词组成，而这些单词数目不多。</li>
+<li>SQL看上去（入门）很简单，实际上是一种强有力的语言，灵活使用其语言元素，可以进行非常复杂和高级的数据库操作。</li>
+</ol>
+<p><strong>SQL扩展说明</strong>：许多DBMS厂商通过增加语句或指令，对SQL进行扩展，目的是提供执行特定操作的额外功能或简化方法。虽然这种扩展使用很便捷，但一般情况是针对个别DBMS，很少有两个厂商同时支持这种扩展。列举两个例子，比如Oracle分页可以使用rownum实现，而MySQL分页使用limit关键字。</p>
+<h3 id="数据库是什么？"><a href="#数据库是什么？" class="headerlink" title="数据库是什么？"></a>数据库是什么？</h3><p><strong>数据库</strong></p>
+<p>数据库（database）：保存有组织数据的容器，通常是一个文件或一组文件。</p>
+<p><strong>tips</strong>：通常说数据库指关系型数据库（RDBMS）。</p>
+<p><strong>注意混淆</strong>平时工作交流，大家通常用数据库这个术语来代表使用的数据软件，这种表述不完全正确，因此产生了许多混淆。确切地说，数据库软件指<strong>数据库管理系统（DBMS）</strong> 。数据库是通过DBMS创建和操作的容器，它具体是什么，形式如何，各种数据库有所差异。这种差异表现在：各大数据库厂商基于标准SQL进行各自的扩展。</p>
+<p><strong>简易说明</strong><br>在MySQL中创建数据库语法：<code>create database db_name</code>。而在Oracle数据库中创建数据库语法<code>create user db_name</code>，你没看错，Oracle中基于用户进行描述与管理。如果你在Oracle中使用<code>create database db_name</code>，会提示数据库已装载。</p>
+<p><strong>表</strong></p>
+<p>表（table）：某种特定类型数据库结构化清单。</p>
+<p><strong>表名</strong></p>
+<p>表名（table name）：<strong>表名是唯一的</strong>（不可重复），实际上是数据库名和表名等的组合，数据库名理解为用户会容易接受一点。有的数据库使用数据库拥有者的名字作为唯一名的一部分，例如Oracle、达梦数据库。在同一个数据中不能使用相同的表名，但在不同的数据库中可以使用相同的表名。</p>
+<p><strong>模式</strong></p>
+<p>模式：关于数据库和<strong>表的布局及特性</strong>的信息。</p>
+<p><strong>列</strong></p>
+<p>列（column）：<strong>表中的一个字段</strong>。所有表由一个列或多列组成。</p>
+<p>数据分解：合理将数据分解为多个列尤为重要。例如：城市、州、邮政编码总是彼此独立的列。通过分解这些数据，才有可能利用特定的列对数据进行分类和过滤（比如找出特定州或城市的所有顾客）。如果城市和州组合到一个列中，则按州分类或过滤会很困难。</p>
+<p>当然，你可以根据自己的需求将数据分解到何种程度。例如，一般可以将街道名和门牌号一起存储到地址里，没有特殊需求是可以这样处理。如果那一天，需求发生变化，根据门牌号进行排序或过滤，最好将门牌号和街道名分开。</p>
+<p><strong>数据类型</strong></p>
+<p>数据类型：允许哪一种数据类型。每一张表中列具有相应数据类型，限制（或允许）该列中存储哪一种类型的数据。</p>
+<p><strong>行</strong></p>
+<p>行（row）：表中列一条或多条记录。</p>
+<p><strong>主键</strong></p>
+<p>主键（primary key）：一列（或几列），其值可以唯一标识表中每一行。</p>
+<p>定义主键：或许并不总是需要主键，达到便于管理目的，大多数数据设计者会保证他们创建的每张表具有一个主键。</p>
+<p><strong>外键</strong></p>
+<p>外键（foreign key）：用来保证参照完整性，通常在两张或多张表中存在。如果有两张表：主表（parent table）和子表（child table），在子表中拥有主表外键约束；你想同时删除两张表；MySQL提示需要先删除约束，才能彻底删除。也有例外，比如设置了级联（cascade）。</p>
+<p><strong>理论知识看得再多，不如亲自实践一遍，效果来得更快</strong>。</p>
+<h3 id="挺身入局，实践出真知"><a href="#挺身入局，实践出真知" class="headerlink" title="挺身入局，实践出真知"></a>挺身入局，实践出真知</h3><p><strong>选择</strong></p>
+<ol>
+<li>选择：选择一种<strong>流行</strong>且<strong>社区活跃</strong>DBMS厂商发行版数据库软件进行入门。</li>
+<li>安装：云服务器或者本机亦或是<strong>虚拟机模拟环境</strong>。</li>
+<li>初学：建议使用各大厂商自带GUI<strong>字符命令界面</strong>进行交互。</li>
+</ol>
+<p><strong>推荐</strong></p>
+<p>个人推荐学习MySQL（MariaDB），逐步学习，深入浅出。为什么推荐入门首选学习MySQL，上面提到了<strong>流行</strong>、<strong>社区活跃</strong>，换句话说，MySQL资源丰富，官方文档全面，更新频繁。</p>
+<p><strong>关于CRUD：增删查改</strong></p>
+<p>一般而言，CRUD是指对数据库表行记录进行新增（insert）、删除（delete）、查询（select）以及修改（update）操作。</p>
+<p><strong>各大DBMS厂商数据库官方文档地址整合</strong>：</p>
+<p><a href="https://blog.cnwangk.top/2022/03/17/MySQL%E7%AD%89%E4%B8%BB%E6%B5%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%82%E5%95%86%EF%BC%88DBMS%EF%BC%89-%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E5%9C%B0%E5%9D%80">https://blog.cnwangk.top/2022/03/17/MySQL等主流数据库厂商（DBMS）-官方文档地址</a></p>
+<h1 id="DBMS初体验"><a href="#DBMS初体验" class="headerlink" title="DBMS初体验"></a>DBMS初体验</h1><ol>
+<li>MySQL（MariaDB）</li>
+<li>Oracle</li>
+<li>postgreSQL</li>
+</ol>
+<h3 id="MySQL：初体验"><a href="#MySQL：初体验" class="headerlink" title="MySQL：初体验"></a>MySQL：初体验</h3><ol>
+<li>部署MySQL；</li>
+<li>检验（启动与关闭服务）；</li>
+<li>修改密码与权限（为第5步做准备）；</li>
+<li>字符命令界面进行交互；</li>
+<li>工具：MySQL workbench、DBeaver（通用数据库管理器）或者SQLyog；</li>
+<li>基本操作（CRUD：insert、delete、update、select）；</li>
+<li>参考官方文档 &amp; 官方完整Demo示例。</li>
+</ol>
+<p>当你看到这篇教程时，MySQL最新稳定版可能已经更新到 8.0.34，创新版 MySQL 8.1.0。</p>
+<p><strong>部署MySQL8.0.x</strong></p>
+<p><strong>Windows install MySQL8.0.x (Archive zip) 简易安装教程</strong></p>
+<ol>
+<li>解压免安装版MySQL：<code>unzip mysql-8.0.x-winx64.zip</code></li>
+<li>切换到MySQL解压目录：<code>cd mysql-8.0.x-winx64</code></li>
+<li>新增MySQL配置文件： my.ini</li>
+<li>初始化MySQL：<code>bin\mysqld --initialize-insecure</code> 或者 <code>bin\mysqld --initialize-insecure --console</code> </li>
+<li>注册MySQL服务：<code>bin\mysqld --install MySQL80</code>（将MySQL服务注册到service，可以使用net命令进行管理）</li>
+<li>启动MySQL服务：net start MySQL80 或者 sc start MySQL80</li>
+<li>登录MySQL字符管理界面：<code>mysql -uroot -p</code></li>
+</ol>
+<p><strong>注意</strong>：版本选择：带有GA（General Availability）标识为稳定版，目前最新稳定是MySQL 8.0.32 发布于2023-01-17。x代表使用MySQL8.0具体版本。打开CMD或者Powershell时以管理员身份运行，如果没有，安装服务时则会提示权限拒绝，如下所示。</p>
+<p>D:\mysql-8.0.32-winx64\bin&gt;<code>mysqld --install MySQL80</code><br>Install&#x2F;Remove of the Service Denied!</p>
+<p>Windows环境新建my.ini做如下设置，指定基本安装目录与数据存放目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">basedir=D:\\mysql-8.0.32-winx64</span><br><span class="line">datadir=D:\\mysql-8.0.32-winx64\\data</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>登录到命令行字符界面</strong></p>
+<p>Windows 平台打开CMD、Powershell或者Windows terminal（win + x 打开Windows终端（管理员））</p>
+<p><strong>参数作用</strong>：</p>
+<ul>
+<li>-u：指定用户为root。</li>
+<li>-p ：回车后输入密码，如果直接输入密码回车即可登录。</li>
+<li>-P ：指定端口号（port），默认为3306。</li>
+</ul>
+<p>Windows平台修改my.ini指定MySQL server端口，Linux平台修改my.cnf指定端口。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p -P 3306</span><br></pre></td></tr></table></figure>
+
+<p>Linux发行版打开终端（terminal）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p -P 3306</span><br></pre></td></tr></table></figure>
+
+<p><strong>输入</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="number">1</span>\G</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析</strong>：</p>
+<p>登录到MySQL字符操作界面，输入select 1\G、select 1；或者select 1\g，会得到输出内容：1。这种情况MySQL不用访问表或索引，直接得到结果，通过explain使用执行计划（后续可以了解）可以看出type&#x3D;NULL，此时效率最高。</p>
+<p><strong>输出</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line"><span class="number">1</span>: <span class="number">1</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>提示：同样在postgreSQL中也是支持select 1；或者select 1\g，输出结果：1。</p>
+<p><strong>做笔记：SQL CRUD</strong></p>
+<p>在创建数据库（用户)、表，最好统一大小写、驼峰命名、下划线，不要混搭使用。个人给出的建议是：要么纯大写，要么纯小写，要么使用下划线进行分割。<strong>使用拼音命名库名、表名、字段名的时候（最好不要简写），如果简写，也请写好注释</strong>。比如地标性的命名北京（beijing）、上海（shanghai）、广州（guangzhou）、深圳（shenzhen），使用全拼音这是可以的，即便查询字典大概也是这样命名的，最好与你的合作团队达成统一意见。</p>
+<p>当然，你看到我所演示SQL语句，关键字部分统一使用大写，库名、表名、字段名使用小写。</p>
+<p><strong>注释使用</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** MySQL基础知识扫盲 **/</span></span><br><span class="line"><span class="comment">-- MySQL基础知识扫盲</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>创建数据库</strong></p>
+<p>创建管理用户study（习惯叫数据库），注意: 执行更新操作时，时刻牢记数据无价，指定条件。最大程度避免给自己带来不必要的工作麻烦。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> DATABASE study;</span><br></pre></td></tr></table></figure>
+
+<p><strong>切换用户</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE study;</span><br></pre></td></tr></table></figure>
+
+<p><strong>建表语句</strong></p>
+<p>创建表，在study用户下分别创建表：girl、books。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> study.girl(</span><br><span class="line">    id <span class="type">INT</span>  <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">    girl_name <span class="type">VARCHAR</span>(<span class="number">64</span>),</span><br><span class="line">    girl_age <span class="type">VARCHAR</span>(<span class="number">64</span>),</span><br><span class="line">    cup_size <span class="type">VARCHAR</span>(<span class="number">64</span>),</span><br><span class="line">    stu_num <span class="type">VARCHAR</span>(<span class="number">64</span>) </span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> study.books(</span><br><span class="line">    id <span class="type">VARCHAR</span>(<span class="number">32</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">    book_names <span class="type">VARCHAR</span>(<span class="number">64</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    isbn <span class="type">VARCHAR</span>(<span class="number">64</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    author <span class="type">VARCHAR</span>(<span class="number">16</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>第一张表girl</strong>：使用CRUD语句 &amp; 开启显式开启事务（MySQL &amp; MariaDB默认开启自动autocommit提交）。</p>
+<p><strong>显式开启事务</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="comment">-- start transaction;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>查询</strong>：标准写法，<strong>指定字段名</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sg.id,sg.girl_name,sg.girl_age,sg.cup_size,sg.stu_num <span class="keyword">FROM</span> study.girl sg;</span><br></pre></td></tr></table></figure>
+
+<p>查询：偷懒写法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> study.girl sg;</span><br></pre></td></tr></table></figure>
+
+<p><strong>插入</strong>一条数据：标准写法，<strong>指定字段名</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> study.girl(id,girl_name,girl_age,cup_size,stu_num) <span class="keyword">VALUES</span>(<span class="number">1001</span>,<span class="string">&#x27;梦梦&#x27;</span>,<span class="string">&#x27;16&#x27;</span>,<span class="string">&#x27;B&#x27;</span>,<span class="string">&#x27;tolovemm16&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>插入一条数据：偷懒写法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> study.girl <span class="keyword">VALUES</span>(<span class="number">1001</span>,<span class="string">&#x27;梦梦&#x27;</span>,<span class="string">&#x27;16&#x27;</span>,<span class="string">&#x27;B&#x27;</span>,<span class="string">&#x27;tolovemm16&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除</strong>数据：指定条件</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> study.girl sg <span class="keyword">WHERE</span> sg.id<span class="operator">=</span><span class="number">1001</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>修改</strong>数据：指定条件</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> study.girl(id,girl_name,girl_age,cup_size,stu_num) sg <span class="keyword">SET</span> sg.stu_num<span class="operator">=</span><span class="string">&#x27;toloveC16&#x27;</span>  <span class="keyword">WHERE</span> sg.id<span class="operator">=</span><span class="number">1001</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> study.girl sg <span class="keyword">SET</span> sg.cup_size<span class="operator">=</span><span class="string">&#x27;C&#x27;</span>  <span class="keyword">WHERE</span> sg.id<span class="operator">=</span><span class="number">1001</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>回滚</strong>操作</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ROLLBACK</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>提交</strong>事务</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">COMMIT</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>第二张表books</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 插入</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> study.books <span class="keyword">VALUES</span>(<span class="string">&#x27;1001&#x27;</span>,<span class="string">&#x27;books&#x27;</span>,<span class="string">&#x27;2023-3-15-miji&#x27;</span>,<span class="string">&#x27;张三&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改</span></span><br><span class="line"><span class="keyword">UPDATE</span> study.books b  <span class="keyword">SET</span> b.book_names<span class="operator">=</span><span class="string">&#x27;绝世武功秘籍&#x27;</span> <span class="keyword">WHERE</span> b.id<span class="operator">=</span><span class="string">&#x27;1001&#x27;</span>; </span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> study.books;</span><br><span class="line"><span class="comment">-- 不用带上用户名也能查询，切换用户操作：use study</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> books;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除全表数据内容</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> study.books;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除全表数据内容：TRUNCATE [TABLE] tbl_name</span></span><br><span class="line"><span class="keyword">TRUNCATE</span> <span class="keyword">TABLE</span> study.books;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除表结构与内容,注意：无法回滚</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> study.books; </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+<p><strong>MySQL官方完整Demo示例</strong></p>
+<p>最后附上官方示例数据库，<strong>sakila-db数据库</strong>一个非常完整的示例。包含：视图、函数、触发器以及存储过程，当然也存在使用外键。</p>
+<p><strong>sakila-db数据库</strong>包含三个文件，便于大家获取与使用：</p>
+<ol>
+<li>sakila-schema.sql：数据库表结构；</li>
+<li>sakila-data.sql：数据库示例模拟数据；</li>
+<li>sakila.mwb：数据库物理模型，在MySQL workbench中可以打开查看。</li>
+</ol>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubXlzcWwuY29tL2RvY3Mvc2FraWxhLWRiLnppcA==">https://downloads.mysql.com/docs/sakila-db.zip<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><strong>用于用于简单测试学习，可以使用world-db</strong>：</p>
+<p><strong>world-db数据库</strong>，包含三张表：city、country、countrylanguage。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubXlzcWwuY29tL2RvY3Mvd29ybGQtZGIuemlw">https://downloads.mysql.com/docs/world-db.zip<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>MySQL官方文档（5.6、5.7、8.0）整合：</p>
+<p>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMThUUFc3TGFuMldvSmhIeFdKVU0zY3c/cHdkPWJ4NDQ=">https://pan.baidu.com/s/18TPW7Lan2WoJhHxWJUM3cw?pwd=bx44<i class="fa fa-external-link-alt"></i></span> </p>
+<p>提取码: bx44 </p>
+<h3 id="Oracle：初体验"><a href="#Oracle：初体验" class="headerlink" title="Oracle：初体验"></a>Oracle：初体验</h3><p>初步使用，建议掌握Oracle自带的字符命令操作工具 SQL plus。</p>
+<p>其次掌握第三方管理工具 PLSQL developer，管理Oracle很好用，免费30天试用，付费软件。</p>
+<p>个人认为，有必要了解Oracle自带SQL客户端管理工具SQL developer，免费使用。</p>
+<ol>
+<li>SQL plus</li>
+<li>PLSQL developer</li>
+<li>SQL developer</li>
+</ol>
+<p>以下将演示在Oracle数据库中如何构建用户、表、对数据查询、新增、修改、删除操作。</p>
+<p><strong>1、创建用户</strong></p>
+<p>创建数据库test，在Oracle中指创建用户用于管理</p>
+<p>常规（Oracle12c是一个拐点，有CDB和PDB之分）建表用法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> test identified <span class="keyword">by</span> <span class="number">123456</span>;</span><br></pre></td></tr></table></figure>
+
+<p>新版Oracle19c（带c，默认为CDB模式），新建用户</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> c##test identified <span class="keyword">by</span> <span class="number">123456</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>2、授权</strong></p>
+<p>授予用户test权限resource，connect</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">grant</span> resource,<span class="keyword">connect</span> <span class="keyword">to</span> test;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3、建表</strong></p>
+<p>创建表girl，指定了用户为test</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> test.girl(</span><br><span class="line">    ID VARCHAR2(<span class="number">32</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    GIRL_NAME VARCHAR2(<span class="number">64</span>),</span><br><span class="line">    GIRL_SEX VARCHAR2(<span class="number">2</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>4、索引</strong></p>
+<p>添加主键索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> test.girl <span class="keyword">add</span> <span class="keyword">primary</span> key(ID);</span><br></pre></td></tr></table></figure>
+
+<p><strong>5、查询、新增、修改、删除</strong></p>
+<p>查询表girl</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> test.girl;</span><br></pre></td></tr></table></figure>
+
+<p>新增数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> test.girl <span class="keyword">values</span>(<span class="string">&#x27;1001&#x27;</span>,<span class="string">&#x27;梦梦&#x27;</span>,<span class="string">&#x27;女&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>修改数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> test.girl t <span class="keyword">set</span> t.ID<span class="operator">=</span><span class="string">&#x27;1002&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>删除数据</p>
+<p>删除表中全部数据，但不删除表结构。使用drop则删除表结构以及数据。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> test.girl;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="PostgreSQL：初体验"><a href="#PostgreSQL：初体验" class="headerlink" title="PostgreSQL：初体验"></a>PostgreSQL：初体验</h3><p>主要熟悉PostgreSQL自带的SQL shell字符命令工具和pgAdmin客户端管理工具的使用。</p>
+<ol>
+<li>SQL shell</li>
+<li>pgAdmin</li>
+</ol>
+<p>可以在我个人公众号历史文章中找到关于PostgreSQL入门教程。</p>
+<h3 id="Demo示例"><a href="#Demo示例" class="headerlink" title="Demo示例"></a>Demo示例</h3><p><strong>SQL必知必会demo示例</strong></p>
+<p>官网地址：<span class="exturl" data-url="aHR0cHM6Ly9mb3J0YS5jb20vYm9va3MvMDEzNTE4Mjc5NC8=">https://forta.com/books/0135182794/<i class="fa fa-external-link-alt"></i></span></p>
+<p>涵盖DBMS示例：DB2、SQLserver、MySQL、Oracle、PostgreSQL、SQLite</p>
+<p><strong>SQL表结构示例下载</strong></p>
+<p>个人整理一些资料进行整合打包。</p>
+<p>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMU1IVmEtb28yMlhLSm9MbWY3TnJVNEE=">https://pan.baidu.com/s/1MHVa-oo22XKJoLmf7NrU4A<i class="fa fa-external-link-alt"></i></span>	</p>
+<p>提取码: cx3p </p>
+<p><strong>参考资料</strong>：</p>
+<ol>
+<li>SQL必知必会第5版。</li>
+</ol>
+<p>最后，以上总结仅供参考哟！</p>
+<p><strong>——END——</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2023/03/16/SQL%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%89%AB%E7%9B%B2/" title="SQL基础知识扫盲">https://blog.cnwangk.top/2023/03/16/SQL基础知识扫盲/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/SQL/" rel="tag"><i class="fa fa-tag"></i> SQL</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/15/MySQL8-0-x-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" rel="prev" title="MySQL8.0.x 简易安装教程">
+                  <i class="fa fa-angle-left"></i> MySQL8.0.x 简易安装教程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/03/16/%E9%BE%99%E8%85%BE%E4%B8%87%E9%87%8Csky%E5%B0%8F%E7%AB%99%E5%A4%87%E7%94%A8%E5%9C%B0%E5%9D%80/" rel="next" title="龙腾万里sky小破站备用地址">
+                  龙腾万里sky小破站备用地址 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/03/16/SQL%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%89%AB%E7%9B%B2/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

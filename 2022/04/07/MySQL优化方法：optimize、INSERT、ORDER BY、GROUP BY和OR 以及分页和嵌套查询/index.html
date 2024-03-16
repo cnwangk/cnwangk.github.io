@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="主要介绍：MySQL定期分析表、定期优化表；批量（大量）插入数据优化技巧；优化 INSERT、ORDER BY、GROUP BY 语句、优化 OR 条件；优化嵌套查询、分页查询；使用SQL提示。 只停留在看上面，提升效果甚微。应该带着思考去测试佐证，或者使用（同类书籍）新版本进行对比，这样带来的效果更好。最重要的一环，养成阅读官方文档，是一个良好的习惯。能编写官方文档，至少证明他们在这个领域是有很">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="MySQL优化方法：optimize、INSERT、ORDER BY、GROUP BY和OR 以及分页和嵌套查询">
+<meta property="og:url" content="https://blog.cnwangk.top/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9Aoptimize%E3%80%81INSERT%E3%80%81ORDER%20BY%E3%80%81GROUP%20BY%E5%92%8COR%20%E4%BB%A5%E5%8F%8A%E5%88%86%E9%A1%B5%E5%92%8C%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="主要介绍：MySQL定期分析表、定期优化表；批量（大量）插入数据优化技巧；优化 INSERT、ORDER BY、GROUP BY 语句、优化 OR 条件；优化嵌套查询、分页查询；使用SQL提示。 只停留在看上面，提升效果甚微。应该带着思考去测试佐证，或者使用（同类书籍）新版本进行对比，这样带来的效果更好。最重要的一环，养成阅读官方文档，是一个良好的习惯。能编写官方文档，至少证明他们在这个领域是有很">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/acf1fd88c4b72660309388d03852a999.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/17d4943de92930dea49aa6fe2eaeac55.png">
+<meta property="article:published_time" content="2022-04-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-25T14:51:42.153Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/acf1fd88c4b72660309388d03852a999.png">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9Aoptimize%E3%80%81INSERT%E3%80%81ORDER%20BY%E3%80%81GROUP%20BY%E5%92%8COR%20%E4%BB%A5%E5%8F%8A%E5%88%86%E9%A1%B5%E5%92%8C%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9Aoptimize%E3%80%81INSERT%E3%80%81ORDER%20BY%E3%80%81GROUP%20BY%E5%92%8COR%20%E4%BB%A5%E5%8F%8A%E5%88%86%E9%A1%B5%E5%92%8C%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2/","path":"2022/04/07/MySQL优化方法：optimize、INSERT、ORDER BY、GROUP BY和OR 以及分页和嵌套查询/","title":"MySQL优化方法：optimize、INSERT、ORDER BY、GROUP BY和OR 以及分页和嵌套查询"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL优化方法：optimize、INSERT、ORDER BY、GROUP BY和OR 以及分页和嵌套查询 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94SQL%E8%AF%AD%E5%8F%A5%E5%B8%B8%E7%94%A8%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">MySQL优化——SQL语句常用优化方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-%E7%AE%80%E5%8D%95%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-number">1.0.1.</span> <span class="nav-text">01 简单优化方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E5%AE%9A%E6%9C%9F%E5%88%86%E6%9E%90%E8%A1%A8%E5%92%8C%E6%A3%80%E6%9F%A5%E8%A1%A8"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">1.1  定期分析表和检查表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E5%AE%9A%E6%9C%9F%E4%BC%98%E5%8C%96%E8%A1%A8"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">1.2  定期优化表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-%E5%B8%B8%E7%94%A8SQL%E4%BC%98%E5%8C%96"><span class="nav-number">1.0.2.</span> <span class="nav-text">02 常用SQL优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E6%89%B9%E9%87%8F%EF%BC%88%E5%A4%A7%E9%87%8F%EF%BC%89%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">2.1  批量（大量）插入数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E4%BC%98%E5%8C%96-INSERT%E3%80%81ORDER-BY%E3%80%81GROUP-BY-%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">2.2  优化 INSERT、ORDER BY、GROUP BY 语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-%E4%BC%98%E5%8C%96%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2%E3%80%81%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">2.3  优化嵌套查询、分页查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-%E4%BC%98%E5%8C%96-OR-%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.0.2.4.</span> <span class="nav-text">2.4  优化 OR 条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-%E4%BD%BF%E7%94%A8-SQL-%E6%8F%90%E7%A4%BA"><span class="nav-number">1.0.2.5.</span> <span class="nav-text">2.5  使用 SQL 提示</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#03-MySQL%E5%AE%98%E6%96%B9%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.0.3.</span> <span class="nav-text">03  MySQL官方示例数据库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%AB%E9%97%AE%E6%94%B6%E8%8E%B7%EF%BC%8C%E4%BD%86%E9%97%AE%E8%80%95%E8%80%98"><span class="nav-number">2.</span> <span class="nav-text">莫问收获，但问耕耘</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%B5%81%E7%A8%8B%EF%BC%9A%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E5%85%B8%E5%9E%8B%E5%9C%BA%E6%99%AFAND%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF/" rel="bookmark">
+        <time class="popular-posts-time">2022-04-07</time>
+        <br>
+      MySQL优化流程：使用索引典型场景AND索引失效场景
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7%EF%BC%9ARAND()%E5%92%8CWITH%20ROLLUP%E3%80%81Bit%20GROUP%E4%BB%A5%E5%8F%8A%E5%A4%96%E9%94%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" rel="bookmark">
+        <time class="popular-posts-time">2022-04-07</time>
+        <br>
+      MySQL优化技巧：RAND()和WITH ROLLUP、Bit GROUP以及外键注意事项
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9Aoptimize%E3%80%81INSERT%E3%80%81ORDER%20BY%E3%80%81GROUP%20BY%E5%92%8COR%20%E4%BB%A5%E5%8F%8A%E5%88%86%E9%A1%B5%E5%92%8C%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MySQL优化方法：optimize、INSERT、ORDER BY、GROUP BY和OR 以及分页和嵌套查询 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL优化方法：optimize、INSERT、ORDER BY、GROUP BY和OR 以及分页和嵌套查询
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-07 00:00:00" itemprop="dateCreated datePublished" datetime="2022-04-07T00:00:00+08:00">2022-04-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-25 22:51:42" itemprop="dateModified" datetime="2023-09-25T22:51:42+08:00">2023-09-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>27 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>主要介绍：MySQL定期分析表、定期优化表；批量（大量）插入数据优化技巧；优化 INSERT、ORDER BY、GROUP BY 语句、优化 OR 条件；优化嵌套查询、分页查询；使用SQL提示。</p>
+<p>只停留在看上面，提升效果甚微。应该带着思考去测试佐证，或者使用（同类书籍）新版本进行对比，这样带来的效果更好。最重要的一环，<strong>养成阅读官方文档</strong>，是一个良好的习惯。能编写官方文档，至少证明他们在这个领域是有很高的造诣，对用法足够熟练。</p>
+<p><strong>tips</strong>：图片资源可能被防盗链（寄）了，可以<strong>右键属性复制地址在地址栏查看</strong>哈。</p>
+<span id="more"></span>
+
+<p>示例数据库使用MySQL官方提供的sakila（模拟电影出租信息管理系统）和world数据库，类似于Oracle的scott用户。</p>
+<p>你可以将这篇博文，当成过度到MySQL8.0的参考资料。<strong>友情提示：经验是用来参考，不是拿来即用</strong>。如果您能看到并分享这篇文章，我很荣幸。如果有误导您的地方，我表示抱歉。</p>
+<p>如果没有进行特别说明，一般是基于MySQL8.0.28进行测试验证。官方文档非常具有参考意义。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/acf1fd88c4b72660309388d03852a999.png"></p>
+<p><strong>注意</strong>：在某些情况，你自己测试的结果可能与我演示有所不同，我省略了查询结果的部分参数。</p>
+<p>如果你是从MySQL5.6或者5.7版本过渡到MySQL8.0。学习之前，建议线看官方文档这一章节：1.3 What Is New MySQL8.0 。在做对比的时候，<strong>文档中带有Note标识是你应该注意的地方</strong>。比如下面这张截图：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/17d4943de92930dea49aa6fe2eaeac55.png"></p>
+<h1 id="MySQL优化——SQL语句常用优化方法"><a href="#MySQL优化——SQL语句常用优化方法" class="headerlink" title="MySQL优化——SQL语句常用优化方法"></a>MySQL优化——SQL语句常用优化方法</h1><h3 id="01-简单优化方法"><a href="#01-简单优化方法" class="headerlink" title="01 简单优化方法"></a>01 简单优化方法</h3><p>对于开发人员来说，可能只需掌握简单实用的优化方法。比较复杂的优化，一般交给DBA来管理。</p>
+<ol>
+<li><code>analyze</code>：分析表，analyze table table_name;</li>
+<li><code>check</code>：检查表，check table table_name;</li>
+<li><code>checksum table</code>：检查表；</li>
+<li><code>optimize table</code>：优化表，同时支持MyISAM和InnoDB表。回收删除操作造成的空洞，比如回收索引。</li>
+<li><code>repair table</code>：修复表，支持 MyISAM，ARCHIVE以及CSV 表。</li>
+</ol>
+<h4 id="1-1-定期分析表和检查表"><a href="#1-1-定期分析表和检查表" class="headerlink" title="1.1  定期分析表和检查表"></a>1.1  定期分析表和检查表</h4><p>定期分析与检查主要有两个关键命令：</p>
+<ol>
+<li><code>analyze</code>：分析表，analyze table table_name;</li>
+<li><code>check</code>：检查表，check table table_name;</li>
+</ol>
+<p><strong>分析（analyze）表语法</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ANALYZE [NO_WRITE_TO_BINLOG <span class="operator">|</span> <span class="keyword">LOCAL</span>]</span><br><span class="line"><span class="keyword">TABLE</span> tbl_name [, tbl_name] ...</span><br><span class="line"></span><br><span class="line">ANALYZE [NO_WRITE_TO_BINLOG <span class="operator">|</span> <span class="keyword">LOCAL</span>]</span><br><span class="line"><span class="keyword">TABLE</span> tbl_name</span><br><span class="line"></span><br><span class="line"><span class="keyword">UPDATE</span> HISTOGRAM <span class="keyword">ON</span> col_name [, col_name] ...</span><br><span class="line">[<span class="keyword">WITH</span> N BUCKETS]</span><br><span class="line"></span><br><span class="line">ANALYZE [NO_WRITE_TO_BINLOG <span class="operator">|</span> <span class="keyword">LOCAL</span>]</span><br><span class="line"><span class="keyword">TABLE</span> tbl_name</span><br><span class="line"><span class="keyword">DROP</span> HISTOGRAM <span class="keyword">ON</span> col_name [, col_name] ...</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例分析表</strong>：可以使用官方示例库进行分析，个人使用自己创建test数据库进行测试tolove表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">analyze <span class="keyword">table</span> test.tolove;</span><br><span class="line"><span class="operator">+</span><span class="comment">-------------+---------+----------+-----------------------------+</span></span><br><span class="line"><span class="operator">|</span> <span class="keyword">Table</span>       <span class="operator">|</span> Op      <span class="operator">|</span> Msg_type <span class="operator">|</span> Msg_text                    <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-------------+---------+----------+-----------------------------+</span></span><br><span class="line"><span class="operator">|</span> test.tolove <span class="operator">|</span> analyze <span class="operator">|</span> status   <span class="operator">|</span> <span class="keyword">Table</span> <span class="keyword">is</span> already up <span class="keyword">to</span> <span class="type">date</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-------------+---------+----------+-----------------------------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>总结</strong>：analyze语句用于分析存储表关键字分布，分析结果使系统得到更准确的信息，SQL生成预期执行计划。如果你感觉实际执行计划没有达到预期结果，不妨尝试执行一次分析表计划。</p>
+<p><strong>检查（check）表语法</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CHECK</span> <span class="keyword">TABLE</span> tbl_name [, tbl_name] ... [option] ...</span><br><span class="line">option: &#123;</span><br><span class="line"><span class="keyword">FOR</span> UPGRADE</span><br><span class="line"><span class="operator">|</span> QUICK <span class="operator">|</span> FAST  <span class="operator">|</span> MEDIUM</span><br><span class="line"><span class="operator">|</span> EXTENDED  <span class="operator">|</span> CHANGED</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>示例检查表</strong>：这张tolove表创建后修改为<code>MyISAM</code>存储引擎进行测试，<strong>数据量1kw</strong>，所以分析起来有点耗时。</p>
+<p><strong>tips</strong>：同时测试使用InnoDB表，数据量1kw，花了5.21sec，这里就不贴出来了。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">check</span> <span class="keyword">table</span> test.tolove;</span><br><span class="line"><span class="operator">+</span><span class="comment">-------------+-------+----------+----------+</span></span><br><span class="line"><span class="operator">|</span> <span class="keyword">Table</span>       <span class="operator">|</span> Op    <span class="operator">|</span> Msg_type <span class="operator">|</span> Msg_text <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-------------+-------+----------+----------+</span></span><br><span class="line"><span class="operator">|</span> test.tolove <span class="operator">|</span> <span class="keyword">check</span> <span class="operator">|</span> status   <span class="operator">|</span> OK       <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-------------+-------+----------+----------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">1.63</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>check table作用</strong>：用于检查一张或多张表是否有错误，前面提到过，同时支持MyISAM和InnoDB表。同样支持检查视图，这里不做示范，可以自行参考文档进行测试验证。</p>
+<h4 id="1-2-定期优化表"><a href="#1-2-定期优化表" class="headerlink" title="1.2  定期优化表"></a>1.2  定期优化表</h4><p><strong>优化（optimize ）表语法</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OPTIMIZE [NO_WRITE_TO_BINLOG <span class="operator">|</span> <span class="keyword">LOCAL</span>]</span><br><span class="line"><span class="keyword">TABLE</span> tbl_name [, tbl_name] ...</span><br></pre></td></tr></table></figure>
+
+<p>如果已经删除了表中一大部分数据，或已经对含有可变长度行的表（例如含有：varchar、blob或者txt列的表）进行很多更改，则可以使用<code>optimize table</code>命令 进行优化表。</p>
+<p><strong>作用</strong>：<code>optimize</code>命令可以将表中空间碎片进行合并，消除由于删除或者更新造成的空间浪费。<strong>同样支持MyISAM和InnoDB表</strong>。</p>
+<p><strong>示例（optimize）优化表</strong>：演示的tolove表前面说过指定MyISAM存储引擎</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> optimize <span class="keyword">table</span> test.tolove\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">   <span class="keyword">Table</span>: test.tolove</span><br><span class="line">      Op: optimize</span><br><span class="line">Msg_type: status</span><br><span class="line">Msg_text: <span class="keyword">Table</span> <span class="keyword">is</span> already up <span class="keyword">to</span> <span class="type">date</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>测试test表使用InnoDB存储引擎</strong>。对于InnoDB存储引擎，通过设置<code>innodb_file_per_table</code>参数（默认值为1），改为独立表空间模式，每个数据库每张表会生成独立ibd文件，用于存储表和索引，可以在一定程度上减轻 InnoDB表回收空间问题。此外，在删除大量数据后，可以通过<code>alter table</code>命令不修改表引擎方式回收不用的空间：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> optimize <span class="keyword">table</span> test.test\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">   <span class="keyword">Table</span>: test.test</span><br><span class="line">      Op: optimize</span><br><span class="line">Msg_type: note</span><br><span class="line">Msg_text: <span class="keyword">Table</span> does <span class="keyword">not</span> support optimize, doing recreate <span class="operator">+</span> analyze instead</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">2.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">   <span class="keyword">Table</span>: test.test</span><br><span class="line">      Op: optimize</span><br><span class="line">Msg_type: status</span><br><span class="line">Msg_text: OK</span><br><span class="line"><span class="number">2</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">17.85</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">alter</span> <span class="keyword">table</span> test.test engine<span class="operator">=</span>innodb;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="keyword">rows</span> affected (<span class="number">20.30</span> sec)</span><br><span class="line">Records: <span class="number">0</span>  Duplicates: <span class="number">0</span>  Warnings: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：<code>analyze</code>、<code>check</code>、<code>optimize</code>以及<code>alter table</code><strong>执行期间将对表进行锁定</strong>，<strong>一定要注意在数据库不频繁使用期间，再进行相关操作</strong>。</p>
+<p><strong>提到优化方法</strong>，在MySQL8.0文档中你可以找到参考内容：</p>
+<blockquote>
+<p>1.7 MySQL Standards Compliance</p>
+<p>13.7.3 Table Maintenance Statements</p>
+</blockquote>
+<h3 id="02-常用SQL优化"><a href="#02-常用SQL优化" class="headerlink" title="02 常用SQL优化"></a>02 常用SQL优化</h3><p>在某种场景下，查询使用很频繁，针对查询优化确实很有必要。</p>
+<p>但实际开发中，还会面临使用其它常用SQL，比如insert、group by、order by等等。</p>
+<h4 id="2-1-批量（大量）插入数据"><a href="#2-1-批量（大量）插入数据" class="headerlink" title="2.1  批量（大量）插入数据"></a>2.1  批量（大量）插入数据</h4><p>在使用load命令导入数据时，适当进行设置可以提高导入效率。</p>
+<p>对于MyISAM表可以通过以下方式快速导入大量数据。</p>
+<p><strong>操作命令</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name DISABLE KEYS;  <span class="comment">-- 禁用MyISAM表非唯一索引更新</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name ENABLE KEYS; <span class="comment">-- 开启MyISAM表非唯一索引更新</span></span><br></pre></td></tr></table></figure>
+
+<p>disable keys和enable keys用于开启和关闭MyISAM表非唯一索引更新。</p>
+<p>MyISAM存储引擎默认，导入大量数据至一张空MyISAM表，默认先导入数据，然后创建索引，不用进行设置。</p>
+<p><strong>示例导入数据语句</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data infile <span class="string">&#x27;file_name&#x27;</span> <span class="keyword">into</span> <span class="keyword">table</span> tbl_name;</span><br></pre></td></tr></table></figure>
+
+<p>自行测试时，可以先手动开启非唯一索引，然后关闭非唯一索引进行对比导入时间。</p>
+<p>通过测试关闭唯一索引，导入数据效率确实要高很多。<strong>这是对MyISAM表进行测试优化，对InnoDB类型表上述方式作用不是很大</strong>。</p>
+<p><strong>InnoDB表导入表同样也有相应优化措施</strong>：</p>
+<ol>
+<li>导入数据按主键顺序排列，可以提高效率。（<strong>InnoDB表是按主键顺序排列</strong>）</li>
+<li>导入数据前执行set unique_checks&#x3D;0，关闭唯一性校验；导入完成，再设置set unique_checks&#x3D;1，恢复唯一性校验。从而提高导入效率。</li>
+<li>如果应用使用自动提交（autocommit），建议导入前执行set autocommit&#x3D;0，关闭自动提交。导入数据后，再设置set autocommit&#x3D;1，开启自动提交，同样可以提高导入效率。</li>
+</ol>
+<p>MyISAM表和InnoDB表导入数据语句是一样的。以上介绍MyISAM表和InnoDB表导入数据优化方式，可进行参考测试验证。</p>
+<p>更多关于MyISAM表插入数据优化方法可以参考如下引用说明： <strong>对于文档理应善于使用搜索Ctrl + f</strong></p>
+<blockquote>
+<p>8.5 Optimizing for InnoDB Tables  </p>
+<p>8.6 Optimizing for MyISAM Tables</p>
+<p>13.2.7 LOAD DATA Statement</p>
+</blockquote>
+<h4 id="2-2-优化-INSERT、ORDER-BY、GROUP-BY-语句"><a href="#2-2-优化-INSERT、ORDER-BY、GROUP-BY-语句" class="headerlink" title="2.2  优化 INSERT、ORDER BY、GROUP BY 语句"></a>2.2  优化 INSERT、ORDER BY、GROUP BY 语句</h4><p>你可以找到参考内容：</p>
+<blockquote>
+<p>13.2.6 INSERT Statement</p>
+<p>8.2.1.16 ORDER BY Optimization</p>
+<p>8.2.1.17 GROUP BY Optimization</p>
+</blockquote>
+<p><strong>2.2.1 INSERT语句</strong></p>
+<p>当进行数据库<code>INSERT</code>操作时，可以考虑以下几种优化方式。</p>
+<p>如果同时从同一用户表插入多行，应尽量<strong>使用多个值表的INSERT语句</strong>，这种方式大大缩减客户端与数据库之间的连接、关闭等消耗。一般情况下，比单个执行INSERT语句效率要高得多，但也分场景。下面给出一次插入多值示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tbl_name(a,b,c) <span class="keyword">VALUES</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>), (<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>), (<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上述演示，指定字段。从安全角度考虑，实际开发过程中也是推荐指定字段，因为这种方式更加安全。多年前，我还是一位菜鸡开发人员，虽然现在也是一名菜鸟。当时不是很理解，为何在DAO中非要在前面指明字段。直到某天翻阅实体书籍时，才意识到。</p>
+<p>如果从不同用户插入多行。<strong>使用到DELAYED语句，需要注意了</strong>，在MySQL5.6之前版本还没被移除，<strong>从MySQL5.6开始已经弃用</strong>。使用<strong>DELAYED之所以快，其实数据被存放在内存队列中，并没有真正写入从磁盘</strong>。</p>
+<p><strong>注意事项</strong>：<code>DELAYED</code>关键字计划在未来的版本中删除。延迟插入（ DELAYED INSERT ）和替换在MySQL 5.6中已弃用。在MySQL 8.0中，不支持DELAYED。服务器可以识别，但会忽略DELAYED关键字，将插入处理视为非延迟插入，并生成ER_WARN_LEGACY_SYNTAX_CONVERTED 警告：INSERT DELAYED is no longer supported. The statement was converted to INSERT。</p>
+<p><strong>可以将索引文件与数据文件在不同的磁盘上存放，建表时可以选择</strong>。</p>
+<p>如果进行批量插入，可以通过增减<code>bulk_insert_buffer_size</code>变量值的方法来提高速度。对MyISAM表有效，MyISAM使用一种特殊的树状缓存，使批量插入更快。 INSERT … SELECT，INSERT … VALUES (…)，(…)，…，和LOAD DATA在添加数据到非空表时。这个变量以每个线程的字节为单位限制缓存树的大小。将其设置为0将禁用此优化。默认值为8MB。</p>
+<p><strong>注意事项</strong>：从MySQL 8.0.14开始，设置<code>bulk_insert_buffer_size</code>这个系统变量的会话值是一个受限制的操作。会话用户必须具有设置受限制会话变量的权限。</p>
+<p><strong>当从一个文本装载一张表时，使用LOAD DATA INFILE，一般比使用INSERT语句快得多</strong>。</p>
+<p>从MySQL 8.0.19版本开始，你也可以使用INSERT…TABLE在MySQL 8.0.19及以后版本中插入一行，使用TABLE替换SELECT。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tb (i <span class="type">INT</span>);</span><br><span class="line">Query OK, <span class="number">0</span> <span class="keyword">rows</span> affected (<span class="number">0.02</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">INSERT</span> <span class="keyword">INTO</span> tb <span class="keyword">TABLE</span> t;</span><br><span class="line">Query OK, <span class="number">3</span> <span class="keyword">rows</span> affected (<span class="number">0.01</span> sec)</span><br><span class="line">Records: <span class="number">3</span>  Duplicates: <span class="number">0</span>  Warnings: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>以上演示，是将表 t 中所有记录插入到 tb 表中，与之前<code>insert into tb select * from t</code>用法是一样的执行效果。</p>
+<p><strong>2.2.2 ORDER BY语句</strong></p>
+<p>看到<code>ORDER BY</code>语句，可以联想到排序方式。那么，了解一下MySQL中的排序方式。</p>
+<p>查看world数据库中city表索引情况：此处省略掉了一些参数值，全部展示篇幅太长。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> index <span class="keyword">from</span> city\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">        <span class="keyword">Table</span>: city</span><br><span class="line">   Non_unique: <span class="number">0</span></span><br><span class="line">     Key_name: <span class="keyword">PRIMARY</span></span><br><span class="line"> Seq_in_index: <span class="number">1</span></span><br><span class="line">  Column_name: ID</span><br><span class="line">    <span class="keyword">Collation</span>: A</span><br><span class="line">  <span class="keyword">Cardinality</span>: <span class="number">4046</span></span><br><span class="line">   Index_type: BTREE</span><br><span class="line">      Visible: YES</span><br><span class="line">   Expression: <span class="keyword">NULL</span></span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">2.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">        <span class="keyword">Table</span>: city</span><br><span class="line">   Non_unique: <span class="number">1</span></span><br><span class="line">     Key_name: CountryCode</span><br><span class="line"> Seq_in_index: <span class="number">1</span></span><br><span class="line">  Column_name: CountryCode</span><br><span class="line">    <span class="keyword">Collation</span>: A</span><br><span class="line">  <span class="keyword">Cardinality</span>: <span class="number">232</span></span><br><span class="line">   Index_type: BTREE</span><br><span class="line">      Visible: YES</span><br><span class="line">   Expression: <span class="keyword">NULL</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>MySQL中有两种排序方式</strong>：</p>
+<ol>
+<li>Use of Indexes to Satisfy ORDER BY，使用using index。</li>
+<li>Use of filesort to Satisfy ORDER BY，使用filesort。</li>
+</ol>
+<p>在某些情况下，MySQL可能会使用索引来满足ORDER BY子句，从而避免执行filesort操作时涉及的额外排序。<strong>第一种通过有序使用顺序扫描直接返回有序数据</strong>，这种方式在使用explain分析查询时显示<code>Using index</code>，无需额外排序，操作效率较高，示例如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> id <span class="keyword">from</span> city <span class="keyword">order</span> <span class="keyword">by</span> id\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: city</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: index</span><br><span class="line">possible_keys: <span class="keyword">NULL</span></span><br><span class="line">          key: <span class="keyword">PRIMARY</span></span><br><span class="line">      key_len: <span class="number">4</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">4046</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> index</span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果索引不能满足ORDER BY子句，MySQL执行一个filesort操作，读取表行并对它们排序。filesort在查询执行中构成一个额外的排序阶段。<strong>第二种是通过对返回数据进行排序</strong>，也是通常所说的<code>filesort</code>排序，所有不是通过索引直接返回结果的排序都称为filesort排序。</p>
+<p>filesort并不代表通过磁盘文件进行排序，只是说明进行了一个排序操作，至于操作是否使用了磁盘文件或者临时表等，则取决于MySQL服务器对排序参数的设置和需要排序数据的大小。</p>
+<p>如果结果集太大，无法装入内存，则 filesort 操作将根据需要使用临时磁盘文件。有些类型的查询特别适合于完全在内存中的filesort操作。例如，优化器可以使用filesort在内存中有效地处理，而不需要临时文件。示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ... <span class="keyword">FROM</span> single_table ... <span class="keyword">ORDER</span> <span class="keyword">BY</span> non_index_column [<span class="keyword">DESC</span>] LIMIT [M,]N;</span><br></pre></td></tr></table></figure>
+
+<p>以下给出使用 Using filesort 情况示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> store_id,email,customer_id <span class="keyword">from</span> sakila.customer <span class="keyword">order</span> <span class="keyword">by</span> email\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: customer</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: index</span><br><span class="line">possible_keys: <span class="keyword">NULL</span></span><br><span class="line">          key: idx_storeid_email</span><br><span class="line">      key_len: <span class="number">204</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">599</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> index; <span class="keyword">Using</span> filesort</span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：为了获得 filesort 操作的内存，<strong>从MySQL 8.0.12开始，优化器根据需要增量分配内存缓冲区(sort_buffer_size )<strong>，直到由排序缓冲区大小系统变量指示的大小，而不是像在</strong>MySQL 8.0.12之前那样，预先分配固定数量的排序缓冲区(sort_buffer_size )大小字节</strong>。这使用户可以将排序缓冲区大小设置为更大的值，以加快更大的排序，而不用担心小排序会占用过多的内存。(这种好处可能不会出现在Windows上的多个并发排序，因为Windows有一个弱多线程malloc。）</p>
+<p>了解MySQL排序方式后，优化目的清晰了：<strong>尽量减少额外排序，通过索引直接返回数据</strong>。</p>
+<p>添加组合索引，然后使用explain执行测试：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">ALTER</span> <span class="keyword">TABLE</span> sakila.customer <span class="keyword">ADD</span> INDEX idx_storeid_email(store_id,email);</span><br><span class="line">Query OK, <span class="number">0</span> <span class="keyword">rows</span> affected (<span class="number">0.04</span> sec)</span><br><span class="line">Records: <span class="number">0</span>  Duplicates: <span class="number">0</span>  Warnings: <span class="number">0</span></span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> store_id,email,customer_id <span class="keyword">from</span> sakila.customer <span class="keyword">where</span> store_id<span class="operator">=</span><span class="number">1</span> <span class="keyword">order</span> <span class="keyword">by</span> email <span class="keyword">desc</span>\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: customer</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: <span class="keyword">ref</span></span><br><span class="line">possible_keys: idx_fk_store_id,idx_storeid_email</span><br><span class="line">          key: idx_storeid_email</span><br><span class="line">      key_len: <span class="number">1</span></span><br><span class="line">          <span class="keyword">ref</span>: const</span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">326</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: Backward index scan; <span class="keyword">Using</span> index</span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>依据上面测试演示结果，可以分析出返回索引扫描。如果是在8.0之前显示有所区别，比如在MySQL5.7出现的是Extra: Using where; Using index。</p>
+<p>查询商店编号store_id大于等于1小于等于3，按照email进行排序记录主键customer_id时，由于优化器评估使用索引idx_storeid_email进行范围扫描const最低，所以最终对索引进行扫描的结果，进行额外email逆序操作：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> store_id,email,customer_id <span class="keyword">from</span> sakila.customer <span class="keyword">where</span> store_id<span class="operator">&gt;=</span><span class="number">1</span> <span class="keyword">and</span> store_id<span class="operator">&lt;=</span><span class="number">3</span> <span class="keyword">order</span> <span class="keyword">by</span> email <span class="keyword">desc</span>\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: customer</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: index</span><br><span class="line">possible_keys: idx_fk_store_id,idx_storeid_email</span><br><span class="line">          key: idx_storeid_email</span><br><span class="line">      key_len: <span class="number">204</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">599</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> <span class="keyword">where</span>; <span class="keyword">Using</span> index; <span class="keyword">Using</span> filesort</span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>优化filesort</strong>：通过建立合适的索引减少 filesort 出现，但在某种情况下，条件限制无法让 filesort 消失，可以想办法加快 filesort 操作。如何加快，可以通过控制<code>sort_buffer_size</code> 和  <code>max_length_for_sort_data</code>（max_sort_length ） 大小进行优化。</p>
+<p><strong>注意</strong>：对于没有使用filesort的慢<code>ORDER BY</code>查询，尝试将排序数据系统变量（max_length_for_sort_data）的最大长度降低到适合触发filesort的值。(将此变量值设置过高的一个症状是高磁盘活动和低CPU活动的结合。)这种技术只适用于MySQL 8.0.20之前。从8.0.20开始，排序数据的最大长度已弃用，因为优化器的更改使其过时且无效。</p>
+<p><strong>2.2.3 GROUP BY语句</strong></p>
+<p>满足<code>GROUP BY</code>子句的最常用方法是扫描全表，并创建一个新的临时表，其中每个组中所有行都是连续的，然后使用这个临时表来发现组并应用聚合函数(如果存在的话)。在某些情况下，MySQL能够做得更好，并通过使用索引访问避免创建临时表。</p>
+<p>GROUP BY使用索引最重要的前提条件：所有GROUP BY列引用来自同一索引的属性，并且该索引按顺序存储其键(例如，对于BTREE索引是这样，但对于HASH索引则不同)。临时表的使用是否可以被索引访问替代，还取决于查询中使用索引的哪些部分、为这些部分指定的条件以及所选的聚合函数。</p>
+<p><strong>访问索引执行 GROUP BY 两种扫描方式</strong>：</p>
+<ol>
+<li>松散索引扫描（Loose Index Scan）</li>
+<li>密集索引扫描（Tight Index Scan）</li>
+</ol>
+<p>默认情况下，MySQL对所有<code>GROUP BY</code> c1，c2，…字段进行排序，与查询中指定<code>ORDER BY</code>  c1，c2，…类似。因此，如果显示包括一个相同列的<code>ORDER BY</code>子句，对MySQL实际执行性能没有什么影响。</p>
+<p>如果查询包括GROUP BY，但用户想避免排序结果的消耗，则可以指定ORDER BY NULL禁止排序。如下示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> payment_date,<span class="built_in">sum</span>(amount) <span class="keyword">from</span> sakila.payment <span class="keyword">group</span> <span class="keyword">by</span> payment_date\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: payment</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: <span class="keyword">ALL</span></span><br><span class="line">possible_keys: <span class="keyword">NULL</span></span><br><span class="line">          key: <span class="keyword">NULL</span></span><br><span class="line">      key_len: <span class="keyword">NULL</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">16086</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> temporary</span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>分析查询出来的结果，发现Extra: Using temporary，使用一个临时表。type&#x3D;ALL，执行全表扫描。</p>
+<p><strong>注意</strong>：在MySQL5.7或者更低的版本中使用 <code>ORDER BY NULL</code>有显示优化作用，<code>GROUP BY</code>在特定条件下隐式排序。在MySQL8.0中不再出现这种情况，所以在最后指定 ORDER BY NULL 来抑制隐式排序，就没有必要了。但是，查询结果可能与之前的MySQL版本有所不同。要生成给定的排序顺序，请使用 ORDER BY子句。</p>
+<p>即使在MySQL8.0中显示使用<code>ORDER BY NULL</code> 来抑制隐式排序，结果并没变化。但在MySQL5.7或者MariaDB10.5.6中使用时有变化，而且你会发现执行结果出现：Extra: Using temporary; Using filesort。对于filesort吗，上面也给出了简单处理方法。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> payment_date,<span class="built_in">sum</span>(amount) <span class="keyword">from</span> sakila.payment <span class="keyword">group</span> <span class="keyword">by</span> payment_date <span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">null</span>\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: payment</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: <span class="keyword">ALL</span></span><br><span class="line">possible_keys: <span class="keyword">NULL</span></span><br><span class="line">          key: <span class="keyword">NULL</span></span><br><span class="line">      key_len: <span class="keyword">NULL</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">16086</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> temporary</span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="2-3-优化嵌套查询、分页查询"><a href="#2-3-优化嵌套查询、分页查询" class="headerlink" title="2.3  优化嵌套查询、分页查询"></a>2.3  优化嵌套查询、分页查询</h4><p><strong>2.3.1 嵌套查询</strong></p>
+<p>你可以找到参考内容：8.2.1 Optimizing SELECT Statements</p>
+<p>MySQL4.1中开始支持SQL子查询。这个技术可以使用SELECT语句来创建一个单列的查询结果，然后将查询的结果作为过滤条件作用在另一个查询中。使子查询可以一次性完成更多逻辑上需要多个步骤才能完成的SQL操作，同时可以表面事务或者表锁死，编写相对容易。但在某些情况下，使用连接（join）效率更高，可以被替代。</p>
+<p><strong>示例</strong>：在顾客表查询排除支付表中的所有顾客信息，使用子查询实现。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> EXPLAIN <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> sakila.`customer` <span class="keyword">WHERE</span> customer_id</span><br><span class="line">  <span class="keyword">NOT</span> <span class="keyword">IN</span>(<span class="keyword">SELECT</span> customer_id <span class="keyword">FROM</span> sakila.`payment`)\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: customer</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: <span class="keyword">ALL</span></span><br><span class="line">possible_keys: <span class="keyword">NULL</span></span><br><span class="line">          key: <span class="keyword">NULL</span></span><br><span class="line">      key_len: <span class="keyword">NULL</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">599</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: <span class="keyword">NULL</span></span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">2.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: payment</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: <span class="keyword">ref</span></span><br><span class="line">possible_keys: idx_fk_customer_id</span><br><span class="line">          key: idx_fk_customer_id</span><br><span class="line">      key_len: <span class="number">2</span></span><br><span class="line">          <span class="keyword">ref</span>: sakila.customer.customer_id</span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">26</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> <span class="keyword">where</span>; <span class="keyword">Not</span> <span class="keyword">exists</span>; <span class="keyword">Using</span> index</span><br><span class="line"><span class="number">2</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>可使用join进行改进，我提供思路，用left join进行连接查询，主要以customer表为主，也是以左表为主。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> sakila.`customer` a <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> sakila.`payment` b <span class="keyword">ON</span></span><br><span class="line">a.`customer_id`<span class="operator">=</span>b.`customer_id` <span class="keyword">WHERE</span> b.`customer_id` <span class="keyword">IS</span> <span class="keyword">NULL</span>\G</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：当时还纳闷测试看不出index_subquery。查询后，发现在MySQL8.0.16之前可以看到type由index_subquery变为ref，而在MySQL8.0.16开始优化器调整并做优化（in和exists），与上面子查询得到结果并无区别。</p>
+<p>连接（join）之所以效率更高，因为MySQL不需要在内存中创建临时表来完成这个逻辑上需要两个步骤完成的工作。</p>
+<p><strong>2.3.2 分页查询</strong></p>
+<p>你可以找到参考内容：8.2.1.19 LIMIT Query Optimization</p>
+<p>一般分页查询时，通过创建覆盖索引能够比较好地提高性能。一个很头痛的分页场景：limit 996,20，此时MySQL排序出前996记录后仅仅只需要返回第996到1016条记录，前996条记录会被抛弃，查询和排序代价非常高。</p>
+<p>通过分析上述描述场景，使用explain进行分析：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> world.city limit <span class="number">996</span>,<span class="number">20</span>\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: city</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: <span class="keyword">ALL</span></span><br><span class="line">possible_keys: <span class="keyword">NULL</span></span><br><span class="line">          key: <span class="keyword">NULL</span></span><br><span class="line">      key_len: <span class="keyword">NULL</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">4046</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: <span class="keyword">NULL</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，type&#x3D;ALL，优化分析器走了全表扫描。</p>
+<p><strong>第一种优化思路</strong>：在索引上完成排序分页操作，最后根据关联原表查询所需要的其它列内容。</p>
+<p>通过思考，对上面SQL语句进行调整优化：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> world.city c <span class="keyword">inner</span> <span class="keyword">join</span>(<span class="keyword">select</span> id <span class="keyword">from</span> world.city <span class="keyword">order</span> <span class="keyword">by</span> countrycode limit <span class="number">996</span>,<span class="number">20</span>)a <span class="keyword">on</span> c.id<span class="operator">=</span>a.id\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: <span class="keyword">PRIMARY</span></span><br><span class="line">  ...</span><br><span class="line">         type: <span class="keyword">ALL</span></span><br><span class="line">        Extra: <span class="keyword">NULL</span></span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">2.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: <span class="keyword">PRIMARY</span></span><br><span class="line">  ...</span><br><span class="line">         type: eq_ref</span><br><span class="line">        Extra: <span class="keyword">NULL</span></span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">3.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">2</span></span><br><span class="line">  select_type: DERIVED</span><br><span class="line">        <span class="keyword">table</span>: city</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: index</span><br><span class="line">possible_keys: <span class="keyword">NULL</span></span><br><span class="line">          key: CountryCode</span><br><span class="line">      key_len: <span class="number">12</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">1016</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> index</span><br><span class="line"><span class="number">3</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>上述结果，前两页省略掉了一些内容。这种方式使MySQL扫描尽可能少的页面来提高分页效率，缺点是SQL语句变长了。</p>
+<p><strong>第二种优化思路</strong>：将limit查询转换成某个位置的查询，实际上是将limit m,n转换为limit n查询，只适合排序字段不会出现重复值的特定环境，能减轻分页翻页压力。如果排序字段现大量重复值，则不适合进行这种优化，因为会丢失部分记录。</p>
+<p><strong>注意</strong>：对于带有ORDER BY或GROUP BY和LIMIT子句的查询，优化器在默认情况下尝试选择一个有序索引，这样做会加快查询的执行速度。在MySQL 8.0.21之前，即使在使用一些其它优化，可能更快的情况下，没有办法覆盖这种行为。从MySQL 8.0.21开始，可以通过设置优化器开关（optimizer_switch）系统变量的优先排序索引（prefer_ordering_index）标志来关闭这种优化。</p>
+<p>默认情况<code>optimizer_switch</code> 和 <code>prefer_ordering_index</code>是开启的：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SELECT</span> @<span class="variable">@optimizer_switch</span> <span class="keyword">LIKE</span> <span class="string">&#x27;%prefer_ordering_index=on%&#x27;</span>\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">@<span class="variable">@optimizer_switch</span> <span class="keyword">LIKE</span> <span class="string">&#x27;%prefer_ordering_index=on%&#x27;</span>: <span class="number">1</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-4-优化-OR-条件"><a href="#2-4-优化-OR-条件" class="headerlink" title="2.4  优化 OR 条件"></a>2.4  优化 OR 条件</h4><p>你可以查找到参考内容：12.4.3 Logical Operators</p>
+<p>在介绍OR条件时，可以先了解MySQL中的逻辑操作符（Logical Operators）。有如下几种：</p>
+<ul>
+<li>AND, &amp;&amp;：逻辑与、并且，在两个条件中必须都满足。</li>
+<li>NOT, !：否定、取反。</li>
+<li>OR, ||：逻辑或、在两个条件中满足一个条件即可。</li>
+<li>XOR：逻辑XOR。如果是NULL，返回NULL；如果是non-NULL，返回1；如果奇数个非零操作数，则计算结果为1，否则返回0。</li>
+</ul>
+<p>示例XOR：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="number">1</span> XOR <span class="number">1</span>\G    <span class="comment">-- return:0</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="number">1</span> XOR <span class="number">0</span>\G    <span class="comment">-- return:1</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="number">1</span> XOR <span class="keyword">NULL</span>\G   <span class="comment">-- return:NULL</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="number">1</span> XOR <span class="number">1</span> XOR <span class="number">1</span>\G  <span class="comment">-- return:1</span></span><br></pre></td></tr></table></figure>
+
+<p>对于含有OR查询的子句，如果要利用索引、则OR之间的每个条件列都必须用到索引，如果没有索引，应该考虑增加索引。</p>
+<p>可以使用show index from tal_name语句查看表索引情况：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> index <span class="keyword">from</span> city\G</span><br><span class="line">...</span><br><span class="line">Column_name: city_id</span><br><span class="line">Column_name: country_id</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>然后查询存在索引的两列，并使用OR条件联合查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> city <span class="keyword">where</span> city_id<span class="operator">=</span><span class="number">6</span> <span class="keyword">or</span> country_id<span class="operator">=</span><span class="number">101</span>\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: city</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: index_merge</span><br><span class="line">possible_keys: <span class="keyword">PRIMARY</span>,idx_fk_country_id</span><br><span class="line">          key: <span class="keyword">PRIMARY</span>,idx_fk_country_id</span><br><span class="line">      key_len: <span class="number">2</span>,<span class="number">2</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">4</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> <span class="keyword">union</span>(<span class="keyword">PRIMARY</span>,idx_fk_country_id); <span class="keyword">Using</span> <span class="keyword">where</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>可以发现查询正确地使用到索引，并且从执行计划描述中，发现MySQL在处理含有OR子句查询时，实际对OR各个字段分别查询后的结果进行了union操作。</p>
+<p>在有复合索引的列上做OR操作，却无法使用到索引，查询结果如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> inventory <span class="keyword">where</span> inventory_id<span class="operator">=</span><span class="number">6</span> <span class="keyword">or</span> store_id<span class="operator">=</span><span class="number">2</span>\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: inventory</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: <span class="keyword">ALL</span></span><br><span class="line">possible_keys: <span class="keyword">PRIMARY</span>,idx_store_id_film_id</span><br><span class="line">          key: <span class="keyword">NULL</span></span><br><span class="line">      key_len: <span class="keyword">NULL</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">4581</span></span><br><span class="line">     filtered: <span class="number">50.01</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> <span class="keyword">where</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="2-5-使用-SQL-提示"><a href="#2-5-使用-SQL-提示" class="headerlink" title="2.5  使用 SQL 提示"></a>2.5  使用 SQL 提示</h4><p>可以找到参考的内容：8.9.4 Index Hints</p>
+<p>SQL提示（SQL Hints）是优化数据库的一项重要手段，简单说是在SQL语句中<strong>加入一些人为的提示达到优化目的</strong>。下面将给出一个使用SQL提示的示例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> SQL_BUFFER_RESULT <span class="keyword">FROM</span> t1...</span><br></pre></td></tr></table></figure>
+
+<p>其默认值为0，即是关闭状态，设置为1则启用。如果启用，SQL_BUFFER_RESULT将强制SELECT语句的结果放入临时表中。在需要很长时间向客户端发送结果的情况下，帮助比较大，因为这有助于MySQL尽早释放表锁。</p>
+<p><strong>以下介绍一些在MySQL中常用的SQL提示：索引提示</strong>（Index Hints）</p>
+<p><strong>索引提示语法</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">tbl_name [[<span class="keyword">AS</span>] alias] [index_hint_list]</span><br><span class="line"></span><br><span class="line">index_hint_list:</span><br><span class="line">    index_hint [index_hint] ...</span><br><span class="line">    </span><br><span class="line">index_hint:</span><br><span class="line">  USE &#123;INDEX<span class="operator">|</span>KEY&#125;</span><br><span class="line">    [<span class="keyword">FOR</span> &#123;<span class="keyword">JOIN</span><span class="operator">|</span><span class="keyword">ORDER</span> <span class="keyword">BY</span><span class="operator">|</span><span class="keyword">GROUP</span> <span class="keyword">BY</span>&#125;] ([index_list])</span><br><span class="line">    <span class="operator">|</span> &#123;IGNORE<span class="operator">|</span>FORCE&#125; &#123;INDEX<span class="operator">|</span>KEY&#125;</span><br><span class="line">    [<span class="keyword">FOR</span> &#123;<span class="keyword">JOIN</span><span class="operator">|</span><span class="keyword">ORDER</span> <span class="keyword">BY</span><span class="operator">|</span><span class="keyword">GROUP</span> <span class="keyword">BY</span>&#125;] (index_list)</span><br><span class="line"></span><br><span class="line">index_list:</span><br><span class="line">    index_name [, index_name] ...</span><br></pre></td></tr></table></figure>
+
+<p>看完提示语法，可以了解到索引提示三种技巧USE INDEX、IGNORE INDEX以及FORCE INDEX。</p>
+<p><strong>2.5.1 USE INDEX</strong></p>
+<p>在查询语句中表名的背后，使用USE INDEX希望MySQL去参考索引列表，此时达到不让MySQL去参考其它可用索引的目的。</p>
+<p><strong>示例</strong>：使用explain进行分析</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> countrylanguage use index(CountryCode)\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: countrylanguage</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: index</span><br><span class="line">possible_keys: <span class="keyword">NULL</span></span><br><span class="line">          key: CountryCode</span><br><span class="line">      key_len: <span class="number">12</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">984</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> index</span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>根据上面分析结果，可以看出type&#x3D;index，走索引扫描；Extra内容是Using index，达到我们预期要求。</p>
+<p><strong>2.5.2 IGNORE INDEX</strong></p>
+<p>如果用户只是单纯地想让MySQL忽略某一个或多个索引，则可以使用<code>IGNORE INDEX</code>作为索引提示（HINTS）。</p>
+<p>下面使用IGNORE INDEX进行演示：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>) <span class="keyword">from</span> countrylanguage ignore index(CountryCode)\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: countrylanguage</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: index</span><br><span class="line">possible_keys: <span class="keyword">NULL</span></span><br><span class="line">          key: <span class="keyword">PRIMARY</span></span><br><span class="line">      key_len: <span class="number">132</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">984</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> index</span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>通过上述执行分析，放弃了默认索引，此时走的索引是PRIMARY。</p>
+<p><strong>2.5.3 FORCE INDEX</strong></p>
+<p>强制MySQL使用一个特定索引，可以在查询中使用<code>FORCE INDEX</code>作为HINTS。</p>
+<p>例如，不强制使用索引时，此时支付表中大部分rental_id都是大于1的，因此MySQL默认会全表扫描，而不使用索引。如下所示：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> sakila.payment <span class="keyword">where</span> rental_id <span class="operator">&gt;</span> <span class="number">1</span>\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: payment</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: <span class="keyword">ALL</span></span><br><span class="line">possible_keys: fk_payment_rental</span><br><span class="line">          key: <span class="keyword">NULL</span></span><br><span class="line">      key_len: <span class="keyword">NULL</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">16086</span></span><br><span class="line">     filtered: <span class="number">50.00</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> <span class="keyword">where</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>此时，尝试指定使用索引fk_payment_rental，发现MySQL依旧走全表扫描。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> sakila.payment use index(fk_payment_rental) <span class="keyword">where</span> rental_id <span class="operator">&gt;</span> <span class="number">1</span>\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: payment</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: <span class="keyword">ALL</span></span><br><span class="line">possible_keys: fk_payment_rental</span><br><span class="line">          key: <span class="keyword">NULL</span></span><br><span class="line">      key_len: <span class="keyword">NULL</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">16086</span></span><br><span class="line">     filtered: <span class="number">50.00</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> <span class="keyword">where</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>当使用<code>FORCE INDEX</code>进行提示时，即使使用索引效率不是最高，MySQL还是选择使用索引，这是MySQL将选择执行计划的权利交给了用户。加入FORCE INDEX进行测试索引提示：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> explain <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> sakila.payment force index(fk_payment_rental) <span class="keyword">where</span> rental_id <span class="operator">&gt;</span> <span class="number">1</span>\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">           id: <span class="number">1</span></span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        <span class="keyword">table</span>: payment</span><br><span class="line">   partitions: <span class="keyword">NULL</span></span><br><span class="line">         type: <span class="keyword">range</span></span><br><span class="line">possible_keys: fk_payment_rental</span><br><span class="line">          key: fk_payment_rental</span><br><span class="line">      key_len: <span class="number">5</span></span><br><span class="line">          <span class="keyword">ref</span>: <span class="keyword">NULL</span></span><br><span class="line">         <span class="keyword">rows</span>: <span class="number">8043</span></span><br><span class="line">     filtered: <span class="number">100.00</span></span><br><span class="line">        Extra: <span class="keyword">Using</span> index <span class="keyword">condition</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>通过测试验证，发现MySQL确实强制走了索引，印证了MySQL将选择计划使用索引提示权利交给了用户。</p>
+<p><strong>注意</strong>：在MySQL8.0.20版本，此时服务支持index-level分析优化提示这些索引：JOIN_INDEX，GROUP_INDEX，ORDER_INDEX以及 INDEX。它们相当于取代了FORCE INDEX提示，同样地NO JOIN INDEX、NO GROUP INDEX、NO ORDER INDEX和NO INDEX优化器提示，它们相当于并打算取代IGNORE INDEX索引提示。因此，你应该预料到使用USE INDEX、FORCE INDEX和IGNORE INDEX会在未来的MySQL版本中被弃用，并且在以后的某个时候会被完全删除。</p>
+<h3 id="03-MySQL官方示例数据库"><a href="#03-MySQL官方示例数据库" class="headerlink" title="03  MySQL官方示例数据库"></a>03  MySQL官方示例数据库</h3><p>给出<strong>sakila-db数据库</strong>包含三个文件，便于大家获取与使用：</p>
+<ol>
+<li>sakila-schema.sql：数据库表结构；</li>
+<li>sakila-data.sql：数据库示例模拟数据；</li>
+<li>sakila.mwb：数据库物理模型，在MySQL workbench中可以打开查看。</li>
+</ol>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubXlzcWwuY29tL2RvY3Mvc2FraWxhLWRiLnppcA==">https://downloads.mysql.com/docs/sakila-db.zip<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><strong>只是用于用于简单测试学习，建议使用world-db</strong>：</p>
+<p><strong>world-db数据库</strong>，包含三张表：city、country、countrylanguage。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubXlzcWwuY29tL2RvY3Mvd29ybGQtZGIuemlw">https://downloads.mysql.com/docs/world-db.zip<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>最后附上官方示例数据库，<strong>sakila-db数据库</strong>一个非常完整的示例。包含：视图、函数、触发器以及存储过程，当然也存在使用外键。</p>
+<p><strong>参考资料&amp;鸣谢</strong>：</p>
+<ul>
+<li>《深入浅出MySQL 第2版 数据库开发、优化与管理维护》。</li>
+<li>《MySQL技术内幕InnoDB存储引擎 第2版》。</li>
+<li>MySQL8.0官网文档：refman-8.0-en.pdf，如果学习新版本，官方文档是非常不错的选择。</li>
+</ul>
+<p>虽然书籍年份比较久远（停留在MySQL5.6.x版本），但仍然具有借鉴意义。</p>
+<p>最后，对以上书籍和官方文档所有作者表示衷心感谢。让我充分体会到：前人栽树，后人乘凉。</p>
+<h1 id="莫问收获，但问耕耘"><a href="#莫问收获，但问耕耘" class="headerlink" title="莫问收获，但问耕耘"></a>莫问收获，但问耕耘</h1><p><strong>能看到这里的，都是帅哥靓妹</strong>。以上是本次MySQL优化篇（上部分）全部内容，希望能对你的工作与学习有所帮助。感觉写的好，就拿出你的一键三连。如果感觉总结的不到位，也希望能留下您宝贵的意见，我会在文章中定期进行调整优化。<strong>好记性不如烂笔头，多实践多积累</strong>。<strong>你会发现，自己的知识宝库越来越丰富</strong>。原创不易，转载也请标明出处和作者，尊重原创。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9Aoptimize%E3%80%81INSERT%E3%80%81ORDER%20BY%E3%80%81GROUP%20BY%E5%92%8COR%20%E4%BB%A5%E5%8F%8A%E5%88%86%E9%A1%B5%E5%92%8C%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2/" title="MySQL优化方法：optimize、INSERT、ORDER BY、GROUP BY和OR 以及分页和嵌套查询">https://blog.cnwangk.top/2022/04/07/MySQL优化方法：optimize、INSERT、ORDER BY、GROUP BY和OR 以及分页和嵌套查询/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%B5%81%E7%A8%8B%EF%BC%9A%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E5%85%B8%E5%9E%8B%E5%9C%BA%E6%99%AFAND%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF/" rel="prev" title="MySQL优化流程：使用索引典型场景AND索引失效场景">
+                  <i class="fa fa-angle-left"></i> MySQL优化流程：使用索引典型场景AND索引失效场景
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95-%E4%BC%98%E5%8C%96%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/" rel="next" title="MySQL优化数据库对象">
+                  MySQL优化数据库对象 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9Aoptimize%E3%80%81INSERT%E3%80%81ORDER%20BY%E3%80%81GROUP%20BY%E5%92%8COR%20%E4%BB%A5%E5%8F%8A%E5%88%86%E9%A1%B5%E5%92%8C%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

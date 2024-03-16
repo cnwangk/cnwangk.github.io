@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="进入主题之前，先了解 Nacos prometheus grafana。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Nacos prometheus grafana">
+<meta property="og:url" content="https://blog.cnwangk.top/2023/04/19/Nacos-prometheus-grafana/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="进入主题之前，先了解 Nacos prometheus grafana。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/21/p9EDJ3Q.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/23/ppwyHDs.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9ADez9.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9kLfrq.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9kLXs1.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9kLWMn.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9kL5ZV.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9kL2xs.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9ABLa8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9ABqVf.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9ABHqP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9ABOIS.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9AB7rt.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9ABOIS.png">
+<meta property="article:published_time" content="2023-04-19T10:30:00.000Z">
+<meta property="article:modified_time" content="2023-09-08T02:42:19.443Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="nacos">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/04/21/p9EDJ3Q.png">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2023/04/19/Nacos-prometheus-grafana/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2023/04/19/Nacos-prometheus-grafana/","path":"2023/04/19/Nacos-prometheus-grafana/","title":"Nacos prometheus grafana"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Nacos prometheus grafana | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#springboot%E4%B8%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6nacos"><span class="nav-number">1.</span> <span class="nav-text">springboot与微服务组件nacos</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2springboot%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.1.</span> <span class="nav-text">Linux服务器部署springboot项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Springboot%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%E6%8C%87%E5%AE%9A%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">Springboot启动服务指定参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-%E5%B9%B3%E5%8F%B0"><span class="nav-number">1.2.1.</span> <span class="nav-text">Windows 平台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-%E5%B9%B3%E5%8F%B0"><span class="nav-number">1.2.2.</span> <span class="nav-text">Linux 平台</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%91%E6%8E%A7%E8%BF%90%E8%A1%8C%E4%B8%AD%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.3.</span> <span class="nav-text">监控运行中的服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-%E5%B9%B3%E5%8F%B0-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">Windows 平台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-%E5%B9%B3%E5%8F%B0-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">Linux 平台</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prometheus%E9%87%87%E9%9B%86%E6%95%B0%E6%8D%AE"><span class="nav-number">1.4.</span> <span class="nav-text">Prometheus采集数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grafana%E5%9B%BE%E5%BD%A2%E5%8C%96%E5%B1%95%E7%A4%BA%E6%95%B0%E6%8D%AE"><span class="nav-number">1.5.</span> <span class="nav-text">Grafana图形化展示数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#END%E2%80%94"><span class="nav-number">1.6.</span> <span class="nav-text">END—-</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/03/30/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8ENacos%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1/" rel="bookmark">
+        <time class="popular-posts-time">2023-03-30</time>
+        <br>
+      MySQL数据库与Nacos搭建监控服务
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/" rel="bookmark">
+        <time class="popular-posts-time">2023-04-15</time>
+        <br>
+      SpringBoot应用集成微服务组件Nacos
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2023/04/19/Nacos-prometheus-grafana/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Nacos prometheus grafana | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Nacos prometheus grafana
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-19 18:30:00" itemprop="dateCreated datePublished" datetime="2023-04-19T18:30:00+08:00">2023-04-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-08 10:42:19" itemprop="dateModified" datetime="2023-09-08T10:42:19+08:00">2023-09-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">开发运维</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>18 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>进入主题之前，先了解 Nacos prometheus grafana。</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/21/p9EDJ3Q.png"></p>
+<span id="more"></span>
+
+<p><strong>nacos 是什么？</strong></p>
+<blockquote>
+<p>一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。</p>
+</blockquote>
+<p>nacos 最新稳定版本更新到了 2.2.2 ，官方推荐使用 nacos 2.1.1 。</p>
+<p><strong>prometheus 是什么</strong>？</p>
+<blockquote>
+<p>From metrics to insight<br>Power your metrics and alerting with the leading<br>open-source monitoring solution.</p>
+</blockquote>
+<p>大意是，从监控到洞察力。利用领先的开源监控解决方案，让你的监控和警报发挥作用。</p>
+<p>prometheus 最新稳定版本更新到了 2.4.3，你可以选择使用长期支持版本 2.3.7（LTS）.</p>
+<p><strong>grafana 是什么</strong>？</p>
+<blockquote>
+<p>Operational dashboards for your data here, there, or anywhere</p>
+</blockquote>
+<p>大意是，在任何位置将你的数据以仪表板（控制面板）形式展现出来。</p>
+<p>grafana 最新稳定版本更新到了 9.4.7 。</p>
+<p>可在博客园，个人公众号以及站内搜索前两篇，此篇为nacos系列文章第三篇：《运维篇：<strong>Nacos prometheus grafana</strong>》</p>
+<p>当你再次看到这张流程图时，第三篇运维相关知识终于磨出来了：</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/23/ppwyHDs.png"></p>
+<p><strong>整体思路，个人nacos系列博文一共分为三篇</strong>：</p>
+<ul>
+<li>基础篇：《MySQL数据库与Nacos搭建监控服务》，Nacos与MySQL基本介绍。</li>
+<li>开发篇：《开发篇：springboot与微服务组件nacos》，从代码开始构建，集成微服务组件。</li>
+<li>运维篇：《运维篇：nacos prometheus grafana》，服务监控篇，主要以Linux发行版为主。</li>
+</ul>
+<p>不同的场景有不同的解决方案，按需（调研）适配spring、springboot、springcloud集成nacos。</p>
+<h1 id="springboot与微服务组件nacos"><a href="#springboot与微服务组件nacos" class="headerlink" title="springboot与微服务组件nacos"></a>springboot与微服务组件nacos</h1><p>此处主要以Linux（centos-stream-9）环境为主。如果非要在Windows平台使用，也是可以的。本人也在Windows平台测试过，同样可以正常运行。只是官方目前并不推荐在Windows平台使用，可能是还不够稳定吧。</p>
+<p>个人在测试环境下，用过三个版本：</p>
+<ul>
+<li>nacos 2.0.3</li>
+<li>nacos 2.1.1</li>
+<li>nacos 2.2.0</li>
+</ul>
+<p>目前，2.2.x 版本UI变化比较大，更加优美。</p>
+<h2 id="Linux服务器部署springboot项目"><a href="#Linux服务器部署springboot项目" class="headerlink" title="Linux服务器部署springboot项目"></a>Linux服务器部署springboot项目</h2><p>当你测试时，需要准备测试使用的环境。比如maven打包好的 jar 包，如何上传部署？</p>
+<p><strong>上传文件方法</strong>：</p>
+<ul>
+<li>方式一：已知服务器用户名和密码（具有相关权限），可以使用 scp 命令上传。</li>
+<li>方式二：已知服务器用户名和密码（具有相关权限），可以使用工具 WinSCP、FileZilla等工具上传文件。</li>
+</ul>
+<p>如下是WinSCP界面，两种方式：</p>
+<ul>
+<li>左右方式，Windows窗口在左边，Linux服务器窗口在右边，支持拖拽和复制粘贴。</li>
+<li>只显示远程目录形式，支持拖拽。</li>
+</ul>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9ADez9.png"></p>
+<p><strong>测试环境</strong></p>
+<ul>
+<li>Linux（centos-stream-9）</li>
+<li>JDK17：支撑springboot服务启动</li>
+<li>Nacos 2.1.1 ：监控发现springboot服务</li>
+</ul>
+<p><strong>解压JDK &amp; 配置环境变量</strong>（如果仅仅为了测试可以不配置环境变量，采用指定服务路径形式）</p>
+<p>RHEL体系shell环境变量调用顺序：</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9kLfrq.png"></p>
+<p>配置全局环境变量：<code>vim /etc/profile</code>，配置当前用户环境变量：<code>vim .bash_profile</code> 或者 .bashrc，加入配置全局变量我所列出的内容即可。什么时候配置全局用户，什么时候配置当前用户，各有各的应用场景。</p>
+<ul>
+<li><p>比如配置当前用户环境变量，我只在 test 用户配置测试，就不给你 demo 用户进行测试，我们互不干扰。</p>
+</li>
+<li><p>比如配置全局用户环境变量，我既要 test 用户配置测试，我又要 demo 用户进行测试，还要在 root 用户下使用，我全都要。</p>
+</li>
+</ul>
+<p><strong>如下分4步优化操作</strong>：</p>
+<ol>
+<li>解压jdk ：<code>tar  -zxvf  jdk-17.0.4.1_linux-x64_bin.tar.gz</code></li>
+<li>简化应用名称：<code>mv  jdk-17.0.4.1_linux-x64_bin  jdk17</code></li>
+<li>新建部署目录：<code>mkdir  -p  /usr/java</code></li>
+<li>指定部署目录：<code>mv  jdk17  /usr/java/</code></li>
+</ol>
+<p><strong>介绍配置全局环境变量</strong>：<code>vim /etc/profile</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/usr/java/jdk17</span><br><span class="line">CLASS_PATH=.:<span class="variable">$JAVA_HOME</span>/jre/lib/rt.jar:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br><span class="line">PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME CLASS_PATH PATH</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>执行 source 命令立即生效</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>关于环境变量更多配置可参考个人站内或者公众号关于JDK17的简单介绍。</p>
+<p><strong>验证Java版本</strong></p>
+<p>配置了环境变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+<p>未配置环境变量：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/java/jdk-17.0.4.1/bin/java -version</span><br></pre></td></tr></table></figure>
+
+
+<p>解压Nacos Server 并剪切到 &#x2F;usr&#x2F;local&#x2F; 目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf nacos-server-2.1.1.tar.gz</span><br><span class="line"><span class="built_in">mv</span> nacos /usr/local/</span><br></pre></td></tr></table></figure>
+
+<p><strong>启动nacos服务（非集群模式）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/local/nacos/bin/</span><br><span class="line">sh startup.sh -m standalone</span><br></pre></td></tr></table></figure>
+
+<p><strong>新建测试目录</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/test  /opt/sh</span><br></pre></td></tr></table></figure>
+
+<p>执行命令脱离终端运行，并输出日志到指定文件 &#x2F;opt&#x2F;test&#x2F;springboot.log</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream ~]<span class="comment"># nohup /usr/java/jdk-17.0.4.1/bin/java -jar /opt/test/springboot-test-0.0.1-SNAPSHOT.jar  &gt;&gt; /opt/test/springboot.log 2&gt;&amp;1 &amp;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>编辑脚本</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/sh/start_springboot_demo.sh</span><br></pre></td></tr></table></figure>
+
+<p><strong>写入到脚本</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">nohup</span> /usr/java/jdk-17.0.4.1/bin/java -jar /opt/test/springboot-test-0.0.1-SNAPSHOT.jar  &gt;&gt; /opt/test/springboot.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+
+<p><strong>curl命令测试接口</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> D:\work&gt; <span class="built_in">curl</span> http://<span class="number">192.168</span>.<span class="number">245.132</span>:<span class="number">8081</span>/demo/getStu</span><br><span class="line">&#123;<span class="string">&quot;code&quot;</span>:<span class="number">0</span>,<span class="string">&quot;msg&quot;</span>:<span class="string">&quot;成功&quot;</span>,<span class="string">&quot;data&quot;</span>:&#123;<span class="string">&quot;id&quot;</span>:<span class="string">&quot;d5e52f71-67f0-499a-acf9-574ec14ffbe6&quot;</span>,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;梦梦&quot;</span>,<span class="string">&quot;sex&quot;</span>:<span class="string">&quot;女&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">16</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用 cat 命令查看日志</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span>  /opt/test/springboot.log </span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>vim</code> 查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim  /opt/test/springboot.log</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>tail</code> 命令查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tail</span> -f /opt/test/springboot.log</span><br><span class="line"><span class="built_in">tail</span> -n 5 /opt/test/springboot.log</span><br></pre></td></tr></table></figure>
+
+<p><strong>tail 参数</strong>：-n代表查看多少条日志信息，我只想查看最近的5条数据，使用 tail -n 5。</p>
+<h2 id="Springboot启动服务指定参数"><a href="#Springboot启动服务指定参数" class="headerlink" title="Springboot启动服务指定参数"></a>Springboot启动服务指定参数</h2><p><strong>注意</strong>：带参运行方式，开发或者测试时，可以运用上，便于调试。</p>
+<ul>
+<li>参数一：<code>--server.port=9999</code> 代表指定服务端口运行，不添加则使用默认设置服务端口</li>
+<li>参数二：<code>-Dspring.profiles.active=prod</code> 指定环境(dev：开发环境、prod：生产环境、test：测试环境）</li>
+</ul>
+<h3 id="Windows-平台"><a href="#Windows-平台" class="headerlink" title="Windows 平台"></a>Windows 平台</h3><p>指定服务API端口：<code>--server.port=9999</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar springboot-test-nacos.jar --server.port=9999</span><br></pre></td></tr></table></figure>
+
+<p>指定服务运行（生产）环境：<code>-Dspring.profiles.active=prod</code></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java <span class="literal">-jar</span> <span class="string">&quot;-Dspring.profiles.active=prod&quot;</span> demo<span class="literal">-0</span>.<span class="number">0.1</span><span class="literal">-SNAPSHOT</span>.jar</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Linux-平台"><a href="#Linux-平台" class="headerlink" title="Linux 平台"></a>Linux 平台</h3><p>采用默认形式指定运行（生产）环境，输出日志到 test.log 文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nohup</span> java -jar -Dspring.profiles.active=prod demo-0.0.1-SNAPSHOT.jar &gt; test.log 2&gt;&amp;1 &amp; </span><br></pre></td></tr></table></figure>
+
+<p>采用默认形式运行服务并指定服务端口，输出日志到 test.log 文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nohup</span> java -jar springboot-test-nacos.jar --server.port=9999 &gt; test.log 2&gt;&amp;1 &amp; </span><br></pre></td></tr></table></figure>
+
+<p>采用指定 jdk 路径，指定运行（生产）环境，输出日志到 test.log 文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nohup</span> /usr/java/jdk-17.0.4.1/bin/java -jar /opt/test/springboot-test-0.0.1-SNAPSHOT.jar  &gt; /opt/test/springboot.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="监控运行中的服务"><a href="#监控运行中的服务" class="headerlink" title="监控运行中的服务"></a>监控运行中的服务</h2><p>无论是 Linux 平台还是 Windows 平台，<code>netstat</code> 命令基本用法还是需要掌握的，对于开发、测试、运维都比较重要。</p>
+<p>使用 netstat 监控如下服务：</p>
+<ul>
+<li>nacos：监控springboot服务 </li>
+<li>prometheus：采集数据 ，个人使用的版本为 2.37.1</li>
+<li>grafana：图形化（仪表板）展示数据 ，个人使用版本为 9.3.0，目前9.3.x版本已经更新到 9.3.11</li>
+</ul>
+<p>关于 nacos 服务部署以及设置MySQL数据源，此篇不再赘述。可以参考前两篇博文，有介绍，可在公众号内搜索到。</p>
+<h3 id="Windows-平台-1"><a href="#Windows-平台-1" class="headerlink" title="Windows 平台"></a>Windows 平台</h3><p><strong>Windows 平台查询运行中的nacos服务</strong></p>
+<p>通过Windows terminal打开powershell或者CMD，使用netstat命令配合findstr查询nacos使用到的端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano | findstr 8848;netstat -ano | findstr 9848;netstat -ano | findstr 9849</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9kLXs1.png"></p>
+<p>查阅官方文档，发现Nacos2.0版本相比1.X新增了gRPC的通信方式，因此需要增加2个端口。新增端口是在配置的主端口(server.port)基础上，进行一定偏移量自动生成。偏移量分别为：+1000，+1001，所以监控到端口多出了9848和9849。</p>
+<p><strong>友情提示</strong>：通常着重关注 <strong>ESTABLISHED</strong> ，表示已经确立联系。</p>
+<p>通过查找到的PID，以图片上PID值8220为示例，使用命令tasklist去查找使用服务以及占用内存</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tasklist | findstr 8220</span><br><span class="line">java.exe                      8220 Console                    1    449,472 K</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Windows 平台查看运行中的springboot服务</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano | findstr 8081;netstat -ano | findstr 8082;netstat -ano | findstr 8083</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数含义</strong>：</p>
+<ul>
+<li>-a： 显示所有连接和侦听端口。</li>
+<li>-n：以数字形式显示地址和端口号。</li>
+<li>-o：显示拥有的与每个连接关联的进程 ID。</li>
+</ul>
+<p>更多参数使用，请查看帮助命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat <span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Windows 平台查看nacos、prometheus、grafana服务进程</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tasklist | findstr nacos;tasklist | findstr prometheus;tasklist | findstr grafana;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Windows 平台查看nacos、prometheus、grafana服务端口</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano | findstr 3000;netstat -ano | findstr 8848;netstat -ano | findstr 9090</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Linux-平台-1"><a href="#Linux-平台-1" class="headerlink" title="Linux 平台"></a>Linux 平台</h3><p><strong>Linux （REHL系列） 平台查询运行中的nacos服务</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tlunp | grep 8848;netstat -tlunp | grep 9848;netstat -tlunp | grep 9849</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Linux （RHEL系列）查看运行中的springboot服务，已经引入微服务组件 nacos</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream <span class="built_in">test</span>]<span class="comment"># netstat -tlunp | grep 8081; netstat -tlunp | grep 8082;netstat -tlunp | grep 8083;</span></span><br><span class="line">tcp6       0      0 :::8081                 :::*                    LISTEN      2690/java</span><br><span class="line">tcp6       0      0 :::8082                 :::*                    LISTEN      3104/java</span><br><span class="line">tcp6       0      0 :::8083                 :::*                    LISTEN      3213/java</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9kLWMn.png"></p>
+<p>在Linux平台我习惯使用参数 -tlunp 去查询监听服务。</p>
+<p><strong>参数含义</strong>：</p>
+<ul>
+<li>-t：–tcp，显示监听tcp协议。</li>
+<li>-l：–listening ，用于展示监听服务的sockets。</li>
+<li>-u：–udp，显示监听udp协议。</li>
+<li>-n：–numeric，不解析服务（主机、端口、用户）名称。</li>
+<li>-p：–programs，显示使用了sockets 应用程序的PID号。</li>
+</ul>
+<p>上面图片以及代码展示的tcp6（tcp协议），8081 表示ip绑定端口号，LISTEN 代表正在监听，2690&#x2F;java 表示监听到java进程pid号是2690。通常我们比较关心的是端口（port），监听状态，服务名进程号。</p>
+<p>更多参数使用，请查看帮助命令：：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -h</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>RHEL 系列查看nacos、prometheus、grafana服务进程</strong></p>
+<p>ps命令监控服务三种方式：</p>
+<ol>
+<li>使用 ps 命令参数 -aux：ps -aux | grep nacos| grep -v “grep”</li>
+<li>使用 ps 命令参数 -ef：ps -ef | grep nacos| grep -v “grep”</li>
+<li>使用 ps 命令参数 -le：ps -le | grep nacos| grep -v “grep”</li>
+</ol>
+<p><strong>如下使用参数 -aux 进行监控 nacos、prometheus、grafana 服务</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream prometheus-2.37.1]<span class="comment"># ps -aux | grep nacos;ps -aux | grep prometheus;ps -aux | grep grafana</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9kL5ZV.png"></p>
+<p>可以看到，监控服务命令将 nacos、prometheus、grafana 以红色字体标记出来了。将当前使用用户root、nacos 进程（pid）号2334、服务所在路径、配置文件指定路径等等展现在屏幕上。</p>
+<p>这里教大家一个小技巧，如果你不想看到 grep –color&#x3D;auto 这一行，可以通过 grep 取反命令过滤。</p>
+<p>示例 grep 取反过滤：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -aux | grep nacos| grep -v <span class="string">&quot;grep&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>RHEL 系列查看nacos、prometheus、grafana服务端口</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream prometheus-2.37.1]<span class="comment"># netstat -tlunp | grep 3000;netstat -tlunp | grep 8848;netstat -tlunp | grep 9090</span></span><br><span class="line">tcp6       0      0 :::3000                 :::*                    LISTEN      2194/grafana-server</span><br><span class="line">tcp6       0      0 :::8848                 :::*                    LISTEN      2234/java</span><br><span class="line">tcp6       0      0 :::9090                 :::*                    LISTEN      2509/prometheus</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9kL2xs.png"></p>
+<h2 id="Prometheus采集数据"><a href="#Prometheus采集数据" class="headerlink" title="Prometheus采集数据"></a>Prometheus采集数据</h2><p><strong>简单科普</strong></p>
+<p>Prometheus是一个开源的系统监控和报警系统，它可以从多个来源收集数据，并对数据进行多维度的数据模型分析，可视化展现，及时报警。它已经加入到CNCF基金会，成为继k8s之后第二个在CNCF托管的项目。</p>
+<p>Prometheus的基本原理是通过HTTP协议周期性抓取被监控组件的状态，任意组件只要提供对应的HTTP接口就可以接入监控。 不需要任何SDK或者其他的集成过程。 这样做非常适合做虚拟化环境监控系统，比如VM、Docker、Kubernetes等。 输出被监控组件信息的HTTP接口被叫做exporter。</p>
+<p>Prometheus支持多种数据源，比如：</p>
+<ol>
+<li>系统监控数据：例如cpu，内存，磁盘IO等。</li>
+<li>网络数据：例如网络吞吐量，延迟等。</li>
+<li>进程和线程数据：例如goroutines，processes，threads等。</li>
+<li>存储数据：例如数据库的插入，更新，删除等。</li>
+</ol>
+<p>Prometheus支持多种数据模型，例如：</p>
+<ol>
+<li>指标模型：可以对系统的指标进行建模。</li>
+<li>时间模型：可以对系统的时间序列数据进行建模。</li>
+<li>事件模型：可以对系统的事件进行建模。</li>
+<li>图模型：可以对系统的状态或流程进行可视化展现。</li>
+</ol>
+<p>Prometheus有多种可视化图像界面，例如：</p>
+<ol>
+<li>Grafana：一个开源的、基于Web的可视化平台。</li>
+<li>VTiger：一个开源的、基于Web的仪表盘系统。</li>
+</ol>
+<p>Prometheus还支持高可用，可以对数据做异地备份，联邦集群，部署多套prometheus，pushgateway上报数据等功能。总的来说，Prometheus是一个功能强大、易于使用的系统监控和报警系统，可以广泛应用于各种类型的系统监控和性能分析场景。</p>
+<p><strong>必备环境</strong></p>
+<ul>
+<li>prometheus：采集数据</li>
+<li>nacos：监控发现服务</li>
+<li>JDK：支撑服务启动</li>
+</ul>
+<p>prometheus 官方文档地址：<span class="exturl" data-url="aHR0cHM6Ly9wcm9tZXRoZXVzLmlvL2RvY3MvcHJvbWV0aGV1cy8yLjM3L2dldHRpbmdfc3RhcnRlZC8=">https://prometheus.io/docs/prometheus/2.37/getting_started/<i class="fa fa-external-link-alt"></i></span></p>
+<p>prometheus 下载地址：<span class="exturl" data-url="aHR0cHM6Ly9wcm9tZXRoZXVzLmlvL2Rvd25sb2FkLw==">https://prometheus.io/download/<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>1、安装prometheus</strong></p>
+<p>请前往上面列出的下载地址准备好安装包，简化安装步骤如下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf prometheus-2.37.1.linux-amd64.tar.gz</span><br><span class="line"><span class="built_in">mv</span> prometheus-2.37.1.linux-amd64 prometheus-2.37.1</span><br><span class="line"><span class="built_in">mv</span> prometheus-2.37.1 /usr/local/</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>2、启动prometheus服务</strong></p>
+<p>指定配置文件路径，执行prometheus脚本。示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/prometheus-2.37.1/prometheus --config=/usr/local/prometheus-2.37.1/prometheus.yml </span><br></pre></td></tr></table></figure>
+
+<p>如果想脱离终端在后台运行，需要在行首加上 nohup 命令，在行尾加上&amp; 符号。示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">nohup</span> /usr/local/prometheus-2.37.1/prometheus --config=/usr/local/prometheus-2.37.1/prometheus.yml &amp;</span><br></pre></td></tr></table></figure>
+
+<p><strong>参数含义</strong>：</p>
+<ol>
+<li>prometheus：普罗米修斯服务脚本。</li>
+<li>–config：用于指定普罗米修斯脚本 yml 格式配置文件。</li>
+</ol>
+<p><strong>3、修改配置文件，监控nacos暴露的metrics数据</strong><br>说明：metrics_path和static_configs不要设置多个，否则检测会出现语法错误，提示已存在</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># metrics_path defaults to &#x27;/metrics&#x27;</span></span><br><span class="line"><span class="comment"># scheme defaults to &#x27;http&#x27;.</span></span><br><span class="line"><span class="comment">#监控nacos服务</span></span><br><span class="line">    <span class="attr">metrics_path:</span> <span class="string">&#x27;/nacos/actuator/prometheus&#x27;</span></span><br><span class="line">    <span class="attr">static_configs:</span></span><br><span class="line"><span class="comment">#设置监控nacos远程服务地址</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">targets:</span> [<span class="string">&#x27;192.168.245.132:8848&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>4、检测配置文件</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream nacos]<span class="comment"># /usr/local/prometheus-2.37.1/promtool check config /usr/local/prometheus-2.37.1/prometheus.yml</span></span><br><span class="line">Checking /usr/local/prometheus-2.37.1/prometheus.yml</span><br><span class="line"> SUCCESS: /usr/local/prometheus-2.37.1/prometheus.yml is valid prometheus config file syntax</span><br></pre></td></tr></table></figure>
+
+<p>通过 kill 命令暴力停掉进程，再次启动 prometheus 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">netstat -tlunp | grep 9090</span><br><span class="line"><span class="built_in">kill</span> -9 进程号</span><br><span class="line"><span class="built_in">nohup</span> /usr/local/prometheus-2.37.1/prometheus --config=/usr/local/prometheus-2.37.1/prometheus.yml &amp;</span><br></pre></td></tr></table></figure>
+
+<p>关于 netstat 命令上面有简单介绍过，不再赘述。</p>
+<p><strong>5、访问prometheus服务</strong></p>
+<p>prometheus 运行默认端口是9090：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMjQ1LjEzMjo5MDkwLw==">http://192.168.245.132:9090/<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>tips</strong>：需要将端口9090开放，或者通过防火墙管理工具firewalld临时关闭防火墙服务进行测试。</p>
+<p>Linux（RHEL系列）:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开放9090端口</span></span><br><span class="line">firewall-cmd --zone=public --add-port=9090/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"><span class="comment"># 临时关闭</span></span><br><span class="line">systemctl stop firewalld.service</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>6、查看prometheus监控status</strong><br>依次选择status—&gt; Targets—&gt; show more</p>
+<p><strong>7、验证数据</strong></p>
+<p>搜索nacos_monitor，得到如下结果（截取部分）：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">nacos_monitor&#123;instance=<span class="string">&quot;192.168.245.132:8848&quot;</span>, job=<span class="string">&quot;prometheus&quot;</span>, module=<span class="string">&quot;config&quot;</span>, name=<span class="string">&quot;configCount&quot;</span>&#125;</span><br><span class="line">1</span><br><span class="line">nacos_monitor&#123;instance=<span class="string">&quot;192.168.245.132:8848&quot;</span>, job=<span class="string">&quot;prometheus&quot;</span>, module=<span class="string">&quot;config&quot;</span>, name=<span class="string">&quot;dumpTask&quot;</span>&#125;</span><br><span class="line">0</span><br><span class="line">nacos_monitor&#123;instance=<span class="string">&quot;192.168.245.132:8848&quot;</span>, job=<span class="string">&quot;prometheus&quot;</span>, module=<span class="string">&quot;config&quot;</span>, name=<span class="string">&quot;getConfig&quot;</span>&#125;</span><br><span class="line">9</span><br><span class="line">...</span><br><span class="line">nacos_monitor&#123;instance=<span class="string">&quot;192.168.245.132:8848&quot;</span>, job=<span class="string">&quot;prometheus&quot;</span>, module=<span class="string">&quot;naming&quot;</span>, name=<span class="string">&quot;ipCount&quot;</span>&#125;</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+
+<h2 id="Grafana图形化展示数据"><a href="#Grafana图形化展示数据" class="headerlink" title="Grafana图形化展示数据"></a>Grafana图形化展示数据</h2><p><strong>简单科普</strong></p>
+<p>Grafana是一款开源的数据可视化工具，它可以在Web浏览器中运行，提供了一个易于使用的界面，使用户可以轻松地创建各种类型的图表和仪表板。</p>
+<p>Grafana拥有快速灵活的客户端图表，面板插件有许多不同方式的可视化指标和日志，官方库中具有丰富的仪表盘插件，比如热图、折线图、图表等多种展示方式，让我们复杂的数据展示的美观而优雅。它支持许多不同的时间序列数据（数据源）存储后端，每个数据源都有一个特定查询编辑器，官方支持以下数据源：Graphite、infloxdb、opensdb、prometheus、elasticsearch、cloudwatch。每个数据源的查询语言和功能明显不同，你可以将来自多个数据源的数据组合到一个仪表板上，但每个面板都要绑定到属于特定组织的特定数据源。它还支持警报功能，允许用户将规则附加到仪表板面板上，但目前只支持graph面板的报警。</p>
+<p>总的来说，Grafana是一款功能强大的数据可视化工具，可以帮助用户轻松地创建漂亮的图表和仪表板，同时也支持各种数据源的组合和报警功能，是数据分析和可视化的必备工具之一。</p>
+<p><strong>必备环境</strong></p>
+<ul>
+<li>grafana：图形化（仪表板）展示数据。</li>
+<li>prometheus：采集数据</li>
+<li>nacos：监控发现服务</li>
+<li>JDK：支撑服务启动</li>
+</ul>
+<p><strong>tips</strong>：初次登录，用户名：admin，密码：admin。</p>
+<p>grafana下载地址：<span class="exturl" data-url="aHR0cHM6Ly9ncmFmYW5hLmNvbS9ncmFmYW5hL2Rvd25sb2Fk">https://grafana.com/grafana/download<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>1、搭建grafana，图形化展示metrics数据</strong></p>
+<p><strong>RHEL 系列快速安装grafana：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install grafana</span><br></pre></td></tr></table></figure>
+
+<p>在RHEL7以及以上使用yum或者dnf命令安装完后，可以使用如下命令启动或者查看服务状态。</p>
+<p><strong>启动grafana服务：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start grafana-server.service</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看grafana服务：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status grafana-server.service</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>详细grafana安装指南，请参考官方文档</strong><br><span class="exturl" data-url="aHR0cHM6Ly9ncmFmYW5hLmNvbS9kb2NzL2dyYWZhbmEvdjkuMy9zZXR1cC1ncmFmYW5hL2luc3RhbGxhdGlvbi8=">https://grafana.com/docs/grafana/v9.3/setup-grafana/installation/<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>Linux平台安装grafana服务</strong><br><strong>Standalone Linux Binaries(64 Bit)</strong></p>
+<p>oss版本获取地址，基于AGPLv3 开源协议。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://dl.grafana.com/oss/release/grafana-9.3.0.linux-amd64.tar.gz</span><br><span class="line">tar -zxvf grafana-9.3.0.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>企业版enterprise获取地址</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://dl.grafana.com/enterprise/release/grafana-enterprise-9.3.0.linux-amd64.tar.gz</span><br><span class="line">tar -zxvf grafana-enterprise-9.3.0.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>Red Hat, CentOS, RHEL, and Fedora(64 Bit)</strong></p>
+<p>可以根据自己的需求选择 oss 版本或者 enterprise 企业版本。企业版本包含oss版本所有功能，同时也是免费使用，拥有更多插件功能。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://dl.grafana.com/oss/release/grafana-9.3.0-1.x86_64.rpm</span><br><span class="line">sudo yum install grafana-9.3.0-1.x86_64.rpm</span><br></pre></td></tr></table></figure>
+
+<p><strong>Ubuntu and Debian(64 Bit)</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y adduser libfontconfig1</span><br><span class="line">wget https://dl.grafana.com/oss/release/grafana_9.3.0_amd64.deb</span><br><span class="line">sudo dpkg -i grafana_9.3.0_amd64.deb</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>grafana配置文件</strong></p>
+<p>如果使用yum或者dnf命令安装，安装后的grafana配置文件路径。主要配置文件在&#x2F;etc&#x2F;grafana&#x2F;目录下，文件收集以及报警信息相关在&#x2F;var&#x2F;lib&#x2F;grafana&#x2F;目录下。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream <span class="built_in">local</span>]<span class="comment"># ls /etc/grafana/</span></span><br><span class="line">grafana.ini  ldap.toml  provisioning</span><br><span class="line">[root@Centos9-Stream <span class="built_in">local</span>]<span class="comment"># ls /var/lib/grafana/</span></span><br><span class="line">alerting  csv  file-collections  grafana.db  png</span><br><span class="line">[root@Centos9-Stream <span class="built_in">local</span>]<span class="comment"># du -sk -h /var/run/grafana/grafana-server.pid</span></span><br><span class="line">4.0K    /var/run/grafana/grafana-server.pid</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>du</code>命令查看<code>grafana-server</code>服务所占存储空间</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream <span class="built_in">local</span>]<span class="comment"># du -sk -h /usr/sbin/grafana-*</span></span><br><span class="line">4.0K    /usr/sbin/grafana-cli</span><br><span class="line">102M    /usr/sbin/grafana-server</span><br></pre></td></tr></table></figure>
+
+<p>以上这些信息，在RHEL7以上环境中，你可以使用<code>systemctl</code>命令查看到所在路径</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream <span class="built_in">local</span>]<span class="comment"># systemctl status grafana-server.service</span></span><br><span class="line">● grafana-server.service - Grafana instance</span><br><span class="line">	...</span><br><span class="line">     CGroup: /system.slice/grafana-server.service</span><br><span class="line">             └─2821 /usr/sbin/grafana-server --config=/etc/grafana/grafana.ini </span><br><span class="line">             --pidfile=/var/run/grafana/grafana-server.pid</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>2、配置数据源prometheus</strong><br>获取nacos json模板：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25hY29zLWdyb3VwL25hY29zLXRlbXBsYXRlL2Jsb2IvbWFzdGVyL25hY29zLWdyYWZhbmEuanNvbg==">https://github.com/nacos-group/nacos-template/blob/master/nacos-grafana.json<i class="fa fa-external-link-alt"></i></span></p>
+<p>加入http地址：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMjQ1LjEzMjo5MDkwLw==">http://192.168.245.132:9090/<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>注意</strong>：将ip地址替换成你自己的。</p>
+<p>**如果遇到问题(注意排查导入json文件配置以及grafana数据源名称配置)**：</p>
+<p><strong>Failed to upgrade legacy queries Datasource prometheus was not found</strong></p>
+<p>检查配置json文件数据源名称：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;datasource&quot;</span><span class="punctuation">:</span> <span class="string">&quot;prometheus&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;format&quot;</span><span class="punctuation">:</span> <span class="string">&quot;none&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;gauge&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">   <span class="attr">&quot;maxValue&quot;</span><span class="punctuation">:</span> <span class="number">100</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;minValue&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;show&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;thresholdLabels&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;thresholdMarkers&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>可以看到默认配置的datasource是：prometheus</strong></p>
+<p>解决方法：<strong>修改默认数据源名称Prometheus为prometheus</strong>，注意匹配名称。</p>
+<p><strong>配置prometheus数据源</strong></p>
+<p>grafana运行默认端口是3000，访问：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMjQ1LjEzMjozMDAwLw==">http://192.168.245.132:3000/<i class="fa fa-external-link-alt"></i></span></p>
+<p>同样需要开放相应端口，参考上面介绍prometheus使用的方法。</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9ABLa8.png"></p>
+<p><strong>引入nacos json template</strong></p>
+<p>注意：熟悉的情况下，这个配置模板，可以根据自己的需求去修改，不一定要照搬，可以灵活运用。</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9ABqVf.png"></p>
+<p><strong>引入nacos json配置文件，看到如下三项代表配置成功</strong></p>
+<ul>
+<li>nacos monitor：展示nacos服务监控信息，包含上线服务、IP个数、cpu、内存、线程负载等等。</li>
+<li>nacos detail：展示nacos服务详细信息。</li>
+<li>nacos alert：展示nacos服务报警相关信息。</li>
+</ul>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9ABHqP.png"></p>
+<p><strong>nacos monitor 展示效果</strong></p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9ABOIS.png"></p>
+<p><strong>配置语言中文 &amp; 时区</strong><br>值得注意的是，在9.3.x之前还没实装设置语言这一项功能。</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9AB7rt.png"></p>
+<p>如果不出意外，配置完成，可以正常访问配置的nacos监控服务。</p>
+<p><strong>3、访问grafana服务</strong></p>
+<p>访问地址，默认端口3000，可以根据你的工作场景进行调整：<span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMjQ1LjEzMjozMDAwLyVFRiVCQyU4QyVFNSVBNiU4MiVFNiU5RSU5QyVFNSU5QyVBOCVFNiU5QyVBQyVFNSU5QyVCMCVFNiU5MCVBRCVFNSVCQiVCQSVFRiVCQyU4QyVFNSVCMCU4NmlwJUU2JTlCJUJGJUU2JThEJUEyJUU0JUI4JUJB">http://192.168.245.132:3000/，如果在本地搭建，将ip替换为<i class="fa fa-external-link-alt"></i></span> 127.0.0.1 或者 localhost。</p>
+<p>如果在服务器搭建，将ip替换为你的解析域名或者远程ip地址。</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9ABOIS.png"></p>
+<p><strong>如果想深入学习nacos，可以参考官方用户指南、运维指南和《Nacos架构&amp;原理》</strong>。</p>
+<p>《Nacos架构&amp;原理》：<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9lYm9vay8zNj9zcG09YTJjNmguMjAzNDUxMDcuZWJvb2staW5kZXguMTguMTUyYzI5ODRmc2k1U1Q="> https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST<i class="fa fa-external-link-alt"></i></span></p>
+<p>到此为止，是本篇的全部内容。感谢你的阅读和建议，我们下期再见。</p>
+<p><strong>参考资料</strong>：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9uYWNvcy5pby96aC1jbi9kb2NzL3YyL3F1aWNrc3RhcnQvcXVpY2stc3RhcnQuaHRtbA==">nacos2.x 官方文档<i class="fa fa-external-link-alt"></i></span></li>
+<li>[prometheus 官方文档](<span class="exturl" data-url="aHR0cHM6Ly9wcm9tZXRoZXVzLmlvL2RvY3MvcHJvbWV0aGV1cy9sYXRlc3QvZ2V0dGluZ19zdGFydGVkLw==">Getting started | Prometheus<i class="fa fa-external-link-alt"></i></span>)</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ncmFmYW5hLmNvbS9kb2NzL2dyYWZhbmEvbGF0ZXN0L2dldHRpbmctc3RhcnRlZC8=">grafana 官方文档<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="END—"><a href="#END—" class="headerlink" title="END—-"></a>END—-</h2><p>静下心来，才发现原来不会的还有很多。</p>
+<p>一分耕耘，一分收获。</p>
+<p>多总结，你会发现，自己的知识宝库越来越丰富。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2023/04/19/Nacos-prometheus-grafana/" title="Nacos prometheus grafana">https://blog.cnwangk.top/2023/04/19/Nacos-prometheus-grafana/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/nacos/" rel="tag"><i class="fa fa-tag"></i> nacos</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/17/rockyLinux%E9%95%9C%E5%83%8F%E6%BA%90%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80/" rel="prev" title="rockyLinux镜像源下载地址">
+                  <i class="fa fa-angle-left"></i> rockyLinux镜像源下载地址
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/26/rockyLinux%E5%88%9D%E4%BD%93%E9%AA%8CPostgreSQL15%E8%AF%A6%E7%BB%86%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" rel="next" title="rockyLinux初体验PostgreSQL15详细安装教程">
+                  rockyLinux初体验PostgreSQL15详细安装教程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/04/19/Nacos-prometheus-grafana/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

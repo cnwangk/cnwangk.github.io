@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="默认情况下，无论是Windows还是linux，一般为动态获取IP地址以及DNS。日常工作中，推荐配置静态IP地址。本文将教你如何在linux下配置IP地址。 正文基于Redhat系列，使用Centos7进行讲解。 磁盘相关的管理命令，可以参考菜鸟教程https:&#x2F;&#x2F;www.runoob.com&#x2F;（服务端-&gt;linux-&gt;linux命令大全） 一、设置静态IP在Linux服务器网卡配置">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Linux系统配置静态ip地址">
+<meta property="og:url" content="https://blog.cnwangk.top/2021/09/06/Linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81ip%E5%9C%B0%E5%9D%80/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="默认情况下，无论是Windows还是linux，一般为动态获取IP地址以及DNS。日常工作中，推荐配置静态IP地址。本文将教你如何在linux下配置IP地址。 正文基于Redhat系列，使用Centos7进行讲解。 磁盘相关的管理命令，可以参考菜鸟教程https:&#x2F;&#x2F;www.runoob.com&#x2F;（服务端-&gt;linux-&gt;linux命令大全） 一、设置静态IP在Linux服务器网卡配置">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-28T13:49:14.667Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2021/09/06/Linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81ip%E5%9C%B0%E5%9D%80/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2021/09/06/Linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81ip%E5%9C%B0%E5%9D%80/","path":"2021/09/06/Linux系统配置静态ip地址/","title":"Linux系统配置静态ip地址"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux系统配置静态ip地址 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81IP"><span class="nav-number">1.1.</span> <span class="nav-text">一、设置静态IP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81Centos6%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81IP"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、Centos6设置静态IP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81Centos7%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81IP"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、Centos7设置静态IP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E4%BF%AE%E6%94%B9%E5%AE%8C%E9%87%8D%E5%90%AF%E7%BD%91%E5%8D%A1%E7%94%9F%E6%95%88"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、修改完重启网卡生效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E6%B5%8B%E8%AF%95%E8%AE%BF%E9%97%AE%E5%A4%96%E7%BD%91"><span class="nav-number">1.1.4.</span> <span class="nav-text">4、测试访问外网</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BC%98%E5%8C%96%E7%AF%87"><span class="nav-number">1.2.</span> <span class="nav-text">二、优化篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E9%85%8D%E7%BD%AE%E9%98%BF%E9%87%8C%E6%BA%90"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、配置阿里源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%AE%89%E8%A3%85wget%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、安装wget命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E6%B8%85%E9%99%A4%E7%BC%93%E5%AD%98%EF%BC%8C%E7%94%9F%E6%88%90%E6%96%B0%E7%9A%84%E7%BC%93%E5%AD%98"><span class="nav-number">1.2.3.</span> <span class="nav-text">3、清除缓存，生成新的缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81firewalld%E7%81%AB%E5%A2%99%E5%B7%A5%E5%85%B7"><span class="nav-number">1.2.4.</span> <span class="nav-text">4、firewalld火墙工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E5%AE%89%E8%A3%85%E5%B9%B6%E9%85%8D%E7%BD%AE%E5%90%AF%E7%94%A8iptables"><span class="nav-number">1.2.5.</span> <span class="nav-text">5、安装并配置启用iptables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E5%85%B3%E9%97%ADselinux"><span class="nav-number">1.2.6.</span> <span class="nav-text">6、关闭selinux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%E3%80%81htop%E5%B7%A5%E5%85%B7"><span class="nav-number">1.2.7.</span> <span class="nav-text">7、htop工具</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2021/09/06/Linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81ip%E5%9C%B0%E5%9D%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux系统配置静态ip地址 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux系统配置静态ip地址
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-06 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-06T00:00:00+08:00">2021-09-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-28 21:49:14" itemprop="dateModified" datetime="2023-05-28T21:49:14+08:00">2023-05-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">开发运维</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>默认情况下，无论是Windows还是linux，一般为动态获取IP地址以及DNS。日常工作中，推荐配置静态IP地址。本文将教你如何在linux下配置IP地址。</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>基于Redhat系列，使用Centos7进行讲解。</p>
+<p>磁盘相关的管理命令，可以参考菜鸟教程<br><span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS8=">https://www.runoob.com/<i class="fa fa-external-link-alt"></i></span>（服务端-&gt;linux-&gt;linux命令大全）</p>
+<h2 id="一、设置静态IP"><a href="#一、设置静态IP" class="headerlink" title="一、设置静态IP"></a>一、设置静态IP</h2><p>在Linux服务器网卡配置文件中新增如下配置</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">IPADDR=<span class="number">192.168</span>.<span class="number">245.130</span>  <span class="comment">#静态ip地址</span></span><br><span class="line">NETMASK=<span class="number">255.225</span>.<span class="number">225.0</span>   <span class="comment">#子网掩码</span></span><br><span class="line">GATEWAY=<span class="number">192.168</span>.<span class="number">245.2</span>   <span class="comment">#网关地址</span></span><br><span class="line">DNS1=<span class="number">114.114</span>.<span class="number">114.114</span>    <span class="comment">#配置DNS 可配置多个DNS</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1、Centos6设置静态IP"><a href="#1、Centos6设置静态IP" class="headerlink" title="1、Centos6设置静态IP"></a>1、Centos6设置静态IP</h3><p>修改网卡if-eth0，个人使用虚拟机测试。</p>
+<p>使用cat命令只查看ifcfg-eth0网卡配置文件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用cat命令只查看ifcfg-eth0网卡配置文件</span></span><br><span class="line"><span class="built_in">cat</span> /etc/sysconfig/network<span class="literal">-scripts</span>/ifcfg<span class="literal">-eth0</span></span><br></pre></td></tr></table></figure>
+<p><strong>使用vim命令修改编辑</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用vim命令修改编辑</span></span><br><span class="line">vim /etc/sysconfig/network<span class="literal">-scripts</span>/ifcfg<span class="literal">-eth0</span></span><br></pre></td></tr></table></figure>
+<p><strong>配置文件内容</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置文件内容</span></span><br><span class="line">DEVICE=eth0</span><br><span class="line">HWADDR=<span class="number">00</span>:<span class="number">0</span>C:<span class="number">29</span>:<span class="number">66</span>:<span class="number">15</span>:<span class="number">29</span></span><br><span class="line"><span class="built_in">TYPE</span>=Ethernet</span><br><span class="line">UUID=c805e85a<span class="literal">-aa4e-4e35-9eaa-9fb4457c4568</span></span><br><span class="line">ONBOOT=yes <span class="comment">#设置为yes，重启系统，可以用ifconfig查看ip在哪个网段</span></span><br><span class="line">NM_CONTROLLED=yes</span><br><span class="line">BOOTPROTO=<span class="keyword">static</span> <span class="comment">#设置为静态static，动态则为dhcp</span></span><br><span class="line">IPADDR=<span class="number">192.168</span>.<span class="number">245.130</span> <span class="comment">#静态ip地址</span></span><br><span class="line">NETMASK=<span class="number">255.225</span>.<span class="number">225.0</span> <span class="comment">#子网掩码</span></span><br><span class="line">GATEWAY=<span class="number">192.168</span>.<span class="number">245.2</span> <span class="comment">#网关地址</span></span><br><span class="line">DNS1=<span class="number">114.114</span>.<span class="number">114.114</span> <span class="comment">#配置DNS</span></span><br><span class="line">DNS2=<span class="number">8.8</span>.<span class="number">8.8</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2、Centos7设置静态IP"><a href="#2、Centos7设置静态IP" class="headerlink" title="2、Centos7设置静态IP"></a>2、Centos7设置静态IP</h3><p>修改网卡配置文件if-ens33</p>
+<p>使用vim命令修改编辑</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用vim命令修改编辑</span></span><br><span class="line">vim /etc/sysconfig/network<span class="literal">-scripts</span>/<span class="keyword">if</span><span class="literal">-ens33</span></span><br></pre></td></tr></table></figure>
+<p><strong>配置文件内容</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置文件内容 </span></span><br><span class="line"><span class="built_in">TYPE</span>=Ethernet</span><br><span class="line">BOOTPROTO=<span class="keyword">static</span></span><br><span class="line">DEFROUTE=yes</span><br><span class="line">PEERDNS=yes</span><br><span class="line">PEERROUTES=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_PEERDNS=yes</span><br><span class="line">IPV6_PEERROUTES=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable<span class="literal">-privacy</span></span><br><span class="line">NAME=ens33</span><br><span class="line">UUID=<span class="number">8</span>a75b801<span class="literal">-6f56-48e6-b351-50620a66a1a3</span></span><br><span class="line">DEVICE=ens33</span><br><span class="line">ONBOOT=yes</span><br><span class="line">IPADDR=<span class="number">192.168</span>.<span class="number">245.129</span></span><br><span class="line">NETMASK=<span class="number">255.225</span>.<span class="number">225.0</span></span><br><span class="line">GATEWAY=<span class="number">192.168</span>.<span class="number">245.2</span></span><br><span class="line">DNS1=<span class="number">114.114</span>.<span class="number">114.114</span></span><br><span class="line">ZONE=public </span><br></pre></td></tr></table></figure>
+
+
+<h3 id="3、修改完重启网卡生效"><a href="#3、修改完重启网卡生效" class="headerlink" title="3、修改完重启网卡生效"></a>3、修改完重启网卡生效</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#centos6</span></span><br><span class="line">service network restart</span><br></pre></td></tr></table></figure>
+
+<p>centos7使用systemctl，同样在redhat系列可以使用service命令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart network</span><br></pre></td></tr></table></figure>
+
+
+<p>顺带讲一下相关知识点。这里是区分源码包和rpm包，根据安装位置不同，以及启动方式略微不同来区分，不然容易混淆。</p>
+<p><strong>这里介绍一个检测开机自启的命令，以nginx中间件为例子</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig <span class="literal">-list</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>设置服务自启</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig <span class="literal">-list</span> <span class="number">2345</span> nginx on</span><br></pre></td></tr></table></figure>
+
+<p><strong>查询nginx服务启动</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ps</span> <span class="literal">-aux</span> | grep nginx</span><br></pre></td></tr></table></figure>
+
+<p><strong>查询nginx的端口号监听</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat <span class="literal">-tlunp</span> | grep nginx</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>linux下（通用方式）是使用绝对路径找到服务然后启动</strong><br>例如：启动源码包安装的nginx</p>
+<p>绝对路径</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
+
+<p>重新加载配置文件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/nginx/sbin/nginx  <span class="literal">-s</span> reload</span><br></pre></td></tr></table></figure>
+
+<p>测试配置文件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/nginx/sbin/nginx <span class="literal">-t</span></span><br></pre></td></tr></table></figure>
+
+<p>停止服务</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/nginx/sbin/nginx <span class="literal">-s</span> stop</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4、测试访问外网"><a href="#4、测试访问外网" class="headerlink" title="4、测试访问外网"></a>4、测试访问外网</h3><p>ping命令的其它带参数使用，参考ping -help，或者使用man命令去查看学习。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#ping接参数，ping 5次</span></span><br><span class="line">ping baidu.com <span class="literal">-c</span> <span class="number">5</span></span><br></pre></td></tr></table></figure>
+
+<p>接收数据成功，证明配置完好。</p>
+<p>当然还有fping以及hping可以去官网找相关的源码包安装<br>这里讲到源码包安装，源码包目录有configure文件<br>一般三大步骤：<br>01、 .&#x2F;configure<br>02、 make<br>03、 make install</p>
+<h2 id="二、优化篇"><a href="#二、优化篇" class="headerlink" title="二、优化篇"></a>二、优化篇</h2><h3 id="1、配置阿里源"><a href="#1、配置阿里源" class="headerlink" title="1、配置阿里源"></a>1、配置阿里源</h3><p>阿里源链接</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://mirrors.aliyun.com/repo/</span><br></pre></td></tr></table></figure>
+
+<p>修改使其失效</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> /etc/yum.repos.d/CentOS<span class="literal">-Base</span>.repo /etc/yum.repos.d/CentOS<span class="literal">-Base</span>.repo.bak</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、安装wget命令"><a href="#2、安装wget命令" class="headerlink" title="2、安装wget命令"></a>2、安装wget命令</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="literal">-y</span> install <span class="built_in">wget</span></span><br></pre></td></tr></table></figure>
+
+<p>下载阿里云的repo，替换掉原来的repo。<strong>替换之前做好备份</strong>。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">wget</span> <span class="literal">-O</span> /etc/yum.repos.d/CentOS<span class="literal">-Base</span>.repo http://mirrors.aliyun.com/repo/Centos<span class="literal">-7</span>.repo</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="3、清除缓存，生成新的缓存"><a href="#3、清除缓存，生成新的缓存" class="headerlink" title="3、清除缓存，生成新的缓存"></a>3、清除缓存，生成新的缓存</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum clean all </span><br><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、firewalld火墙工具"><a href="#4、firewalld火墙工具" class="headerlink" title="4、firewalld火墙工具"></a>4、firewalld火墙工具</h3><p>firewalld和iptables启用其中一个就行。</p>
+<p>查看防火墙状态</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld.service</span><br></pre></td></tr></table></figure>
+
+<p>临时关闭防火墙</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service</span><br></pre></td></tr></table></figure>
+
+<p>开机禁止防火墙</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl disable firewalld.service</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="5、安装并配置启用iptables"><a href="#5、安装并配置启用iptables" class="headerlink" title="5、安装并配置启用iptables"></a>5、安装并配置启用iptables</h3><p>安装iptables</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="literal">-y</span> install iptables<span class="literal">-services</span>.x86_64</span><br></pre></td></tr></table></figure>
+<p>启动iptable</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">start</span> iptables.service</span><br></pre></td></tr></table></figure>
+
+<p>开机启用iptables</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable iptables.service</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="6、关闭selinux"><a href="#6、关闭selinux" class="headerlink" title="6、关闭selinux"></a>6、关闭selinux</h3><p>查看状态</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getenforce</span><br></pre></td></tr></table></figure>
+
+<p>临时关闭</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setenforce <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>永久关闭<br>vim &#x2F;etc&#x2F;selinux&#x2F;config</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selinux=disable;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7、htop工具"><a href="#7、htop工具" class="headerlink" title="7、htop工具"></a>7、htop工具</h3><p>htop工具下载地址<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h0b3AtZGV2L2h0b3AvYXJjaGl2ZS9yZWZzL3RhZ3MvMy4wLjUudGFyLmd6">https://github.com/htop-dev/htop/archive/refs/tags/3.0.5.tar.gz<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>好记性不如烂笔头</strong>，积少成多，收获也颇丰。<strong>你会发现，自己的知识宝库越来越丰富</strong>。白嫖有瘾，原创不易！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2021/09/06/Linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81ip%E5%9C%B0%E5%9D%80/" title="Linux系统配置静态ip地址">https://blog.cnwangk.top/2021/09/06/Linux系统配置静态ip地址/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/01/Ubuntu20-04%E4%BC%98%E9%BA%92%E9%BA%9F%E6%89%8B%E5%8A%A8%E5%BC%80%E5%90%AFroot%E7%94%A8%E6%88%B7/" rel="prev" title="Ubuntu20.04优麒麟：手动开启root用户">
+                  <i class="fa fa-angle-left"></i> Ubuntu20.04优麒麟：手动开启root用户
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/09/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" rel="next" title="Linux服务器挂载硬盘详细教程">
+                  Linux服务器挂载硬盘详细教程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2021/09/06/Linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81ip%E5%9C%B0%E5%9D%80/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

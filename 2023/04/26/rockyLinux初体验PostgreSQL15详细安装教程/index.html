@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="彼时，PostgreSQL 已经更新到了15.2。在rockyLinux上初体验PostgreSQL15，从部署到测试psql工具，体验基本用法，运用通用数据库管理工具。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="rockyLinux初体验PostgreSQL15详细安装教程">
+<meta property="og:url" content="https://blog.cnwangk.top/2023/04/26/rockyLinux%E5%88%9D%E4%BD%93%E9%AA%8CPostgreSQL15%E8%AF%A6%E7%BB%86%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="彼时，PostgreSQL 已经更新到了15.2。在rockyLinux上初体验PostgreSQL15，从部署到测试psql工具，体验基本用法，运用通用数据库管理工具。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/25/p9KFODs.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/25/p9KFxU0.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/25/p9KFHgg.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/25/p9KkpCT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/25/p9Kk98U.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/25/p9KFz5V.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/25/p9KFHgg.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/25/p9KkC2F.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/25/p9KFXbn.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/25/p9KFvEq.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/25/p9KFLuj.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/25/p9KFbvQ.png">
+<meta property="article:published_time" content="2023-04-26T14:07:49.000Z">
+<meta property="article:modified_time" content="2024-01-24T07:39:31.910Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="PostgreSQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/04/25/p9KFODs.png">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2023/04/26/rockyLinux%E5%88%9D%E4%BD%93%E9%AA%8CPostgreSQL15%E8%AF%A6%E7%BB%86%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2023/04/26/rockyLinux%E5%88%9D%E4%BD%93%E9%AA%8CPostgreSQL15%E8%AF%A6%E7%BB%86%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/","path":"2023/04/26/rockyLinux初体验PostgreSQL15详细安装教程/","title":"rockyLinux初体验PostgreSQL15详细安装教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>rockyLinux初体验PostgreSQL15详细安装教程 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BD%AF%E4%BB%B6-PostgreSQL-%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">数据库软件 PostgreSQL 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BD%AF%E4%BB%B6-PostgreSQL-%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">数据库软件 PostgreSQL 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BD%AF%E4%BB%B6-PostgreSQL-%E4%BA%A4%E4%BA%92"><span class="nav-number">3.</span> <span class="nav-text">数据库软件 PostgreSQL 交互</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E8%BD%AF%E4%BB%B6-DBeaver"><span class="nav-number">4.</span> <span class="nav-text">通用数据库管理软件 DBeaver</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/03/20/Windows-10%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85PostgreSQL-14-2%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" rel="bookmark">
+        <time class="popular-posts-time">2022-03-20</time>
+        <br>
+      Windows 10平台安装PostgreSQL 14.2详细教程
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2023/04/26/rockyLinux%E5%88%9D%E4%BD%93%E9%AA%8CPostgreSQL15%E8%AF%A6%E7%BB%86%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="rockyLinux初体验PostgreSQL15详细安装教程 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          rockyLinux初体验PostgreSQL15详细安装教程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-26 22:07:49" itemprop="dateCreated datePublished" datetime="2023-04-26T22:07:49+08:00">2023-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-24 15:39:31" itemprop="dateModified" datetime="2024-01-24T15:39:31+08:00">2024-01-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>14 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img data-src="https://s1.ax1x.com/2023/04/25/p9KFODs.png"></p>
+<p>彼时，PostgreSQL 已经更新到了15.2。在rockyLinux上初体验PostgreSQL15，从部署到测试psql工具，体验基本用法，运用通用数据库管理工具。</p>
+<span id="more"></span>
+
+<p>距离我上一次写 PostgreSQL 教程 2022-03-20，已经过去一年多了。Linux篇 PostgreSQL 教程很久之前就想写了，一直停留在想法上面，没有付诸实际行动。那会我的主要环境还在centos-7上，因为 centos-7快要停止维护了，目前已经转移到 rockyLinux-9平台。</p>
+<p>当时只是简单的在 Windows 平台介绍如何安装和简单使用，甚至没有过多参考官方文档。</p>
+<p>也是对前段时间总结的 《SQL 基础知识扫盲》 的补充。</p>
+<p>如今，我为什么又写起了 postgreSQL 相关文档呢？<br>答：目前市面postgreSQL文档相对较少，官方文档纯英文，上手有一定的难度。像MySQL（MariaDB）、Oracle之类的文档已经烂大街了，无非是新版本发布，闲暇时间部署尝尝鲜。</p>
+<p>初体验，第一次嘛，姿势、动作难度不能太高，容易劝退，所以比较简单。</p>
+<h3 id="数据库软件-PostgreSQL-安装"><a href="#数据库软件-PostgreSQL-安装" class="headerlink" title="数据库软件 PostgreSQL 安装"></a>数据库软件 PostgreSQL 安装</h3><p>如果获取软件比较缓慢，可以在公众号回复blog，进入站点搜索：rockyLinux镜像源下载地址。如下所示，列出部分 postgresql 国内镜像源地址：</p>
+<ol>
+<li>浙江大学开源软件镜像站：<span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLnpqdS5lZHUuY24vcG9zdGdyZXNxbC8=">https://mirrors.zju.edu.cn/postgresql/<i class="fa fa-external-link-alt"></i></span></li>
+<li>中国科学技术大学镜像站：<span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLnVzdGMuZWR1LmNuL3Bvc3RncmVzcWwv">https://mirrors.ustc.edu.cn/postgresql/<i class="fa fa-external-link-alt"></i></span></li>
+<li>清华大学开源软件镜像站：<span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLnR1bmEudHNpbmdodWEuZWR1LmNuL3Bvc3RncmVzcWwv">https://mirrors.tuna.tsinghua.edu.cn/postgresql/<i class="fa fa-external-link-alt"></i></span></li>
+</ol>
+<p>最新版本（PDF）文档地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcvZmlsZXMvZG9jdW1lbnRhdGlvbi9wZGYvMTUvcG9zdGdyZXNxbC0xNS1BNC5wZGY=">https://www.postgresql.org/files/documentation/pdf/15/postgresql-15-A4.pdf<i class="fa fa-external-link-alt"></i></span></p>
+<p>如果还是下载缓慢，这是正常现象，建议使用迅雷（打钱）等BT工具下载，或者在Linux平台使用 wget 获取，然后使用 scp 命令传到Windows平台浏览。</p>
+<p>目前所有版本，最新版本为15.2，9th February 2023: PostgreSQL 15.2, 14.7, 13.10, 12.14, and 11.19 Released!</p>
+<p><strong>安装方式：Packages and Installers</strong></p>
+<p>使用 Installers 安装包形式进行安装，RHEL系列使用rpm包居多。</p>
+<p>选择适合你的操作系统，支持的操作系统比较丰富：</p>
+<ol>
+<li>Linux</li>
+<li>macOS</li>
+<li>Windows</li>
+<li>BSD</li>
+<li>Solaris</li>
+</ol>
+<p>postgreSQL 下载目前支持两种方式：</p>
+<ol>
+<li>Packages：发行安装包形式，难易度较低，不灵活。</li>
+<li>Source：源码包形式，难易度相对较高，比较灵活。</li>
+</ol>
+<p>如下，将演示Linux发行版Rocky-9平台PostgreSQL的部署。</p>
+<p>切换到普通用进行安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su wzgy</span><br></pre></td></tr></table></figure>
+
+<p>如果安装rockyLinux-9之后，默认提示安装的版本是 postgresql-13.10，使用TAB键进行补全会提示。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wzgy@localhost ~]$ dnf -y install postgresql-server-13.10-1.el9_1.x86_64</span><br><span class="line">postgresql-contrib-13.10-1.el9_1.x86_64   </span><br><span class="line">...</span><br><span class="line">postgresql-server-13.10-1.el9_1.x86_64	postgresql-upgrade-13.10-1.el9_1.x86_64</span><br></pre></td></tr></table></figure>
+
+
+<p>如果想安装比较新的版本，可以前往postgresql官网找到对应的Linux发行版选择对应版本进行安装。</p>
+<p>postgreSQL 下载地址： <span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcvZG93bmxvYWQv">https://www.postgresql.org/download/<i class="fa fa-external-link-alt"></i></span></p>
+<p>示例选择 Linux 发行版<strong>Red Hat&#x2F;Rocky&#x2F;CentOS version 9</strong>（版本），<strong>PostgreSQL Yum</strong>源仓库：<br><span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcvZG93bmxvYWQvbGludXgvcmVkaGF0Lw==">https://www.postgresql.org/download/linux/redhat/<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>PostgreSQL 快速安装</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span><br><span class="line">sudo dnf -qy module <span class="built_in">disable</span> postgresql</span><br><span class="line">sudo dnf install -y postgresql15-server</span><br><span class="line">sudo /usr/pgsql-15/bin/postgresql-15-setup initdb</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> postgresql-15</span><br><span class="line">sudo systemctl start postgresql-15</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>PostgreSQL 详细安装步骤</strong></p>
+<p><strong>PostgreSQL 下载所需要 rpm 依赖包，用于更新（版本库）到最新版本</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<p><strong>PostgreSQL 导入公钥，验证过程，由于网络等原因可能会失败</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf -qy module <span class="built_in">disable</span> postgresql</span><br><span class="line">导入 GPG 公钥 0x442DF0F8:</span><br><span class="line"> Userid: <span class="string">&quot;PostgreSQL RPM Building Project &lt;pgsql-pkg-yum@postgresql.org&gt;&quot;</span></span><br><span class="line"> 指纹: 68C9 E2B9 1A37 D136 FE74 D176 1F16 D2E1 442D F0F8</span><br><span class="line"> 来自: /etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG</span><br></pre></td></tr></table></figure>
+
+<p><strong>PostgreSQL 安装 postgresql-15 服务</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf install -y postgresql15-server</span><br></pre></td></tr></table></figure>
+<p>由于网络等原因，<strong>可能安装会比较缓慢</strong>，这里建议更换为国内yum &amp; dnf 源，比如阿里、网易等等都可以。</p>
+<p><strong>比如更换阿里源</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sed -e <span class="string">&#x27;s|^mirrorlist=|#mirrorlist=|g&#x27;</span> \</span><br><span class="line">    -e <span class="string">&#x27;s|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://mirrors.aliyun.com/rockylinux|g&#x27;</span> \</span><br><span class="line">    -i.bak \</span><br><span class="line">    /etc/yum.repos.d/rocky-*.repo</span><br><span class="line">dnf makecache</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：替换镜像源，建议先备份，然后验证路径是否正确。</p>
+<p>示例，注意大小写，可能存在无法读取正确路径，<strong>Linux下对大小写敏感</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> /etc/yum.repos.d/rocky-*.repo</span><br></pre></td></tr></table></figure>
+<p>输出信息：&#x2F;etc&#x2F;yum.repos.d&#x2F;rocky-addons.repo   &#x2F;etc&#x2F;yum.repos.d&#x2F;rocky-devel.repo   &#x2F;etc&#x2F;yum.repos.d&#x2F;rocky-extras.repo，证明路径真实存在。</p>
+<p>备份，sed命令接 -i 属性已经加入备份到当前目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sed -i .bak \</span><br><span class="line">/etc/yum.repos.d/rocky-*.repo</span><br></pre></td></tr></table></figure>
+<p>最后使用 dnf makecache 更新缓存：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf makecache</span><br></pre></td></tr></table></figure>
+<p>如果使用 RHEL8 之前，请使用 yum makecache 更新。</p>
+<p><strong>PostgreSQL 初始化</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/pgsql-15/bin/postgresql-15-setup initdb</span><br></pre></td></tr></table></figure>
+<p>看到：Initializing database … OK，证明初始化完成。</p>
+<p>为什么这样执行？<br>答：postgresql-15-setup 脚本所在绝对路径位置 &#x2F;usr&#x2F;pgsql-15&#x2F;bin&#x2F;，通过 initdb 参数进行初始化。</p>
+<p>如果你有过使用MySQL（MariaDB）或者Oracle以及其它关系型数据库经验，也存在初始化的过程，执行命令略有不同。在MySQL（MariaDB）中，可以使用如下命令初始化：bin\mysqld –initialize-insecure 或者 bin\mysqld –initialize-insecure –console。</p>
+<p><strong>PostgreSQL 设置开机自启</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> postgresql-15</span><br></pre></td></tr></table></figure>
+<p>看到输出信息：Created symlink &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;multi-user.target.wants&#x2F;postgresql-15.service → &#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;postgresql-15.service. 代表设置开机自启完成。</p>
+<p><strong>PostgreSQL 服务启动</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start postgresql-15</span><br></pre></td></tr></table></figure>
+
+
+
+<p>查询当前用户身份：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bash-5.1$ <span class="built_in">whoami</span></span><br><span class="line">postgres</span><br></pre></td></tr></table></figure>
+
+<p>可以看到当前用户已经切换到了 postgres。</p>
+<p><strong>管理 PostgreSQL 服务另一种方式，使用 pg_ctl 脚本</strong></p>
+<p>pg_ctl  命令启动服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash-5.1$ /usr/pgsql-15/bin/pg_ctl -D /var/lib/pgsql/15/data/ start</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://s1.ax1x.com/2023/04/25/p9KFxU0.png"></p>
+<p>输出信息：</p>
+<blockquote>
+<p>等待服务器进程启动 ….2023-04-25 18:47:50.476 CST [3505] 日志:  日志输出重定向到日志收集进程<br>2023-04-25 18:47:50.476 CST [3505] 提示:  后续的日志输出将出现在目录 “log”中.<br> 完成<br>服务器进程已经启动</p>
+</blockquote>
+<p>pg_ctl  命令重启服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash-5.1$ /usr/pgsql-15/bin/pg_ctl -D /var/lib/pgsql/15/data/ restart</span><br></pre></td></tr></table></figure>
+
+<p>输出信息：</p>
+<blockquote>
+<p>等待服务器进程关闭 …. 完成<br>服务器进程已经关闭<br>等待服务器进程启动 ….2023-04-25 18:48:34.629 CST [3521] 日志:  日志输出重定向到日志收集进程<br>2023-04-25 18:48:34.629 CST [3521] 提示:  后续的日志输出将出现在目录 “log”中.<br> 完成<br>服务器进程已经启动</p>
+</blockquote>
+<p>pg_ctl  命令停止服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash-5.1$ /usr/pgsql-15/bin/pg_ctl -D /var/lib/pgsql/15/data/ stop</span><br></pre></td></tr></table></figure>
+
+<p>输出信息：</p>
+<blockquote>
+<p>等待服务器进程关闭 …. 完成<br>服务器进程已经关闭</p>
+</blockquote>
+<p><strong>注意</strong>：需要以非 root 用户身份执行命令。</p>
+<blockquote>
+<p>pg_ctl: 无法以 root 用户运行<br>请以服务器进程所属用户 (非特权用户) 登录 (或使用 “su”)</p>
+</blockquote>
+<h3 id="数据库软件-PostgreSQL-配置"><a href="#数据库软件-PostgreSQL-配置" class="headerlink" title="数据库软件 PostgreSQL 配置"></a>数据库软件 PostgreSQL 配置</h3><p><strong>postgreSQL 查看状态以及验证是否自启</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> postgresql-15</span><br></pre></td></tr></table></figure>
+<p>当你看到 active (running)，代表服务（活跃）正常启动状态，看到 &#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;postgresql-15.service; enabled;代表开机自启，如果想开机禁用，使用命令 systemctl disable postgresql-15 即可。</p>
+<p>到此为止，postgresql-15 安装过程以及服务启动演示完成。</p>
+<p><strong>postgresql-15 初步使用</strong></p>
+<p><strong>rockyLinux创建普通用户</strong>，需要root（创建用户）权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd wzgy</span><br><span class="line">passwd wzgy</span><br></pre></td></tr></table></figure>
+<p>参数含义：</p>
+<ol>
+<li>useradd wzgy：useradd 命令用于新增用户，后面接用户名。</li>
+<li>passwd wzgy：passwd 命令用于修改新增用户密码。</li>
+</ol>
+<p><strong>切换到普用户</strong>，如果没有普通用户，可以创建一个用户用于安装管理postgresql-15：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">su wzgy</span><br><span class="line">sudo systemctl status postgresql-15.service</span><br></pre></td></tr></table></figure>
+<p>参数含义：</p>
+<ol>
+<li>su wzgy：su 命令用切换用户身份。</li>
+<li>sudo：用于提取权限，是一个很有意思的命令。</li>
+</ol>
+<p><strong>netstat 监控 5432 端口</strong>，输出信息如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[wzgy@localhost ~]$ sudo netstat -tlunp | grep 5432</span><br><span class="line">tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      9117/postmaster</span><br><span class="line">tcp6       0      0 ::1:5432                :::*                    LISTEN      9117/postmaster</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://s1.ax1x.com/2023/04/25/p9KFHgg.png"></p>
+<p><strong>ps 监控服务命令监控 postmaster服务</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -aux | grep postmaster</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://s1.ax1x.com/2023/04/25/p9KkpCT.png"></p>
+<p>通过监控服务命令可以看出，初始化的data目录在：&#x2F;var&#x2F;lib&#x2F;pgsql&#x2F;15&#x2F;data&#x2F;。</p>
+<p>使用 yum &amp; dnf 命令安装，<strong>默认配置文件所在路径</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/var/lib/pgsql/15/data/postgresql.conf</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：如果 data 目录不存在，大概率初始化阶段出现问题，也就是初始化失败，需要检查日志文件：&#x2F;var&#x2F;lib&#x2F;pgsql&#x2F;15&#x2F;initdb.log。</p>
+<p>服务器环境可以使用 vim 或者 nvim（需要安装 neovim ）进行编辑配置文件：postgresql.conf。</p>
+<p>修改配置：sudo vim &#x2F;var&#x2F;lib&#x2F;pgsql&#x2F;15&#x2F;data&#x2F;postgresql.conf</p>
+<p>开放配置，只演示最基础的：</p>
+<ol>
+<li>listen_addresses &#x3D; ‘localhost’ ：监听地址，重启数据库软件服务生效；</li>
+<li>defaults to ‘localhost’; use ‘*’ for all：<strong>默认为localhost，*代表开放所以ip进行访问</strong>。</li>
+<li>port &#x3D; 5432 ： 监听端口，重启数据库软件服务生效；</li>
+<li>max_connections &#x3D; 100 ：最大连接数，重启数据库软件服务生效。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># - 配置文件：连接设置 -</span></span><br><span class="line">listen_addresses = <span class="string">&#x27;localhost&#x27;</span>          <span class="comment"># 监听地址，重启数据库软件服务生效;</span></span><br><span class="line">port = 5432                             <span class="comment"># 监听端口，重启数据库软件服务生效;</span></span><br><span class="line">max_connections = 100                   <span class="comment"># 最大连接数，重启数据库软件服务生效;</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://s1.ax1x.com/2023/04/25/p9Kk98U.png"></p>
+<p><strong>注意</strong>：如果需要使用通用数据库管理工具远程连接，还需要做如下修改，授予相应权限，由于测试，我直接设置 all（所有ip）：</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/25/p9KFz5V.png"></p>
+<p>编辑pg_hba.conf配置文件，vim &#x2F;var&#x2F;lib&#x2F;pgsql&#x2F;15&#x2F;data&#x2F;pg_hba.conf，找到 IPv4 local connections，官方文档有详细配置说明。理论上，应该可以通过 GRANT 命令形式授权，在MySQL（MariaDB）是支持的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># IPv4 local connections:</span></span><br><span class="line">host    all             all             127.0.0.1/32            scram-sha-256</span><br><span class="line">host    all             all             all                     scram-sha-256</span><br></pre></td></tr></table></figure>
+
+<p>如果安装了 firewalld 防火墙管理工具，需要开放相应的端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=5432/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://s1.ax1x.com/2023/04/25/p9KFHgg.png"></p>
+<p><strong>修改配置文件后，记得重启 postgresql 服务</strong>。</p>
+<p>如果你使用其它普通用户创建用户、角色、登录等等操作，会出现如下错误：<br>createuser: 错误: 连接到套接字”&#x2F;var&#x2F;run&#x2F;postgresql&#x2F;.s.PGSQL.5432”上的服务器失败:致命错误:  角色 “root” 不存在。</p>
+<p>如果你不确定有哪些用户，可以使用命令查看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># cat /etc/passwd | grep postgres</span></span><br><span class="line">postgres:x:26:26:PostgreSQL Server:/var/lib/pgsql:/bin/bash</span><br></pre></td></tr></table></figure>
+<p><strong>请注意</strong>：有时候为了方便，我直接使用root用户操作，比如我用 cat 和 grep 命令查看postgres用户。</p>
+<p>解决方案，<strong>切换用户为postgres：su postgres</strong>，如果你仔细阅读了官方文档，其实会有启发的。</p>
+<p>登录字符命令操作界面 psql：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">psql</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="数据库软件-PostgreSQL-交互"><a href="#数据库软件-PostgreSQL-交互" class="headerlink" title="数据库软件 PostgreSQL 交互"></a>数据库软件 PostgreSQL 交互</h3><p>参数 postgres&#x3D;#：登录 PostgreSQL 默认用户前缀名称。</p>
+<p>输入 select version(); 查询版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postgres=<span class="comment"># select version();</span></span><br></pre></td></tr></table></figure>
+<p>输出信息：PostgreSQL 15.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 11.3.1 20220421 (Red Hat 11.3.1-2), 64-bit。</p>
+<p>参数含义：</p>
+<ol>
+<li>PostgreSQL 15.2：数据库软件版本 15.2。</li>
+<li>x86_64-pc-linux-gnu：使用Linux平台x86_64架构。</li>
+<li>compiled by gcc (GCC) 11.3.1 20220421 (Red Hat 11.3.1-2)：编译gcc版本。</li>
+<li>64-bit：64位操作系统。</li>
+</ol>
+<p>输入测试验证：postgres&#x3D;# select 1\g<br>输出结果： ?column? 	1，这是正常状态。</p>
+<p><strong>创建表 books</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">postgres<span class="operator">=</span># <span class="keyword">create</span> <span class="keyword">table</span> books(id <span class="type">varchar</span>(<span class="number">64</span>) <span class="keyword">primary</span> key,name <span class="type">varchar</span>(<span class="number">64</span>));</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>新增操作</strong>，插入一条数据：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">postgres<span class="operator">=</span># <span class="keyword">insert</span> <span class="keyword">into</span> books <span class="keyword">values</span>(<span class="string">&#x27;1001&#x27;</span>,<span class="string">&#x27;绝世武功秘籍&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="number">0</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>查询操作</strong>，查询表 books ：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">postgres<span class="operator">=</span># <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> books\g</span><br><span class="line">  id  <span class="operator">|</span>     name</span><br><span class="line"><span class="comment">------+--------------</span></span><br><span class="line"> <span class="number">1001</span> <span class="operator">|</span> 绝世武功秘籍</span><br><span class="line">(<span class="number">1</span> 行记录)</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>修改操作</strong>，修改表  books ：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">postgres<span class="operator">-</span># <span class="keyword">update</span> books <span class="keyword">set</span> name<span class="operator">=</span><span class="string">&#x27;PostgreSQL-15.2&#x27;</span>  <span class="keyword">where</span> id<span class="operator">=</span><span class="string">&#x27;1001&#x27;</span></span><br><span class="line"><span class="keyword">UPDATE</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>再次查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">postgres<span class="operator">=</span># <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> books;</span><br><span class="line">  id  <span class="operator">|</span>      name</span><br><span class="line"><span class="comment">------+-----------------</span></span><br><span class="line"> <span class="number">1001</span> <span class="operator">|</span> PostgreSQL<span class="number">-15.2</span></span><br><span class="line">(<span class="number">1</span> 行记录)</span><br></pre></td></tr></table></figure>
+
+<p>输出信息：发现 name 值已经变成了 PostgreSQL-15.2，证明修改成功。</p>
+<p><strong>删除 books 表行记录</strong>，这是个人操作重要数据时有备份的习惯，开启显示事务，验证完后手动commit（提交）：</p>
+<ol>
+<li>begin：手动开启显示事务。</li>
+<li>delete：执行删除语句。</li>
+<li>rollback：执行回滚操作。</li>
+<li>commit：最后提交。</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">postgres<span class="operator">=</span><span class="operator">*</span># <span class="keyword">delete</span> <span class="keyword">from</span> books <span class="keyword">where</span> id<span class="operator">=</span><span class="string">&#x27;1001&#x27;</span>;</span><br><span class="line"><span class="keyword">DELETE</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>无论是 修改或者删除（统称更新操作），建议加上条件 where 语句。</p>
+<p>无图无真相，如下所示为时间线操作步骤：</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/25/p9KkC2F.png"></p>
+<p>试一试 postgreSQL 使用 explain 分析SQL执行效率，和MySQL（MariaDB）差不多，参数显示更少：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">postgres<span class="operator">=</span># explain <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> books <span class="keyword">where</span> id<span class="operator">=</span><span class="string">&#x27;1001&#x27;</span>\g</span><br><span class="line">                                QUERY PLAN</span><br><span class="line"><span class="comment">--------------------------------------------------------------------------</span></span><br><span class="line"> Index Scan <span class="keyword">using</span> books_pkey <span class="keyword">on</span> books  (cost<span class="operator">=</span><span class="number">0.14</span>.<span class="number">.8</span><span class="number">.16</span> <span class="keyword">rows</span><span class="operator">=</span><span class="number">1</span> width<span class="operator">=</span><span class="number">292</span>)</span><br><span class="line">   Index Cond: ((id)::text <span class="operator">=</span> <span class="string">&#x27;1001&#x27;</span>::text)</span><br><span class="line">(<span class="number">2</span> 行记录)</span><br></pre></td></tr></table></figure>
+
+<p>因为创建表时，事先已经指定 id 属性为主键（primary key），所以执行计划扫描表使用到索引（using books_pkey）。 </p>
+<p><strong>psql 帮助命令</strong>：</p>
+<ol>
+<li>? [commands] ：显示反斜线命令的帮助；</li>
+<li>? options  ：显示 psql 命令行选项的帮助；</li>
+<li>? variables  ： 显示特殊变量的帮助；</li>
+<li>\h [NAME]  ：  SQL命令语法上的说明，用*显示全部命令的语法说明。</li>
+</ol>
+<p>最后，善用帮助文档，有助于你快速定位操作命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">postgres=<span class="comment"># \h</span></span><br><span class="line">postgres=<span class="comment"># \?</span></span><br></pre></td></tr></table></figure>
+<p>示例，我要查询alter具体用法：postgres-# \h alter 。如果你和我一样安装选择语言是中文版的rockyLinux，那么将有友好的中文翻译。</p>
+<p>输出信息比较多：比如alter、create、drop等等DDL（Data Definition Language）语句。</p>
+<p><strong>简单科普</strong>：<br>DDL（Data Definition Language）语句，数据定义语句。主要用于对索引、数据表结构、字段等进行创建、删除以及修改。比如我们常用的关键字主要有：CREATE、DROP、ALTER等等。一般是DBA管理员使用的比较频繁。</p>
+<p>DML（Data Manipulation Language）语句，数据操纵语句。主要用于对数据库表中记录进行增删改查。比如我们常用的关键字主要有：INSERT、DELTE、UPDATE以及SELECT等。一般是开发人员使用的比较频繁。</p>
+<p>DCL（Data Control Language）语句，数据控制语句。主要用于对用户、表、字段的访问权限进行控制授权。比如我们常用的关键字有：grant（授权）、revoke（撤回授权）等。</p>
+<p>退出 psql 终端管理命令： postgres&#x3D;# \q</p>
+<p>再次进入 psql 终端管理，执行：psql </p>
+<h3 id="通用数据库管理软件-DBeaver"><a href="#通用数据库管理软件-DBeaver" class="headerlink" title="通用数据库管理软件 DBeaver"></a>通用数据库管理软件 DBeaver</h3><p><strong>初始化连接参数</strong>：</p>
+<ol>
+<li>新增数据库连接，选择PostgreSQL。</li>
+<li>主机（host）：ip地址，localhost或者远程ip。</li>
+<li>数据库（database）：不填默认使用 postgres。</li>
+<li>端口（port）：默认为5432，实际工作中，建议修改，尽量避免被恶意扫描软件攻击。</li>
+<li>用户名（username）：初始化安装会存在一个超级用户 postgres。</li>
+<li>密码：可以使用 alter 语句修改，默认可能是空。</li>
+</ol>
+<p>修改密码语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postgres<span class="operator">=</span># <span class="keyword">ALTER</span> <span class="keyword">USER</span> postgres PASSWORD <span class="string">&#x27;123456&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img data-src="https://s1.ax1x.com/2023/04/25/p9KFXbn.png"></p>
+<p><strong>测试连接</strong>，连接成功（正常）显示输出信息：</p>
+<ol>
+<li>选择顶部菜单栏：数据库。</li>
+<li>新建数据库连接。</li>
+<li>选择PostgreSQL，设置连接参数。</li>
+<li>测试连接。</li>
+</ol>
+<p><img data-src="https://s1.ax1x.com/2023/04/25/p9KFvEq.png"></p>
+<p><strong>数据库目录导航，查询表 books</strong>：</p>
+<ol>
+<li>定位数据库导航，选择postgres，依次展开public、表；</li>
+<li>右键（F4）查看表 books；</li>
+<li>选项：属性（显示表结构等等）、数据（行记录），ER图。</li>
+</ol>
+<p><img data-src="https://s1.ax1x.com/2023/04/25/p9KFLuj.png"></p>
+<p><strong>使用SQL编辑器查询</strong>：</p>
+<ol>
+<li>选择选择顶部菜单栏：SQL编辑器；</li>
+<li>新建SQL编辑器；</li>
+<li>输入SQL语句：select * from books b 。</li>
+</ol>
+<p><img data-src="https://s1.ax1x.com/2023/04/25/p9KFbvQ.png"></p>
+<p>看完整篇教程后，有同学可能有疑问，你这张表的字段为什么这么少？没错，就是这么少。</p>
+<p>初体验，第一次嘛，姿势动作难度不能太高，容易劝退，所以比较简单。创建用户、创建角色以及权限相关等等知识没有具体介绍，也许会在下一篇介绍哟。</p>
+<p>至此，在 Linux 发行版 rockyLinux-9上初步体验 postgresql最新版本postgresql-15。</p>
+<p>以上总结，仅供参考！</p>
+<p>如需转载，请标明出处和原作者。</p>
+<p>参考资料：</p>
+<ul>
+<li>PostgreSQL-15官方文档：<span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcvZG9jcy8xNS9pbmRleC5odG1s">https://www.postgresql.org/docs/15/index.html<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>—END—</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2023/04/26/rockyLinux%E5%88%9D%E4%BD%93%E9%AA%8CPostgreSQL15%E8%AF%A6%E7%BB%86%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="rockyLinux初体验PostgreSQL15详细安装教程">https://blog.cnwangk.top/2023/04/26/rockyLinux初体验PostgreSQL15详细安装教程/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/PostgreSQL/" rel="tag"><i class="fa fa-tag"></i> PostgreSQL</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/19/Nacos-prometheus-grafana/" rel="prev" title="Nacos prometheus grafana">
+                  <i class="fa fa-angle-left"></i> Nacos prometheus grafana
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/05/05/hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0cloudflare-pages%E7%A4%BA%E4%BE%8B/" rel="next" title="hexo博客部署到cloudflare pages示例">
+                  hexo博客部署到cloudflare pages示例 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/04/26/rockyLinux%E5%88%9D%E4%BD%93%E9%AA%8CPostgreSQL15%E8%AF%A6%E7%BB%86%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言MySQL主从复制实战。以前总听说集群之类的，从来没有好好思考过。如今有空余时间，终于亲自搭建环境得以实现MySQL主从复制。 从搭建虚拟机环境，以及安装Redhat系列的centos7.5服务器，部署MySQL5.6环境。嘿嘿，测试使用虚拟机搭建美滋滋。当然你也可以花money，多建几台云服务器实现集群环境。 正文MySQL主从复制实战 主要使用到的环境说明 数据库版本 12#使用cento">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="CentOS7 Linux 搭建MySQL主从复制">
+<meta property="og:url" content="https://blog.cnwangk.top/2021/11/30/CentOS7%20Linux%20%E6%90%AD%E5%BB%BAMySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="前言MySQL主从复制实战。以前总听说集群之类的，从来没有好好思考过。如今有空余时间，终于亲自搭建环境得以实现MySQL主从复制。 从搭建虚拟机环境，以及安装Redhat系列的centos7.5服务器，部署MySQL5.6环境。嘿嘿，测试使用虚拟机搭建美滋滋。当然你也可以花money，多建几台云服务器实现集群环境。 正文MySQL主从复制实战 主要使用到的环境说明 数据库版本 12#使用cento">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b4f0f1eb4dae4cc0a6d57b0507ab1fe6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/267f0cde8fb84b08ba10885ef226dc8a.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1171a1cb58cb4ccf89f43c155e7be038.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/65093ffc14f447389d1409f724f24261.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e3879a0a4d994b55bbab91d63ec0ac2a.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7e2c75a6733a4db0907e4062191a1aaa.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/635b955eec404eeaa64fa2a4d42df58e.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/19ebc56a514245fba120997f467d81f8.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/79dfcf85f972466c91740a83a132a17b.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/4ccd9a581e494d7d9b990d3edc83f052.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9421b86c2f2b4519a0e7cc6216ef5693.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/6a6ea12e0dbe4fb5a07a5f2b683b8c3f.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_18,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/0058c7bfdb584e039ae7b0bd0c6a12a0.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_18,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3b12ec87b3894e54ac2b0d222ef65cc7.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5f71fb1bf7a541659167e279e64a9c1f.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a1c23c5687f744b8baba899c2cfb0122.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/870c93fdf05544f58019209b9fd6d940.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/55f2fb392b7f4685ad41a24b41ae5bc2.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7e4ac3f916084c32bdc3d3d347449790.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f8d6c4bac4244a9590bafcca13d67534.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d15885b813824b98b49461c8e9fb1961.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ecee6f893de949d894e1cb38c7f6f39b.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e32b155a20b543e8a3db6c9c63a272df.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/19ebc56a514245fba120997f467d81f8.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/79dfcf85f972466c91740a83a132a17b.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/c477973816274cbbb448fd207cc7567a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/4ccd9a581e494d7d9b990d3edc83f052.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1fada42a85e34709aab98c0c042aa647.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9accbacee2144cabab2b78ff23723f78.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d4d77ff463b043b783ccaf03b4c838f2.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/267f0cde8fb84b08ba10885ef226dc8a.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1171a1cb58cb4ccf89f43c155e7be038.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/65093ffc14f447389d1409f724f24261.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e3879a0a4d994b55bbab91d63ec0ac2a.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7e2c75a6733a4db0907e4062191a1aaa.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/635b955eec404eeaa64fa2a4d42df58e.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+<meta property="article:published_time" content="2021-11-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-29T11:16:01.665Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/b4f0f1eb4dae4cc0a6d57b0507ab1fe6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2021/11/30/CentOS7%20Linux%20%E6%90%AD%E5%BB%BAMySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2021/11/30/CentOS7%20Linux%20%E6%90%AD%E5%BB%BAMySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/","path":"2021/11/30/CentOS7 Linux 搭建MySQL主从复制/","title":"CentOS7 Linux 搭建MySQL主从复制"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CentOS7 Linux 搭建MySQL主从复制 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84%E7%8E%AF%E5%A2%83%E8%AF%B4%E6%98%8E"><span class="nav-number">2.1.</span> <span class="nav-text">主要使用到的环境说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81binlog%E4%B8%8Erelay-log"><span class="nav-number">2.2.</span> <span class="nav-text">一、binlog与relay-log</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-binlog"><span class="nav-number">2.2.1.</span> <span class="nav-text">1.1 binlog</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-relay-log"><span class="nav-number">2.2.2.</span> <span class="nav-text">1.2 relay-log</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81master%E8%8A%82%E7%82%B9%E9%85%8D%E7%BD%AE"><span class="nav-number">2.3.</span> <span class="nav-text">二、master节点配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-master%E8%8A%82%E7%82%B9%E9%85%8D%E7%BD%AE"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.1 master节点配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E9%87%8D%E5%90%AFmysql"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.2 重启mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E6%9F%A5%E7%9C%8B%E4%B8%BB%E8%8A%82%E7%82%B9%E7%8A%B6%E6%80%81"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3 通过命令查看主节点状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E6%8E%88%E6%9D%83slave%E8%8A%82%E7%82%B9%E8%B4%A6%E5%8F%B7"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.4 授权slave节点账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E6%9F%A5%E7%9C%8B%E9%AA%8C%E8%AF%81"><span class="nav-number">2.3.5.</span> <span class="nav-text">2.5 查看验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81slave%E8%8A%82%E7%82%B9%E9%85%8D%E7%BD%AE"><span class="nav-number">2.4.</span> <span class="nav-text">三、slave节点配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-slave%E8%8A%82%E7%82%B9%E9%85%8D%E7%BD%AE"><span class="nav-number">2.4.1.</span> <span class="nav-text">3.1 slave节点配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E7%99%BB%E5%BD%95mysql%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.4.2.</span> <span class="nav-text">3.2 登录mysql设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%BC%80%E5%90%AF%E4%B8%AD%E7%BB%A7%E6%97%A5%E5%BF%97"><span class="nav-number">2.4.3.</span> <span class="nav-text">3.3 开启中继日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E8%BE%85%E5%8A%A9%E6%93%8D%E4%BD%9C"><span class="nav-number">2.4.4.</span> <span class="nav-text">3.4 辅助操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-slave02%EF%BC%88%E4%BB%8E%E8%8A%82%E7%82%B9%E9%85%8D%E7%BD%AE%EF%BC%89"><span class="nav-number">2.4.5.</span> <span class="nav-text">3.5 slave02（从节点配置）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%88%9B%E5%BB%BA%E8%A1%A8%E4%BB%A5%E5%8F%8A%E6%96%B0%E5%A2%9E%E6%95%B0%E6%8D%AE%E8%BF%9B%E8%A1%8C%E9%AA%8C%E8%AF%81"><span class="nav-number">2.5.</span> <span class="nav-text">四、创建表以及新增数据进行验证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E6%88%B7"><span class="nav-number">2.5.1.</span> <span class="nav-text">4.1 创建数据库用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%88%9B%E5%BB%BA%E8%A1%A8"><span class="nav-number">2.5.2.</span> <span class="nav-text">4.2 创建表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E7%94%9F%E6%88%90%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE"><span class="nav-number">2.5.3.</span> <span class="nav-text">4.3 生成测试数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E9%87%87%E7%94%A8SQLylog%E5%B7%A5%E5%85%B7%E9%AA%8C%E8%AF%81"><span class="nav-number">2.5.4.</span> <span class="nav-text">4.4 采用SQLylog工具验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%8E%92%E6%9F%A5%E9%97%AE%E9%A2%98"><span class="nav-number">2.6.</span> <span class="nav-text">五、排查问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-error-1236"><span class="nav-number">2.6.1.</span> <span class="nav-text">5.1 error 1236</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="nav-number">2.6.2.</span> <span class="nav-text">5.2 解决问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8E%88%E6%9D%83%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95"><span class="nav-number">2.6.3.</span> <span class="nav-text">5.3 数据库授权远程登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E9%98%B2%E7%81%AB%E5%A2%99%E9%97%AE%E9%A2%98"><span class="nav-number">2.6.4.</span> <span class="nav-text">5.4 防火墙问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-%E8%BF%9E%E6%8E%A5%E5%B7%A5%E5%85%B7"><span class="nav-number">2.6.5.</span> <span class="nav-text">5.5 连接工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%AE%9E%E7%8E%B0MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="nav-number">2.7.</span> <span class="nav-text">六、实现MySQL主从复制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.7.1.</span> <span class="nav-text">6.1 分析模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-1-%E4%B8%80%E4%B8%BB%E4%B8%80%E4%BB%8E%E6%A8%A1%E5%9E%8B%EF%BC%9Amaster-slave"><span class="nav-number">2.7.2.</span> <span class="nav-text">6.1.1 一主一从模型：master-&gt;slave</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-2-%E4%B8%80%E4%B8%BB%E5%A4%9A%E4%BB%8E"><span class="nav-number">2.7.3.</span> <span class="nav-text">6.1.2 一主多从</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-3-%E5%A4%9A%E4%B8%BB%E4%B8%80%E4%BB%8E"><span class="nav-number">2.7.4.</span> <span class="nav-text">6.1.3 多主一从</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-4-%E7%89%B9%E4%BE%8B%EF%BC%9A%E4%B8%BB-%E4%B8%BB%E5%A4%8D%E5%88%B6"><span class="nav-number">2.7.5.</span> <span class="nav-text">6.1.4 特例：主-主复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-5-%E4%BD%BF%E7%94%A8SQLylog%E6%93%8D%E4%BD%9C%E9%AA%8C%E8%AF%81"><span class="nav-number">2.7.6.</span> <span class="nav-text">6.1.5 使用SQLylog操作验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E9%99%84%E4%BB%B6%EF%BC%88%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%EF%BC%89"><span class="nav-number">2.8.</span> <span class="nav-text">七、附件（搭建环境）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83"><span class="nav-number">2.8.1.</span> <span class="nav-text">7.1 虚拟机搭建环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-xshell%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.8.2.</span> <span class="nav-text">7.2  xshell远程连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-%E6%90%AD%E5%BB%BAlinux%E7%8E%AF%E5%A2%83"><span class="nav-number">2.8.3.</span> <span class="nav-text">7.3 搭建linux环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-4-%E9%87%87%E7%94%A8SQLylog%E5%B7%A5%E5%85%B7%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">2.8.4.</span> <span class="nav-text">7.4 采用SQLylog工具进行测试</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2021/07/27/Linux%EF%BC%88%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%EF%BC%89%E9%83%A8%E7%BD%B2VNC%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%B9%B6%E4%B8%94%E4%BD%BF%E7%94%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5/" rel="bookmark">
+        <time class="popular-posts-time">2021-07-27</time>
+        <br>
+      Linux（银河麒麟V10）部署VNC服务端并且使用客户端连接
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" rel="bookmark">
+        <time class="popular-posts-time">2022-02-18</time>
+        <br>
+      DM8 数据库 DTS 迁移工具详细使用教程
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2020/01/03/Linux%E5%85%BB%E6%88%90%E8%BE%BE%E4%BA%BA%E4%B9%8B%E5%85%A5%E9%97%A8%E5%AE%9E%E8%B7%B5%E5%9B%BE%E6%96%87%E8%B6%85%E8%AF%A6%E7%BB%86/" rel="bookmark">
+        <time class="popular-posts-time">2020-01-03</time>
+        <br>
+      Linux养成达人之入门实践图文超详细
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2021/04/26/CentOS7%20Linux%20%E4%BD%BF%E7%94%A8VMware12%E6%90%AD%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/" rel="bookmark">
+        <time class="popular-posts-time">2021-04-26</time>
+        <br>
+      CentOS7 Linux 使用VMware12搭建测试环境
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/02/18/Windows%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4%E5%B8%B8%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/" rel="bookmark">
+        <time class="popular-posts-time">2022-02-18</time>
+        <br>
+      Windows服务器运维常用小技巧
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2021/11/30/CentOS7%20Linux%20%E6%90%AD%E5%BB%BAMySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CentOS7 Linux 搭建MySQL主从复制 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CentOS7 Linux 搭建MySQL主从复制
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-30 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-30T00:00:00+08:00">2021-11-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-29 19:16:01" itemprop="dateModified" datetime="2023-05-29T19:16:01+08:00">2023-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>MySQL主从复制实战。以前总听说集群之类的，从来没有好好思考过。如今有空余时间，终于亲自搭建环境得以实现MySQL主从复制。</p>
+<p>从搭建虚拟机环境，以及安装Redhat系列的centos7.5服务器，部署MySQL5.6环境。嘿嘿，测试使用虚拟机搭建美滋滋。当然你也可以花money，多建几台云服务器实现集群环境。</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>MySQL主从复制实战</p>
+<h2 id="主要使用到的环境说明"><a href="#主要使用到的环境说明" class="headerlink" title="主要使用到的环境说明"></a>主要使用到的环境说明</h2><p><img data-src="https://img-blog.csdnimg.cn/b4f0f1eb4dae4cc0a6d57b0507ab1fe6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p><strong>数据库版本</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用centos7.3初始安装就可选择安装所需基本环境</span></span><br><span class="line"><span class="number">5.6</span>.<span class="number">51</span><span class="literal">-log</span> MySQL Community Server (GPL)</span><br></pre></td></tr></table></figure>
+
+<p><strong>操作系统</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">linux <span class="keyword">for</span> centos7.<span class="number">3</span>  or centos7.<span class="number">5</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>测试环境</strong>：VMware12虚拟机搭建三台centos7.3服务器<br><strong>服务器IP地址</strong>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">IP_MASTER：<span class="number">192.168</span>.<span class="number">245.131</span></span><br><span class="line">IP_SLAVE：<span class="number">192.168</span>.<span class="number">245.132</span></span><br><span class="line">IP_SLAVE：<span class="number">192.168</span>.<span class="number">245.132</span></span><br></pre></td></tr></table></figure>
+<p><strong>搭建服务器环境参考文章</strong>：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbS9hcnRpY2xlL2RldGFpbHMvMTE2MDg1NDY3">VMware12配合使用Centos7搭建Linux开发环境<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>测试模型</strong>：一主两从，即（master、slave、slave）<br><strong>知识宝库</strong>：VMware的简单使用，Linux基本命令、MySQL数据库CRUD<br><strong>tips</strong>：VMware8亦可搭建，解决内存过小，这个小伙子有点东西啊！<br><strong>目标实现</strong>：MySQL主从复制</p>
+<h2 id="一、binlog与relay-log"><a href="#一、binlog与relay-log" class="headerlink" title="一、binlog与relay-log"></a>一、binlog与relay-log</h2><h3 id="1-1-binlog"><a href="#1-1-binlog" class="headerlink" title="1.1 binlog"></a>1.1 binlog</h3><p><strong>作用</strong>：记录数据库改变的数据，在第四步可以进行验证。</p>
+<p><strong>查看binlog日志</strong> </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 查看binlog日志 **/</span></span><br><span class="line"><span class="keyword">SHOW</span> BINLOG EVENTS <span class="keyword">IN</span> <span class="string">&#x27;mysql-bin.000004&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>mysqlbinlog查看binlog日志</strong> </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** mysqlbinlog查看binlog日志 **/</span></span><br><span class="line">mysqlbinlog <span class="comment">--short-form --force-if-open --base64-output=never /var/lib/mysql/mysql-bin.000004 //对应你MySQL的安装目录</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-relay-log"><a href="#1-2-relay-log" class="headerlink" title="1.2 relay-log"></a>1.2 relay-log</h3><p><strong>作用</strong>：连接master与slave节点的核心</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">01</span> master.info</span><br><span class="line"><span class="number">02</span> relay<span class="literal">-log</span>.info</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="二、master节点配置"><a href="#二、master节点配置" class="headerlink" title="二、master节点配置"></a>二、master节点配置</h2><h3 id="2-1-master节点配置"><a href="#2-1-master节点配置" class="headerlink" title="2.1 master节点配置"></a>2.1 master节点配置</h3><p>MySQL数据库配置文件my.cnf</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/my.cnf</span><br></pre></td></tr></table></figure>
+
+<p>加入配置</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">#开启binlog</span><br><span class="line">log<span class="operator">-</span>bin<span class="operator">=</span>mysql<span class="operator">-</span>bin</span><br><span class="line">#不与其它从节点重复即可</span><br><span class="line">server<span class="operator">-</span>id<span class="operator">=</span><span class="number">101</span></span><br><span class="line">#需要同步的数据，如果不配置则同步全部</span><br><span class="line">binlog<span class="operator">-</span>do<span class="operator">-</span>db<span class="operator">=</span>test_db</span><br><span class="line">#binlog日志保留的天数，清除超过<span class="number">10</span>天的日志；防止日志文件过大，导致磁盘空间不足</span><br><span class="line">expire<span class="operator">-</span>logs<span class="operator">-</span>days<span class="operator">=</span><span class="number">10</span></span><br><span class="line">#开启混合模式</span><br><span class="line">binlog_format<span class="operator">=</span>mixed</span><br><span class="line">innodb_file_per_table<span class="operator">=</span><span class="keyword">ON</span></span><br><span class="line">skip_name_resolve<span class="operator">=</span><span class="keyword">ON</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-重启mysql"><a href="#2-2-重启mysql" class="headerlink" title="2.2 重启mysql"></a>2.2 重启mysql</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#readhat7系列使用方式</span></span><br><span class="line">systemctl restart mysql</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-通过命令查看主节点状态"><a href="#2-3-通过命令查看主节点状态" class="headerlink" title="2.3 通过命令查看主节点状态"></a>2.3 通过命令查看主节点状态</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> master status\G;</span><br></pre></td></tr></table></figure>
+
+<p>注意查看：master_log_pos的值，这点很重要，master与搭建集群的两个slave节点保持一致。</p>
+<h3 id="2-4-授权slave节点账号"><a href="#2-4-授权slave节点账号" class="headerlink" title="2.4 授权slave节点账号"></a>2.4 授权slave节点账号</h3><p>关联授权搭建的两个slave子节点</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#关联授权搭建的两个slave子节点</span><br><span class="line"><span class="keyword">GRANT</span> REPLICATION SLAVE <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;192.168.245.132&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;123456&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#关联授权搭建的两个slave子节点</span><br><span class="line"><span class="keyword">GRANT</span> REPLICATION SLAVE <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;192.168.245.133&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;123456&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>刷新权限</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#刷新权限</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-查看验证"><a href="#2-5-查看验证" class="headerlink" title="2.5 查看验证"></a>2.5 查看验证</h3><p>显示查看日志</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#显示查看日志</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> variables <span class="keyword">like</span> <span class="string">&#x27;%log%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>显示查看服务</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#显示查看服务</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> variables <span class="keyword">like</span> <span class="string">&#x27;%server%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、slave节点配置"><a href="#三、slave节点配置" class="headerlink" title="三、slave节点配置"></a>三、slave节点配置</h2><h3 id="3-1-slave节点配置"><a href="#3-1-slave节点配置" class="headerlink" title="3.1 slave节点配置"></a>3.1 slave节点配置</h3><p>MySQL数据库配置文件my.cnf</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#slave01（从节点配置）</span></span><br><span class="line">vim /etc/my.cnf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">#不与主节点以及其它从节点重复即可</span><br><span class="line">server<span class="operator">-</span>id<span class="operator">=</span><span class="number">102</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-登录mysql设置"><a href="#3-2-登录mysql设置" class="headerlink" title="3.2 登录mysql设置"></a>3.2 登录mysql设置</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql <span class="operator">-</span>uroot <span class="operator">-</span>p</span><br></pre></td></tr></table></figure>
+
+<p>输入命令如下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CHANGE MASTER <span class="keyword">TO</span></span><br><span class="line">MASTER_HOST<span class="operator">=</span><span class="string">&#x27;192.168.245.131&#x27;</span>,<span class="operator">/</span><span class="operator">/</span>MASTER主节点IP</span><br><span class="line">MASTER_USER<span class="operator">=</span><span class="string">&#x27;root&#x27;</span>,<span class="operator">/</span><span class="operator">/</span>创建的用户</span><br><span class="line">MASTER_PASSWORD<span class="operator">=</span><span class="string">&#x27;123456&#x27;</span>,<span class="operator">/</span><span class="operator">/</span>用户密码</span><br><span class="line">MASTER_LOG_FILE<span class="operator">=</span><span class="string">&#x27;mysql-bin.000001&#x27;</span>,<span class="operator">/</span><span class="operator">/</span>MASTER主机binlog日志名称，必须是最新的一个</span><br><span class="line">MASTER_LOG_POS<span class="operator">=</span><span class="number">120</span>,<span class="operator">/</span><span class="operator">/</span>binlog日志偏移量，对应master节点的</span><br><span class="line">master_port<span class="operator">=</span><span class="number">3306</span>;<span class="operator">/</span>端口号</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-开启中继日志"><a href="#3-3-开启中继日志" class="headerlink" title="3.3 开启中继日志"></a>3.3 开启中继日志</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">server<span class="operator">-</span>id<span class="operator">=</span><span class="number">102</span> #必须</span><br><span class="line">relay<span class="operator">-</span>log<span class="operator">=</span>relay<span class="operator">-</span>log #必须</span><br><span class="line">relay<span class="operator">-</span>log<span class="operator">-</span>index<span class="operator">=</span>relay<span class="operator">-</span>log.index #必须</span><br><span class="line">innodb_file_per_table<span class="operator">=</span><span class="keyword">ON</span> #非必须</span><br><span class="line">skip_name_resolve<span class="operator">=</span><span class="keyword">ON</span> #非必须</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-辅助操作"><a href="#3-4-辅助操作" class="headerlink" title="3.4 辅助操作"></a>3.4 辅助操作</h3><p>查看slave子节点状态</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查看slave子节点状态</span><br><span class="line"><span class="keyword">show</span> slave status\G;</span><br></pre></td></tr></table></figure>
+
+<p>启动slave节点</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#启动slave节点</span><br><span class="line"><span class="keyword">start</span> slave;</span><br></pre></td></tr></table></figure>
+
+<p>关闭slave节点</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#关闭slave节点</span><br><span class="line">stop slave;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-slave02（从节点配置）"><a href="#3-5-slave02（从节点配置）" class="headerlink" title="3.5 slave02（从节点配置）"></a>3.5 slave02（从节点配置）</h3><p>修改MySQL从节点配置文件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/my.cnf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">#不与主节点以及其它从节点重复即可</span><br><span class="line">server<span class="operator">-</span>id<span class="operator">=</span><span class="number">103</span></span><br></pre></td></tr></table></figure>
+
+<p>查看slave子节点状态</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查看slave子节点状态</span><br><span class="line"><span class="keyword">show</span> slave status\G;</span><br></pre></td></tr></table></figure>
+
+<p>启动slave节点</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#启动slave节点</span><br><span class="line"><span class="keyword">start</span> slave;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="四、创建表以及新增数据进行验证"><a href="#四、创建表以及新增数据进行验证" class="headerlink" title="四、创建表以及新增数据进行验证"></a>四、创建表以及新增数据进行验证</h2><h3 id="4-1-创建数据库用户"><a href="#4-1-创建数据库用户" class="headerlink" title="4.1 创建数据库用户"></a>4.1 创建数据库用户</h3><p>建议使用SQLyog工具创建用户，比较方便。</p>
+<p>链接：<span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMTFnSWxaS3hvVEc1QkNDY29YZFZKUmc="> https://pan.baidu.com/s/11gIlZKxoTG5BCCcoXdVJRg<i class="fa fa-external-link-alt"></i></span> 提取码: ntu7</p>
+<h3 id="4-2-创建表"><a href="#4-2-创建表" class="headerlink" title="4.2 创建表"></a>4.2 创建表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 创建测试表GIRL **/</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `GIRL` (</span><br><span class="line">  `ID` <span class="type">varchar</span>(<span class="number">64</span>) <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8 <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `GIRE_NAME` <span class="type">varchar</span>(<span class="number">64</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `GIRL_AGE` <span class="type">varchar</span>(<span class="number">10</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `CUP_SIZE` <span class="type">varchar</span>(<span class="number">2</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`ID`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8 <span class="keyword">COLLATE</span><span class="operator">=</span>utf8_bin</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-生成测试数据"><a href="#4-3-生成测试数据" class="headerlink" title="4.3 生成测试数据"></a>4.3 生成测试数据</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 插入测试数据 **/</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> GIRL <span class="keyword">values</span>(<span class="string">&#x27;tolove16B&#x27;</span>,<span class="string">&#x27;梦梦&#x27;</span>,<span class="string">&#x27;16&#x27;</span>,<span class="string">&#x27;B&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-4-采用SQLylog工具验证"><a href="#4-4-采用SQLylog工具验证" class="headerlink" title="4.4 采用SQLylog工具验证"></a>4.4 采用SQLylog工具验证</h3><p><strong>master节点插入测试数据</strong><br><img data-src="https://img-blog.csdnimg.cn/267f0cde8fb84b08ba10885ef226dc8a.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p><strong>master节点binlog日志验证</strong><br><img data-src="https://img-blog.csdnimg.cn/1171a1cb58cb4ccf89f43c155e7be038.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"><br><strong>slave_check_RELAYLOG（133服务器）</strong><br><img data-src="https://img-blog.csdnimg.cn/65093ffc14f447389d1409f724f24261.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>132_slave_insert_data_girl同步数据<br><img data-src="https://img-blog.csdnimg.cn/e3879a0a4d994b55bbab91d63ec0ac2a.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>133_slave_check_RELAYLOG日志<br><img data-src="https://img-blog.csdnimg.cn/7e2c75a6733a4db0907e4062191a1aaa.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>133_slave_同步数据<br><img data-src="https://img-blog.csdnimg.cn/635b955eec404eeaa64fa2a4d42df58e.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<h2 id="五、排查问题"><a href="#五、排查问题" class="headerlink" title="五、排查问题"></a>五、排查问题</h2><h3 id="5-1-error-1236"><a href="#5-1-error-1236" class="headerlink" title="5.1 error 1236"></a>5.1 error 1236</h3><p><strong>master_log_pos与从节点不一致导致error 1236</strong><br><img data-src="https://img-blog.csdnimg.cn/19ebc56a514245fba120997f467d81f8.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"><br><strong>分析日志：position日志偏移量与master节点不一致</strong><br>设置的master_log_pos发生改变，导致position不一致，出现无法同步（报：error 1236）<br><img data-src="https://img-blog.csdnimg.cn/79dfcf85f972466c91740a83a132a17b.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p><strong>slave节点正常状态参考</strong></p>
+<p><em>注意：我截图上的是后期优化处理过的，所以看到的pos和上面的不一致</em><br><img data-src="https://img-blog.csdnimg.cn/4ccd9a581e494d7d9b990d3edc83f052.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<h3 id="5-2-解决问题"><a href="#5-2-解决问题" class="headerlink" title="5.2 解决问题"></a>5.2 解决问题</h3><p>通过如下设置保持与master节点一致<br>首先关闭slave节点</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop slave</span><br></pre></td></tr></table></figure>
+
+<p>查看master节点日志偏移量</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> master status\G;</span><br></pre></td></tr></table></figure>
+
+<p>在slave节点修改日志偏移量与master一致</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">change master <span class="keyword">to</span> master_log_file <span class="operator">=</span><span class="string">&#x27;mysql-bin.000005&#x27;</span>,master_log_pos<span class="operator">=</span><span class="number">950</span>;</span><br></pre></td></tr></table></figure>
+
+<p>最后启动slave节点</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">start</span> slave</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-数据库授权远程登录"><a href="#5-3-数据库授权远程登录" class="headerlink" title="5.3 数据库授权远程登录"></a>5.3 数据库授权远程登录</h3><p>5.3.1 授权命令</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> PRIVILEGES <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;你的数据库用户名&#x27;</span>@<span class="string">&#x27;单个ip或者%表示所有&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;你的数据库连接密码&#x27;</span> <span class="keyword">WITH</span> <span class="keyword">GRANT</span> OPTION;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> PRIVILEGES <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;123456&#x27;</span> <span class="keyword">WITH</span> <span class="keyword">GRANT</span> OPTION;</span><br></pre></td></tr></table></figure>
+
+<p>5.3.2 修改用户密码：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> password <span class="keyword">for</span> root<span class="variable">@localhost</span><span class="operator">=</span>password(<span class="string">&#x27;123456&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="5-4-防火墙问题"><a href="#5-4-防火墙问题" class="headerlink" title="5.4 防火墙问题"></a>5.4 防火墙问题</h3><p>5.4.1 本次实战中使用到的是centos7，默认安装的是firewalld<br>5.4.2 临时关闭防火墙：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service</span><br></pre></td></tr></table></figure>
+
+<p>5.4.3 实际工作中推荐需要使用哪些端口采取开放，比如开放MySQL默认的3306：<br>公共区域设置开放3306端口永久生效（–permanent）：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall<span class="literal">-cmd</span> <span class="literal">--zone</span>=public <span class="literal">--add-port</span>=<span class="number">3306</span>/tcp <span class="literal">--permanent</span></span><br></pre></td></tr></table></figure>
+
+<p>操作完记住重启或重载：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewalld<span class="literal">-cmd</span> <span class="literal">--reload</span></span><br></pre></td></tr></table></figure>
+
+<p>移除：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall<span class="literal">-cmd</span> <span class="literal">--zone</span>=public <span class="literal">--remove-port</span>=<span class="number">3306</span>/tcp <span class="literal">--permanent</span></span><br></pre></td></tr></table></figure>
+
+<p>查看是否开放：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall<span class="literal">-cmd</span> <span class="literal">--zone</span>=public <span class="literal">--query-port</span>=<span class="number">3306</span>/tcp</span><br></pre></td></tr></table></figure>
+<h3 id="5-5-连接工具"><a href="#5-5-连接工具" class="headerlink" title="5.5 连接工具"></a>5.5 连接工具</h3><p>推荐使用Navicat和SQLyog可视化工具。<br>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMTFnSWxaS3hvVEc1QkNDY29YZFZKUmc=">https://pan.baidu.com/s/11gIlZKxoTG5BCCcoXdVJRg<i class="fa fa-external-link-alt"></i></span> 提取码: ntu7<br>SQLyog官网下载<br><span class="exturl" data-url="aHR0cHM6Ly9zcWx5b2cuZW4uc29mdG9uaWMuY29tLw==">https://sqlyog.en.softonic.com/<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="六、实现MySQL主从复制"><a href="#六、实现MySQL主从复制" class="headerlink" title="六、实现MySQL主从复制"></a>六、实现MySQL主从复制</h2><h3 id="6-1-分析模型"><a href="#6-1-分析模型" class="headerlink" title="6.1 分析模型"></a>6.1 分析模型</h3><p>分析模型：一主一从，一主多从，多主一从</p>
+<h3 id="6-1-1-一主一从模型：master-slave"><a href="#6-1-1-一主一从模型：master-slave" class="headerlink" title="6.1.1 一主一从模型：master-&gt;slave"></a>6.1.1 一主一从模型：master-&gt;slave</h3><p><img data-src="https://img-blog.csdnimg.cn/9421b86c2f2b4519a0e7cc6216ef5693.png#" alt="在这里插入图片描述"></p>
+<h3 id="6-1-2-一主多从"><a href="#6-1-2-一主多从" class="headerlink" title="6.1.2 一主多从"></a>6.1.2 一主多从</h3><p>在slave节点再配置slave缓解master服务器压力<br><img data-src="https://img-blog.csdnimg.cn/6a6ea12e0dbe4fb5a07a5f2b683b8c3f.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_18,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<h3 id="6-1-3-多主一从"><a href="#6-1-3-多主一从" class="headerlink" title="6.1.3 多主一从"></a>6.1.3 多主一从</h3><p><img data-src="https://img-blog.csdnimg.cn/0058c7bfdb584e039ae7b0bd0c6a12a0.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_18,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<h3 id="6-1-4-特例：主-主复制"><a href="#6-1-4-特例：主-主复制" class="headerlink" title="6.1.4 特例：主-主复制"></a>6.1.4 特例：主-主复制</h3><p>（每一个主既是从又是主）<br><img data-src="https://img-blog.csdnimg.cn/3b12ec87b3894e54ac2b0d222ef65cc7.png#" alt="在这里插入图片描述"></p>
+<h3 id="6-1-5-使用SQLylog操作验证"><a href="#6-1-5-使用SQLylog操作验证" class="headerlink" title="6.1.5 使用SQLylog操作验证"></a>6.1.5 使用SQLylog操作验证</h3><p>分别登陆三台数据库服务器（推荐SQLylog工具）<br>同时登陆xshell工具连接查看三台服务器状态（推荐使用xshell或者SecureCRT）</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip:<span class="number">192.168</span>.<span class="number">245.131</span> //master</span><br></pre></td></tr></table></figure>
+
+<p>数据库：test_db &#x2F;&#x2F;与master节点配置单一用户对应<br>数据库表：GIRL</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip:<span class="number">192.168</span>.<span class="number">245.132</span> //slave</span><br></pre></td></tr></table></figure>
+
+<p>master节点创建GIRL表，slave同步创建</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip:<span class="number">192.168</span>.<span class="number">245.133</span> //slave</span><br></pre></td></tr></table></figure>
+
+<p>master节点创建GIRL表，slave同步创建</p>
+<p>tips：如果想实现主-主同步，则需要在其它两台配置数据库用户关联授权，参考第二步。<br>      我并没有验证主-主同步，嘿嘿，当然你可以私下验证哟！</p>
+<h2 id="七、附件（搭建环境）"><a href="#七、附件（搭建环境）" class="headerlink" title="七、附件（搭建环境）"></a>七、附件（搭建环境）</h2><h3 id="7-1-虚拟机搭建环境"><a href="#7-1-虚拟机搭建环境" class="headerlink" title="7.1 虚拟机搭建环境"></a>7.1 虚拟机搭建环境</h3><p><strong>搭建服务器环境参考文章</strong>：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbS9hcnRpY2xlL2RldGFpbHMvMTE2MDg1NDY3">VMware12配合使用Centos7搭建Linux开发环境<i class="fa fa-external-link-alt"></i></span></p>
+<p>7.1.1 搭建虚拟机环境<br><img data-src="https://img-blog.csdnimg.cn/5f71fb1bf7a541659167e279e64a9c1f.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>7.1.2 虚拟机服务器配置<br><img data-src="https://img-blog.csdnimg.cn/a1c23c5687f744b8baba899c2cfb0122.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<h3 id="7-2-xshell远程连接"><a href="#7-2-xshell远程连接" class="headerlink" title="7.2  xshell远程连接"></a>7.2  xshell远程连接</h3><p>7.2.1  使用xshell远程连接<br><img data-src="https://img-blog.csdnimg.cn/870c93fdf05544f58019209b9fd6d940.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<h3 id="7-3-搭建linux环境"><a href="#7-3-搭建linux环境" class="headerlink" title="7.3 搭建linux环境"></a>7.3 搭建linux环境</h3><p>准备三台MySQL服务器配置主从复制（master：131，slave：132，slave：133）<br><img data-src="https://img-blog.csdnimg.cn/55f2fb392b7f4685ad41a24b41ae5bc2.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>131 master主节点my.cnf配置<br><img data-src="https://img-blog.csdnimg.cn/7e4ac3f916084c32bdc3d3d347449790.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>131 验证master节点log_bin开启<br><img data-src="https://img-blog.csdnimg.cn/f8d6c4bac4244a9590bafcca13d67534.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>131 show_master_status查看状态（注意：此时master的pos为120）<br><img data-src="https://img-blog.csdnimg.cn/d15885b813824b98b49461c8e9fb1961.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>131查看主节点master的server服务（131服务器）<br><img data-src="https://img-blog.csdnimg.cn/ecee6f893de949d894e1cb38c7f6f39b.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>131查看主节点binlog日志所在目录（131服务器）<br><img data-src="https://img-blog.csdnimg.cn/e32b155a20b543e8a3db6c9c63a272df.png#" alt="在这里插入图片描述"></p>
+<p>start_slave启动从节点132（此时master的pos为120，没对应上导致slave无法读取）<br><img data-src="https://img-blog.csdnimg.cn/19ebc56a514245fba120997f467d81f8.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"><br><img data-src="https://img-blog.csdnimg.cn/79dfcf85f972466c91740a83a132a17b.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>参考<strong>步骤五排查问题</strong>进行解决<br>在slave节点修改日志偏移量与master一致，master_log_file对应先查出主节点最新的：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> master status\G;</span><br></pre></td></tr></table></figure>
+<p><strong>查看此时master的pos为120</strong></p>
+<p><img data-src="https://img-blog.csdnimg.cn/c477973816274cbbb448fd207cc7567a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center" alt="在这里插入图片描述"></p>
+<p><strong>此时设置master_log_pos&#x3D;120</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">change master <span class="keyword">to</span> master_log_file <span class="operator">=</span><span class="string">&#x27;mysql-bin.000001&#x27;</span>,master_log_pos<span class="operator">=</span><span class="number">120</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>正常slave节点读取_IO_SQL_Running为YES，如下图</strong><br><img data-src="https://img-blog.csdnimg.cn/4ccd9a581e494d7d9b990d3edc83f052.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p><strong>slave_mysql_log（132服务器对应的slave节点）</strong><br><img data-src="https://img-blog.csdnimg.cn/1fada42a85e34709aab98c0c042aa647.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p><strong>启动从节点slave（对应slave节点133服务器）</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**（此时master的pos为120，没对应上导致slave无法读取）</span></span><br><span class="line"><span class="comment">参考132服务器正常状态，修改pos对应上master节点 **/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">start</span> slave</span><br></pre></td></tr></table></figure>
+
+<p><strong>slave节点MySQL日志（slave节点对应133服务器）</strong><br><img data-src="https://img-blog.csdnimg.cn/9accbacee2144cabab2b78ff23723f78.png#" alt="在这里插入图片描述"></p>
+<p>132开启从节点中继日志<br><img data-src="https://img-blog.csdnimg.cn/d4d77ff463b043b783ccaf03b4c838f2.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<h3 id="7-4-采用SQLylog工具进行测试"><a href="#7-4-采用SQLylog工具进行测试" class="headerlink" title="7.4 采用SQLylog工具进行测试"></a>7.4 采用SQLylog工具进行测试</h3><p>131_master_插入测试数据<br><img data-src="https://img-blog.csdnimg.cn/267f0cde8fb84b08ba10885ef226dc8a.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>131_master_binlog_日志验证<br><img data-src="https://img-blog.csdnimg.cn/1171a1cb58cb4ccf89f43c155e7be038.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"><br>132_slave_check_RELAYLOG<br><img data-src="https://img-blog.csdnimg.cn/65093ffc14f447389d1409f724f24261.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>132_slave_insert_data_girl同步数据<br><img data-src="https://img-blog.csdnimg.cn/e3879a0a4d994b55bbab91d63ec0ac2a.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>133_slave_check_RELAYLOG日志<br><img data-src="https://img-blog.csdnimg.cn/7e2c75a6733a4db0907e4062191a1aaa.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>133_slave_同步数据<br><img data-src="https://img-blog.csdnimg.cn/635b955eec404eeaa64fa2a4d42df58e.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p>—END—</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2021/11/30/CentOS7%20Linux%20%E6%90%AD%E5%BB%BAMySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" title="CentOS7 Linux 搭建MySQL主从复制">https://blog.cnwangk.top/2021/11/30/CentOS7 Linux 搭建MySQL主从复制/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/07/Linux%E5%8F%91%E8%A1%8C%E7%89%88%E5%9B%BD%E4%BA%A7%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E9%83%A8%E7%BD%B2ARM%E6%9E%B6%E6%9E%84%E8%BE%BE%E6%A2%A6%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="prev" title="Linux银河麒麟V10部署DM8数据库">
+                  <i class="fa fa-angle-left"></i> Linux银河麒麟V10部署DM8数据库
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/12/01/Linux%E4%B8%8Bzabbix%E9%85%8D%E5%90%88MySQL%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" rel="next" title="Linux下zabbix配合MySQL搭建监控系统使用教程">
+                  Linux下zabbix配合MySQL搭建监控系统使用教程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2021/11/30/CentOS7%20Linux%20%E6%90%AD%E5%BB%BAMySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

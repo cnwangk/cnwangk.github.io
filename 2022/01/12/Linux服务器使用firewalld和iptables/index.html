@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Linux服务器使用 firewalld 与 iptables 命令管理防火墙规则：通俗来讲，用于管理开放相应端口，甚至可以通过管理工具进行限流。 许多不了解的人，认为RHEL7中的防火墙从iptables变成了firewalld。其实不然，无论是iptables还是firewalld都无法提供防火墙功能。他们都只是linux系统中的一个防火墙管理工具，负责生成防火墙规则与内核模块netfilte">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Linux服务器使用firewalld与iptables命令管理防火墙规则">
+<meta property="og:url" content="https://blog.cnwangk.top/2022/01/12/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8firewalld%E5%92%8Ciptables/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="Linux服务器使用 firewalld 与 iptables 命令管理防火墙规则：通俗来讲，用于管理开放相应端口，甚至可以通过管理工具进行限流。 许多不了解的人，认为RHEL7中的防火墙从iptables变成了firewalld。其实不然，无论是iptables还是firewalld都无法提供防火墙功能。他们都只是linux系统中的一个防火墙管理工具，负责生成防火墙规则与内核模块netfilte">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/04/pp448cq.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/04/pp448cq.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/04/pp44mB8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/04/pp44KAg.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/04/pp44VjP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/04/pp44nHS.png">
+<meta property="article:published_time" content="2022-01-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-28T13:51:16.862Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/04/04/pp448cq.png">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2022/01/12/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8firewalld%E5%92%8Ciptables/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2022/01/12/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8firewalld%E5%92%8Ciptables/","path":"2022/01/12/Linux服务器使用firewalld和iptables/","title":"Linux服务器使用firewalld与iptables命令管理防火墙规则"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux服务器使用firewalld与iptables命令管理防火墙规则 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81Netfilter%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97"><span class="nav-number">1.</span> <span class="nav-text">一、Netfilter内核模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81netfilter%E7%9A%84%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">1、netfilter的体系结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%8C%85%E8%BF%87%E6%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">2、包过滤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81firewalld%E9%98%B2%E7%81%AB%E5%A2%99%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text">二、firewalld防火墙工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81firewalld%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">1、firewalld命令行模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81firewalld%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2"><span class="nav-number">2.2.</span> <span class="nav-text">2、firewalld图形化界面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81iptables%E9%98%B2%E7%81%AB%E5%A2%99%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">三、iptables防火墙工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%AE%89%E8%A3%85iptables"><span class="nav-number">3.1.</span> <span class="nav-text">1、安装iptables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">3.2.</span> <span class="nav-text">2、应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81iptables%E9%98%B2%E6%94%BB%E5%87%BB%E4%BC%81%E4%B8%9A%E5%BA%94%E7%94%A8"><span class="nav-number">3.3.</span> <span class="nav-text">3、iptables防攻击企业应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81limit%E6%A8%A1%E5%9D%97"><span class="nav-number">3.4.</span> <span class="nav-text">4、limit模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%96%B0%E5%A2%9E%E8%A7%84%E5%88%99"><span class="nav-number">3.5.</span> <span class="nav-text">5、配置文件新增规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81UFW%E9%98%B2%E7%81%AB%E5%A2%99%E5%B7%A5%E5%85%B7"><span class="nav-number">4.</span> <span class="nav-text">四、UFW防火墙工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E4%B8%8E%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">4.1.</span> <span class="nav-text">开启与关闭防火墙</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/01/12/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8firewalld%E5%92%8Ciptables/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux服务器使用firewalld与iptables命令管理防火墙规则 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux服务器使用firewalld与iptables命令管理防火墙规则
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-12 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-12T00:00:00+08:00">2022-01-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-28 21:51:16" itemprop="dateModified" datetime="2023-05-28T21:51:16+08:00">2023-05-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">开发运维</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Linux服务器使用 firewalld 与 iptables 命令管理防火墙规则：通俗来讲，用于管理开放相应端口，甚至可以通过管理工具进行限流。</p>
+<p><strong>许多不了解的人，认为RHEL7中的防火墙从iptables变成了firewalld。其实不然，无论是iptables还是firewalld都无法提供防火墙功能。他们都只是linux系统中的一个防火墙管理工具，负责生成防火墙规则与内核模块netfilter进行“交流”，真正实现防火墙功能的是内核模块netfilter。</strong></p>
+<p><img data-src="https://s1.ax1x.com/2023/04/04/pp448cq.png" alt="https://s1.ax1x.com/2023/04/04/pp448cq.png"></p>
+<p>iptables与firewalld防火墙管理工具在linux发行版Redhat7系列使用较为广泛。UFW则是在linux发行版Ubuntu下进行管理防火墙的一款管理工具。在选用防火墙工具的时候，运维或者是开发人员往往会纠结使用哪个。这里给出建议，使用iptables工具管理就禁用firewalld，使用firewalld工具管理就禁用iptables，二者选其一即可，避免产生混乱。</p>
+<p>此篇文章不会在原理上做深究，主要以实用性为主，原理可以阅读相关书籍慢慢品味。</p>
+<h2 id="一、Netfilter内核模块"><a href="#一、Netfilter内核模块" class="headerlink" title="一、Netfilter内核模块"></a>一、Netfilter内核模块</h2><p>无论是使用<code>iptables</code>还是<code>firewalld</code>，不妨先了解一下<strong>Netfilter内核模块</strong>。</p>
+<p><strong>什么是Netfilter</strong>：linux操作系统核心层内部的一个数据包处理模块。</p>
+<p><strong>Hook point</strong>：数据包在Netfilter中的挂载点。（PRE_ROUTING INPUT OUTPUT FORWORD POST_ROUTING）</p>
+<h3 id="1、netfilter的体系结构"><a href="#1、netfilter的体系结构" class="headerlink" title="1、netfilter的体系结构"></a>1、netfilter的体系结构</h3><p>网络数据包的的统信主要通过以下相关步骤，对应netfilter定义的钩子函数，具体可以参考源码介绍。</p>
+<ul>
+<li><p><strong>NF_IP_PRE_ROUTING</strong>：</p>
+<p>网络数据包进入系统，经过简单检测后，数据包转交给改函数进行处理，然后根据系统设置的规则对数据包进行处理，如果数据包不被丢弃则交给路由函数进行处理。<strong>在该函数中可以替换IP包的目的地址，及DNAT</strong>。</p>
+</li>
+<li><p>NF_IP_LOCAL_IN：</p>
+<p>所有发送给本机的数据包都要通过该函数进行处理，该函数根据系统设置的系统规则对数据包进行处理，如果数据包不被丢弃则交给本地的应用程序。</p>
+</li>
+<li><p>NF_IP_FORWARD：</p>
+<p>所有不是发送给本机的数据包都要通过该函数进行处理，该函数会根据系统设置的规则对数据包进行处理，如数据包不被丢弃则转给</p>
+<p>NF_IP_POST_ROUTING处理。</p>
+</li>
+<li><p>NF_IP_LOCAL_OUT：</p>
+<p>所有从本地应用程序出来的数据包必须通过该函数进行处理，该函数会根据系统设置的规则对数据包进行处理，如数据包不被丢弃则交给路由函数进行处理。</p>
+</li>
+<li><p><strong>NF_IP_POST_ROUTING</strong>：</p>
+<p>所有数据包在发送给其它主机之前需要通过该函数进行处理，该函数会根据系统设置的规则对数据包进行处理，如数据包不被丢弃，将数据包发给数据链路层。<strong>在该函数中可以替换IP包的源地址，即SNAT</strong>。</p>
+</li>
+</ul>
+<p>数据包通过linux防火墙的处理过程如下图：</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/04/pp448cq.png" alt="https://s1.ax1x.com/2023/04/04/pp448cq.png"></p>
+<h3 id="2、包过滤"><a href="#2、包过滤" class="headerlink" title="2、包过滤"></a>2、包过滤</h3><p>每个函数都可以对数据包进行处理，最基本的操作是对数据包进行过滤。系统管理员可以通过iptables工具来向内核模块注册多个过滤规则，并且指明过滤规则的优先权。设置完以后每个钩子按照规则进行匹配。如果规则匹配，函数就会进行一些过滤操作，这些操作主要如下：</p>
+<ul>
+<li>NF_ACCEPT：继续正常的传递包。</li>
+<li>NF_DROP：丢弃包，阻止传送。</li>
+<li>SF_STOLEN：已经接管了包，不需要继续传送。</li>
+<li>NF_QUEUE：排列包。</li>
+<li>NF_REPEAT：再次使用钩子。</li>
+</ul>
+<p>篇幅受限，介绍过多反而不好。关于包过滤就介绍这么多。</p>
+<h2 id="二、firewalld防火墙工具"><a href="#二、firewalld防火墙工具" class="headerlink" title="二、firewalld防火墙工具"></a>二、firewalld防火墙工具</h2><p>以Redhat系列为例子做简单的介绍，熟悉CentOS的基本上可以套用。</p>
+<p><strong>firewalld简介</strong></p>
+<p>在RHEL7之前的版本中，iptables和ip6tables作为防火墙配置管理工具。在RHEL7中防火墙管理工具变成了firewalld，它是一个支持自定义网络区域（zone）及接口安全等级的动态防火墙管理工具。利用firewalld，用户可以实现许多强大的网络功能，例如防火墙、代理服务器以及网络地址转换。</p>
+<p>之前版本的system-config-firewall和lokkit防火墙模型是静态的，每次修改防火墙规则都需要完全重启。在此过程中包括提供防火墙的内核模块netfilter需要卸载和重新加载。而卸载会破坏已建立的连接和状态防火墙。与之前的静态模型有区别，firewalld将动态地管理防火墙，不需要重新启动防火墙，也不需重新加载内核模块。但firewalld服务要求所有关于防火墙的变更都要通过守护进程来完成，从而确保守护进程中的状态与内核防火墙之间的一致性。</p>
+<p><strong>许多不了解的人，认为RHEL7中的防火墙从iptables变成了firewalld。其实不然，无论是iptables还是firewalld都无法提供防火墙功能。他们都只是linux系统中的一个防火墙管理工具，负责生成防火墙规则与内核模块netfilter进行“交流”，真正实现防火墙功能的是内核模块netfilter。</strong></p>
+<p>firewalld提供了两种管理模式：其一是firewall-cmd命令管理工具，其二是firewall-config图形化管理工具。在之前版本中的iptables将规则保存在文件&#x2F;etc&#x2F;sysconfig&#x2F;iptables中，现在firewalld将配置文件保存在&#x2F;usr&#x2F;lib&#x2F;firewalld和&#x2F;etc&#x2F;firewalld目录的xml文件中。</p>
+<p>虽然RHEL7中将默认的防火墙管理工具从iptables换成了firewalld，但在RHEL7中仍然可以使用iptables的，只需要通过yum命令进行安装启用iptables服务即可。换句话说，红帽将这个选择权交给了用户。</p>
+<p>下面给出RHEL7的防火墙堆栈：</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/04/pp44mB8.png" alt="https://s1.ax1x.com/2023/04/04/pp44mB8.png"></p>
+<h3 id="1、firewalld命令行模式"><a href="#1、firewalld命令行模式" class="headerlink" title="1、firewalld命令行模式"></a>1、firewalld命令行模式</h3><p><strong>区域选择</strong></p>
+<p>当前操作系统安装完成后，防火墙会设置一个默认区域，将接口加入到默认区域中。用户配置防火墙的第一步是获取默认区域并修改，关于操作如下：</p>
+<p>查看当前系统中所有区域</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --get-zones</span><br></pre></td></tr></table></figure>
+<p>查看当前默认的区域</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --get-default-zone</span><br></pre></td></tr></table></figure>
+<p>查看当前已激活的区域</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --get-active-zones</span><br></pre></td></tr></table></figure>
+<p>获取接口ens33所属区域</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --get-zone-of-interface=ens33</span><br></pre></td></tr></table></figure>
+<p>修改接口所属区域</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone=internal --change-interface=ens33</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>firewalld服务重载、重启、停止</strong></p>
+<p>重新加载防火墙配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<p>重启防火墙(redhat系列)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart firewalld.service</span><br></pre></td></tr></table></figure>
+
+<p>临时关闭防火墙</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service</span><br></pre></td></tr></table></figure>
+<p>开机启用防火墙</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> firewalld.service</span><br></pre></td></tr></table></figure>
+<p>开机禁止防火墙</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">disable</span> firewalld.service</span><br></pre></td></tr></table></figure>
+
+<p>查看firewalld的运行状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --state</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>firewalld开放端口（public）</strong></p>
+<p>公共区域设置开放21端口永久生效并写入配置文件（参数：–permanent）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#参数：--permanent，设置即立刻生效并且写入配置文件</span></span><br><span class="line">firewall-cmd --zone=public --add-port=21/tcp --permanent</span><br></pre></td></tr></table></figure>
+
+<p>查询防火墙端口21是否开放</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --query-port=21/tcp</span><br></pre></td></tr></table></figure>
+
+<p>移除开放的端口21</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --remove-port=21/tcp --permanent</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>区域规则修改</strong></p>
+<p>查询防火墙规则列表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --list-all</span><br></pre></td></tr></table></figure>
+<p>新增一条区域规则httpd服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone=internal --add-service=http</span><br></pre></td></tr></table></figure>
+<p>验证规则</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd  --zone=internal --list-all</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2、firewalld图形化界面"><a href="#2、firewalld图形化界面" class="headerlink" title="2、firewalld图形化界面"></a>2、firewalld图形化界面</h3><p>上面的简介也介绍到了firewalld提供了两种管理模式：其一是<code>firewall-cmd</code>命令管理工具，其二是<code>firewall-config</code>图形化管理工具。在之前版本中的iptables将规则保存在文件<code>/etc/sysconfig/iptables</code>中，现在firewalld将配置文件保存在<code>/usr/lib/firewalld</code>和<code>/etc/firewalld</code>目录的xml文件中。</p>
+<p>图形化界面中修改接口区域可以使用NetworkManager，也可以使用firewall-config工具。NetworkManager使用方法：打开终端执行命令<code>nm-connection-editor</code>，如下图弹出对话框：</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/04/pp44KAg.png"></p>
+<p>2.1、图形化界面NetworkManager</p>
+<p>终端执行：<code>nm-connection-editor</code></p>
+<p>2.2、图形化界面firewall-config</p>
+<p>终端执行：<code>firewall-config</code></p>
+<p><img data-src="https://s1.ax1x.com/2023/04/04/pp44VjP.png"></p>
+<h2 id="三、iptables防火墙工具"><a href="#三、iptables防火墙工具" class="headerlink" title="三、iptables防火墙工具"></a>三、iptables防火墙工具</h2><h3 id="1、安装iptables"><a href="#1、安装iptables" class="headerlink" title="1、安装iptables"></a>1、安装iptables</h3><p>假如是centos6，默认是安装了iptables。<br>如果是centos7或者Redhat7系列，默认没有安装iptables。你需要关闭默认启动的firewalld，二选一即可。</p>
+<p>临时关闭firewalld</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br></pre></td></tr></table></figure>
+
+<p><strong>开机禁用firewalld</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">disable</span> firewalld</span><br></pre></td></tr></table></figure>
+
+<p>开机启用firewalld</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> firewalld</span><br></pre></td></tr></table></figure>
+
+
+
+<p>通过yum在线安装iptables，检查是否安装了iptables</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl status iptables.service</span><br><span class="line">service iptables status</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装iptables</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install iptables</span><br></pre></td></tr></table></figure>
+
+<p>升级iptables</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum update iptables</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装iptables-services</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install iptables-services.x86_64</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置iptables为开机自启</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> iptables.service</span><br></pre></td></tr></table></figure>
+
+<p><strong>iptables规则组成</strong></p>
+<ul>
+<li>ACCEPT(接收，允许通过)</li>
+<li>DROP(丢弃数据包不做任何反馈)</li>
+<li>REJECT(丢弃数据包，客户端有对应消息返回)</li>
+</ul>
+<p><strong>查询已经设置的规则：-L命令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#一般配合-n命令使用</span></span><br><span class="line">iptables -L</span><br><span class="line"><span class="comment">#不显示主机地址</span></span><br><span class="line">iptables -nL </span><br></pre></td></tr></table></figure>
+
+<p><strong>清除原来设置的规则：-F命令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -F</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除某一条已经设置的规则：-D命令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -D INPUT -p tcp --dport 80 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、应用场景"><a href="#2、应用场景" class="headerlink" title="2、应用场景"></a>2、应用场景</h3><p>插入一些规则：-I命令，<strong>放通80、22、10~21（一段）这些端口</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -I INPUT -p tcp --dport 80 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置某一个固定的IP访问80端口</strong>：-s 192.168.xxx.xxx</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -I INPUT -p tcp -s (你的IP地址) --dport 80 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p><strong>ssh远程连接本地服务器或者云服务器需要默认启用的端口</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -I INPUT -p tcp --dport 22 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置10~21端口开放访问</strong>  			 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -I INPUT -p tcp --dport 10:21 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置icmp规则允许访问</strong>	</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -I INPUT -p icmp -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：允许本机可以访问本机，本机访问外网</strong><br>解决本机可以访问本机（telnet 127.0.0.1  22），添加-i lo（网卡）规则。</p>
+<p>设置规则</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -I INPUT -i lo -p tcp  -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>本机测试访问外网</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>设置规则</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -I INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p><strong>在设置的最后追加一条规则</strong>：-A命令<br>拒绝xx规则</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -j REJECT</span><br></pre></td></tr></table></figure>
+
+<p><strong>场景二</strong></p>
+<p>ftp主动模式下iptables的规则配置（不建议）<br><strong>ftp被动模式下iptables的规则配置（实际应用，推荐）</strong></p>
+<p><strong>场景三</strong></p>
+<p>工作中的一些常用配置，设置好规则后保存到配置文件。chkconfig iptables on 设置开机启动规则。<br>snat（对原地址，发起地址）规则设置，dnat（目标地址，发往的地址）规则设置。</p>
+<h3 id="3、iptables防攻击企业应用"><a href="#3、iptables防攻击企业应用" class="headerlink" title="3、iptables防攻击企业应用"></a>3、iptables防攻击企业应用</h3><p>iptables防攻击企业应用(根据实际业务设置)</p>
+<ol>
+<li>利用iptables防CC攻击</li>
+<li>connlimit模块</li>
+<li>作用：用于限制每一个客户端IP的并发连接数。</li>
+<li>参数： <code>--connlimit-above n</code>（次数），限制并发数</li>
+</ol>
+<p>例如，限制次数为100</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -I INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 100 -j REJECT</span><br></pre></td></tr></table></figure>
+
+<p>测试，限制某一固定IP并发次数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -I INPUT -p tcp --dport 80 -s [ip地址] -m connlimit --connlimit-above 10 -j REJECT</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、limit模块"><a href="#4、limit模块" class="headerlink" title="4、limit模块"></a>4、limit模块</h3><p><strong>作用：</strong> 限速，控制流量<br>例如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptable -A INPUT -m <span class="built_in">limit</span> --<span class="built_in">limit</span> 3/hour</span><br></pre></td></tr></table></figure>
+<p>–limit-burst 5，默认值为5</p>
+<p>在设置最后追加一条过滤规则</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p icmp -m <span class="built_in">limit</span> --<span class="built_in">limit</span> 1/m --limit-burst 10 -j ACCEPT </span><br></pre></td></tr></table></figure>
+
+<p>拒绝其它规则访问</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p icmp -j DROP</span><br></pre></td></tr></table></figure>
+
+<p>设置完，测试接限制的IP地址：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#测试受限IP地址</span></span><br><span class="line">ping 192.168.245.139</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="5、配置文件新增规则"><a href="#5、配置文件新增规则" class="headerlink" title="5、配置文件新增规则"></a>5、配置文件新增规则</h3><p>文中介绍过iptables安装后的配置文件所在目录。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/sysconfig/iptables</span><br></pre></td></tr></table></figure>
+
+
+<p>修改配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim  /etc/sysconfig/iptables</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://s1.ax1x.com/2023/04/04/pp44nHS.png"></p>
+<h2 id="四、UFW防火墙工具"><a href="#四、UFW防火墙工具" class="headerlink" title="四、UFW防火墙工具"></a>四、UFW防火墙工具</h2><blockquote>
+<p>Uncomplicated Firewall</p>
+<p>简称UFW，是Ubuntu系统上默认的防火墙组件。UFW是为轻量化配置iptables而开发的一款工具。<br>UFW 提供一个非常友好的界面用于创建基于IPV4，IPV6的防火墙规则。UFW 在 Ubuntu 8.04 LTS 后的所有发行版中默认可用。<br>UFW 的图形用户界面叫Gufw。</p>
+</blockquote>
+<h3 id="开启与关闭防火墙"><a href="#开启与关闭防火墙" class="headerlink" title="开启与关闭防火墙"></a>开启与关闭防火墙</h3><p>开启防火墙</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
+
+<p>关闭防火墙</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw <span class="built_in">disable</span></span><br></pre></td></tr></table></figure>
+<p>2、显示防火墙状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw status</span><br></pre></td></tr></table></figure>
+
+<p>3、查看防火墙详细状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw status verbose</span><br></pre></td></tr></table></figure>
+
+<p>4、允许与阻止</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw allow</span><br></pre></td></tr></table></figure>
+
+<p>5、允许通过 21 连接端口使用 tcp 和 udp 协议连线本机</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 21</span><br></pre></td></tr></table></figure>
+
+<p>6、增加一条表示阻止的规则</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw deny</span><br></pre></td></tr></table></figure>
+<p>阻止通过 21 连接端口使用 tcp 协议连线本机</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw deny 21/tcp</span><br></pre></td></tr></table></figure>
+
+<p>7、增加一条表示拒绝的规则</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw reject</span><br></pre></td></tr></table></figure>
+
+<p>8、以服务名称代表连接端口，可以采用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">less /etc/services</span><br></pre></td></tr></table></figure>
+
+<p>——END——</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2022/01/12/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8firewalld%E5%92%8Ciptables/" title="Linux服务器使用firewalld与iptables命令管理防火墙规则">https://blog.cnwangk.top/2022/01/12/Linux服务器使用firewalld和iptables/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/" rel="prev" title="如何优雅的管理redis">
+                  <i class="fa fa-angle-left"></i> 如何优雅的管理redis
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/01/15/nginx%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5/" rel="next" title="nginx入门到实践">
+                  nginx入门到实践 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2022/01/12/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8firewalld%E5%92%8Ciptables/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

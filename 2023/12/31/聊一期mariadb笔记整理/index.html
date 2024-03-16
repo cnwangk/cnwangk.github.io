@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="关于版本的选择，仅供参考： 从版本稳定性和维护生命周期两个角度考虑。  从长远考虑：建议选择稳定长期支持版（Stable long term support versions），稳定且有更长的维护生命周期。 想尝试新特性，但又想有一定的稳定性：建议选择稳定短期支持版（Stable short term support versions），生命周期较短。 想尝试新特性：可以选择预览版（Preview">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="聊一期 mariadb 笔记整理">
+<meta property="og:url" content="https://blog.cnwangk.top/2023/12/31/%E8%81%8A%E4%B8%80%E6%9C%9Fmariadb%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="关于版本的选择，仅供参考： 从版本稳定性和维护生命周期两个角度考虑。  从长远考虑：建议选择稳定长期支持版（Stable long term support versions），稳定且有更长的维护生命周期。 想尝试新特性，但又想有一定的稳定性：建议选择稳定短期支持版（Stable short term support versions），生命周期较短。 想尝试新特性：可以选择预览版（Preview">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-12-31T09:03:29.000Z">
+<meta property="article:modified_time" content="2024-02-01T05:29:36.275Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="MariaDB">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2023/12/31/%E8%81%8A%E4%B8%80%E6%9C%9Fmariadb%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2023/12/31/%E8%81%8A%E4%B8%80%E6%9C%9Fmariadb%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/","path":"2023/12/31/聊一期mariadb笔记整理/","title":"聊一期 mariadb 笔记整理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>聊一期 mariadb 笔记整理 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%87%86%E5%A4%87%E9%98%B6%E6%AE%B5"><span class="nav-number">1.</span> <span class="nav-text">基础知识准备阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MariaDB-%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">MariaDB 版本说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MariaDB-%E8%B5%84%E6%BA%90%E8%8E%B7%E5%8F%96"><span class="nav-number">1.2.</span> <span class="nav-text">MariaDB 资源获取</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows-%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8C-mariadb-10-11-6"><span class="nav-number">2.</span> <span class="nav-text">Windows 平台体验 mariadb-10.11.6</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Archive-Zip-%E5%BD%A2%E5%BC%8F%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">Archive Zip 形式安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MSI-%E6%96%87%E4%BB%B6%E5%BD%A2%E5%BC%8F%E5%AE%89%E8%A3%85"><span class="nav-number">2.2.</span> <span class="nav-text">MSI 文件形式安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8C-mariadb-10-11-6"><span class="nav-number">3.</span> <span class="nav-text">Linux 平台体验 mariadb-10.11.6</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RHEL%E3%80%81Rocky%E3%80%81CentOS%E7%8E%AF%E5%A2%83"><span class="nav-number">3.1.</span> <span class="nav-text">RHEL、Rocky、CentOS环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Systemd-%E7%8E%AF%E5%A2%83"><span class="nav-number">3.2.</span> <span class="nav-text">Systemd 环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Source-%E6%BA%90%E7%A0%81%E5%8C%85%E7%8E%AF%E5%A2%83"><span class="nav-number">3.3.</span> <span class="nav-text">Source 源码包环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MariaDB-%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%8E%A7"><span class="nav-number">3.4.</span> <span class="nav-text">MariaDB 服务监控</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mariadb-%E5%AD%97%E7%AC%A6%E9%9B%86%EF%BC%9A%E6%97%A0%E6%B3%95%E6%8F%92%E5%85%A5%E4%B8%AD%E6%96%87"><span class="nav-number">4.</span> <span class="nav-text">mariadb 字符集：无法插入中文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web-%E5%BC%80%E5%8F%91%E9%98%B6%E6%AE%B5"><span class="nav-number">5.</span> <span class="nav-text">web 开发阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MariaDB-%E4%B9%8B-JDBC"><span class="nav-number">5.1.</span> <span class="nav-text">MariaDB 之 JDBC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Springboot-%E4%B9%8B-JPA"><span class="nav-number">5.2.</span> <span class="nav-text">Springboot 之 JPA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thymeleaf-%E9%A1%B5%E9%9D%A2%E4%BA%A4%E4%BA%92"><span class="nav-number">5.3.</span> <span class="nav-text">Thymeleaf 页面交互</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/03/17/MySQL%E7%AD%89%E4%B8%BB%E6%B5%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%82%E5%95%86%EF%BC%88DBMS%EF%BC%89-%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E5%9C%B0%E5%9D%80/" rel="bookmark">
+        <time class="popular-posts-time">2022-03-17</time>
+        <br>
+      MySQL等主流数据库厂商（DBMS）--官方文档地址
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" rel="bookmark">
+        <time class="popular-posts-time">2023-05-21</time>
+        <br>
+      Windows 11 和 Rocky 9 Linux 初体验 MySQL8.0.33 简易安装教程
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/03/15/MySQL8-0-x-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" rel="bookmark">
+        <time class="popular-posts-time">2023-03-15</time>
+        <br>
+      MySQL8.0.x 简易安装教程
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/02/18/Windows%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4%E5%B8%B8%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/" rel="bookmark">
+        <time class="popular-posts-time">2022-02-18</time>
+        <br>
+      Windows服务器运维常用小技巧
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/06/30/Windows-%E5%8E%9F%E7%89%88%E9%95%9C%E5%83%8F%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80/" rel="bookmark">
+        <time class="popular-posts-time">2022-06-30</time>
+        <br>
+      Windows 原版镜像下载地址
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2023/12/31/%E8%81%8A%E4%B8%80%E6%9C%9Fmariadb%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="聊一期 mariadb 笔记整理 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          聊一期 mariadb 笔记整理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-31 17:03:29" itemprop="dateCreated datePublished" datetime="2023-12-31T17:03:29+08:00">2023-12-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-02-01 13:29:36" itemprop="dateModified" datetime="2024-02-01T13:29:36+08:00">2024-02-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>24 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>关于版本的选择，仅供参考</strong>：</p>
+<p>从版本稳定性和维护生命周期两个角度考虑。</p>
+<ol>
+<li>从长远考虑：建议选择稳定长期支持版（Stable long term support versions），稳定且有更长的维护生命周期。</li>
+<li>想尝试新特性，但又想有一定的稳定性：建议选择稳定短期支持版（Stable short term support versions），生命周期较短。</li>
+<li>想尝试新特性：可以选择预览版（Preview release）和候选版（RC versions），不稳定。</li>
+</ol>
+<p><strong>企业或者个人生产环境，建议使用稳定版</strong>（GA）。不推荐使用预览版（Preview release）和候选版（RC versions）。</p>
+<p>mariadb 下载地址：<span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9kb3dubG9hZA==">https://mariadb.org/download<i class="fa fa-external-link-alt"></i></span></p>
+<p>mariadb 官方文档：<span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9kb2N1bWVudGF0aW9uLw==">https://mariadb.org/documentation/<i class="fa fa-external-link-alt"></i></span></p>
+<p>在线文档：<span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9kb2N1bWVudGF0aW9uLw==">https://mariadb.com/kb/en/documentation/<i class="fa fa-external-link-alt"></i></span></p>
+<p>mariadb 官方文档 PDF 下载地址：<span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubWFyaWFkYi5vcmcvcmVzdC1hcGkvZG93bmxvYWQtZG9jdW1lbnRhdGlvbg==">MariaDBServerKnowledgeBase.pdf<i class="fa fa-external-link-alt"></i></span></p>
+<p>mariadb 资源整合：<span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMVlYaEV1bmY0bThHUkVuMkd3YXJZbHc/cHdkPXFlN2Y=">https://pan.baidu.com/s/1YXhEunf4m8GREn2GwarYlw?pwd=qe7f<i class="fa fa-external-link-alt"></i></span></p>
+<span id="more"></span>
+
+<p>MariaDB 资料整理，包含 Windows 平台与 Linux 平台 mariadb 安装包，mariadb 离线 PDF 文档，JD-GUI 用于反编译查看 <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9hYm91dC1tYXJpYWRiLWNvbm5lY3Rvci1qLw==">MariaDB Connector&#x2F;J<i class="fa fa-external-link-alt"></i></span> jar 包代码，以及个人整理的 mariadb  私人笔记：<span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMVlYaEV1bmY0bThHUkVuMkd3YXJZbHc/cHdkPXFlN2Y=">mariadb 笔记整理，不定期更新哟<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="基础知识准备阶段"><a href="#基础知识准备阶段" class="headerlink" title="基础知识准备阶段"></a>基础知识准备阶段</h2><h3 id="MariaDB-版本说明"><a href="#MariaDB-版本说明" class="headerlink" title="MariaDB 版本说明"></a>MariaDB 版本说明</h3><blockquote>
+<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9kb3dubG9hZC8/dD1tYXJpYWRiJnA9bWFyaWFkYiZyPTExLjQuMCZvcz13aW5kb3dzJmNwdT14ODZfNjQmcGtnPW1zaSZtPXh0b21faGsjcmVsZWFzZS1zY2hlZHVsZQ==">Release schedule About MariaDB Server - MariaDB.org<i class="fa fa-external-link-alt"></i></span></p>
+<p>MariaDB Foundation ensures that MariaDB Server has a steady cadence of releases. Until MariaDB Server 10.6, MariaDB Server had about one stable major release every year. <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9wcmV2aWV3LXJlbGVhc2VzLw==">Now there are multiple short term releases each year<i class="fa fa-external-link-alt"></i></span>, in addition to less frequent long-term releases. The current maintained versions are: <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9jaGFuZ2VzLWFuZC1pbXByb3ZlbWVudHMtaW4tbWFyaWFkYi0xMC00">10.4<i class="fa fa-external-link-alt"></i></span>, <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9jaGFuZ2VzLWFuZC1pbXByb3ZlbWVudHMtaW4tbWFyaWFkYi0xMC01">10.5<i class="fa fa-external-link-alt"></i></span>, <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9jaGFuZ2VzLWFuZC1pbXByb3ZlbWVudHMtaW4tbWFyaWFkYi0xMC02">10.6<i class="fa fa-external-link-alt"></i></span>, <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9jaGFuZ2VzLWFuZC1pbXByb3ZlbWVudHMtaW4tbWFyaWFkYi0xMC0xMQ==">10.11<i class="fa fa-external-link-alt"></i></span> (maintained for 5 years), <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9jaGFuZ2VzLWFuZC1pbXByb3ZlbWVudHMtaW4tbWFyaWFkYi0xMC0xMA==">10.10<i class="fa fa-external-link-alt"></i></span>, <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9jaGFuZ2VzLWFuZC1pbXByb3ZlbWVudHMtaW4tbWFyaWFkYi0xMS0w">11.0<i class="fa fa-external-link-alt"></i></span>, <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9jaGFuZ2VzLWFuZC1pbXByb3ZlbWVudHMtaW4tbWFyaWFkYi0xMS0x">11.1<i class="fa fa-external-link-alt"></i></span>, <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9jaGFuZ2VzLWFuZC1pbXByb3ZlbWVudHMtaW4tbWFyaWFkYi0xMS0y">11.2<i class="fa fa-external-link-alt"></i></span>, <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9jaGFuZ2VzLWFuZC1pbXByb3ZlbWVudHMtaW4tbWFyaWFkYi0xMS0z">11.3<i class="fa fa-external-link-alt"></i></span> (maintained for one year). and the development version will be 11.4. Each stable version receives bug-fixes and security fixes periodically.</p>
+<p>The roadmap is visible on <span class="exturl" data-url="aHR0cHM6Ly9qaXJhLm1hcmlhZGIub3JnL3NlY3VyZS9EYXNoYm9hcmQuanNwYQ==">jira.mariadb.org<i class="fa fa-external-link-alt"></i></span> (login is required), along with estimated release dates.</p>
+</blockquote>
+<p>翻译：MariaDB基金会确保MariaDB服务器具有稳定的发布节奏。在MariaDB Server 10.6之前，MariaDB Server每年大约有一个稳定的主要版本。现在，除了不太频繁的长期版本外，<span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9wcmV2aWV3LXJlbGVhc2VzLw==">每年都有多个短期版本<i class="fa fa-external-link-alt"></i></span> 释放。当前维护的版本有：10.4、10.5、10.6、10.11（维护 5 年）、10.10、11.0、11.1、11.2、 <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9jaGFuZ2VzLWFuZC1pbXByb3ZlbWVudHMtaW4tbWFyaWFkYi0xMC02">11.3<i class="fa fa-external-link-alt"></i></span>（维护 1 年）。 开发版本将为 11.4。 每个稳定版本都会定期收到错误修复和安全修复。</p>
+<p>发布时间路线报表在 <span class="exturl" data-url="aHR0cHM6Ly9qaXJhLm1hcmlhZGIub3JnL3NlY3VyZS9EYXNoYm9hcmQuanNwYQ==">jira.mariadb.org<i class="fa fa-external-link-alt"></i></span> 上可预览（需要登录），以及预计的发布日期。</p>
+<p><strong>小结</strong>：MariaDB 长期稳定支持版本通常维护周期是 5 年，短期稳定支持版本通常维护周期是 1 年。</p>
+<p>MariaDB 发行注记：<span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9yZWxlYXNlLW5vdGVzLw==">Release Notes - MariaDB Knowledge Base<i class="fa fa-external-link-alt"></i></span></p>
+<p>MariaDB 版本说明、发行注记以及维护周期整理表格如下：</p>
+<table>
+<thead>
+<tr>
+<th>版本(预览版&#x2F;候选版&#x2F;稳定长期&#x2F;短期支持版)</th>
+<th>版本号</th>
+<th>发行日期</th>
+<th>发行注记</th>
+<th>维护周期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>预览版（Preview release）</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubWFyaWFkYi5vcmcvbWFyaWFkYi8xMS40LjAv">11.4.0<i class="fa fa-external-link-alt"></i></span></td>
+<td>2023.12.24</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9tYXJpYWRiLTExLTQtMC1yZWxlYXNlLW5vdGVzLw==">Release notes<i class="fa fa-external-link-alt"></i></span></td>
+<td>开发中（GA 维护一年）</td>
+</tr>
+<tr>
+<td>候选版（RC versions）</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubWFyaWFkYi5vcmcvbWFyaWFkYi8xMS4zLjEv">11.3.1<i class="fa fa-external-link-alt"></i></span></td>
+<td>2023.8.21</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9tYXJpYWRiLTExLTMtMS1yZWxlYXNlLW5vdGVzLw==">Release notes<i class="fa fa-external-link-alt"></i></span></td>
+<td>开发中（GA 维护一年）</td>
+</tr>
+<tr>
+<td>稳定长期支持版（Stable long term support versions）</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubWFyaWFkYi5vcmcvbWFyaWFkYi8xMC4xMS42Lw==">10.11.6<i class="fa fa-external-link-alt"></i></span></td>
+<td>2023.11.13</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9tYXJpYWRiLTEwLTExLTYtcmVsZWFzZS1ub3Rlcy8=">Release notes<i class="fa fa-external-link-alt"></i></span></td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9hYm91dC8jbWFpbnRlbmFuY2UtcG9saWN5">维护到<i class="fa fa-external-link-alt"></i></span> 2028 年 2 月</td>
+</tr>
+<tr>
+<td>稳定长期支持版（Stable long term support versions）</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubWFyaWFkYi5vcmcvbWFyaWFkYi8xMC42LjE2Lw==">10.6.16<i class="fa fa-external-link-alt"></i></span></td>
+<td>2023.11.13</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9tYXJpYWRiLTEwLTYtMTYtcmVsZWFzZS1ub3Rlcy8=">Release notes<i class="fa fa-external-link-alt"></i></span></td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9hYm91dC8jbWFpbnRlbmFuY2UtcG9saWN5">维护到<i class="fa fa-external-link-alt"></i></span> 2026 年 7 月</td>
+</tr>
+<tr>
+<td>稳定长期支持版（Stable long term support versions）</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubWFyaWFkYi5vcmcvbWFyaWFkYi8xMC41LjIzLw==">10.5.23<i class="fa fa-external-link-alt"></i></span></td>
+<td>2023.11.13</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9tYXJpYWRiLTEwLTUtMjMtcmVsZWFzZS1ub3Rlcy8=">Release notes<i class="fa fa-external-link-alt"></i></span></td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9hYm91dC8jbWFpbnRlbmFuY2UtcG9saWN5">维护到<i class="fa fa-external-link-alt"></i></span> 2025 年 6 月</td>
+</tr>
+<tr>
+<td>稳定长期支持版（Stable long term support versions）</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubWFyaWFkYi5vcmcvbWFyaWFkYi8xMC40LjMyLw==">10.4.32<i class="fa fa-external-link-alt"></i></span></td>
+<td>2023.11.13</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9tYXJpYWRiLTEwLTQtMzItcmVsZWFzZS1ub3Rlcy8=">Release notes<i class="fa fa-external-link-alt"></i></span></td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9hYm91dC8jbWFpbnRlbmFuY2UtcG9saWN5">维护到<i class="fa fa-external-link-alt"></i></span> 2024 年 6 月</td>
+</tr>
+<tr>
+<td>稳定短期支持版（Stable short term support versions）</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubWFyaWFkYi5vcmcvbWFyaWFkYi8xMS4yLjIv">11.2.2<i class="fa fa-external-link-alt"></i></span></td>
+<td>2023.11.21</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9tYXJpYWRiLTExLTItMi1yZWxlYXNlLW5vdGVzLw=="> Release notes<i class="fa fa-external-link-alt"></i></span></td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9hYm91dC8jbWFpbnRlbmFuY2UtcG9saWN5">维护到<i class="fa fa-external-link-alt"></i></span> 2024 年 11 月</td>
+</tr>
+<tr>
+<td>稳定短期支持版（Stable short term support versions）</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubWFyaWFkYi5vcmcvbWFyaWFkYi8xMS4xLjMv">11.1.3<i class="fa fa-external-link-alt"></i></span></td>
+<td>2023.11.13</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9tYXJpYWRiLTExLTEtMy1yZWxlYXNlLW5vdGVzLw==">Release notes<i class="fa fa-external-link-alt"></i></span></td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9hYm91dC8jbWFpbnRlbmFuY2UtcG9saWN5">维护到<i class="fa fa-external-link-alt"></i></span> 2024 年 7 月</td>
+</tr>
+<tr>
+<td>稳定短期支持版（Stable short term support versions）</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubWFyaWFkYi5vcmcvbWFyaWFkYi8xMS4wLjQv">11.0.4<i class="fa fa-external-link-alt"></i></span></td>
+<td>2023.11.13</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9tYXJpYWRiLTExLTAtNC1yZWxlYXNlLW5vdGVzLw==">Release notes<i class="fa fa-external-link-alt"></i></span></td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9hYm91dC8jbWFpbnRlbmFuY2UtcG9saWN5">维护到<i class="fa fa-external-link-alt"></i></span> 2024 年 10 月</td>
+</tr>
+<tr>
+<td>稳定短期支持版（Stable short term support versions）</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubWFyaWFkYi5vcmcvbWFyaWFkYi8xMC4xMC43Lw==">10.10.7<i class="fa fa-external-link-alt"></i></span></td>
+<td>2023.11.13</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9tYXJpYWRiLTEwLTEwLTctcmVsZWFzZS1ub3Rlcy8=">Release notes<i class="fa fa-external-link-alt"></i></span></td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9hYm91dC8jbWFpbnRlbmFuY2UtcG9saWN5">维护到<i class="fa fa-external-link-alt"></i></span> 2023 年 11 月</td>
+</tr>
+<tr>
+<td>稳定短期支持版（Stable short term support versions）</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubWFyaWFkYi5vcmcvbWFyaWFkYi8xMC45Ljgv">10.9.8<i class="fa fa-external-link-alt"></i></span></td>
+<td>2023.8.14</td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9tYXJpYWRiLTEwLTktOC1yZWxlYXNlLW5vdGVzLw==">Release notes<i class="fa fa-external-link-alt"></i></span></td>
+<td><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9hYm91dC8jbWFpbnRlbmFuY2UtcG9saWN5">维护到<i class="fa fa-external-link-alt"></i></span> 2023 年 8 月</td>
+</tr>
+</tbody></table>
+<p><strong>点击发行注记 Release notes 链接</strong>，即可查看每个小版本的次带历史版本，<strong>详情请以 <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9tYXJpYWRiLTEwLTExLTYtcmVsZWFzZS1ub3Rlcy8=">mariadb 官方发行注记<i class="fa fa-external-link-alt"></i></span> 为主</strong>，可参考资料 <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9hYm91dC8jbWFpbnRlbmFuY2UtcG9saWN5">maintenance-policy About MariaDB Server - MariaDB.org<i class="fa fa-external-link-alt"></i></span> 。</p>
+<p><strong>友情提醒</strong>：关于版本选择，<strong>企业或者个人生产环境</strong>，<strong>建议使用稳定版</strong>（GA）。不推荐使用预览版（Preview release）和候选版（RC versions）。</p>
+<p>mariadb 社区服务版本生命周期：<span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLw==">Community Server<i class="fa fa-external-link-alt"></i></span></p>
+<table>
+<thead>
+<tr>
+<th>社区版本</th>
+<th>生命周期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzI1Ni8=">Community Server 11.1<i class="fa fa-external-link-alt"></i></span></td>
+<td>2024年8月</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzI3My8=">Community Server 11.2<i class="fa fa-external-link-alt"></i></span></td>
+<td>2024年6月</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzI0Mi8=">Community Server 11.0<i class="fa fa-external-link-alt"></i></span></td>
+<td>2023年11月</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzIyOC8=">Community Server 10.11<i class="fa fa-external-link-alt"></i></span></td>
+<td>2028年2月</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzIxNC8=">Community Server 10.10 (EOL)<i class="fa fa-external-link-alt"></i></span></td>
+<td>EOL（已结束）2023年11月</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzIwNS8=">Community Server 10.9 (EOL)<i class="fa fa-external-link-alt"></i></span></td>
+<td>EOL（已结束）2023年8月22</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzIwMC8=">Community Server 10.8 (EOL)<i class="fa fa-external-link-alt"></i></span></td>
+<td>EOL（已结束）2023年5月20</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzE5Mi8=">Community Server 10.7 (EOL)<i class="fa fa-external-link-alt"></i></span></td>
+<td>EOL（已结束）2023年2月9</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzE2My8=">Community Server 10.6<i class="fa fa-external-link-alt"></i></span></td>
+<td>2026年7月</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzEwMS8=">Community Server 10.5<i class="fa fa-external-link-alt"></i></span></td>
+<td>2025年6月</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzc2Lw==">Community Server 10.4<i class="fa fa-external-link-alt"></i></span></td>
+<td>2024年6月</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzM4Lw==">Community Server 10.3 (EOL)<i class="fa fa-external-link-alt"></i></span></td>
+<td>EOL（已结束）2023年5月23</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzM5Lw==">Community Server 10.2 (EOL)<i class="fa fa-external-link-alt"></i></span></td>
+<td>EOL（已结束）2022年5月23</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzQwLw==">Community Server 10.1 (EOL)<i class="fa fa-external-link-alt"></i></span></td>
+<td>EOL（已结束）2020年10月17</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzQxLw==">Community Server 10.0 (EOL)<i class="fa fa-external-link-alt"></i></span></td>
+<td>EOL（已结束）2019年3月31</td>
+</tr>
+<tr>
+<td><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzQyLw==">Community Server 5.5 (EOL)<i class="fa fa-external-link-alt"></i></span></td>
+<td>EOL（已结束）2020年4月11</td>
+</tr>
+</tbody></table>
+<p><strong>友情提醒</strong>：EOL 表示寿命终止（end of life），文中指某一版本已停止维护；面向表达式的语言（Expression-Oriented Language）。</p>
+<h3 id="MariaDB-资源获取"><a href="#MariaDB-资源获取" class="headerlink" title="MariaDB 资源获取"></a>MariaDB 资源获取</h3><p><strong>友情提醒</strong>：关于版本选择，<strong>企业或者个人生产环境</strong>，<strong>建议使用稳定版</strong>（GA）。不推荐使用预览版（Preview release）和候选版（RC versions）。</p>
+<p>MariaDB在Windows平台提供了多种安装形式：</p>
+<ol>
+<li>msi文件：直接双击进行安装，有可视化界面，<strong>安装较为容易，但不够灵活</strong>。</li>
+<li>归档包（archive zip）：以zip格式进行压缩，类似于Linux中的二进制包。<strong>比较灵活，只需几个命令即可安装服务和实例化</strong>。</li>
+<li>源码包（source package）：<strong>最灵活</strong>，可根据需求编译安装功能，<strong>难易度最高</strong>。</li>
+<li>docker形式安装：其实是在容器中安装。</li>
+</ol>
+<p>Linux或者Unix安装MariaDB有四种方式：</p>
+<ol>
+<li>rpm包安装：最为简单，但<strong>不灵活，适合初学者使用</strong>。</li>
+<li>二进制包（binary package）：归档包（archive zip），编译好的源码包，<strong>比rpm包更灵活。个人认为是安装多个服务最佳选择</strong>。</li>
+<li>源码包（source package）：<strong>最灵活</strong>，可根据需求编译安装功能，<strong>难易度最高</strong>。</li>
+<li>docker形式安装：其实是在容器中安装。</li>
+</ol>
+<p>MariaDB所有版本下载地址，<strong>建议使用BT工具或者那个你们缓存过很多日本姑娘的软件</strong>，速度更快：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLw==">https://dlm.mariadb.com/browse/mariadb_server&#x2F;<i class="fa fa-external-link-alt"></i></span></p>
+<p>如果上面地址失效选择下面地址（点击Show All Files进入所有版本下载界面）：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9kb3dubG9hZHMv">https://mariadb.com/downloads/<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>mariadb 社区服务版本 Community Server 参数说明</strong></p>
+<p>MariaDB 目前最新稳定长期支持版本：<span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzIyOC8xOTE1Lw==">All Files - Community Server 10.11.6 (mariadb.com)<i class="fa fa-external-link-alt"></i></span> ，<span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9hYm91dC8jbWFpbnRlbmFuY2UtcG9saWN5">维护到<i class="fa fa-external-link-alt"></i></span> 2028 年 2 月。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzIyOC8xOTE1L2JpbnRhci1saW51eC1zeXN0ZW1kLXg4Nl82NC8=">bintar-linux-systemd-x86_64&#x2F;<i class="fa fa-external-link-alt"></i></span></strong></td>
+<td>经源码包编译过的二进制 tar包（支持 systemd-x86_64 环境）</td>
+</tr>
+<tr>
+<td><strong><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzIyOC8xOTE1L2dhbGVyYS0yNi40LjE2Lw==">galera-26.4.14&#x2F;<i class="fa fa-external-link-alt"></i></span></strong></td>
+<td>galera-26.4.14</td>
+</tr>
+<tr>
+<td><strong><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzIyOC8xOTE1L3JlcG8v">repo&#x2F;<i class="fa fa-external-link-alt"></i></span></strong></td>
+<td>仓库（包含Debian、Ubuntu）</td>
+</tr>
+<tr>
+<td><strong><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzIyOC8xOTE1L3NvdXJjZS8=">source&#x2F;<i class="fa fa-external-link-alt"></i></span></strong></td>
+<td>源码包</td>
+</tr>
+<tr>
+<td><strong><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzIyOC8xOTE1L3dpbng2NC1wYWNrYWdlcy8=">winx64-packages&#x2F;<i class="fa fa-external-link-alt"></i></span></strong></td>
+<td>Windows平台（ msi 文件与免安装二进制归档包 zip 文件）</td>
+</tr>
+<tr>
+<td><strong><span class="exturl" data-url="aHR0cHM6Ly9kbG0ubWFyaWFkYi5jb20vYnJvd3NlL21hcmlhZGJfc2VydmVyLzIyOC8xOTE1L3l1bS8=">yum&#x2F;<i class="fa fa-external-link-alt"></i></span></strong></td>
+<td>yum仓库（ RHEL 系列 CentOS、Fedora、OpenSUSE、RHEL、Sles 可使用 ）</td>
+</tr>
+</tbody></table>
+<p>你还可以通过 <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy8=">mariadb.org<i class="fa fa-external-link-alt"></i></span> 获取（下载） <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9kb3dubG9hZA==">mariadb server<i class="fa fa-external-link-alt"></i></span></p>
+<ol>
+<li>MariaDB Server：可以选择版本、操作系统、平台，安装包类型。</li>
+<li>MariaDB Server Repositories：可以选择操作系统发行版本、具体版本，mariadb 服务版本、仓库镜像地址（国内可选阿里云）。</li>
+<li>Connectors：可以选择连接器的版本（支持编程语言 C、Java、Nodejs、ODBC 以及 Python），操作系统，安装包类型。</li>
+</ol>
+<p><strong>关于个人演示说明</strong>：</p>
+<ul>
+<li>采用最新长期支持稳定版本做演示，目前最新长期维护稳定版本是 mariadb-10.11.6。</li>
+<li>Windows 平台使用 archive zip 版本。</li>
+<li>Linux 平台，主要以RHEL9 系列（Rocky-9）作为演示环境，安装方式主要以 <strong>Systemd</strong>、 <strong>YUM 或者 DNF 工具</strong>进行安装。</li>
+</ul>
+<h2 id="Windows-平台体验-mariadb-10-11-6"><a href="#Windows-平台体验-mariadb-10-11-6" class="headerlink" title="Windows 平台体验 mariadb-10.11.6"></a>Windows 平台体验 mariadb-10.11.6</h2><p><strong>如果提示权限不足，请以管理员身份运行 Windows terminal、powershell 或者 cmd</strong>。</p>
+<h3 id="Archive-Zip-形式安装"><a href="#Archive-Zip-形式安装" class="headerlink" title="Archive Zip 形式安装"></a>Archive Zip 形式安装</h3><p>使用Windows terminal 打开 powershell 或者 cmd ，进入解压后的 mariadb-10.11.6-winx64.zip 目录。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unzip mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>.zip</span><br><span class="line"><span class="built_in">cd</span> mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>如果没有 <code>unzip</code> 命令，请尝试打开<code>powershell</code> 使用 <code>Expand-Archive</code>命令解压。</p>
+<p>示例<strong>解压到默认目录</strong>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Expand-Archive</span> .\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>.zip </span><br></pre></td></tr></table></figure>
+
+<p>示例<strong>解压到指定目录</strong><code>D:\work\</code>，使用参数 <code>-DestinationPath</code>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Expand-Archive</span> .\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>.zip <span class="literal">-DestinationPath</span> D:\work\</span><br></pre></td></tr></table></figure>
+
+<p>如果你想<strong>指定压缩文件路径</strong><code>D:\Downloads\DBMS\MariaDB\winx64\mariadb-10.11.6-winx64.zip</code>，可以使用<code>-Path</code>参数：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Expand-Archive</span> <span class="literal">-Path</span> D:\Downloads\DBMS\MariaDB\winx64\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>.zip <span class="literal">-DestinationPath</span> D:\work\</span><br></pre></td></tr></table></figure>
+
+<p>可参考资料：<span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLmFyY2hpdmUvZXhwYW5kLWFyY2hpdmU/dmlldz1wb3dlcnNoZWxsLTcuNA==">Expand-Archive (Microsoft.PowerShell.Archive) - PowerShell | Microsoft Learn<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>1、初始化 mariadb</strong></p>
+<p>运行 <code>mysql_install_db.exe</code> 或者 <code>mariadb-install-db.exe</code> 程序进行mariadb安装环节，创建 <code>my.ini</code> 配置文件（Creating my.ini file），移除默认用户（Removing default user），创建数据库服务完成（Creation of the database was successful）。</p>
+<p><strong>如果提示权限不足，请以管理员身份运行 Windows terminal、powershell 或者 cmd</strong>。</p>
+<p>示例初始化 mariadb：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> D:\work\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>&gt; .\bin\mysql_install_db.exe</span><br><span class="line">Default <span class="keyword">data</span> directory is D:\work\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>\data</span><br><span class="line">Running bootstrap</span><br><span class="line">Creating my.ini file</span><br><span class="line">Removing default user</span><br><span class="line">Creation of the database was successful</span><br></pre></td></tr></table></figure>
+
+<p>或者执行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> D:\work\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>&gt; .\bin\mariadb<span class="literal">-install-db</span>.exe</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>2、管理 mariadb 服务</strong></p>
+<p>进入解压后的 <code>.\mariadb-10.11.6-winx64\bin</code> 或者 <code>.\mariadb-10.11.6-winx64</code>  运行 <code>mysqld</code> 或者 <code>.\bin\mysqld</code> 程序启动 mariadb 服务。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] Starting MariaDB <span class="number">10.11</span>.<span class="number">6</span><span class="literal">-MariaDB</span> source revision fecd78b83785d5ae96f2c6ff340375be803cd299 as <span class="keyword">process</span> <span class="number">62216</span></span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: Compressed tables use zlib <span class="number">1.3</span></span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: Number of transaction pools: <span class="number">1</span></span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: <span class="keyword">Using</span> crc32 + pclmulqdq instructions</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: Initializing buffer pool, total size = <span class="number">128.000</span>MiB, chunk size = <span class="number">2.000</span>MiB</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: Completed initialization of buffer pool</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: File system buffers <span class="keyword">for</span> log disabled (block size=<span class="number">4096</span> bytes)</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: <span class="keyword">End</span> of log at LSN=<span class="number">46980</span></span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: <span class="number">128</span> rollback segments are active.</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: Setting file <span class="string">&#x27;./ibtmp1&#x27;</span> size to <span class="number">12.000</span>MiB. Physically writing the file full; Please wait ...</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: File <span class="string">&#x27;./ibtmp1&#x27;</span> size is now <span class="number">12.000</span>MiB.</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: log sequence number <span class="number">46980</span>; transaction id <span class="number">14</span></span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] Plugin <span class="string">&#x27;FEEDBACK&#x27;</span> is disabled.</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: Loading buffer pool(s) from D:\work\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>\data\ib_buffer_pool</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] mysqld.exe: SSPI: <span class="keyword">using</span> principal name <span class="string">&#x27;localhost&#x27;</span>, mech <span class="string">&#x27;Negotiate&#x27;</span></span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: Buffer pool(s) load completed at <span class="number">231226</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span></span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] Server socket created on IP: <span class="string">&#x27;::&#x27;</span>.</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] Server socket created on IP: <span class="string">&#x27;0.0.0.0&#x27;</span>.</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">55</span>:<span class="number">08</span> <span class="number">0</span> [<span class="type">Note</span>] D:\work\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>\bin\mysqld.exe: ready <span class="keyword">for</span> connections.</span><br><span class="line">Version: <span class="string">&#x27;10.11.6-MariaDB&#x27;</span>  socket: <span class="string">&#x27;&#x27;</span>  port: <span class="number">3306</span>  mariadb.org binary distribution</span><br></pre></td></tr></table></figure>
+
+<p>还可以运行 <code>mariadb</code> 或者 <code>.\bin\mariadb</code> 程序启动 mariadb 服务。</p>
+<p>将服务注册到 services.ms 管理：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\bin\mariadbd --install</span><br></pre></td></tr></table></figure>
+
+<p>或者使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\bin\mysqld --install</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>.\bin\mariadbd --install</code>或者 <code>.\bin\mysqld --install</code> 后不加服务名，默认服务名是 MySQL。</p>
+<p>示例移除 MySQL 服务，然后重新命名为 MariaDB：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PS D:\work\mariadb-10.11.6-winx64&gt; sc delete MySQL</span><br><span class="line">[SC] DeleteService 成功</span><br><span class="line">PS D:\work\mariadb-10.11.6-winx64&gt; .\bin\mariadbd --install MariaDB</span><br><span class="line">Service &#x27;MariaDB&#x27; successfully installed.</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>sc</code> 命令管理 MariaDB 服务：</p>
+<ol>
+<li>查询 MariaDB 服务：<code>sc query mariadb</code>；</li>
+<li>启动 MariaDB 服务：<code>sc start mariadb</code>；</li>
+<li>停止 MariaDB 服务：<code>sc stop mariadb</code>；</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">PS D:\work\mariadb-10.11.6-winx64&gt; sc query mariadb</span><br><span class="line">SERVICE_NAME: mariadb</span><br><span class="line">        TYPE               : 10  WIN32_OWN_PROCESS</span><br><span class="line">        STATE              : 1  STOPPED</span><br><span class="line">        WIN32_EXIT_CODE    : 1077  (0x435)</span><br><span class="line">        SERVICE_EXIT_CODE  : 0  (0x0)</span><br><span class="line">        CHECKPOINT         : 0x0</span><br><span class="line">        WAIT_HINT          : 0x0</span><br><span class="line">        </span><br><span class="line">PS D:\work\mariadb-10.11.6-winx64&gt; sc start mariadb</span><br><span class="line">SERVICE_NAME: mariadb</span><br><span class="line">        TYPE               : 10  WIN32_OWN_PROCESS</span><br><span class="line">        STATE              : 2  START_PENDING</span><br><span class="line">                                (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)</span><br><span class="line">        WIN32_EXIT_CODE    : 0  (0x0)</span><br><span class="line">        SERVICE_EXIT_CODE  : 0  (0x0)</span><br><span class="line">        CHECKPOINT         : 0x1</span><br><span class="line">        WAIT_HINT          : 0x0</span><br><span class="line">        PID                : 8056</span><br><span class="line">        FLAGS              :</span><br><span class="line">        </span><br><span class="line">PS D:\work\mariadb-10.11.6-winx64&gt; sc stop mariadb</span><br><span class="line">SERVICE_NAME: mariadb</span><br><span class="line">        TYPE               : 10  WIN32_OWN_PROCESS</span><br><span class="line">        STATE              : 3  STOP_PENDING</span><br><span class="line">                                (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)</span><br><span class="line">        WIN32_EXIT_CODE    : 0  (0x0)</span><br><span class="line">        SERVICE_EXIT_CODE  : 0  (0x0)</span><br><span class="line">        CHECKPOINT         : 0x4</span><br><span class="line">        WAIT_HINT          : 0x0</span><br></pre></td></tr></table></figure>
+
+<p>当然，你还可以通过 <code>net</code> 命令管理 mariadb 服务：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> D:\work&gt; net <span class="built_in">start</span> mariadb</span><br><span class="line">MariaDB 服务正在启动 ......</span><br><span class="line">MariaDB 服务已经启动成功。</span><br><span class="line"></span><br><span class="line"><span class="built_in">PS</span> D:\work&gt; net stop mariadb</span><br><span class="line">MariaDB 服务正在停止..</span><br><span class="line">MariaDB 服务已成功停止。</span><br></pre></td></tr></table></figure>
+
+<p>Windows terminal 通过 <code>netstat</code> 配合 <code>tasklist</code>  以及 <code>findstr</code> 命令监控 mariadb 服务：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> D:\work&gt; netstat <span class="literal">-ano</span> | findstr <span class="number">3306</span></span><br><span class="line">  TCP    <span class="number">0.0</span>.<span class="number">0.0</span>:<span class="number">3306</span>           <span class="number">0.0</span>.<span class="number">0.0</span>:<span class="number">0</span>              LISTENING       <span class="number">24416</span></span><br><span class="line">  TCP    [::]:<span class="number">3306</span>              [::]:<span class="number">0</span>                 LISTENING       <span class="number">24416</span></span><br><span class="line"><span class="built_in">PS</span> D:\work&gt; tasklist | findstr <span class="number">24416</span></span><br><span class="line">mariadbd.exe                 <span class="number">24416</span> Services                   <span class="number">0</span>     <span class="number">26</span>,<span class="number">236</span> K</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>3、快捷关闭 mariadb 服务</strong><br>使用 Windows terminal  打开 powershell 或者 cmd ，使用快捷键 <code>ctrl + c</code> 可以停止  mariadb 服务（\mariadb-10.11.6-winx64\bin\mysqld.exe: Shutdown complete）。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">57</span>:<span class="number">18</span> <span class="number">0</span> [<span class="type">Note</span>] console_event_handler: received CTRL_C_EVENT event, shutting down</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">57</span>:<span class="number">18</span> <span class="number">0</span> [<span class="type">Note</span>] D:\work\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>\bin\mysqld.exe (initiated by: unknown): Normal shutdown</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">57</span>:<span class="number">18</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: FTS optimize thread exiting.</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">57</span>:<span class="number">18</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: Starting shutdown...</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">57</span>:<span class="number">18</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: Dumping buffer pool(s) to D:\work\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>\data\ib_buffer_pool</span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">57</span>:<span class="number">18</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: Buffer pool(s) dump completed at <span class="number">231226</span> <span class="number">21</span>:<span class="number">57</span>:<span class="number">18</span></span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">57</span>:<span class="number">19</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: Removed temporary tablespace <span class="keyword">data</span> file: <span class="string">&quot;./ibtmp1&quot;</span></span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">57</span>:<span class="number">19</span> <span class="number">0</span> [<span class="type">Note</span>] InnoDB: Shutdown completed; log sequence number <span class="number">46980</span>; transaction id <span class="number">15</span></span><br><span class="line"><span class="number">2023</span><span class="literal">-12-26</span> <span class="number">21</span>:<span class="number">57</span>:<span class="number">19</span> <span class="number">0</span> [<span class="type">Note</span>] D:\work\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>\bin\mysqld.exe: Shutdown complete</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>4、登录 mariadb monitor 字符命令行模式</strong></p>
+<p>如下示例，进入 <code>.\mariadb-10.11.6-winx64</code> 目录，执行 <code>.\bin\mysql -uroot -p</code>。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> D:\work\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>&gt; .\bin\mysql <span class="literal">-uroot</span> <span class="literal">-p</span></span><br></pre></td></tr></table></figure>
+
+<p>或者使用 <code>.\bin\mariadb -uroot -p</code>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> D:\work\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>&gt; .\bin\mariadb <span class="literal">-uroot</span> <span class="literal">-p</span></span><br></pre></td></tr></table></figure>
+
+<p>默认 mariadb 或者 MySQL  端口号（port）均为 3306，实际生产环境可能会视实际情况而改变。比如我个人测试环境安装了多个服务，在 my.ini 或者 my.cnf 中会指定端口为 3307，达到演示目的。执行方式略有变动，指定 <code>-P 3307</code>，如下：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> D:\work\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>&gt; .\bin\mysql <span class="literal">-uroot</span> <span class="literal">-p</span> <span class="literal">-P</span> <span class="number">3307</span></span><br></pre></td></tr></table></figure>
+
+<p>或者使用：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> D:\work\mariadb<span class="literal">-10</span>.<span class="number">11.6</span><span class="literal">-winx64</span>&gt; .\bin\mariadb <span class="literal">-uroot</span> <span class="literal">-p</span> <span class="literal">-P</span> <span class="number">3307</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>5、初步体验</strong></p>
+<p>如果你使用了第三方数据库软件管理工具，注释用法如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 注释用法一</span></span><br><span class="line"><span class="comment">/** 注释用法二 **/</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>演示过程，加了注释只为便于初学者理解：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [mysql]<span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="number">1</span>; <span class="comment">-- 检索 1，不经过任何表</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---+</span></span><br><span class="line"><span class="operator">|</span> <span class="number">1</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---+</span></span><br><span class="line"><span class="operator">|</span> <span class="number">1</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---+</span></span><br><span class="line"></span><br><span class="line">MariaDB [mysql]<span class="operator">&gt;</span> EXPLAIN <span class="keyword">SELECT</span> <span class="number">1</span>; <span class="comment">-- 使用 EXPLAIN 执行计划分析</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------+-------------+-------+------+---------------+------+---------+------+------+----------------+</span></span><br><span class="line"><span class="operator">|</span> id   <span class="operator">|</span> select_type <span class="operator">|</span> <span class="keyword">table</span> <span class="operator">|</span> type <span class="operator">|</span> possible_keys <span class="operator">|</span> key  <span class="operator">|</span> key_len <span class="operator">|</span> <span class="keyword">ref</span>  <span class="operator">|</span> <span class="keyword">rows</span> <span class="operator">|</span> Extra          <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------+-------------+-------+------+---------------+------+---------+------+------+----------------+</span></span><br><span class="line"><span class="operator">|</span>    <span class="number">1</span> <span class="operator">|</span> SIMPLE      <span class="operator">|</span> <span class="keyword">NULL</span>  <span class="operator">|</span> <span class="keyword">NULL</span> <span class="operator">|</span> <span class="keyword">NULL</span>          <span class="operator">|</span> <span class="keyword">NULL</span> <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span> <span class="keyword">NULL</span> <span class="operator">|</span> <span class="keyword">NULL</span> <span class="operator">|</span> <span class="keyword">No</span> tables used <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------+-------------+-------+------+---------------+------+---------+------+------+----------------+</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查询数据库软件具体版本号</span></span><br><span class="line">MariaDB [mysql]<span class="operator">&gt;</span> <span class="keyword">SELECT</span> version(); </span><br><span class="line"><span class="operator">+</span><span class="comment">----------------+</span></span><br><span class="line"><span class="operator">|</span> version()      <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">----------------+</span></span><br><span class="line"><span class="operator">|</span> <span class="number">10.11</span><span class="number">.6</span><span class="operator">-</span>MariaDB <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">----------------+</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/** 查询所有数据库 **/</span></span><br><span class="line">MariaDB [mysql]<span class="operator">&gt;</span> <span class="keyword">SHOW</span> DATABASES;</span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------+</span></span><br><span class="line"><span class="operator">|</span> Database           <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------+</span></span><br><span class="line"><span class="operator">|</span> information_schema <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql              <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> performance_schema <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> sys                <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------+</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="MSI-文件形式安装"><a href="#MSI-文件形式安装" class="headerlink" title="MSI 文件形式安装"></a>MSI 文件形式安装</h3><p>由于安装过程比较容易，此处省略教程，详情请参考<span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9pbnN0YWxsaW5nLW1hcmlhZGItbXNpLXBhY2thZ2VzLW9uLXdpbmRvd3Mv">Installing MariaDB MSI Packages on Windows - MariaDB Knowledge Base<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="Linux-平台体验-mariadb-10-11-6"><a href="#Linux-平台体验-mariadb-10-11-6" class="headerlink" title="Linux 平台体验 mariadb-10.11.6"></a>Linux 平台体验 mariadb-10.11.6</h2><p><strong>友情提醒</strong>：可直接参考 <span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vOC4wL2VuL2luc3RhbGxpbmcuaHRtbA==">MySQL<i class="fa fa-external-link-alt"></i></span> 或者 <span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9nZXR0aW5nLWluc3RhbGxpbmctYW5kLXVwZ3JhZGluZy1tYXJpYWRiLw==">MariadDB<i class="fa fa-external-link-alt"></i></span> 官方文档进行安装哟！当然，可能存在细微差别。</p>
+<h3 id="RHEL、Rocky、CentOS环境"><a href="#RHEL、Rocky、CentOS环境" class="headerlink" title="RHEL、Rocky、CentOS环境"></a>RHEL、Rocky、CentOS环境</h3><p><strong>RHEL 9  使用 YUM &amp; DNF 工具安装 mariadb</strong>：</p>
+<p>新建 mariadb 服务仓库：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/yum.repos.d</span><br><span class="line">touch MariaDB.repo</span><br></pre></td></tr></table></figure>
+
+<p>如果存在 <code>Nvim</code> 或者 <code>Vim</code> 环境，可以直接编辑 <code>MariaDB.repo</code> 文件进行补全：</p>
+<p><code>Nvim /etc/yum.repos.d/MariaDB.repo</code></p>
+<p><code>vim /etc/yum.repos.d/MariaDB.repo</code></p>
+<p>复制如下内容到 <code>MariaDB.repo</code> ：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">MariaDB 10.11 RedHatEnterpriseLinux repository list - created 2023-12-25 13:48 UTC</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">https://mariadb.org/download/</span></span><br><span class="line">[mariadb]</span><br><span class="line">name = MariaDB</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">rpm.mariadb.org is a dynamic mirror <span class="keyword">if</span> your preferred mirror goes offline. See https://mariadb.org/mirrorbits/ <span class="keyword">for</span> details.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">baseurl = https://rpm.mariadb.org/10.11/rhel/<span class="variable">$releasever</span>/<span class="variable">$basearch</span></span></span><br><span class="line">baseurl = https://mirrors.aliyun.com/mariadb/yum/10.11/rhel/$releasever/$basearch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">gpgkey = https://rpm.mariadb.org/RPM-GPG-KEY-MariaDB</span></span><br><span class="line">gpgkey = https://mirrors.aliyun.com/mariadb/yum/RPM-GPG-KEY-MariaDB</span><br><span class="line">gpgcheck = 1</span><br></pre></td></tr></table></figure>
+
+<p>国内访问<span class="exturl" data-url="aHR0cHM6Ly9ycG0ubWFyaWFkYi5vcmcv">mariadb官方镜像地址<i class="fa fa-external-link-alt"></i></span>可能较缓慢，此处采用了<span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLmFsaXl1bi5jb20v">阿里云<i class="fa fa-external-link-alt"></i></span>的镜像地址。</p>
+<p><strong>安装</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf install MariaDB-server MariaDB-client</span><br></pre></td></tr></table></figure>
+
+<p>安装成功，监控 mariadb 状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost local]# systemctl status mariadb</span><br><span class="line">● mariadb.service - MariaDB 10.11.6 database server</span><br><span class="line">     Loaded: loaded (/usr/lib/systemd/system/mariadb.service; disabled; preset: disabled)</span><br><span class="line">    Drop-In: /etc/systemd/system/mariadb.service.d</span><br><span class="line">             └─migrated-from-my.cnf-settings.conf</span><br><span class="line">     Active: active (running) since Tue 2023-12-26 15:23:02 CST; 46min ago</span><br><span class="line">       Docs: man:mariadbd(8)</span><br><span class="line">             https://mariadb.com/kb/en/library/systemd/</span><br><span class="line">    Process: 3639 ExecStartPre=/bin/sh -c systemctl unset-environment _WSREP_START_POSITION (code=exited, status=0/SUCCESS)</span><br><span class="line">    Process: 3640 ExecStartPre=/bin/sh -c [ ! -e /usr/bin/galera_recovery ] &amp;&amp; VAR= ||   VAR=`cd /usr/bin/..; /usr/bin/galera_recovery`; [&gt;</span><br><span class="line">    Process: 3660 ExecStartPost=/bin/sh -c systemctl unset-environment _WSREP_START_POSITION (code=exited, status=0/SUCCESS)</span><br><span class="line">   Main PID: 3648 (mariadbd)</span><br><span class="line">     Status: &quot;Taking your SQL requests now...&quot;</span><br><span class="line">      Tasks: 9 (limit: 10685)</span><br><span class="line">     Memory: 216.1M</span><br><span class="line">        CPU: 681ms</span><br><span class="line">     CGroup: /system.slice/mariadb.service</span><br><span class="line">             └─3648 /usr/sbin/mariadbd</span><br><span class="line"></span><br><span class="line">12月 26 15:23:02 localhost.localdomain mariadbd[3648]: 2023-12-26 15:23:02 0 [Note] InnoDB: File &#x27;./ibtmp1&#x27; size is now 12.000MiB.</span><br><span class="line">12月 26 15:23:02 localhost.localdomain mariadbd[3648]: 2023-12-26 15:23:02 0 [Note] InnoDB: log sequence number 45502; transaction id 14</span><br><span class="line">12月 26 15:23:02 localhost.localdomain mariadbd[3648]: 2023-12-26 15:23:02 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_&gt;</span><br><span class="line">12月 26 15:23:02 localhost.localdomain mariadbd[3648]: 2023-12-26 15:23:02 0 [Note] Plugin &#x27;FEEDBACK&#x27; is disabled.</span><br><span class="line">12月 26 15:23:02 localhost.localdomain mariadbd[3648]: 2023-12-26 15:23:02 0 [Note] Server socket created on IP: &#x27;0.0.0.0&#x27;.</span><br><span class="line">12月 26 15:23:02 localhost.localdomain mariadbd[3648]: 2023-12-26 15:23:02 0 [Note] Server socket created on IP: &#x27;::&#x27;.</span><br><span class="line">12月 26 15:23:02 localhost.localdomain mariadbd[3648]: 2023-12-26 15:23:02 0 [Note] InnoDB: Buffer pool(s) load completed at 231226 15:23:&gt;</span><br><span class="line">12月 26 15:23:02 localhost.localdomain mariadbd[3648]: 2023-12-26 15:23:02 0 [Note] /usr/sbin/mariadbd: ready for connections.</span><br><span class="line">12月 26 15:23:02 localhost.localdomain mariadbd[3648]: Version: &#x27;10.11.6-MariaDB&#x27;  socket: &#x27;/var/lib/mysql/mysql.sock&#x27;  port: 3306  MariaD&gt;</span><br><span class="line">12月 26 15:23:02 localhost.localdomain systemd[1]: Started MariaDB 10.11.6 database server.</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>友情提醒</strong>：初次安装 mariadb 数据库软件， root 用户密码为空，可登录终端自行更改。</p>
+<p>修改 root@localhost 用户密码：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mariadb <span class="operator">-</span>uroot <span class="operator">-</span>p</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;mypwd@123&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>小结</strong>：</p>
+<ul>
+<li>优点：使用 <code>yum</code> 或者 <code>dnf</code> 工具在线，有网络，安装过程比较简单。相比离线下载 rpm 包容易上手，会自动匹配依赖包。</li>
+<li>缺点：不灵活。</li>
+</ul>
+<h3 id="Systemd-环境"><a href="#Systemd-环境" class="headerlink" title="Systemd 环境"></a>Systemd 环境</h3><p>可参考资料：<span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9pbnN0YWxsaW5nLW1hcmlhZGItYmluYXJ5LXRhcmJhbGxzLw==">Installing MariaDB Binary Tarballs - MariaDB Knowledge Base<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>Systemd 环境安装</strong>：</p>
+<p>预备环境，开启 EPEL，<strong>AlmaLinux 9, Rocky Linux 9</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf config-manager --set-enabled crb</span><br><span class="line">dnf install epel-release</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装必备依赖包</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf install libaio</span><br><span class="line">dnf -y install ncurses-compat-libs</span><br></pre></td></tr></table></figure>
+
+<p>安装步骤：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">groupadd mysql</span><br><span class="line">useradd -r -g mysql -s /bin/false mysql # 创建 mysql 用户（没有服务器主机登录权限的用户）</span><br><span class="line">cd /usr/local</span><br><span class="line">tar -zxvpf /path-to/mariadb-VERSION-OS.tar.gz</span><br><span class="line">ln -s mariadb-VERSION-OS mysql</span><br><span class="line">cd mysql</span><br><span class="line">./scripts/mariadb-install-db --user=mysql</span><br><span class="line">chown -R root .</span><br><span class="line">chown -R mysql data</span><br></pre></td></tr></table></figure>
+
+<p><strong>重点解析</strong>：</p>
+<ol>
+<li><p><code>groupadd mysql</code>：创建 mysql 组。</p>
+</li>
+<li><p><code>useradd -r -g mysql -s /bin/false mysql</code>： 创建 mysql 用户（没有服务器主机登录权限的用户）。</p>
+</li>
+<li><p><code>/path-to/mariadb-VERSION-OS.tar.gz</code>：你下载的 mariadb 安装包名称所在路径。</p>
+<p>比如我示例安装路径 <code>/usr/local/mariadb-10.11.6-linux-systemd-x86_64.tar.gz</code>。</p>
+</li>
+<li><p><code>./scripts/mariadb-install-db --user=mysql</code>：指定 mysql 用户，安装 mariadb 服务。</p>
+</li>
+</ol>
+<p><strong>启动 mariadb 服务</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./bin/mysqld_safe --user=mysql &amp;</span><br><span class="line">or</span><br><span class="line">./bin/mysqld_safe --defaults-file=~/.my.cnf --user=mysql &amp;</span><br></pre></td></tr></table></figure>
+
+<p>配置环境变量：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/usr/local/mysql/bin/</span><br></pre></td></tr></table></figure>
+
+<p><strong>写入配置文件，永久生效，全局则做如下设置</strong>，编辑：<code>vim /etc/profile</code>，需要 root 用户权限，或者使用 <code>sudo vim /etc/profile</code>： </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">mysql home</span></span><br><span class="line">MYSQL_HOME=/usr/local/mysql</span><br><span class="line">PATH=$PATH:$MYSQL_HOME/bin</span><br><span class="line">export MYSQL_HOME PATH</span><br></pre></td></tr></table></figure>
+
+<p>设置 mysqld 服务使用 systemctl 进行管理：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp support-files/mysql.server /etc/init.d/mysql.server</span><br><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+<p>设置 mariadb 服务使用 systemctl 进行管理：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp support-files/systemd/mariadb.service /usr/lib/systemd/system/mariadb.service</span><br><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+<p>启动 mariadb 与停止服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mariadb.service</span><br><span class="line">systemctl stop mariadb.service</span><br></pre></td></tr></table></figure>
+
+<p>设置 mariadb 自启：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable mariadb.service</span><br></pre></td></tr></table></figure>
+
+<p>监控 mariadb 服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mariadb.service</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="Source-源码包环境"><a href="#Source-源码包环境" class="headerlink" title="Source 源码包环境"></a>Source 源码包环境</h3><p>本人工作中很少遇到需要使用源码包环境编译安装，扩展或者精简某些功能。此处省略教程，详情请参考<span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9jb21waWxpbmctbWFyaWFkYi1mcm9tLXNvdXJjZS8=">Compiling MariaDB From Source - MariaDB Knowledge Base<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="MariaDB-服务监控"><a href="#MariaDB-服务监控" class="headerlink" title="MariaDB 服务监控"></a>MariaDB 服务监控</h3><p><strong>友情提醒</strong>，如果条件允许，可以利用 cockpit 工具协助管理 Linux 服务器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dnf install cockpit</span><br><span class="line">systemctl enable --now cockpit.socket</span><br><span class="line">firewall-cmd --add-service=cockpit --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<p>安装 cockpit 服务并设置开机自启，利用 firewalld 防火墙管理工具设置 cockpit 服务加入到 firewall-cmd 进行管理。</p>
+<p><strong>terminal 监控 mariadb 服务</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">netstat -tlunp | grep 3306</span><br><span class="line">ps -aux | grep mariadb</span><br><span class="line">ps -ef | grep mariadb</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="mariadb-字符集：无法插入中文"><a href="#mariadb-字符集：无法插入中文" class="headerlink" title="mariadb 字符集：无法插入中文"></a>mariadb 字符集：无法插入中文</h2><p>使用标准形式安装 mariadb 服务，默认字符集是 <strong>latin1</strong>，插入中文，会出现如下提示：</p>
+<p><code>MariaDB [test]&gt; insert into t1 values(1,&#39;mariadb 最新长期稳定支持版本是 10.11.6&#39;);</code><br><code>ERROR 1366 (22007): Incorrect string value: &#39;\xE6\x9C\x80\xE6\x96\xB0...&#39; for column test.t1.db_names at row 1</code></p>
+<p>创建表时指定字符集，成功插入中文内容：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MariaDB [test]<span class="operator">&gt;</span> <span class="keyword">create</span> <span class="keyword">table</span> t2(id <span class="type">int</span> <span class="keyword">primary</span> key,db_names <span class="type">varchar</span>(<span class="number">64</span>)) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8mb4 <span class="keyword">COLLATE</span><span class="operator">=</span>utf8mb4_general_ci;</span><br><span class="line">MariaDB [test]<span class="operator">&gt;</span> <span class="keyword">insert</span> <span class="keyword">into</span> t2 <span class="keyword">values</span>(<span class="number">1</span>,<span class="string">&#x27;mariadb 最新长期稳定支持版是 10.11.6&#x27;</span>);</span><br><span class="line">MariaDB [test]<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t2\G;</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">      id: <span class="number">1</span></span><br><span class="line">db_names: mariadb 最新长期稳定支持版是 <span class="number">10.11</span><span class="number">.6</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>System Variables 系统变量</strong></p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>MariaDB in Debian</th>
+<th>Standard MariaDB</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>character_set_server</td>
+<td>utf8mb4</td>
+<td>latin1</td>
+<td>Debian sets a default character set that can support emojis etc.</td>
+</tr>
+<tr>
+<td>collation_server</td>
+<td>utf8mb4_general_ci</td>
+<td>latin1_swedish_ci</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>Windows 平台配置 my.ini，编辑 <code>\mariadb-10.11.6-winx64\data\my.ini</code> ：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="attr">datadir</span>=D:/work/mariadb-<span class="number">10.11</span>.<span class="number">6</span>-winx64/data</span><br><span class="line"><span class="attr">character_set_server</span>=utf8mb4</span><br><span class="line"><span class="attr">collation_server</span>=utf8mb4_general_ci</span><br><span class="line"><span class="section">[client]</span></span><br><span class="line"><span class="attr">plugin-dir</span>=D:\work\mariadb-<span class="number">10.11</span>.<span class="number">6</span>-winx64/lib/plugin</span><br></pre></td></tr></table></figure>
+
+<p>设置好默认字符集以及字符集排序规则，重启 mariadb 服务即可。</p>
+<p><strong>查询与设置字符集</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> VARIABLES <span class="keyword">LIKE</span> <span class="string">&#x27;character_set\_%&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------------+---------+</span></span><br><span class="line"><span class="operator">|</span> Variable_name            <span class="operator">|</span> <span class="keyword">Value</span>   <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------------+---------+</span></span><br><span class="line"><span class="operator">|</span> character_set_client     <span class="operator">|</span> utf8mb3 <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> character_set_connection <span class="operator">|</span> utf8mb3 <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> character_set_database   <span class="operator">|</span> latin1  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> character_set_filesystem <span class="operator">|</span> <span class="type">binary</span>  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> character_set_results    <span class="operator">|</span> utf8mb3 <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> character_set_server     <span class="operator">|</span> latin1  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> character_set_system     <span class="operator">|</span> utf8mb3 <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------------+---------+</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SHOW</span> VARIABLES <span class="keyword">LIKE</span> <span class="string">&#x27;collation%&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">----------------------+--------------------+</span></span><br><span class="line"><span class="operator">|</span> Variable_name        <span class="operator">|</span> <span class="keyword">Value</span>              <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">----------------------+--------------------+</span></span><br><span class="line"><span class="operator">|</span> collation_connection <span class="operator">|</span> utf8mb3_general_ci <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> collation_database   <span class="operator">|</span> latin1_swedish_ci  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> collation_server     <span class="operator">|</span> latin1_swedish_ci  <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">----------------------+--------------------+</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> <span class="type">CHARACTER</span> <span class="keyword">SET</span> utf8mb4;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SHOW</span> VARIABLES <span class="keyword">LIKE</span> <span class="string">&#x27;character_set\_%&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------------+---------+</span></span><br><span class="line"><span class="operator">|</span> Variable_name            <span class="operator">|</span> <span class="keyword">Value</span>   <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------------+---------+</span></span><br><span class="line"><span class="operator">|</span> character_set_client     <span class="operator">|</span> utf8mb4 <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> character_set_connection <span class="operator">|</span> latin1  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> character_set_database   <span class="operator">|</span> latin1  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> character_set_filesystem <span class="operator">|</span> <span class="type">binary</span>  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> character_set_results    <span class="operator">|</span> utf8mb4 <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> character_set_server     <span class="operator">|</span> latin1  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> character_set_system     <span class="operator">|</span> utf8mb3 <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------------+---------+</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SHOW</span> VARIABLES <span class="keyword">LIKE</span> <span class="string">&#x27;collation%&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">----------------------+-------------------+</span></span><br><span class="line"><span class="operator">|</span> Variable_name        <span class="operator">|</span> <span class="keyword">Value</span>             <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">----------------------+-------------------+</span></span><br><span class="line"><span class="operator">|</span> collation_connection <span class="operator">|</span> latin1_swedish_ci <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> collation_database   <span class="operator">|</span> latin1_swedish_ci <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> collation_server     <span class="operator">|</span> latin1_swedish_ci <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">----------------------+-------------------+</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="web-开发阶段"><a href="#web-开发阶段" class="headerlink" title="web 开发阶段"></a>web 开发阶段</h2><p><strong>极简体验</strong></p>
+<p>这里所说的开发阶段，是指利用第三方工具技术与 DBMS 发行厂商发行的数据库软件进行沟通交流。</p>
+<p>mariadb Java 连接驱动与 Java 版本、JDBC 版本对应关系：</p>
+<table>
+<thead>
+<tr>
+<th align="left">Java Version(s)</th>
+<th align="left">Recommended MariaDB Connector&#x2F;J Release Series</th>
+<th align="left">JDBC Version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Java 21, Java 17, Java 11, Java 8</td>
+<td align="left">MariaDB Connector&#x2F;J 3.3</td>
+<td align="left">JDBC 4.2</td>
+</tr>
+<tr>
+<td align="left">Java 17, Java 11, Java 8</td>
+<td align="left">MariaDB Connector&#x2F;J 3.0</td>
+<td align="left">JDBC 4.2</td>
+</tr>
+<tr>
+<td align="left">Java 11, Java 8</td>
+<td align="left">MariaDB Connector&#x2F;J 2.7</td>
+<td align="left">JDBC 4.2</td>
+</tr>
+</tbody></table>
+<h3 id="MariaDB-之-JDBC"><a href="#MariaDB-之-JDBC" class="headerlink" title="MariaDB 之 JDBC"></a>MariaDB 之 JDBC</h3><p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> DriverManager.getConnection(<span class="string">&quot;jdbc:mariadb://localhost:3306/DB?user=root&amp;password=myPassword&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>使用 Java JDBC 连接 mariadb，采用 <span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hcGFjaGUub3JnLw==">Maven<i class="fa fa-external-link-alt"></i></span> 或者 <span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdyYWRsZS5vcmcvY3VycmVudC91c2VyZ3VpZGUvZ3JhZGxlX2lkZXMuaHRtbA==">Gradle in IDEs<i class="fa fa-external-link-alt"></i></span> 进行构建。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9hYm91dC1tYXJpYWRiLWNvbm5lY3Rvci1qLw==">About MariaDB Connector&#x2F;J - MariaDB Knowledge Base<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9qYXZhLWNvbm5lY3Rvci11c2luZy1tYXZlbi8=">Java Connector Using Maven - MariaDB Knowledge Base<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9qYXZhLWNvbm5lY3Rvci11c2luZy1ncmFkbGUv">Java Connector Using Gradle - MariaDB Knowledge Base<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><strong>maven 配置</strong></p>
+<p>设置 pom.xml 配置文件，使用 mariadb 进行连接测试。maven 的镜像仓库，可以使用<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9tdm4vZ3VpZGU=">阿里仓库服务 (aliyun.com)<i class="fa fa-external-link-alt"></i></span>的镜像源地址。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mariadb.jdbc<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mariadb-java-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>创建普通的 <span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hcGFjaGUub3JnL2Rvd25sb2FkLmNnaQ==">Maven<i class="fa fa-external-link-alt"></i></span> 项目或者 springboot 项目，然后配置 pom.xml。如果访问、下载速度缓慢，这是正常现象，建议使用国内镜像站，比如阿里云提供的 <span class="exturl" data-url="aHR0cHM6Ly9taXJyb3JzLmFsaXl1bi5jb20vYXBhY2hlL21hdmVuLw==">apache-maven安装包下载、开源镜像站<i class="fa fa-external-link-alt"></i></span> ，<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9taXJyb3IvbWF2ZW4v">maven aliyun config<i class="fa fa-external-link-alt"></i></span>，更多配置可以参考<span class="exturl" data-url="aHR0cHM6Ly9kZXZvcHMuYWxpeXVuLmNvbS8/Y2hhbm5lbD1tYXZlbi5hbGl5dW4=">阿里云云效<i class="fa fa-external-link-alt"></i></span> 。</p>
+<p>配置前建议备份一份原始 settings.xml 作为参考，<code>apache-maven-3.8.6\conf\settings.xml</code> 具体参考配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>aliyunmaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 老版本url --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;url&gt;https://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 新版本url --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://maven.aliyun.com/repository/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span>        </span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>编写Java代码</strong></p>
+<p>借助编辑器 <span class="exturl" data-url="aHR0cHM6Ly93d3cuZWNsaXBzZS5vcmcvZG93bmxvYWRzL3BhY2thZ2VzLw==">Eclipse for JavaEE<i class="fa fa-external-link-alt"></i></span>、[VSCode](<span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vRG93bmxvYWQ=">Download Visual Studio Code - Mac, Linux, Windows<i class="fa fa-external-link-alt"></i></span>)、<span class="exturl" data-url="aHR0cHM6Ly9zcHJpbmcuaW8vdG9vbHM=">Spring Tool<i class="fa fa-external-link-alt"></i></span>  或者 <span class="exturl" data-url="aHR0cHM6Ly93d3cuamV0YnJhaW5zLmNvbS5jbi9pZGVhL2Rvd25sb2FkLw==">IntelliJ IDEA<i class="fa fa-external-link-alt"></i></span>。</p>
+<p><strong>目的</strong>：使用纯JDBC测试，或者ORM框架mybatis、hibernate、或者 JPA，最终达到对数据库进行最基本的沟通交流（增删改查）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.demo.jdbc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.PreparedStatement;</span><br><span class="line"><span class="keyword">import</span> java.sql.ResultSet;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestConnMariaDB</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException, SQLException &#123;    </span><br><span class="line">        TestSQLConnMariadb();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">log</span> <span class="operator">=</span> LoggerFactory.getLogger(TestSQLConnMariadb.class);</span><br><span class="line">    <span class="comment">//初始化参数</span></span><br><span class="line">    <span class="keyword">static</span> <span class="type">Connection</span> <span class="variable">conn</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="type">PreparedStatement</span> <span class="variable">ps</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="type">ResultSet</span> <span class="variable">rs</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> SQLException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> ClassNotFoundException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">TestSQLConnMariadb</span><span class="params">()</span> <span class="keyword">throws</span> SQLException, ClassNotFoundException &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">&quot;org.mariadb.jdbc.Driver&quot;</span>);</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 1.获取连接参数url,username,password,默认端口是3306</span></span><br><span class="line"><span class="comment">             * mariadb：url =&quot;jdbc:mariadb://127.0.0.1:3306/test&quot;;</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="comment">/** mariadb 拼接url **/</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> <span class="string">&quot;jdbc:mariadb://127.0.0.1:3306/TEST?useUnicode=true&amp;characterEncoding=utf-8&quot;</span>;</span><br><span class="line">            <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> <span class="string">&quot;root&quot;</span>;</span><br><span class="line">            <span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span> <span class="string">&quot;mypwd@123&quot;</span>;</span><br><span class="line">            <span class="comment">//获取连接</span></span><br><span class="line">            conn = DriverManager.getConnection(url, username, password);</span><br><span class="line">            <span class="keyword">if</span>(<span class="literal">null</span> != conn) &#123;</span><br><span class="line">                log.info(<span class="string">&quot;connect database success...&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                log.error(<span class="string">&quot;connect database failed...&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//查询数据库</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> <span class="string">&quot;SELECT * FROM STUDY&quot;</span>;</span><br><span class="line">            <span class="comment">// 3.通过preparedStatement执行SQL</span></span><br><span class="line">            ps = conn.prepareStatement(sql);    </span><br><span class="line">            <span class="comment">// 4.执行查询,获取结果集</span></span><br><span class="line">            rs = ps.executeQuery();</span><br><span class="line">            <span class="comment">// 5.遍历结果集，前提是你的数据库创建了表以及有数据</span></span><br><span class="line">            <span class="keyword">while</span> (rs.next()) &#123;</span><br><span class="line">                <span class="comment">//对应数据库表中字段类型Int使用getInt，varchar使用getString</span></span><br><span class="line">                System.out.println(<span class="string">&quot;ID:&quot;</span> + rs.getInt(<span class="string">&quot;ID&quot;</span>));</span><br><span class="line">                System.out.println(<span class="string">&quot;姓名：&quot;</span> + rs.getString(<span class="string">&quot;NAMES&quot;</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">// 6.关闭连接 释放资源</span></span><br><span class="line">            rs.close();</span><br><span class="line">            ps.close();</span><br><span class="line">            conn.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Springboot-之-JPA"><a href="#Springboot-之-JPA" class="headerlink" title="Springboot 之 JPA"></a>Springboot 之 JPA</h3><p>如果 SpringMVC（模型-视图-控制器） 按标准书写：数据持久层、数据业务层、数据展示层。<strong>注意了</strong>，个人演示环境，省略了业务逻辑层，直接调用 repository 获取数据。</p>
+<p><strong>配置 pom.xml</strong>：</p>
+<p>如果不清楚需要引入哪些 jar 包，可以前往 <span class="exturl" data-url="aHR0cHM6Ly9tdm5yZXBvc2l0b3J5LmNvbS8=">Maven Repository<i class="fa fa-external-link-alt"></i></span>  搜索。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 引入数据库驱动 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mariadb.jdbc<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mariadb-java-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 引入 springboot 默认数据源 HikariCP--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 引入thymeleaf模板 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-thymeleaf<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span>	</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>配置 properties 文件</strong>：</p>
+<p><code>application.properties</code></p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.profiles.active</span>=<span class="string">dev</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>application-dev.properties</code></p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># api port 默认8080</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8081</span></span><br><span class="line"><span class="comment">#server.servlet.context-path=</span></span><br><span class="line"><span class="comment"># 开发环境多配置文件设置：dev、prod、test</span></span><br><span class="line"><span class="comment"># 默认会找application.properties或者application.yml文件</span></span><br><span class="line"><span class="comment"># 如果设置bootstrap.properties(优先级更高)</span></span><br><span class="line"><span class="comment">#spring.profiles.active=dev</span></span><br><span class="line"><span class="comment">#spring.profiles.include=application-dev.properties</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 服务名称</span></span><br><span class="line"><span class="attr">spring.application.name</span>=<span class="string">springboot-crud</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Nacos &amp; Eureka</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># thymeleaf base config</span></span><br><span class="line"><span class="comment"># 配置prefix(前缀:路径classpath:/templates/templates.html/)</span></span><br><span class="line"><span class="attr">spring.thymeleaf.prefix</span>=<span class="string">classpath:/templates/templates.html/</span></span><br><span class="line"><span class="comment"># 配置suffix(后缀:格式名.html)  </span></span><br><span class="line"><span class="attr">spring.thymeleaf.suffix</span>=<span class="string">.html</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 骚操作 修改启动logo</span></span><br><span class="line"><span class="comment"># 方式一</span></span><br><span class="line"><span class="comment">#spring.banner.image.location=classpath:banner/test.png</span></span><br><span class="line"><span class="comment">#spring.banner.image.pixelmode=TEXT</span></span><br><span class="line"><span class="comment"># 方式二</span></span><br><span class="line"><span class="comment">#spring.banner.location=classpath:banner/logo.txt</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">###################################DB配置#######################################</span></span><br><span class="line"><span class="comment"># datasource config</span></span><br><span class="line"><span class="attr">spring.datasource.type</span>=<span class="string">com.zaxxer.hikari.HikariDataSource</span></span><br><span class="line"><span class="comment">#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver   # MySQL JDBC</span></span><br><span class="line"><span class="attr">spring.datasource.driver-class-name</span>=<span class="string">org.mariadb.jdbc.Driver</span></span><br><span class="line"><span class="comment">#spring.datasource.url=jdbc:mysql://127.0.0.1:3306/world?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true</span></span><br><span class="line"><span class="attr">spring.datasource.url</span>=<span class="string">jdbc:mariadb://127.0.0.1:3306/world?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true</span></span><br><span class="line"><span class="attr">spring.datasource.username</span>=<span class="string">root</span></span><br><span class="line"><span class="attr">spring.datasource.password</span>=<span class="string">mypwd@123</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># hikariCP连接池具体配置</span></span><br><span class="line"><span class="attr">spring.datasource.hikari.connection-timeout</span>=<span class="string">30000</span></span><br><span class="line"><span class="attr">spring.datasource.hikari.minimum-idle</span>=<span class="string">5</span></span><br><span class="line"><span class="attr">spring.datasource.hikari.maximum-pool-size</span>=<span class="string">20</span></span><br><span class="line"><span class="attr">spring.datasource.hikari.auto-commit</span>=<span class="string">true</span></span><br><span class="line"><span class="attr">spring.datasource.hikari.idle-timeout</span>=<span class="string">600000</span></span><br><span class="line"><span class="attr">spring.datasource.hikari.pool-name</span>=<span class="string">DataSourceHikariCP</span></span><br><span class="line"><span class="attr">spring.datasource.hikari.max-lifetime</span>=<span class="string">1800000</span></span><br><span class="line"><span class="attr">spring.datasource.hikari.connection-test-query</span>=<span class="string">SELECT 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># JPA配置</span></span><br><span class="line"><span class="attr">spring.jpa.show-sql</span>=<span class="string">true</span></span><br><span class="line"><span class="attr">spring.jpa.hibernate.ddl-auto</span>=<span class="string">none</span></span><br><span class="line"><span class="comment"># 使用驼峰命名方式</span></span><br><span class="line"><span class="attr">spring.jpa.hibernate.naming.physical-strategy</span>=<span class="string">org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl</span></span><br><span class="line"><span class="comment"># 指定映射方式为下划线</span></span><br><span class="line"><span class="comment">#spring.jpa.hibernate.naming.physical-strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy</span></span><br><span class="line"><span class="comment">###################################DB配置#######################################</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># minIO FsatDFS</span></span><br><span class="line"><span class="comment"># Solr ElasticSearch</span></span><br><span class="line"><span class="comment"># Redis</span></span><br><span class="line"><span class="comment"># MongoDB</span></span><br><span class="line"><span class="comment"># Kafka</span></span><br><span class="line"><span class="comment"># RocketMQ</span></span><br><span class="line"><span class="comment"># Dubbo Zookeeper</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># custom conf 使用自定义对象配置</span></span><br><span class="line"><span class="comment">#num.one=1 </span></span><br><span class="line"><span class="comment">#num.two=2</span></span><br><span class="line"><span class="comment">#num.three=3</span></span><br><span class="line"><span class="comment">#num.description=&quot;$&#123;num.one&#125;,$&#123;num.two&#125;,$&#123;num.three&#125;&quot;</span></span><br><span class="line"><span class="comment">#custom.config.find=波多老湿</span></span><br><span class="line"><span class="comment">#custom.config.say=你好啊</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>编写 CityRepository 接口类</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.repository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.jpa.repository.JpaRepository;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.jpa.repository.Query;</span><br><span class="line"><span class="keyword">import</span> com.example.entity.City;</span><br><span class="line"><span class="keyword">import</span> com.example.entity.bo.CityBo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">CityRepository</span> <span class="keyword">extends</span> <span class="title class_">JpaRepository</span>&lt;City, Object&gt;&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Query(value = &quot;select c.ID, c.Name, c.CountryCode ,c.District ,c.Population  from world.city c;&quot;,nativeQuery = true)</span></span><br><span class="line">	<span class="keyword">public</span> List&lt;City&gt; <span class="title function_">findAll</span><span class="params">()</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Query(value = &quot;select c.ID, c.Name, c.CountryCode from world.city c;&quot;,nativeQuery = true)</span></span><br><span class="line">	<span class="keyword">public</span> List&lt;Map&lt;String, Object&gt;&gt; <span class="title function_">findAll</span><span class="params">(City city)</span>;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Query(value = &quot;select c.ID, c.Name, c.CountryCode from world.city c;&quot;,nativeQuery = true)</span></span><br><span class="line">	<span class="keyword">public</span> List&lt;Map&lt;CityBo, Object&gt;&gt; <span class="title function_">findCityBo</span><span class="params">()</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Query(value = &quot;select c.Name, c.CountryCode from world.city c;&quot;,nativeQuery = true)</span></span><br><span class="line">	<span class="keyword">public</span> List&lt;Map&lt;CityBo, Object&gt;&gt; <span class="title function_">findCity</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>编写 CityController 类测试访问</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.Optional;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.DeleteMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PostMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PutMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"><span class="keyword">import</span> com.example.entity.City;</span><br><span class="line"><span class="keyword">import</span> com.example.entity.bo.CityBo;</span><br><span class="line"><span class="keyword">import</span> com.example.repository.CityRepository;</span><br><span class="line"><span class="keyword">import</span> com.example.service.impl.CityServiceImpl;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span> 示例使用JPA进行CRUD</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> kart</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/world&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CityController</span> &#123;	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CityServiceImpl cityService;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 访问接口: http://127.0.0.1:8080/world/city/findCityFive</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@desc</span> 查询当前表五条数据</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@GetMapping(&quot;/city/findCityFive&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> List&lt;City&gt; <span class="title function_">findCityFive</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> repository.findAll().subList(<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Thymeleaf-页面交互"><a href="#Thymeleaf-页面交互" class="headerlink" title="Thymeleaf 页面交互"></a>Thymeleaf 页面交互</h3><p>使用 <span class="exturl" data-url="aHR0cHM6Ly93d3cudGh5bWVsZWFmLm9yZy8=">Thymeleaf<i class="fa fa-external-link-alt"></i></span> 与数据展示层（controller）进行交互。</p>
+<p><strong>编写 ThymeleafController 类</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> com.example.entity.bo.CityBo;</span><br><span class="line"><span class="keyword">import</span> com.example.repository.CityRepository;</span><br><span class="line"><span class="keyword">import</span> jakarta.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/thymeleaf&quot;)</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ThymeleafController</span> &#123;	</span><br><span class="line">	 <span class="meta">@Autowired</span></span><br><span class="line">	 <span class="keyword">private</span> CityRepository repository;</span><br><span class="line">	 </span><br><span class="line">	 <span class="meta">@GetMapping(&quot;/findCity&quot;)</span></span><br><span class="line">	 <span class="keyword">public</span> Object <span class="title function_">findCity</span><span class="params">(Model model)</span> &#123;</span><br><span class="line">		 List&lt;Map&lt;CityBo, Object&gt;&gt; list = repository.findCity().subList(<span class="number">5</span>, <span class="number">15</span>);</span><br><span class="line">		 model.addAttribute(<span class="string">&quot;list&quot;</span>, list);</span><br><span class="line">		 <span class="keyword">return</span> <span class="string">&quot;index&quot;</span>;</span><br><span class="line">	 &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>编写 index.html 页面</strong>：</p>
+<p>使用如下路径方式构建 <code>resources\templates\templates.html\index.html</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns:th</span>=<span class="string">&quot;http://www.thymeleaf.org&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- thymeleaf测试使用 </span></span><br><span class="line"><span class="comment">	&lt;section&gt;hello &amp;nbsp;&lt;span th:text=&quot;thymeleaf&quot;&gt;&lt;/span&gt;&lt;/section&gt; &lt;br /&gt;</span></span><br><span class="line"><span class="comment">	&lt;section&gt;hello &amp;nbsp;&lt;span th:text=&quot;$&#123;test&#125;&quot;&gt;&lt;/span&gt;&lt;/section&gt;&lt;br /&gt;</span></span><br><span class="line"><span class="comment">	&lt;section&gt;hello &amp;nbsp;&lt;span th:text=&quot;$&#123;idx&#125;&quot;&gt;&lt;/span&gt;&lt;/section&gt;&lt;br /&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- thymeleaf检查maps大小与非空 --&gt;</span>	</span><br><span class="line">	maps大小：<span class="tag">&lt;<span class="name">span</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;#maps.size(list)&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">	maps是否为空：<span class="tag">&lt;<span class="name">span</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;#maps.isEmpty(list)&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">	containsValue：<span class="tag">&lt;<span class="name">span</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;#maps.containsValue(list,value)&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">&lt;!-- thymeleaf遍历列表 --&gt;</span>	</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span> thymeleaf 迭代列表 <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 常用护眼色：#B5E6B5、#FAF9DE、#FFF2E2、#FDE6E0、</span></span><br><span class="line"><span class="comment">				#E3EDCD、#DCE2F1、#E9EBFE、	#EAEAEF --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">border</span>=<span class="string">&quot;0&quot;</span> <span class="attr">cellspacing</span>=<span class="string">&quot;1&quot;</span> <span class="attr">cellpadding</span>=<span class="string">&quot;4&quot;</span> <span class="attr">bgcolor</span>=<span class="string">&quot;#cccccc&quot;</span> <span class="attr">class</span>=<span class="string">&quot;tabtop13&quot;</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">thead</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">th</span>&gt;</span>城市名称<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">th</span>&gt;</span>国家代码<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">thead</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">tr</span> <span class="attr">th:each</span>=<span class="string">&quot;cityList: $&#123;list&#125;&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">td</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;cityList.Name&#125;&quot;</span>&gt;</span>name<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">td</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;cityList.countryCode&#125;&quot;</span>&gt;</span>countryCode<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>参考资料</strong></p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy8=">MariaDB 官网<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy9kb2N1bWVudGF0aW9uLw==">MariaDB 官方文档<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLmNvbS9rYi9lbi9kb2N1bWVudGF0aW9uLw==">MariaDB Server Documentation - MariaDB Knowledge Base<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9tYXJpYWRiLm9yZy93cC1jb250ZW50L3VwbG9hZHMvMjAyMy8xMS9NYXJpYURCU2VydmVyS25vd2xlZGdlQmFzZS5wZGY=">MariaDBServerKnowledgeBase<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmZlZG9yYXByb2plY3Qub3JnL2VuLVVTL2VwZWwvI19hbG1hbGludXhfOV9yb2NreV9saW51eF85">Extra Packages for Enterprise Linux (EPEL) :: Fedora Docs (fedoraproject.org)<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLmFyY2hpdmUvZXhwYW5kLWFyY2hpdmU/dmlldz1wb3dlcnNoZWxsLTcuNA==">Expand-Archive (Microsoft.PowerShell.Archive) - PowerShell | Microsoft Learn<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>如果你能看到这篇博文笔记，希望对你的工作和学习有些许帮助。</p>
+<p>—END—</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2023/12/31/%E8%81%8A%E4%B8%80%E6%9C%9Fmariadb%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" title="聊一期 mariadb 笔记整理">https://blog.cnwangk.top/2023/12/31/聊一期mariadb笔记整理/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/MariaDB/" rel="tag"><i class="fa fa-tag"></i> MariaDB</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/10/07/vercel%E8%B7%B3%E5%8F%8D%E8%AF%88%E4%B8%B4%E6%97%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E8%AE%BF%E9%97%AE%E4%B8%AA%E4%BA%BAblog/" rel="prev" title="vercel跳反诈临时解决方案">
+                  <i class="fa fa-angle-left"></i> vercel跳反诈临时解决方案
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/02/02/Windows%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85stable-diffusion-webui-1.7.0%E8%A7%A3%E5%86%B3%E5%B0%91%E5%B7%A5%E5%85%B7%E5%8C%85clip-vit-large-patch14/" rel="next" title="Windows平台安装stable-diffusion-webui-1.7.0解决少工具包clip-vit-large-patch14">
+                  Windows平台安装stable-diffusion-webui-1.7.0解决少工具包clip-vit-large-patch14 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/12/31/%E8%81%8A%E4%B8%80%E6%9C%9Fmariadb%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

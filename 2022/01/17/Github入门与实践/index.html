@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="2022最新版github入门教程，教你如何一步步创建自己的github账号并初始化仓库，然后使用git工具配置个人工作环境。配合gitee仓库，作为github的镜像仓库使用。这篇文章很基础，对萌新来说是非常友好的，会持续更新优化。顺带一提，同样将最新的github pages服务的设置一并写入了文档中。 官方文档：  https:&#x2F;&#x2F;docs.github.com&#x2F;cn&#x2F;get-started">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Github入门与实践">
+<meta property="og:url" content="https://blog.cnwangk.top/2022/01/17/Github%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="2022最新版github入门教程，教你如何一步步创建自己的github账号并初始化仓库，然后使用git工具配置个人工作环境。配合gitee仓库，作为github的镜像仓库使用。这篇文章很基础，对萌新来说是非常友好的，会持续更新优化。顺带一提，同样将最新的github pages服务的设置一并写入了文档中。 官方文档：  https:&#x2F;&#x2F;docs.github.com&#x2F;cn&#x2F;get-started">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/3d30e465bd9afb00d69c1c891d8dacc0.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/d93c979b30d28dc5f8a0d4bf4db6da9e.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/7c132ef19d780b9ba3f042ed1bfe5d1a.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/1dbe29d9f68f8326449894cf11f826a6.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/b2bdd5f5181cd534ed8eb78fb4b43bcb.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/8653e3d529bfd3436ea963cf0c435871.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/779c17eb9e2312c4a09782ae53f8e9a3.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/bc2b51c34b3fe6d98b8e832c066e00be.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/9acf84a7c5ba66b223490b44cc3d29a6.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/6edd4b5f049295ae53f442ff63e73dfb.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/ac6cdb5bf9053c3d1e3d0b341e876e8a.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/1036366ba9e6643741594c1b588e13f9.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/5875bcf94257fdbfbb5fa0d040702e9e.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/4f55ddafb666b115bf17d35443864ed5.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/6f454843c703bf62fb16be655fad1164.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/c8def45e8041db717a2ba96c8387887c.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/c5be9363f55908f3dc3c341f4e4187d1.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/60b15a9357420f67a6109c2d66d64427.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/66c8aea21e880396e6a8461d3c619747.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/03bc41b122c7b0a90a51feaedb7bc180.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/41ee4dd94d62cbf223e6d5cbd35301bc.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/55b47a3d1e982c476919cee05e8147bf.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/4ab012db38b5c5760bdebfe8f97648be.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/3ef5050ab3d33152182ab95c75705870.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/f5be19bf3fa5bfcaf86376408f4b028f.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/1847bcfd2aa0d49792baf22e6f1a6361.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/5dfe8349fc3345c5d7a76d9ebbed193f.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/5b4b48033239796b8a26b1840d7c43e4.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/8c1ef023d765a7d47a2154e043fd4592.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/d33e8227b5a8421e1a1c075e9ce64170.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/fa39995032e6e00abeca225ff788afa1.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/05956eb58247bb8f54030dbf00c00408.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/ac123748a5a44985cdc6864fd0c3c5a5.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/376649a39980177fd09d8cc46c4a2e30.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/4cdd5b8b16b29b7f4abb50adebac16e6.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/295fe568f07fd38171ad3a157655e212.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/ea5210d400e3ffafdd7817d1a8460cb0.png">
+<meta property="article:published_time" content="2022-01-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-01T05:12:45.211Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="github">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/3d30e465bd9afb00d69c1c891d8dacc0.png">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2022/01/17/Github%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2022/01/17/Github%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/","path":"2022/01/17/Github入门与实践/","title":"Github入门与实践"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Github入门与实践 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%88%9B%E5%BB%BAgithub%E8%B4%A6%E5%8F%B7"><span class="nav-number">2.1.</span> <span class="nav-text">一、创建github账号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BAgithub%E8%B4%A6%E5%8F%B7"><span class="nav-number">2.1.1.</span> <span class="nav-text">1、创建github账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BB%93%E5%BA%93"><span class="nav-number">2.1.2.</span> <span class="nav-text">2、初始化仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E9%80%9A%E8%BF%87git%E9%85%8D%E7%BD%AE%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4"><span class="nav-number">2.1.3.</span> <span class="nav-text">3、通过git配置工作空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%8A%A0%E9%80%9F%E8%AE%BF%E9%97%AEgithub"><span class="nav-number">2.1.4.</span> <span class="nav-text">4、加速访问github</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81gitee%E5%88%9D%E6%AC%A1%E4%BD%BF%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">二、gitee初次使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BAgitee%E8%B4%A6%E5%8F%B7"><span class="nav-number">2.2.1.</span> <span class="nav-text">1、创建gitee账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BB%93%E5%BA%93-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">2、初始化仓库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8gitee%E4%BD%9Cgithub%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93"><span class="nav-number">2.3.</span> <span class="nav-text">三、使用gitee作github镜像仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81github%E9%81%87%E4%B8%8Ahexo"><span class="nav-number">2.4.</span> <span class="nav-text">四、github遇上hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%87%86%E5%A4%87%E7%8E%AF%E5%A2%83"><span class="nav-number">2.4.1.</span> <span class="nav-text">1、准备环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81hexo%E9%85%8D%E7%BD%AE"><span class="nav-number">2.4.2.</span> <span class="nav-text">2、hexo配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E9%85%8D%E7%BD%AEgithub-pages%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.4.3.</span> <span class="nav-text">3、配置github pages服务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/01/17/Github%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Github入门与实践 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Github入门与实践
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-17 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-17T00:00:00+08:00">2022-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-01 13:12:45" itemprop="dateModified" datetime="2023-09-01T13:12:45+08:00">2023-09-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>2022最新版github入门教程，教你如何一步步创建自己的github账号并初始化仓库，然后使用git工具配置个人工作环境。配合gitee仓库，作为github的镜像仓库使用。这篇文章很基础，对萌新来说是非常友好的，会持续更新优化。顺带一提，同样将最新的github pages服务的设置一并写入了文档中。</p>
+<p>官方文档：</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdpdGh1Yi5jb20vY24vZ2V0LXN0YXJ0ZWQvcXVpY2tzdGFydA==">https://docs.github.com/cn/get-started/quickstart<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>用心作题图，用脚写文档。</p>
+<p>其实这篇文章是对之前的git系列文章的一个补充，毕竟还是需要有人完善最新版的github创建教程，并且使用gitee作为镜像仓库。</p>
+<p>当年也是萌新过来的，自己踩过不少坑，现如今很多教程老化了。为了照顾到新入坑的萌新，近段时间写了一个最新版的创建github账号以及登录的详细教程，并使用gitee作为github的镜像仓库。最后会存放到我新建的demo示例仓库中，并且使用gitee作为图床。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/3d30e465bd9afb00d69c1c891d8dacc0.png"></p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>如下所描述的教程需要事先创建好github和gitee账号。此处会详细讲解github如何创建账号，毕竟这货是纯英文的。对gitee则不会详细介绍如何创建账号，本身就是中文的，比较容易上手。</p>
+<p>个人使用github搭建的hexo博客示例：</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jbndhbmdrLmdpdGh1Yi5pby8=">https://cnwangk.github.io/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/d93c979b30d28dc5f8a0d4bf4db6da9e.png"></p>
+<h2 id="一、创建github账号"><a href="#一、创建github账号" class="headerlink" title="一、创建github账号"></a>一、创建github账号</h2><h3 id="1、创建github账号"><a href="#1、创建github账号" class="headerlink" title="1、创建github账号"></a>1、创建github账号</h3><p><strong>1.1、github登录页面</strong></p>
+<blockquote>
+<p>登录账号：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xvZ2lu">https://github.com/login<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>最下面有一行<strong>Create an account就是创建账号的链接</strong>，打开即可进入创建页面。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/7c132ef19d780b9ba3f042ed1bfe5d1a.png"></p>
+<p><strong>1.2、创建账号页面</strong></p>
+<blockquote>
+<p>创建账号：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NpZ251cA==">https://github.com/signup<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>github创建账号的页面，这个欢迎界面比起N年前确实漂亮不少哟，提示输入你的邮箱。<strong>最好是填写自己常用的邮箱账号</strong>，后续登录验证接收验证码之类的，都需要使用这个填写的邮箱。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/1dbe29d9f68f8326449894cf11f826a6.png"></p>
+<p><strong>1.3、创建账号需要的一些参数</strong></p>
+<ul>
+<li>enter your email：输入你的邮箱账号；</li>
+<li>create a password：输入密码；</li>
+<li>enter a username：输入用户名，注册完后可以用于登录；</li>
+<li>最后一行提示y与n，<strong>建议选y</strong>，貌似有个防机器人验证。</li>
+</ul>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/b2bdd5f5181cd534ed8eb78fb4b43bcb.png"></p>
+<p><strong>1.4、二次验证</strong></p>
+<p>欢迎加入github，这一步确实验证了我的猜想，<strong>选择y</strong>验证自己新创建的账号。</p>
+<p>确实弹出来一个页面，让你选择图片，进行真人认证。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/8653e3d529bfd3436ea963cf0c435871.png"></p>
+<p><strong>1.5、续上面的截图</strong></p>
+<p>点击确认创建github账号：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/779c17eb9e2312c4a09782ae53f8e9a3.png"></p>
+<p><strong>1.6、登录之前创建好的账号</strong></p>
+<p>需要接收验证码，还记得上面说的要填写的那么邮箱吗？</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/bc2b51c34b3fe6d98b8e832c066e00be.png"></p>
+<p><strong>1.7、邮箱验证码</strong></p>
+<p>之前输入的邮箱账号，接收到验证码输入即可进行到下一步界面。</p>
+<p>有可能网速原因，大家都懂得，有时会抽风访问不进去。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/9acf84a7c5ba66b223490b44cc3d29a6.png"></p>
+<p><strong>1.8、询问你是个人还是团队</strong>，当时没仔细看，所以写了随便选一个。</p>
+<ul>
+<li>just me：个人就选择just me；</li>
+<li>如果是team，就选择后面的数字</li>
+</ul>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/6edd4b5f049295ae53f442ff63e73dfb.png"></p>
+<p><strong>1.9、参数的勾选</strong></p>
+<p>可以不选，点击continue继续。下图中部分参数：</p>
+<ul>
+<li>客户端APP</li>
+<li>项目管理</li>
+<li>团队管理员</li>
+<li>社区</li>
+</ul>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/ac6cdb5bf9053c3d1e3d0b341e876e8a.png"></p>
+<p><strong>1.10、选择免费或者团队</strong></p>
+<ul>
+<li>free：个人版式免费提供的，选择继续；</li>
+<li>team：这个是团队版，收费的，每月4美刀。</li>
+</ul>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/1036366ba9e6643741594c1b588e13f9.png"></p>
+<p><strong>1.11、登录到github首页</strong></p>
+<p>至此终于创建完成，成功进入个人的github主页。介绍一些基本的使用：</p>
+<ul>
+<li>create repository：创建仓库，<strong>在当前页面右上角个人的图像展开一样可以新建仓库和导入仓库</strong>；</li>
+<li>import repository：导入远程仓库；</li>
+<li>read the guide：阅读向导。</li>
+</ul>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/5875bcf94257fdbfbb5fa0d040702e9e.png"></p>
+<p>到此创建账号过程就完成了，纯英文的确实对萌新不是很友好。<strong>但是习惯就好，毕竟是学习编程的好平台</strong>。</p>
+<h3 id="2、初始化仓库"><a href="#2、初始化仓库" class="headerlink" title="2、初始化仓库"></a>2、初始化仓库</h3><p><strong>2.1、创建仓库demo</strong></p>
+<blockquote>
+<p>点击创建仓库：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25ldw==">https://github.com/new<i class="fa fa-external-link-alt"></i></span></p>
+<p>新建的demo示例：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2svZGVtbw==">https://github.com/cnwangk/demo<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>接着上面创建完账号，继续新建仓库，并且进行个人的第一个仓库初始化设置。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/4f55ddafb666b115bf17d35443864ed5.png"></p>
+<p>github新建仓库，初始化设置如果勾选了下列三个选项则需要设置模板，没有选择模板否则无法创建仓库。</p>
+<ul>
+<li>Add a README file：初始化设置可以不勾选，不选则不会创建。</li>
+<li>Add .gitignore：初始化新建忽略文件需要下拉设置模板，不选则不会创建。</li>
+<li>Choose a license：初始化设置可以不选开源协议，如果有开源需求则设置，例如：Apache License2.0。</li>
+</ul>
+<p><strong>2.2、设置仓库初始化参数</strong></p>
+<p>续上面的图，接着设置参数，<strong>选择了下面的三个参数则需要选择模板才能创建仓库</strong>：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/6f454843c703bf62fb16be655fad1164.png"></p>
+<p><strong>2.3、README.MD文件设置</strong></p>
+<p>初始化设置可以新增一个README.MD文件，对这个仓库的一个介绍，markdown格式。</p>
+<p>说明比较简单，将仓库的名称以及简介记录到文件中，图中输错了，其实是this is demo，后面修正了，可在线编辑。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/c8def45e8041db717a2ba96c8387887c.png"></p>
+<p><strong>2.4、.gitignore模板设置</strong></p>
+<p>这里以近几十年比较火热的Java语言作为demo进行讲解。</p>
+<p>默认选择了Java语言模板，里面设置了一些忽略文件：</p>
+<ul>
+<li>log日志；</li>
+<li>class编译文件；</li>
+<li>jar包、war包以及压缩包等等。</li>
+</ul>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/c5be9363f55908f3dc3c341f4e4187d1.png"></p>
+<p>至此，我们的第一个github仓库demo就创建完成，并且预配置了readme以及忽略设置文件。</p>
+<h3 id="3、通过git配置工作空间"><a href="#3、通过git配置工作空间" class="headerlink" title="3、通过git配置工作空间"></a>3、通过git配置工作空间</h3><p><strong>接着上面的初始化仓库进行讲解</strong>，首先需要安装好git环境，Windows下安装比较容易，就不再赘述。</p>
+<p>然后将我们创建的demo仓库克隆到本地，选择则克隆方式为SSH，接下来配置的也是公钥SSH：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/60b15a9357420f67a6109c2d66d64427.png"></p>
+<p>关于git工具的下载与详细使用请参考我之前的文章《献给初学者的git和github教程，使用hexo搭建个人博客》，地址如下：</p>
+<blockquote>
+<p>github仓库地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2svU1FMLXN0dWR5L3RyZWUvbWFzdGVyL21kL2dpdA==">https://github.com/cnwangk/SQL-study/tree/master/md/git<i class="fa fa-external-link-alt"></i></span></p>
+<p>备用地址：<span class="exturl" data-url="aHR0cHM6Ly9jbndhbmdrLmdpdGh1Yi5pby90YWdzL2dpdC8=">https://cnwangk.github.io/tags/git/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><strong>3.1、配置git环境</strong></p>
+<p>安装好了git工具，此时可以在桌面右键（Git Bash），输入以下命令进行设置用户以及email（邮箱）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;demo&quot;</span></span><br><span class="line">$ git config --global user.email <span class="string">&quot;demo@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>参数<strong>--global</strong>代表配置全局的，不加--global参数，则是配置当前仓库生效，当然设置了也会覆盖当前仓库的设置。可以通过git config -l命令列出整组配置文件共同查找的所有变量设置值，或者使用你熟悉的cat以及喜欢的vim命令查看配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git config -l</span><br><span class="line"><span class="comment">#或者使用你熟悉的cat以及喜欢的vim命令查看配置文件</span></span><br><span class="line">$ <span class="built_in">cat</span> .git/config</span><br><span class="line">$ vim .git/config</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置ssh-key</strong>，生成ssh公钥。Windows下默认在<strong>系统盘的当前用的.ssh目录下，可以配置ed25519或者是rsa方式都行，github官网的教程默认写的是rsa方式</strong>。如下图所示，默认回车生成ssh-key：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/66c8aea21e880396e6a8461d3c619747.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#方式一</span></span><br><span class="line">$ ssh-keygen -t ed25519 -C <span class="string">&quot;demo@example.com&quot;</span> </span><br><span class="line"><span class="comment">#方式二</span></span><br><span class="line">$ ssh-keygen -t rsa -b 4096 -C <span class="string">&quot;demo@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>检查你的系统目录是否有ssh公钥。<strong>默认情况ssh公钥</strong>，可能是以下几种文件形式：</p>
+<ul>
+<li>id_ed25519.pub</li>
+<li>id_rsa.pub</li>
+<li>id_ecdsa.pub</li>
+<li>id_dsa.pub</li>
+</ul>
+<p>个人在Windows系统下演示生成的ssh-key文件，<strong>使用的是ed25519模式</strong>。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/03bc41b122c7b0a90a51feaedb7bc180.png"></p>
+<p>将生成的pub文件的key值使用记事本、SublimeText或者VScode打开，<strong>然后复制到github账号的ssh-key中</strong>。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NldHRpbmdzL3NzaC9uZXc=">https://github.com/settings/ssh/new<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/41ee4dd94d62cbf223e6d5cbd35301bc.png"></p>
+<p><strong>配置完ssh-key</strong>之后，Windows下右键打开<code>Git Bash</code>，使用<code>ssh -T</code>命令测试验证。<strong>当前配置了github的ssh公钥，验证返回结果成功</strong>。未配置github的ssh公钥，则测试验证返回的结果是权限（permission denied）拒绝。</p>
+<p><strong>使用命令测试验证</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#验证github</span></span><br><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>示例：<strong>验证成功，返回结果为successfully</strong>；验证失败，则返回permission deny权限拒绝。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/55b47a3d1e982c476919cee05e8147bf.png"></p>
+<p><strong>3.2、克隆仓库</strong></p>
+<p>打开git bash命令窗口，使用git clone命令克隆远程仓库demo示例，可以选择多种方式：</p>
+<ul>
+<li>HTTPS方式</li>
+<li>SSH方式，个人最常用的方式</li>
+<li>github cli方式</li>
+</ul>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/4ab012db38b5c5760bdebfe8f97648be.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:cnwangk/demo.git</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>远程仓库demo示例：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2svZGVtbw==">https://github.com/cnwangk/demo<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><strong>3.3、连接远程仓库完成初始化提交</strong></p>
+<p>接着上一步克隆demo仓库，然后<strong>进入demo仓库（目录）进行如下操作</strong>，空目录默认是不会提交的，需要写点内容进去：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git add --all <span class="comment">#暂存所有未追踪的文件</span></span><br><span class="line">$ git commit -a -m <span class="string">&quot;初始化提交&quot;</span> <span class="comment">#初始化提交</span></span><br><span class="line">$ git push git@github.com:cnwangk/demo.git</span><br><span class="line">remote: Resolving deltas: 100% (1/1), completed with 1 <span class="built_in">local</span> object.</span><br><span class="line">To github.com:cnwangk/demo.git</span><br><span class="line">   c670e49..48b58fb  main -&gt; main</span><br></pre></td></tr></table></figure>
+
+<p>至此git环境的配置与github克隆以及推送至远程仓库就讲解完毕，更多的git操作可以参考《git版本控制管理》这本书。github操作则可以参考官方文档，在偶然的一次浏览github文档时发现部分的官方文档已经汉化了，我将当时的截图上传到上面演示的demo仓库中了。</p>
+<h3 id="4、加速访问github"><a href="#4、加速访问github" class="headerlink" title="4、加速访问github"></a>4、加速访问github</h3><p>油侯插件，估计大家都不陌生吧！没错，就是油侯插件。</p>
+<blockquote>
+<p>油侯插件下载：<span class="exturl" data-url="aHR0cHM6Ly93d3cudGFtcGVybW9ua2V5Lm5ldC8=">https://www.tampermonkey.net/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>在Google Chrome管理油侯插件：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/3ef5050ab3d33152182ab95c75705870.png"></p>
+<p><strong>新增js脚本</strong>：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/f5be19bf3fa5bfcaf86376408f4b028f.png"></p>
+<p><strong>在我们的浏览器中启用新增的js脚本</strong>：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/1847bcfd2aa0d49792baf22e6f1a6361.png"></p>
+<h2 id="二、gitee初次使用"><a href="#二、gitee初次使用" class="headerlink" title="二、gitee初次使用"></a>二、gitee初次使用</h2><h3 id="1、创建gitee账号"><a href="#1、创建gitee账号" class="headerlink" title="1、创建gitee账号"></a>1、创建gitee账号</h3><p><strong>1.1、gitee创建账号</strong>，支持多种方式进行登录：</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vc2lnbnVw">https://gitee.com/signup<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/5dfe8349fc3345c5d7a76d9ebbed193f.png"></p>
+<h3 id="2、初始化仓库-1"><a href="#2、初始化仓库-1" class="headerlink" title="2、初始化仓库"></a>2、初始化仓库</h3><p><strong>登录到个人的gitee账号</strong>，进行创建仓库。gitee新建仓库：</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vcHJvamVjdHMvbmV3">https://gitee.com/projects/new<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/5b4b48033239796b8a26b1840d7c43e4.png"></p>
+<h2 id="三、使用gitee作github镜像仓库"><a href="#三、使用gitee作github镜像仓库" class="headerlink" title="三、使用gitee作github镜像仓库"></a>三、使用gitee作github镜像仓库</h2><p>要问为什么需要使用gitee作为镜像仓库使用，那就是大家都懂得。</p>
+<p>gitee仓库管理界面，找到功能设置，然后<strong>滑至底部，进行设置需要强制同步的远程github仓库</strong>：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/8c1ef023d765a7d47a2154e043fd4592.png"></p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRlZS5jb20vZHl3YW5nay9odHovc2V0dGluZ3MjZnVuY3Rpb24=">https://gitee.com/dywangk/htz/settings#function<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><strong>gitee设置同步github做镜像仓库</strong>：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/d33e8227b5a8421e1a1c075e9ce64170.png"></p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2svU1FMLXN0dWR5">https://github.com/cnwangk/SQL-study<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><strong>最后定期进行同步github仓库</strong>：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/fa39995032e6e00abeca225ff788afa1.png"></p>
+<p>gitee同步github仓库就介绍到这里，上手比较容易，毕竟是中文界面。</p>
+<p><strong>tips</strong>：gitee的私人仓库是免费使用的哟，一般我不告诉别人，自己的私人工作空间可以使用gitee哟！还可以使用PicGo配置gitee图床，毕竟访问gitee比较快，访问github还得配置CDN加速。配置图床的教程，我写过一篇稀烂的文章，可以在我的博客或者公众号上找一找。</p>
+<h2 id="四、github遇上hexo"><a href="#四、github遇上hexo" class="headerlink" title="四、github遇上hexo"></a>四、github遇上hexo</h2><h3 id="1、准备环境"><a href="#1、准备环境" class="headerlink" title="1、准备环境"></a>1、准备环境</h3><p>当github遇上hexo、jekyII或者hugo，即将发生美妙的事情，那就是搭建个人博客小站。你只需要做几步简单的配置，就可以轻轻松松搭建属于自己的私人博客，再也不用担心乱七八糟的审核了。这里说的github指的是github pages服务，创建一个仓库命令为<strong>用户名追加.github.io</strong>，并开启github pages服务。</p>
+<p>github pages仓库名配置例如：</p>
+<blockquote>
+<p>sky.github.io</p>
+</blockquote>
+<p><strong>Windows下需要准备环境</strong>：</p>
+<ul>
+<li>下载并安装nodejs环境；</li>
+<li>通过nodejs安装hexo init blog；</li>
+<li>安装git环境，便于推送至github。</li>
+</ul>
+<p>通过hexo new “hello world”生成第一篇博客，使用hexo server启动服务，访问如下链接测试：</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cDovL2xvY2Fob3N0OjQwMDAv">http://locahost:4000<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<h3 id="2、hexo配置"><a href="#2、hexo配置" class="headerlink" title="2、hexo配置"></a>2、hexo配置</h3><p><strong>2.1、安装nodejs</strong></p>
+<p>下载安装比较容易，不做过多介绍，但会讲注意事项。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ub2RlanMub3JnL2VuLw==">https://nodejs.org/en/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>下载Windows版本的nodejs并安装，<strong>建议将nodejs安装目录加入配置环境变量</strong>便于操作：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/05956eb58247bb8f54030dbf00c00408.png"></p>
+<p>个人安装的nodejs版本，安装nodejs后在开始菜单右键即可打开cmd命令窗口，<strong>也可以使用node -v查看版本</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">D:\work\createSpace\hexo&gt;node -v</span><br><span class="line">v14.16.1</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/ac123748a5a44985cdc6864fd0c3c5a5.png"></p>
+<p><strong>2.2、安装hexo</strong></p>
+<p>然后使用npm再安装hexo模块。这里只介绍Windows下安装hexo环境：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">D:\work\createSpace\hexo\blog&gt; npm install hexo-cli -g</span><br><span class="line">$ hexo init blog</span><br><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ npm install</span><br><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>01、安装nodejs环境；</li>
+<li>02、在node环境下安装hexo，打开cmd命令窗口执行：<code>npm install -g hexo-cli</code></li>
+<li>03、初始化blog：<code>hexo init blog</code></li>
+<li>04、进入blog目录：<code>cd blog</code></li>
+<li>05、继续在cmd窗口命令安装：<code>npm install hexo</code></li>
+<li>06、启动服务：<code>hexo server</code></li>
+<li>07、访问：<span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo0MDAwLw==">http://localhost:4000<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>在node环境下安装hexo后生成的blog文件目录：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/376649a39980177fd09d8cc46c4a2e30.png"></p>
+<p><strong>使用hexo命令</strong>，hexo new命令生成文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">D:\work\createSpace\hexo\blog&gt;hexo new <span class="string">&quot;你要生成的md文件名&quot;</span></span><br><span class="line">hexo generate <span class="comment">#生成静态文件</span></span><br><span class="line">hexo server <span class="comment">#启动服务</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/4cdd5b8b16b29b7f4abb50adebac16e6.png"></p>
+<p><strong>hexo server命令启动服务</strong>，通过hexo new “hello world”生成第一篇博客，使用hexo server启动服务，访问如下链接测试：</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo0MDAwLw==">http://locahost:4000<i class="fa fa-external-link-alt"></i></span></p>
+<p>个人搭建的示例：<span class="exturl" data-url="aHR0cHM6Ly9jbndhbmdrLmdpdGh1Yi5pby8=">https://cnwangk.github.io/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>hexo配合github还是挺方便的，毕竟在Windows平台我可以利用node.js安装hexo插件，进而配合一键生成模板然后提交到github。直接在hexo生成的blob模板中的markdown文件中写入你的文章。抛开通用性，markdown确实很方便。具体其它平台安装hexo可以参考官网中文文档，这里提供一下<strong>hexo的网址</strong>：</p>
+<ul>
+<li>hexo的github仓库：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhv">https://github.com/hexojs/hexo<i class="fa fa-external-link-alt"></i></span></li>
+<li>hexo的中文文档：<span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL3poLWNuL2RvY3Mv">https://hexo.io/zh-cn/docs/<i class="fa fa-external-link-alt"></i></span></li>
+<li>hexo中文github-pages教程：<span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL3poLWNuL2RvY3MvZ2l0aHViLXBhZ2Vz">https://hexo.io/zh-cn/docs/github-pages<i class="fa fa-external-link-alt"></i></span></li>
+<li>hexo安装deploy实现一键发布：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvLWRlcGxveWVyLWdpdA==">https://github.com/hexojs/hexo-deployer-git<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h3 id="3、配置github-pages服务"><a href="#3、配置github-pages服务" class="headerlink" title="3、配置github pages服务"></a>3、配置github pages服务</h3><p>github pages的配置页面</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2svdGVzdC9zZXR0aW5ncy9wYWdlcw==">https://github.com/cnwangk/test/settings/pages<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>配置教程，纯英文的，可以用Google翻译一下哈</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9wYWdlcy5naXRodWIuY29tLw==">https://pages.github.com/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><strong>我测试配置了一个仓库</strong></p>
+<p><strong>注意</strong>：仓库必须是公开的（public）、然后仓库命令可以命令为用户名加github.io。默认进入一个设置好的<strong>gh-pages</strong>分支的仓库这样显示内容的：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/295fe568f07fd38171ad3a157655e212.png"></p>
+<p>进入需要配置成github pages服务的仓库，找到Pages页面设置，<strong>选择自己新建的分支gh-pages</strong>，这也是github推荐你这样设置的：</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/ea5210d400e3ffafdd7817d1a8460cb0.png"></p>
+<p>简单的github pages 服务搭建示例，可以测试访问。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jbndhbmdrLmdpdGh1Yi5pby8=">https://cnwangk.github.io/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以上就是对github入门教程进了一个总结，很基础的一个教程，萌新一样可以看懂哟！希望能对你的工作与学习有所帮助。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2022/01/17/Github%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/" title="Github入门与实践">https://blog.cnwangk.top/2022/01/17/Github入门与实践/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/github/" rel="tag"><i class="fa fa-tag"></i> github</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/17/Git%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E4%B8%8E%E7%B4%A2%E5%BC%95/" rel="prev" title="Git文件管理与索引">
+                  <i class="fa fa-angle-left"></i> Git文件管理与索引
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/01/30/MySQL%E5%BC%80%E5%8F%91%E7%AF%87%EF%BC%8C%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E7%9A%84%E9%80%89%E6%8B%A9/" rel="next" title="MySQL开发篇，存储引擎的选择">
+                  MySQL开发篇，存储引擎的选择 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2022/01/17/Github%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

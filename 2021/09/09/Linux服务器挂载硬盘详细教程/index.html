@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Linux服务器挂载硬盘详细教程。 前言本文将带来linux下的磁盘管理中的硬盘挂载，Linux操作系统挂载硬盘需要了解的一些知识。这可能是迄今为止介绍的最最最实用的linux硬盘挂载的文章了，比较详细。由于工作原因，平时使用的比较多。主要目的，只是想让更多人的了解到linux下挂载磁盘也不是那么困难。 有几种常见的文件系统，以前的老牌文件系统ext文件系统(ext2、ext3、ext4)。 在R">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Linux服务器挂载硬盘详细教程">
+<meta property="og:url" content="https://blog.cnwangk.top/2021/09/09/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="Linux服务器挂载硬盘详细教程。 前言本文将带来linux下的磁盘管理中的硬盘挂载，Linux操作系统挂载硬盘需要了解的一些知识。这可能是迄今为止介绍的最最最实用的linux硬盘挂载的文章了，比较详细。由于工作原因，平时使用的比较多。主要目的，只是想让更多人的了解到linux下挂载磁盘也不是那么困难。 有几种常见的文件系统，以前的老牌文件系统ext文件系统(ext2、ext3、ext4)。 在R">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/5324a76fbd054b60d2769434dc9ef136.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/06ab3c857d7db1c575a69bc7a1e2ab3c.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/7a9b5700ab6514c606462bee53c1d837.png">
+<meta property="article:published_time" content="2021-09-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-28T13:49:28.733Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/5324a76fbd054b60d2769434dc9ef136.png">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2021/09/09/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2021/09/09/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/","path":"2021/09/09/Linux服务器挂载硬盘详细教程/","title":"Linux服务器挂载硬盘详细教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux服务器挂载硬盘详细教程 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E5%88%86%E5%8C%BA%E6%83%85%E5%86%B5"><span class="nav-number">2.1.</span> <span class="nav-text">一、查看系统分区情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%88%97%E5%87%BA%E5%88%86%E5%8C%BA%E8%A1%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">1、列出分区表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%BB%BA%E7%AB%8Blinux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.2.</span> <span class="nav-text">二、建立linux文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81xfs%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.2.1.</span> <span class="nav-text">1、xfs文件系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81btrfs%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.2.2.</span> <span class="nav-text">2、btrfs文件系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81ext%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.2.3.</span> <span class="nav-text">3、ext文件系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%88%9B%E5%BB%BA%E8%A6%81%E6%8C%82%E8%BD%BD%E7%9A%84%E8%B7%AF%E5%BE%84"><span class="nav-number">2.3.</span> <span class="nav-text">三、创建要挂载的路径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BA%E6%8C%82%E8%BD%BD%E7%9A%84%E6%96%87%E4%BB%B6data"><span class="nav-number">2.3.1.</span> <span class="nav-text">1、创建挂载的文件data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E4%BD%BF%E7%94%A8%E7%A3%81%E7%9B%98"><span class="nav-number">2.3.2.</span> <span class="nav-text">2、使用磁盘</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BD%BF%E7%94%A8fdisk%E5%AF%B9-dev-sdb%E8%BF%9B%E8%A1%8C%E5%88%86%E5%8C%BA"><span class="nav-number">2.4.</span> <span class="nav-text">四、使用fdisk对&#x2F;dev&#x2F;sdb进行分区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%88%86%E5%8C%BA%E5%91%BD%E4%BB%A4fdisk"><span class="nav-number">2.4.1.</span> <span class="nav-text">1、分区命令fdisk</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%BB%BA%E7%AB%8Bbtrfs%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.5.</span> <span class="nav-text">五、建立btrfs文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%BB%BA%E7%AB%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.5.1.</span> <span class="nav-text">1、建立文件系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%8C%82%E8%BD%BD%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.6.</span> <span class="nav-text">六、挂载文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount"><span class="nav-number">2.6.1.</span> <span class="nav-text">1、挂载命令mount</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%86%99%E5%85%A5fstab%E6%96%87%E4%BB%B6"><span class="nav-number">2.6.2.</span> <span class="nav-text">2、写入fstab文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%B0%B8%E4%B9%85%E5%86%99%E5%85%A5%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.7.</span> <span class="nav-text">七、永久写入配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6fstab%E5%B1%95%E7%A4%BA"><span class="nav-number">2.7.1.</span> <span class="nav-text">1、配置文件fstab展示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E9%83%A8%E5%88%86%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3"><span class="nav-number">2.7.2.</span> <span class="nav-text">2、部分参数详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.7.3.</span> <span class="nav-text">3、修改配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86"><span class="nav-number">2.8.</span> <span class="nav-text">八、磁盘管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81ssm%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7"><span class="nav-number">2.8.1.</span> <span class="nav-text">1、ssm管理工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81linux%E8%87%AA%E5%B8%A6%E7%9A%84%E7%A3%81%E7%9B%98%E5%91%BD%E4%BB%A4"><span class="nav-number">2.8.2.</span> <span class="nav-text">2、linux自带的磁盘命令</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2021/09/09/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux服务器挂载硬盘详细教程 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux服务器挂载硬盘详细教程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-09T00:00:00+08:00">2021-09-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-28 21:49:28" itemprop="dateModified" datetime="2023-05-28T21:49:28+08:00">2023-05-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">开发运维</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Linux服务器挂载硬盘详细教程。</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文将带来linux下的磁盘管理中的硬盘挂载，Linux操作系统挂载硬盘需要了解的一些知识。这可能是迄今为止介绍的最最最实用的linux硬盘挂载的文章了，比较详细。由于工作原因，平时使用的比较多。主要目的，只是想让更多人的了解到linux下挂载磁盘也不是那么困难。</p>
+<p>有几种常见的文件系统，以前的老牌文件系统ext文件系统(ext2、ext3、ext4)。</p>
+<p>在Redhat7系列还是推荐一款优秀的xfs文件系统，在性能上已经超越了ext文件系统。XFS文件系统是硅谷图形公司（Silicon Graphic Inc，简称SGI）开发的用于IRIX（一个Unix操作系统）的文件系统，后来将其移植到Linux操作系统上。XFS是一个高级日志文件系统，其优势是极具伸缩性，同样也极具健壮性。</p>
+<p>还有一款btrfs（B-tree文件系统通常读作Buffer FS、Better FS、B-tree FS）文件系统同样很优秀，Redhat7安装就自带。<br>btrfs具有很多特性。例如：写快照、快照的快照、内建RAID（通常称为磁盘阵列）、子卷（subvolume），其最核心的理念是设计<br>容错、修复以及易于管理。btrfs最大容量卷为16EB，单个最大文件为16EB。</p>
+<p>须知：本文全程使用的是安装选择语言是简体中文版的，所以看到的汉字显示，请不要惊讶。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/5324a76fbd054b60d2769434dc9ef136.png"></p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>开局一张图，文章全靠编。开个玩笑，纯属逗大家乐一乐。下面的图片，已经点明了本文的核心内容。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/06ab3c857d7db1c575a69bc7a1e2ab3c.png"></p>
+<p><strong>建议：进行测试，可以使用虚拟机配合linux（Redhat系列或者Ubuntu搭建环境）测试</strong>。</p>
+<h2 id="一、查看系统分区情况"><a href="#一、查看系统分区情况" class="headerlink" title="一、查看系统分区情况"></a>一、查看系统分区情况</h2><p>fdisk参数说明<br>删除存在的硬盘分区，此时会提示需要删除的序列号是哪一个。</p>
+<ul>
+<li><p>删除分区：d</p>
+</li>
+<li><p>新增分区：n</p>
+</li>
+<li><p>查看分区信息：p</p>
+</li>
+<li><p>保存分区变更信息：w</p>
+</li>
+<li><p>不保存并退出：q</p>
+</li>
+<li><p>获取帮助信息：m</p>
+</li>
+</ul>
+<h3 id="1、列出分区表"><a href="#1、列出分区表" class="headerlink" title="1、列出分区表"></a>1、列出分区表</h3><p>列出分区表，从下面的列出的选项可以看出，原始的磁盘磁盘 &#x2F;dev&#x2F;sda：21.5 GB是初始安装linux操作系统就分配的。另外一块磁盘，是我新增的磁盘sdb用于测试演示。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">fidsk -l</span><br><span class="line">[root@cnwangk /]<span class="comment"># fdisk -l</span></span><br><span class="line"></span><br><span class="line">磁盘 /dev/sda：21.5 GB, 21474836480 字节，41943040 个扇区</span><br><span class="line">Units = 扇区 of 1 * 512 = 512 bytes</span><br><span class="line">扇区大小(逻辑/物理)：512 字节 / 512 字节</span><br><span class="line">I/O 大小(最小/最佳)：512 字节 / 512 字节</span><br><span class="line">磁盘标签类型：dos</span><br><span class="line">磁盘标识符：0x0001805e</span><br><span class="line"></span><br><span class="line">   设备 Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sda1   *        2048      411647      204800   83  Linux</span><br><span class="line">/dev/sda2          411648     4507647     2048000   83  Linux</span><br><span class="line">/dev/sda3         4507648     8603647     2048000   82  Linux swap / Solaris</span><br><span class="line">/dev/sda4         8603648    41943039    16669696    5  Extended</span><br><span class="line">/dev/sda5         8605696    41943039    16668672   83  Linux</span><br><span class="line"></span><br><span class="line">磁盘 /dev/sdb：10.7 GB, 10737418240 字节，20971520 个扇区</span><br><span class="line">Units = 扇区 of 1 * 512 = 512 bytes</span><br><span class="line">扇区大小(逻辑/物理)：512 字节 / 512 字节</span><br><span class="line">I/O 大小(最小/最佳)：512 字节 / 512 字节</span><br><span class="line">磁盘标签类型：dos</span><br><span class="line">磁盘标识符：0x95df3b22</span><br><span class="line"></span><br><span class="line">   设备 Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sdb2        10485760    20971519     5242880   83  Linux</span><br></pre></td></tr></table></figure>
+
+<p>直接输入fdisk命令，中文版会提示帮助信息以及使用方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fdisk [选项] &lt;磁盘&gt;    更改分区表</span><br><span class="line"><span class="comment">#例如新增的磁盘sdb</span></span><br><span class="line">fdisk /dev/sdb</span><br><span class="line">fdisk [选项] -l &lt;磁盘&gt; 列出分区表</span><br><span class="line">fdisk -s &lt;分区&gt;        给出分区大小(块数)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="二、建立linux文件系统"><a href="#二、建立linux文件系统" class="headerlink" title="二、建立linux文件系统"></a>二、建立linux文件系统</h2><h3 id="1、xfs文件系统"><a href="#1、xfs文件系统" class="headerlink" title="1、xfs文件系统"></a>1、xfs文件系统</h3><p>如下所示，我将新建xfs文件系统，指向的是新增的一块磁盘文件路径&#x2F;dev&#x2F;sdb。同样也是Redhat7系列默认推荐的使用格式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.xfs  /dev/sdb </span><br></pre></td></tr></table></figure>
+
+<p>做一个简单说明：xfs文件系统提供了备份分区工具xfsdump以供用户使用。优势在于用户不用借助第三方软件就可以实现对xfs文件系统上的数据实施备份。备份过程如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xfsdump /backup/dump_sdc1 /sdc1</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、btrfs文件系统"><a href="#2、btrfs文件系统" class="headerlink" title="2、btrfs文件系统"></a>2、btrfs文件系统</h3><p>如下所示，我将新建btrfs文件系统，指向的是新增的一块磁盘文件路径&#x2F;dev&#x2F;sdb，下面最终演示的也是btrfs文件系统的配置。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.btrfs /dev/sdb</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、ext文件系统"><a href="#3、ext文件系统" class="headerlink" title="3、ext文件系统"></a>3、ext文件系统</h3><p>在Redhat6以及之前，用的还是ext文件系统。后来到7系列推荐使用xfs文件系。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.ext4 /dev/sdb</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="三、创建要挂载的路径"><a href="#三、创建要挂载的路径" class="headerlink" title="三、创建要挂载的路径"></a>三、创建要挂载的路径</h2><h3 id="1、创建挂载的文件data"><a href="#1、创建挂载的文件data" class="headerlink" title="1、创建挂载的文件data"></a>1、创建挂载的文件data</h3><p>使用mkdir命令创建data目录，用于后续挂载新增的磁盘。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /data</span><br></pre></td></tr></table></figure>
+
+<p>查看创建好的挂载路径data，初始是空的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> /data</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、使用磁盘"><a href="#2、使用磁盘" class="headerlink" title="2、使用磁盘"></a>2、使用磁盘</h3><p>写入一个简单<code>shell</code>的脚本作为演示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;echo &quot;</span>hello linux<span class="string">&quot;\necho &quot;</span>create btrfs filesystem<span class="string">&quot;&quot;</span> &gt;&gt; /data/data.sh</span><br></pre></td></tr></table></figure>
+
+<p>写入简单的shell脚本后，测试查看并执行这个脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#再次查看data盘下的文件</span></span><br><span class="line">[root@cnwangk /]<span class="comment"># ls /data/</span></span><br><span class="line">data.sh</span><br><span class="line">sh /data/data.sh</span><br><span class="line"><span class="comment">#运行脚本</span></span><br><span class="line">[root@cnwangk /]<span class="comment"># sh /data/data.sh </span></span><br><span class="line">hello linux</span><br><span class="line">create btrfs filesystem</span><br></pre></td></tr></table></figure>
+
+<p>从上面可以看出一个基本的磁盘的管理，会引出一些基本命令的使用，比如ls、mkdir、echo等等。本文的受众群体是需要掌握一些linux基本命令知识的。当然能看到本文的，也说明您还是有一些基础的。</p>
+<h2 id="四、使用fdisk对-dev-sdb进行分区"><a href="#四、使用fdisk对-dev-sdb进行分区" class="headerlink" title="四、使用fdisk对&#x2F;dev&#x2F;sdb进行分区"></a>四、使用fdisk对&#x2F;dev&#x2F;sdb进行分区</h2><h3 id="1、分区命令fdisk"><a href="#1、分区命令fdisk" class="headerlink" title="1、分区命令fdisk"></a>1、分区命令fdisk</h3><p>使用fdisk对新增的磁盘&#x2F;dev&#x2F;sdb进行分区，之前演示我已经使用主分区2，现在演示是逻辑扩展分区，使用参数e。</p>
+<ul>
+<li>新增分区：n</li>
+<li>新增主分区：p</li>
+<li>扩展分区：e</li>
+<li>注意：你可以自定义大小，也可以回车就是使用默认大小和扇区。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">fdisk /dev/sdb</span><br><span class="line">[root@cnwangk /]<span class="comment"># fdisk /dev/sdb</span></span><br><span class="line">欢迎使用 fdisk (util-linux 2.23.2)。</span><br><span class="line"></span><br><span class="line">更改将停留在内存中，直到您决定将更改写入磁盘。</span><br><span class="line">使用写入命令前请三思。</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：n <span class="comment">#新增分区，p则为主分区，e则为扩展分区</span></span><br><span class="line">Partition <span class="built_in">type</span>:</span><br><span class="line">   p   primary (1 primary, 0 extended, 3 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): e</span><br><span class="line">分区号 (1,3,4，默认 1)：1</span><br><span class="line">起始 扇区 (2048-20971519，默认为 2048)：</span><br><span class="line">将使用默认值 2048</span><br><span class="line">Last 扇区, +扇区 or +size&#123;K,M,G&#125; (2048-10485759，默认为 10485759)：</span><br><span class="line">将使用默认值 10485759</span><br><span class="line">分区 1 已设置为 Extended 类型，大小设为 5 GiB</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：p <span class="comment">#此时用参数p查看未保存的分区信息</span></span><br><span class="line"></span><br><span class="line">磁盘 /dev/sdb：10.7 GB, 10737418240 字节，20971520 个扇区</span><br><span class="line">Units = 扇区 of 1 * 512 = 512 bytes</span><br><span class="line">扇区大小(逻辑/物理)：512 字节 / 512 字节</span><br><span class="line">I/O 大小(最小/最佳)：512 字节 / 512 字节</span><br><span class="line">磁盘标签类型：dos</span><br><span class="line">磁盘标识符：0x95df3b22</span><br><span class="line"><span class="comment">#查看到新增分区的设备信息</span></span><br><span class="line">   设备 Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sdb1            2048    10485759     5241856    5  Extended</span><br><span class="line">/dev/sdb2        10485760    20971519     5242880   83  Linux</span><br><span class="line"></span><br><span class="line">命令(输入 m 获取帮助)：w <span class="comment">#输入w参数进行保存，输入q进行不保存退出。</span></span><br><span class="line">The partition table has been altered!</span><br><span class="line"></span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line"></span><br><span class="line">WARNING: Re-reading the partition table failed with error 16: 设备或资源忙.</span><br><span class="line">The kernel still uses the old table. The new table will be used at</span><br><span class="line">the next reboot or after you run partprobe(8) or kpartx(8)</span><br><span class="line">正在同步磁盘。</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="五、建立btrfs文件系统"><a href="#五、建立btrfs文件系统" class="headerlink" title="五、建立btrfs文件系统"></a>五、建立btrfs文件系统</h2><h3 id="1、建立文件系统"><a href="#1、建立文件系统" class="headerlink" title="1、建立文件系统"></a>1、建立文件系统</h3><p>新建btrfs文件系统，在确定进行分区之后执行此命令，最后进行挂载磁盘。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.btrfs /dev/sdb2</span><br></pre></td></tr></table></figure>
+
+<p>同样可以使用如下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs -t btrfs /dev/sdb2</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="六、挂载文件系统"><a href="#六、挂载文件系统" class="headerlink" title="六、挂载文件系统"></a>六、挂载文件系统</h2><h3 id="1、挂载命令mount"><a href="#1、挂载命令mount" class="headerlink" title="1、挂载命令mount"></a>1、挂载命令mount</h3><p>接着上面建立好<code>btrfs</code>文件系统，此时再挂载到新建的data目录下。<strong>虽然是挂载成功了，但只是临时生效，重启会掉盘挂载后硬盘。而且卷标还会显示成字母加数字的一串长字符串，类似这种s1k544y55fsa445dda44sd4545eff4字符串</strong>。究其原因，Linux还是以文件系统为核心的。没有目录这个概念，只是方便大家理解，都习惯这样称呼。</p>
+<p>1.1、使用<code>mount</code>挂载，看到的是sdb2，是因为之前已经创建了一个分区sdb1。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sdb2 /data</span><br></pre></td></tr></table></figure>
+
+<p>1.2、使用umount卸载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">umount /dev/sdb2 /data</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2、写入fstab文件"><a href="#2、写入fstab文件" class="headerlink" title="2、写入fstab文件"></a>2、写入fstab文件</h3><p>2.1、<strong>永久生效需要写入&#x2F;etc&#x2F;fstab文件</strong>中，使用<code>echo</code>命令追加数据到fstab文件中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#第一项参数/dev/sdb这里也可以写入UUID的信息</span></span><br><span class="line"><span class="comment">#	 第一项参数	 第二项参数	  第三项参数		第四项参数	第五项参数</span></span><br><span class="line"><span class="built_in">echo</span> /dev/sdb1    /data   	  btrfs    	  defaults     0 0  	&gt;&gt;  /etc/fstab</span><br><span class="line"><span class="built_in">echo</span> /dev/sdb2    /data   	  btrfs    	  defaults     0 0  	&gt;&gt;  /etc/fstab</span><br></pre></td></tr></table></figure>
+
+<p>2.2、输入<code>blkid</code>命令查看卷标或者UUID</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># blkid命令</span></span><br><span class="line">[root@cnwangk /]<span class="comment"># blkid</span></span><br><span class="line">/dev/sda5: UUID=<span class="string">&quot;d4708f44-beed-4a9b-bb11-94706e6c0cf5&quot;</span> TYPE=<span class="string">&quot;xfs&quot;</span> </span><br><span class="line">/dev/sda1: UUID=<span class="string">&quot;7d56f743-a42d-42e2-876e-d839cc583fa7&quot;</span> TYPE=<span class="string">&quot;xfs&quot;</span> </span><br><span class="line">/dev/sda2: UUID=<span class="string">&quot;953b1070-a13a-4b67-ac63-cc376c1dee8d&quot;</span> TYPE=<span class="string">&quot;xfs&quot;</span> </span><br><span class="line">/dev/sda3: UUID=<span class="string">&quot;b075b6d0-4d37-4f18-ae59-bf380862b440&quot;</span> TYPE=<span class="string">&quot;swap&quot;</span> </span><br><span class="line">/dev/sdb2: UUID=<span class="string">&quot;294c0c25-04be-4791-ab06-520c4283cb58&quot;</span> UUID_SUB=<span class="string">&quot;a8b7194a-a694-4a8a-bee1-0ab49821e6bb&quot;</span> TYPE=<span class="string">&quot;btrfs&quot;</span> </span><br></pre></td></tr></table></figure>
+
+<p>2.3、当然，你可以<strong>使用btrfs自带的命令查看磁盘文件的uuid</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@cnwangk /]<span class="comment"># btrfs filesystem show</span></span><br><span class="line">Label: none  uuid: 294c0c25-04be-4791-ab06-520c4283cb58</span><br><span class="line">        Total devices 1 FS bytes used 192.00KiB</span><br><span class="line">        devid    1 size 5.00GiB used 536.00MiB path /dev/sdb2</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="七、永久写入配置文件"><a href="#七、永久写入配置文件" class="headerlink" title="七、永久写入配置文件"></a>七、永久写入配置文件</h2><h3 id="1、配置文件fstab展示"><a href="#1、配置文件fstab展示" class="headerlink" title="1、配置文件fstab展示"></a>1、配置文件fstab展示</h3><p>注意：解决重启掉盘的问题。强调一点，<strong>一旦写入配置文件的参数出现错误异常，大概率导致服务器无法启动，所以修改时需谨慎操作</strong>。最好先做备份，再进行操作。</p>
+<p>如下我的<code>/ect/fstab</code>配置文件内容，可以看到<code>/dev/sdb2</code>是我测试新增的一块盘进行分区后的配置，使用文件系统格式为<code>btrfs</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/fstab</span></span><br><span class="line"><span class="comment"># Created by anaconda on Sun Jan  5 21:10:23 2020</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Accessible filesystems, by reference, are maintained under &#x27;/dev/disk&#x27;</span></span><br><span class="line"><span class="comment"># See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">UUID=d4708f44-beed-4a9b-bb11-94706e6c0cf5 /                       xfs     defaults        0 0</span><br><span class="line">UUID=7d56f743-a42d-42e2-876e-d839cc583fa7 /boot                   xfs     defaults        0 0</span><br><span class="line">UUID=953b1070-a13a-4b67-ac63-cc376c1dee8d /home                   xfs     defaults        0 0</span><br><span class="line">UUID=b075b6d0-4d37-4f18-ae59-bf380862b440 swap                    swap    defaults        0 0</span><br><span class="line">/dev/sdb2                                /data                    btrfs   defaults        0 0</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2、部分参数详解"><a href="#2、部分参数详解" class="headerlink" title="2、部分参数详解"></a>2、部分参数详解</h3><p>写入卷标信息到<code>/etc/fstab</code>文件（<strong>Redhat7系列默认推荐格式为xfs</strong>，从我文中给出的展示就可看出）</p>
+<ul>
+<li>第一项参数：&#x2F;dev&#x2F;sdb1（原始磁盘分区路径）</li>
+<li>第二项参数：&#x2F;data（新建的挂载磁盘文件路径，Linux核心是一个文件系统，所以说是文件路径）</li>
+<li>第三项参数：btrfs（挂载磁盘文件系统格式）</li>
+<li>第四项参数：defaults</li>
+<li>第五项参数：0 0</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#第一项参数/dev/sdb这里也可以写入UUID的信息</span></span><br><span class="line"><span class="comment">#	 第一项参数	 第二项参数	  第三项参数		第四项参数	第五项参数</span></span><br><span class="line"><span class="built_in">echo</span> /dev/sdb1    /data   	  btrfs    	  defaults     0 0  	&gt;&gt;  /etc/fstab</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、修改配置文件"><a href="#3、修改配置文件" class="headerlink" title="3、修改配置文件"></a>3、修改配置文件</h3><p>可以直接编辑文件新增磁盘挂载信息：<code>vim /etc/fstab</code><br>写入到<code>/etc/fstab</code>配置文件，文件系统推荐xfs或者btrfs，具体视实际情况而定：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/dev/sdb2    /data     ext4    defaults    0 0</span><br><span class="line">/dev/sdb2    /data     xfs     defaults    0 0</span><br><span class="line">/dev/sdb2    /data     btrfs   defaults    0 0</span><br></pre></td></tr></table></figure>
+
+<p><strong>重启生效</strong>：<code>reboot</code>  或者 <code>shutdown -r now</code></p>
+<p><strong>验证挂载是否成功</strong>，此时重启系统后可以看到我的新挂载的磁盘&#x2F;dev&#x2F;sdb2已经生效了并写入了fstab配置文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -h</span><br><span class="line">[root@cnwangk /]<span class="comment"># df -h</span></span><br><span class="line">文件系统        容量  已用  可用 已用% 挂载点</span><br><span class="line">devtmpfs        907M     0  907M    0% /dev</span><br><span class="line">tmpfs           917M     0  917M    0% /dev/shm</span><br><span class="line">tmpfs           917M  9.3M  908M    2% /run</span><br><span class="line">tmpfs           917M     0  917M    0% /sys/fs/cgroup</span><br><span class="line">/dev/sda5        16G  7.1G  8.9G   45% /</span><br><span class="line">/dev/sdb2       5.0G   17M  4.5G    1% /data</span><br><span class="line">/dev/sda2       2.0G   34M  2.0G    2% /home</span><br><span class="line">/dev/sda1       197M  154M   43M   79% /boot</span><br><span class="line">tmpfs           184M     0  184M    0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="八、磁盘管理"><a href="#八、磁盘管理" class="headerlink" title="八、磁盘管理"></a>八、磁盘管理</h2><p>其实，上面对硬盘进行分区已经使用到了磁盘管理命令格式化分区<code>mkfs</code>、分区<code>fdisk</code>，属于基本的磁盘管理。还有最常用的<code>df</code>，用来查看磁盘空间占用情况；<code>mount</code>与<code>umount</code>命令进行挂载与卸载磁盘。主要想引出的是如下的第三方ssm管理工具。</p>
+<p>看到这个ssm不要与Javaweb中的框架组合ssm（Spring Springmvc Mybatis）混淆了。</p>
+<h3 id="1、ssm管理工具"><a href="#1、ssm管理工具" class="headerlink" title="1、ssm管理工具"></a>1、ssm管理工具</h3><p>ssm（System Storage Manager）管理逻辑卷。默认没有安装，需要手动安装，下载rpm包或者直接yum源在线安装都行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#提供yum在线安装方式</span></span><br><span class="line">yum -y install system-storage-manager.noarch</span><br></pre></td></tr></table></figure>
+
+<p>安装完后，如下<strong>使用ssm命令</strong>即可展示效果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@cnwangk /]<span class="comment"># ssm list</span></span><br><span class="line">-----------------------------------------------------------------</span><br><span class="line">Device        Free       Used      Total  Pool        Mount point</span><br><span class="line">-----------------------------------------------------------------</span><br><span class="line">/dev/fd0                         4.00 KB                         </span><br><span class="line">/dev/sda                        20.00 GB                         </span><br><span class="line">/dev/sda1                      200.00 MB              /boot      </span><br><span class="line">/dev/sda2                        1.95 GB              /home      </span><br><span class="line">/dev/sda3                        1.95 GB              SWAP       </span><br><span class="line">/dev/sda4                        1.00 KB                         </span><br><span class="line">/dev/sda5                       15.90 GB              /          </span><br><span class="line">/dev/sdb                        10.00 GB                         </span><br><span class="line">/dev/sdb1                        1.00 MB                         </span><br><span class="line">/dev/sdb2  4.48 GB  536.00 MB    5.00 GB  btrfs_sdb2             </span><br><span class="line">-----------------------------------------------------------------</span><br><span class="line">-----------------------------------------------------</span><br><span class="line">Pool        Type   Devices     Free     Used    Total  </span><br><span class="line">-----------------------------------------------------</span><br><span class="line">btrfs_sdb2  btrfs  1        5.00 GB  5.00 GB  5.00 GB  </span><br><span class="line">-----------------------------------------------------</span><br><span class="line">-----------------------------------------------------------------------------------</span><br><span class="line">Volume      Pool        Volume size  FS       FS size      Free  Type   Mount point</span><br><span class="line">-----------------------------------------------------------------------------------</span><br><span class="line">btrfs_sdb2  btrfs_sdb2      5.00 GB  btrfs    5.00 GB   5.00 GB  btrfs  /data      </span><br><span class="line">/dev/sda1                 200.00 MB  xfs    196.66 MB  42.79 MB         /boot      </span><br><span class="line">/dev/sda2                   1.95 GB  xfs      1.94 GB   1.91 GB         /home      </span><br><span class="line">/dev/sda5                  15.90 GB  xfs     15.89 GB   8.87 GB         /          </span><br><span class="line">-----------------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2、linux自带的磁盘命令"><a href="#2、linux自带的磁盘命令" class="headerlink" title="2、linux自带的磁盘命令"></a>2、linux自带的磁盘命令</h3><p>比如，查看磁盘空间状态，加上参数-h以（K、M、G）形式显示。虽然df可以以多种形式展示，但个人工作中最常用的，还是加上-h参数使用的最为频繁。下面以加上参数-h为例子进行展示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -h</span><br><span class="line">[root@cnwangk /]<span class="comment"># df -h</span></span><br><span class="line">文件系统        容量  已用  可用 已用% 挂载点</span><br><span class="line">devtmpfs        907M     0  907M    0% /dev</span><br><span class="line">tmpfs           917M     0  917M    0% /dev/shm</span><br><span class="line">tmpfs           917M  9.3M  908M    2% /run</span><br><span class="line">tmpfs           917M     0  917M    0% /sys/fs/cgroup</span><br><span class="line">/dev/sda5        16G  7.1G  8.9G   45% /</span><br><span class="line">/dev/sdb2       5.0G   17M  4.5G    1% /data</span><br><span class="line">/dev/sda2       2.0G   34M  2.0G    2% /home</span><br><span class="line">/dev/sda1       197M  154M   43M   79% /boot</span><br><span class="line">tmpfs           184M     0  184M    0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<p>在df命令后加上-a参数，显示所有文件系统磁盘使用情况，这里就不贴输出的内容了，显示内容太长了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -ah</span><br></pre></td></tr></table></figure>
+
+<p><strong>以上就是此次文章的所有内容的，希望能对你的工作有所帮助。感觉写的好，就拿出你的一键三连。如果感觉总结的不到位，也希望能留下您宝贵的意见，我会在文章中进行调整优化。</strong></p>
+<p><strong>原创不易，转载也请标明出处，本文会不定期上传到gitee或者github以及VX公众平台。</strong></p>
+<p>最后给出思维导图，凑合着看看吧，权当有个印象！</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/7a9b5700ab6514c606462bee53c1d837.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2021/09/09/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="Linux服务器挂载硬盘详细教程">https://blog.cnwangk.top/2021/09/09/Linux服务器挂载硬盘详细教程/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/06/Linux%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81ip%E5%9C%B0%E5%9D%80/" rel="prev" title="Linux系统配置静态ip地址">
+                  <i class="fa fa-angle-left"></i> Linux系统配置静态ip地址
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/09/Windows_Server2012%E9%83%A8%E7%BD%B2Oracle11g%E6%95%B0%E6%8D%AE%E5%BA%93NET%E7%8E%AF%E5%A2%83%E5%92%8CCPU%E6%A0%B8%E5%BF%83%E6%95%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="next" title="Windows_server2012服务器部署Oracle11g：.NET和CPU核心数问题解决方案">
+                  Windows_server2012服务器部署Oracle11g：.NET和CPU核心数问题解决方案 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2021/09/09/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

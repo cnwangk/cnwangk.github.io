@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="以前写过VMware8+Centos6.5的教程，做为经典的入门确实很舒服。 毕竟VMware8已经具备基本的需求，而且对电脑性能配置要求不高。 现在推荐使用VMware12以及Centos7作为测试环境。 正文lnmpa（linux服务器 + Nginx服务器（中间件，反向代理） + MySQL（MariaDB）数据库+ php（看需求） + Apache（Tomcat服务器））环境搭建之前，">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="CentOS7 Linux 使用VMware12搭建测试环境">
+<meta property="og:url" content="https://blog.cnwangk.top/2021/04/26/CentOS7%20Linux%20%E4%BD%BF%E7%94%A8VMware12%E6%90%AD%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="以前写过VMware8+Centos6.5的教程，做为经典的入门确实很舒服。 毕竟VMware8已经具备基本的需求，而且对电脑性能配置要求不高。 现在推荐使用VMware12以及Centos7作为测试环境。 正文lnmpa（linux服务器 + Nginx服务器（中间件，反向代理） + MySQL（MariaDB）数据库+ php（看需求） + Apache（Tomcat服务器））环境搭建之前，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/469e3fcd2fb6c4b0e28f3c20be97ed61.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/f96f8cf41b4181f3c0aa9cd67652fc5a.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/505ce8f6b22043f4c4b7c77e59d4c752.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/bb92062ecae71abfb8a9bb2dc3042840.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/1c8e587dccdb3a9a7c99497b5d6e462f.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/d0c256b020cce79c70f8a318d82e3633.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/c8ea3761cf4262b160406f98a929a65b.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/6c04fa85ebc5c5c5109b685c5bf2a031.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/2bd9fa0a37d02f1f49655bc28e8ae020.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/c1346444008a0c0d27c4df25028556ff.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/256adc2f7742b8e14b80c73ea50d3d19.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/11ff5064c900bb8dc0ea69597480d6f5.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/e853a08ba0c862fdf8ed42ce2fc103d6.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/90d267d58f4b713414eb02a9419f2fe4.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/ff750685504d9b5b4cd3921e66d769dc.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/d08e081eed0801c4272b49f9b1634832.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/1d4ccb619e0910af722908dbca83e90c.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/4ea21e5809a9df5cf28c8e58f1b72b29.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/ee9dc0bea6d69bff6ac61019214a71e0.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/918d26702b4ef18cad48de3ba8471605.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/7c446f414d137e485c291833773b4c93.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/bd1f48ead9d377ff53aeb03a2423aec3.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/ff0ef62483afd00cb3ca29c4e334ed20.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/a2ece3873f37bdd8b31d63d9aca52d85.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/4fd6109ba2d549ccb6fa17ba1e27b773.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/3e695c873cff55f74310ab5e139b5237.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/9e9d3d941bbfd93631ee58810503d8d1.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/0b19f9858fc640f99277b4d06e3b804f.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e85e67d43d9a4c129888032b1ef326c7.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/b02b17f108472071b00e4afa35c3934d.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/99e1d5a355db679753bcbd7cb11bcb63.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/f35dca0df5e2043abac736a70a1d3ef4.png#">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/ca6b72eeaa09af3941231cc2df38fb3d.png#">
+<meta property="article:published_time" content="2021-04-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-28T13:36:35.980Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/469e3fcd2fb6c4b0e28f3c20be97ed61.png#">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2021/04/26/CentOS7%20Linux%20%E4%BD%BF%E7%94%A8VMware12%E6%90%AD%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2021/04/26/CentOS7%20Linux%20%E4%BD%BF%E7%94%A8VMware12%E6%90%AD%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/","path":"2021/04/26/CentOS7 Linux 使用VMware12搭建测试环境/","title":"CentOS7 Linux 使用VMware12搭建测试环境"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CentOS7 Linux 使用VMware12搭建测试环境 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">1.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81VMware12%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">一、VMware12安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81VMware12%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.2.</span> <span class="nav-text">二、VMware12新建虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#01%E3%80%81%E5%8F%AF%E4%BB%A5%E9%80%89%E5%85%B8%E5%9E%8B%EF%BC%8C%E8%AE%BE%E7%BD%AE%E6%9B%B4%E7%AE%80%E5%8D%95"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">01、可以选典型，设置更简单</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#02%E3%80%81%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%91%E5%AF%BC%EF%BC%8C%E9%80%89%E6%8B%A9%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A1%AC%E4%BB%B6%E5%85%BC%E5%AE%B9%E6%80%A7%EF%BC%8C%E9%BB%98%E8%AE%A4%E5%B0%B1%E8%A1%8C"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">02、新建虚拟机向导，选择虚拟机硬件兼容性，默认就行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#03%E3%80%81%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%91%E5%AF%BC%EF%BC%8C-%E9%80%89%E7%A8%8D%E5%90%8E%E5%AE%89%E8%A3%85%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">03、新建虚拟机向导， 选稍后安装操作系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#04%E3%80%81%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%91%E5%AF%BC%EF%BC%8C%E9%80%89%E6%8B%A9%E5%AE%A2%E6%88%B7%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">04、新建虚拟机向导，选择客户机操作系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#05%E3%80%81%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%91%E5%AF%BC%EF%BC%8C%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E5%91%BD%E5%90%8D"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">05、新建虚拟机向导，虚拟机的命名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#06%E3%80%81%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%91%E5%AF%BC%EF%BC%8C%E5%A4%84%E7%90%86%E5%99%A8%E9%85%8D%E7%BD%AE%E6%A0%B9%E6%8D%AE%E5%AE%9E%E9%99%85%E9%9C%80%E6%B1%82%E6%9D%A5%E9%85%8D%E7%BD%AE%E3%80%82"><span class="nav-number">1.2.0.6.</span> <span class="nav-text">06、新建虚拟机向导，处理器配置根据实际需求来配置。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#07%E3%80%81%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%91%E5%AF%BC%EF%BC%8C%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E5%86%85%E5%AD%98%EF%BC%8C%E8%A7%86%E5%AE%9E%E9%99%85%E9%9C%80%E6%B1%82%E5%AE%9A"><span class="nav-number">1.2.0.7.</span> <span class="nav-text">07、新建虚拟机向导，虚拟机的内存，视实际需求定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#08%E3%80%81%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%91%E5%AF%BC%EF%BC%8C%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E7%BD%91%E7%BB%9C%E7%B1%BB%E5%9E%8B%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.0.8.</span> <span class="nav-text">08、新建虚拟机向导，虚拟机的网络类型设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#09%E3%80%81%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%91%E5%AF%BC%EF%BC%8C%E8%99%9A%E6%8B%9F%E6%9C%BAI-O%E6%8E%A7%E5%88%B6%E7%B1%BB%E5%9E%8B%E9%BB%98%E8%AE%A4%E6%8E%A8%E8%8D%90%E5%B0%B1%E5%8F%AF%E4%BB%A5%E4%BA%86"><span class="nav-number">1.2.0.9.</span> <span class="nav-text">09、新建虚拟机向导，虚拟机I&#x2F;O控制类型默认推荐就可以了</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10%E3%80%81%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%91%E5%AF%BC%EF%BC%8C%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E7%B1%BB%E5%9E%8B%EF%BC%8C%E9%80%89%E6%8E%A8%E8%8D%90%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.0.10.</span> <span class="nav-text">10、新建虚拟机向导，虚拟机磁盘类型，选推荐设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11%E3%80%81%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%91%E5%AF%BC%EF%BC%8C%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%88%9B%E5%BB%BA%E7%A3%81%E7%9B%98%EF%BC%8C%E6%A0%B9%E6%8D%AE%E6%8F%90%E7%A4%BA%E6%9D%A5"><span class="nav-number">1.2.0.11.</span> <span class="nav-text">11、新建虚拟机向导，虚拟机创建磁盘，根据提示来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12%E3%80%81%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%91%E5%AF%BC%EF%BC%8C%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%A3%81%E7%9B%98%E5%AE%B9%E9%87%8F%E8%AE%BE%E7%BD%AE%EF%BC%8C%E9%80%89%E6%8E%A8%E8%8D%90%E9%BB%98%E8%AE%A4%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.0.12.</span> <span class="nav-text">12、新建虚拟机向导，虚拟机磁盘容量设置，选推荐默认设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13%E3%80%81%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%91%E5%AF%BC%EF%BC%8C%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%8C%87%E5%AE%9A%E7%A3%81%E7%9B%98%E6%96%87%E4%BB%B6%EF%BC%8C%E9%80%89%E6%8E%A8%E8%8D%90%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.0.13.</span> <span class="nav-text">13、新建虚拟机向导，虚拟机指定磁盘文件，选推荐设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14%E3%80%81%E7%BC%96%E8%BE%91%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%AE%BE%E7%BD%AE%EF%BC%8C%E5%8F%AF%E4%BB%A5%E9%87%8D%E6%96%B0%E8%AE%BE%E5%AE%9A%E8%AE%BE%E5%A4%87%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.0.14.</span> <span class="nav-text">14、编辑虚拟机设置，可以重新设定设备配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15%E3%80%81%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%91%E5%AF%BC%EF%BC%8C%E8%AE%BE%E7%BD%AEISO%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number">1.2.0.15.</span> <span class="nav-text">15、新建虚拟机向导，设置ISO镜像文件路径</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Centos7%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-number">1.3.</span> <span class="nav-text">三、Centos7的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#01%E3%80%81%E9%80%89%E6%8B%A9Install-CentOS-Linux-7"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">01、选择Install CentOS Linux 7</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#02%E3%80%81%E9%80%89%E6%8B%A9%E8%AF%AD%E8%A8%80%EF%BC%8C%E8%BF%99%E9%87%8C%E6%8E%A8%E8%8D%90%E9%80%89%E4%B8%AD%E6%96%87"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">02、选择语言，这里推荐选中文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#03%E3%80%81%E9%80%89%E6%8B%A9%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">03、选择日期和时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#04%E3%80%81%E9%80%89%E6%8B%A9%E5%AE%89%E8%A3%85%E7%9B%AE%E6%A0%87%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.3.0.4.</span> <span class="nav-text">04、选择安装目标位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#05%E3%80%81%E8%BD%AF%E4%BB%B6%E9%80%89%E6%8B%A9%EF%BC%8C%E5%88%9D%E6%AC%A1%E9%80%89%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.3.0.5.</span> <span class="nav-text">05、软件选择，初次选基础设施服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#06%E3%80%81%E6%9A%97%E8%BD%AC%E4%BF%A1%E6%81%AF%E6%91%98%E8%A6%81%EF%BC%8C%E5%BF%85%E9%80%89%E9%A1%B9%E9%80%89%E5%AE%8C%E5%8D%B3%E5%8F%AF%E7%82%B9%E5%87%BB%E5%AE%89%E8%A3%85"><span class="nav-number">1.3.0.6.</span> <span class="nav-text">06、暗转信息摘要，必选项选完即可点击安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#07%E3%80%81%E9%85%8D%E7%BD%AE%EF%BC%8C%E7%94%A8%E6%88%B7%E8%AE%BE%E7%BD%AE%E4%BB%A5%E5%8F%8A%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><span class="nav-number">1.3.0.7.</span> <span class="nav-text">07、配置，用户设置以及创建用户</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AD%97%E7%AC%A6%E7%95%8C%E9%9D%A2%E5%88%9D%E5%A7%8B%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.4.</span> <span class="nav-text">四、服务器字符界面初始设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#01%E3%80%81%E4%B8%8A%E4%B8%80%E6%AD%A5%E6%8F%90%E7%A4%BA%E9%87%8D%E5%90%AF%EF%BC%8C%E8%BF%9B%E5%85%A5%E5%AD%97%E7%AC%A6%E7%95%8C%E9%9D%A2"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">01、上一步提示重启，进入字符界面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#02%E3%80%81ifconfig%E6%9F%A5%E7%9C%8B%E7%BD%91%E5%8D%A1IP%E5%9C%B0%E5%9D%80%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">02、ifconfig查看网卡IP地址配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#03%E3%80%81%E8%BF%9B%E5%85%A5-etc-sysconfig-network-scripts-%EF%BC%8C%E6%89%BE%E5%88%B0ifcfg-ens33"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">03、进入&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;，找到ifcfg-ens33</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#04%E3%80%81%E8%BF%9B%E5%85%A5-etc-sysconfig-network-scripts"><span class="nav-number">1.4.0.4.</span> <span class="nav-text">04、进入&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#05%E3%80%81%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E4%BD%BF%E7%94%A8reboot%E5%91%BD%E4%BB%A4"><span class="nav-number">1.4.0.5.</span> <span class="nav-text">05、重启服务器，使用reboot命令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81XSHELL%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.</span> <span class="nav-text">五、XSHELL的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#01%E3%80%81XSHELL%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%8C%E9%85%8D%E7%BD%AE%E7%94%A8%E6%88%B7%E4%B8%BB%E6%9C%BA"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">01、XSHELL的使用，配置用户主机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#02%E3%80%81XSHELL%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%8C%E9%85%8D%E7%BD%AE%E7%94%A8%E6%88%B7%E4%B8%BB%E6%9C%BA%E5%90%8D%E4%B8%8E%E5%AF%86%E7%A0%81"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">02、XSHELL的使用，配置用户主机名与密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#03%E3%80%81%E9%AA%8C%E8%AF%81%E4%B8%BB%E6%9C%BA%E7%A7%98%E9%92%A5"><span class="nav-number">1.5.0.3.</span> <span class="nav-text">03、验证主机秘钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#04%E3%80%81%E8%87%B3%E6%AD%A4%E7%99%BB%E5%BD%95XSHELL%E6%88%90%E5%8A%9F"><span class="nav-number">1.5.0.4.</span> <span class="nav-text">04、至此登录XSHELL成功</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%90%AD%E5%BB%BAlnmpa%E7%8E%AF%E5%A2%83"><span class="nav-number">1.6.</span> <span class="nav-text">六、搭建lnmpa环境</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2021/07/27/Linux%EF%BC%88%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%EF%BC%89%E9%83%A8%E7%BD%B2VNC%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%B9%B6%E4%B8%94%E4%BD%BF%E7%94%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5/" rel="bookmark">
+        <time class="popular-posts-time">2021-07-27</time>
+        <br>
+      Linux（银河麒麟V10）部署VNC服务端并且使用客户端连接
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2020/01/03/Linux%E5%85%BB%E6%88%90%E8%BE%BE%E4%BA%BA%E4%B9%8B%E5%85%A5%E9%97%A8%E5%AE%9E%E8%B7%B5%E5%9B%BE%E6%96%87%E8%B6%85%E8%AF%A6%E7%BB%86/" rel="bookmark">
+        <time class="popular-posts-time">2020-01-03</time>
+        <br>
+      Linux养成达人之入门实践图文超详细
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" rel="bookmark">
+        <time class="popular-posts-time">2022-02-18</time>
+        <br>
+      DM8 数据库 DTS 迁移工具详细使用教程
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2021/08/01/Ubuntu20-04%E4%BC%98%E9%BA%92%E9%BA%9F%E6%89%8B%E5%8A%A8%E5%BC%80%E5%90%AFroot%E7%94%A8%E6%88%B7/" rel="bookmark">
+        <time class="popular-posts-time">2021-08-01</time>
+        <br>
+      Ubuntu20.04优麒麟：手动开启root用户
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/02/18/Windows%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%90%E7%BB%B4%E5%B8%B8%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/" rel="bookmark">
+        <time class="popular-posts-time">2022-02-18</time>
+        <br>
+      Windows服务器运维常用小技巧
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2021/04/26/CentOS7%20Linux%20%E4%BD%BF%E7%94%A8VMware12%E6%90%AD%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CentOS7 Linux 使用VMware12搭建测试环境 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CentOS7 Linux 使用VMware12搭建测试环境
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-26 00:00:00" itemprop="dateCreated datePublished" datetime="2021-04-26T00:00:00+08:00">2021-04-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-28 21:36:35" itemprop="dateModified" datetime="2023-05-28T21:36:35+08:00">2023-05-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">开发运维</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>﻿以前写过VMware8+Centos6.5的教程，做为经典的入门确实很舒服。</p>
+<p>毕竟VMware8已经具备基本的需求，而且对电脑性能配置要求不高。</p>
+<p>现在推荐使用VMware12以及Centos7作为测试环境。</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>lnmpa（linux服务器 + Nginx服务器（中间件，反向代理） + MySQL（MariaDB）数据库+ php（看需求） + Apache（Tomcat服务器））环境搭建之前，需要准备VMware虚拟机和Linux版本（Centos或者Ubuntu）。个人推荐使用Centos，毕竟主打服务器，基本用不上桌面系统。</p>
+<p>如果要使用桌面系统，可以下载Ubuntu系统尝鲜，UI界面越做越耐看。麒麟系统适配做的还可以，很耐看。桌面Ubuntu，服务器兼容Centos。<br>个人开发者尝鲜版：<span class="exturl" data-url="aHR0cHM6Ly93d3cudWJ1bnR1a3lsaW4uY29tL2Rvd25sb2Fkcy8=">https://www.ubuntukylin.com/downloads/<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="一、VMware12安装"><a href="#一、VMware12安装" class="headerlink" title="一、VMware12安装"></a>一、VMware12安装</h2><p>这里就不做截图了，绿色版的安装，基本就是下一步下一步。在文章的开头，我提供了VM8和VM12的汁源。其中注册码，也包含在安装包里面，如果没找到可以百度或者谷歌搜索，网上有很多。</p>
+<h2 id="二、VMware12新建虚拟机"><a href="#二、VMware12新建虚拟机" class="headerlink" title="二、VMware12新建虚拟机"></a>二、VMware12新建虚拟机</h2><p>这里推荐新建一个空白的虚拟机，一般来说使用典型的配置就够用。当然可以尝试自定义高级，基于你对虚拟机的使用认知比较熟练。其次，你也可以在新建虚拟机的同时，直接选择需要的操作系统镜像进行直接配置安装。</p>
+<h4 id="01、可以选典型，设置更简单"><a href="#01、可以选典型，设置更简单" class="headerlink" title="01、可以选典型，设置更简单"></a>01、可以选典型，设置更简单</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/469e3fcd2fb6c4b0e28f3c20be97ed61.png#" alt="在这里插入图片描述"></p>
+<h4 id="02、新建虚拟机向导，选择虚拟机硬件兼容性，默认就行"><a href="#02、新建虚拟机向导，选择虚拟机硬件兼容性，默认就行" class="headerlink" title="02、新建虚拟机向导，选择虚拟机硬件兼容性，默认就行"></a>02、新建虚拟机向导，选择虚拟机硬件兼容性，默认就行</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/f96f8cf41b4181f3c0aa9cd67652fc5a.png#" alt="在这里插入图片描述"></p>
+<h4 id="03、新建虚拟机向导，-选稍后安装操作系统"><a href="#03、新建虚拟机向导，-选稍后安装操作系统" class="headerlink" title="03、新建虚拟机向导， 选稍后安装操作系统"></a>03、新建虚拟机向导， 选稍后安装操作系统</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/505ce8f6b22043f4c4b7c77e59d4c752.png#" alt="在这里插入图片描述"></p>
+<h4 id="04、新建虚拟机向导，选择客户机操作系统"><a href="#04、新建虚拟机向导，选择客户机操作系统" class="headerlink" title="04、新建虚拟机向导，选择客户机操作系统"></a>04、新建虚拟机向导，选择客户机操作系统</h4><p>此处我选linux作为例子，当然你可以选择window，安装更简单。</p>
+<p>说简单当然基于我们对win操作系统更熟悉，都是图形化安装界面。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/bb92062ecae71abfb8a9bb2dc3042840.png#" alt="在这里插入图片描述"></p>
+<h4 id="05、新建虚拟机向导，虚拟机的命名"><a href="#05、新建虚拟机向导，虚拟机的命名" class="headerlink" title="05、新建虚拟机向导，虚拟机的命名"></a>05、新建虚拟机向导，虚拟机的命名</h4><p>是centos就填centos系统操作版本，例如：centos7_64</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/1c8e587dccdb3a9a7c99497b5d6e462f.png#" alt="在这里插入图片描述"></p>
+<h4 id="06、新建虚拟机向导，处理器配置根据实际需求来配置。"><a href="#06、新建虚拟机向导，处理器配置根据实际需求来配置。" class="headerlink" title="06、新建虚拟机向导，处理器配置根据实际需求来配置。"></a>06、新建虚拟机向导，处理器配置根据实际需求来配置。</h4><p>当然电脑真机环境很强，可以给高点。</p>
+<p>一般测试玩玩服务器，我不装桌面，无需太高配置。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/d0c256b020cce79c70f8a318d82e3633.png#" alt="在这里插入图片描述"></p>
+<h4 id="07、新建虚拟机向导，虚拟机的内存，视实际需求定"><a href="#07、新建虚拟机向导，虚拟机的内存，视实际需求定" class="headerlink" title="07、新建虚拟机向导，虚拟机的内存，视实际需求定"></a>07、新建虚拟机向导，虚拟机的内存，视实际需求定</h4><p>没特殊需求，默认推荐设置就行</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/c8ea3761cf4262b160406f98a929a65b.png#" alt="在这里插入图片描述"></p>
+<h4 id="08、新建虚拟机向导，虚拟机的网络类型设置"><a href="#08、新建虚拟机向导，虚拟机的网络类型设置" class="headerlink" title="08、新建虚拟机向导，虚拟机的网络类型设置"></a>08、新建虚拟机向导，虚拟机的网络类型设置</h4><p>推荐选NAT，当然后期可以修改</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/6c04fa85ebc5c5c5109b685c5bf2a031.png#" alt="在这里插入图片描述"></p>
+<h4 id="09、新建虚拟机向导，虚拟机I-O控制类型默认推荐就可以了"><a href="#09、新建虚拟机向导，虚拟机I-O控制类型默认推荐就可以了" class="headerlink" title="09、新建虚拟机向导，虚拟机I&#x2F;O控制类型默认推荐就可以了"></a>09、新建虚拟机向导，虚拟机I&#x2F;O控制类型默认推荐就可以了</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/2bd9fa0a37d02f1f49655bc28e8ae020.png#" alt="在这里插入图片描述"></p>
+<h4 id="10、新建虚拟机向导，虚拟机磁盘类型，选推荐设置"><a href="#10、新建虚拟机向导，虚拟机磁盘类型，选推荐设置" class="headerlink" title="10、新建虚拟机向导，虚拟机磁盘类型，选推荐设置"></a>10、新建虚拟机向导，虚拟机磁盘类型，选推荐设置</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/c1346444008a0c0d27c4df25028556ff.png#" alt="在这里插入图片描述"></p>
+<h4 id="11、新建虚拟机向导，虚拟机创建磁盘，根据提示来"><a href="#11、新建虚拟机向导，虚拟机创建磁盘，根据提示来" class="headerlink" title="11、新建虚拟机向导，虚拟机创建磁盘，根据提示来"></a>11、新建虚拟机向导，虚拟机创建磁盘，根据提示来</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/256adc2f7742b8e14b80c73ea50d3d19.png#" alt="在这里插入图片描述"></p>
+<h4 id="12、新建虚拟机向导，虚拟机磁盘容量设置，选推荐默认设置"><a href="#12、新建虚拟机向导，虚拟机磁盘容量设置，选推荐默认设置" class="headerlink" title="12、新建虚拟机向导，虚拟机磁盘容量设置，选推荐默认设置"></a>12、新建虚拟机向导，虚拟机磁盘容量设置，选推荐默认设置</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/11ff5064c900bb8dc0ea69597480d6f5.png#" alt="在这里插入图片描述"></p>
+<h4 id="13、新建虚拟机向导，虚拟机指定磁盘文件，选推荐设置"><a href="#13、新建虚拟机向导，虚拟机指定磁盘文件，选推荐设置" class="headerlink" title="13、新建虚拟机向导，虚拟机指定磁盘文件，选推荐设置"></a>13、新建虚拟机向导，虚拟机指定磁盘文件，选推荐设置</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/e853a08ba0c862fdf8ed42ce2fc103d6.png#" alt="在这里插入图片描述"></p>
+<h4 id="14、编辑虚拟机设置，可以重新设定设备配置"><a href="#14、编辑虚拟机设置，可以重新设定设备配置" class="headerlink" title="14、编辑虚拟机设置，可以重新设定设备配置"></a>14、编辑虚拟机设置，可以重新设定设备配置</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/90d267d58f4b713414eb02a9419f2fe4.png#" alt="在这里插入图片描述"></p>
+<h4 id="15、新建虚拟机向导，设置ISO镜像文件路径"><a href="#15、新建虚拟机向导，设置ISO镜像文件路径" class="headerlink" title="15、新建虚拟机向导，设置ISO镜像文件路径"></a>15、新建虚拟机向导，设置ISO镜像文件路径</h4><p>到此，虚拟机的设置就完成了，接着就是下面对centos7的安装。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/ff750685504d9b5b4cd3921e66d769dc.png#" alt="在这里插入图片描述"></p>
+<h2 id="三、Centos7的安装"><a href="#三、Centos7的安装" class="headerlink" title="三、Centos7的安装"></a>三、Centos7的安装</h2><h4 id="01、选择Install-CentOS-Linux-7"><a href="#01、选择Install-CentOS-Linux-7" class="headerlink" title="01、选择Install CentOS Linux 7"></a>01、选择Install CentOS Linux 7</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/d08e081eed0801c4272b49f9b1634832.png#" alt="在这里插入图片描述"></p>
+<h4 id="02、选择语言，这里推荐选中文"><a href="#02、选择语言，这里推荐选中文" class="headerlink" title="02、选择语言，这里推荐选中文"></a>02、选择语言，这里推荐选中文</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/1d4ccb619e0910af722908dbca83e90c.png#" alt="在这里插入图片描述"></p>
+<h4 id="03、选择日期和时间"><a href="#03、选择日期和时间" class="headerlink" title="03、选择日期和时间"></a>03、选择日期和时间</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/4ea21e5809a9df5cf28c8e58f1b72b29.png#" alt="在这里插入图片描述"></p>
+<h4 id="04、选择安装目标位置"><a href="#04、选择安装目标位置" class="headerlink" title="04、选择安装目标位置"></a>04、选择安装目标位置</h4><p>这一步你也可以选择<strong>我要配置分区</strong></p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/ee9dc0bea6d69bff6ac61019214a71e0.png#" alt="在这里插入图片描述"></p>
+<h4 id="05、软件选择，初次选基础设施服务器"><a href="#05、软件选择，初次选基础设施服务器" class="headerlink" title="05、软件选择，初次选基础设施服务器"></a>05、软件选择，初次选基础设施服务器</h4><p>右边的环境附加项，根据实际需求定。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/918d26702b4ef18cad48de3ba8471605.png#" alt="在这里插入图片描述"></p>
+<h4 id="06、暗转信息摘要，必选项选完即可点击安装"><a href="#06、暗转信息摘要，必选项选完即可点击安装" class="headerlink" title="06、暗转信息摘要，必选项选完即可点击安装"></a>06、暗转信息摘要，必选项选完即可点击安装</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/7c446f414d137e485c291833773b4c93.png#" alt="在这里插入图片描述"></p>
+<h4 id="07、配置，用户设置以及创建用户"><a href="#07、配置，用户设置以及创建用户" class="headerlink" title="07、配置，用户设置以及创建用户"></a>07、配置，用户设置以及创建用户</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/bd1f48ead9d377ff53aeb03a2423aec3.png#" alt="在这里插入图片描述"></p>
+<h2 id="四、服务器字符界面初始设置"><a href="#四、服务器字符界面初始设置" class="headerlink" title="四、服务器字符界面初始设置"></a>四、服务器字符界面初始设置</h2><h4 id="01、上一步提示重启，进入字符界面"><a href="#01、上一步提示重启，进入字符界面" class="headerlink" title="01、上一步提示重启，进入字符界面"></a>01、上一步提示重启，进入字符界面</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/ff0ef62483afd00cb3ca29c4e334ed20.png#" alt="在这里插入图片描述"></p>
+<h4 id="02、ifconfig查看网卡IP地址配置"><a href="#02、ifconfig查看网卡IP地址配置" class="headerlink" title="02、ifconfig查看网卡IP地址配置"></a>02、ifconfig查看网卡IP地址配置</h4><p>需要修改ens33这个文件，将里面的ONBOOTS属性改为YES</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/a2ece3873f37bdd8b31d63d9aca52d85.png#" alt="在这里插入图片描述"></p>
+<h4 id="03、进入-etc-sysconfig-network-scripts-，找到ifcfg-ens33"><a href="#03、进入-etc-sysconfig-network-scripts-，找到ifcfg-ens33" class="headerlink" title="03、进入&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;，找到ifcfg-ens33"></a>03、进入&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;，找到ifcfg-ens33</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/4fd6109ba2d549ccb6fa17ba1e27b773.png#" alt="在这里插入图片描述"></p>
+<h4 id="04、进入-etc-sysconfig-network-scripts"><a href="#04、进入-etc-sysconfig-network-scripts" class="headerlink" title="04、进入&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;"></a>04、进入&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;</h4><p>找到ifcfg-ens33使用vim命令修改：vim ifcfg-ens33</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ONBOOT=<span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/3e695c873cff55f74310ab5e139b5237.png#" alt="在这里插入图片描述"></p>
+<h4 id="05、重启服务器，使用reboot命令"><a href="#05、重启服务器，使用reboot命令" class="headerlink" title="05、重启服务器，使用reboot命令"></a>05、重启服务器，使用reboot命令</h4><p>重启完，使用命令查看IP地址：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
+<p>这里建议修改虚拟机的IP地址为静态地址。</p>
+<p>至于如何修改，文章后续会提到，可以参考网上的其它文章。</p>
+<p>给出自己总结如何修改IP地址，站内搜索：Linux系统配置静态ip地址</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/9e9d3d941bbfd93631ee58810503d8d1.png#" alt="在这里插入图片描述"></p>
+<h2 id="五、XSHELL的配置"><a href="#五、XSHELL的配置" class="headerlink" title="五、XSHELL的配置"></a>五、XSHELL的配置</h2><p>xshell的下载与安装，去官网获取xshell个人版，免费使用正版。<br><strong>xshell7个人版：</strong><br><img data-src="https://img-blog.csdnimg.cn/0b19f9858fc640f99277b4d06e3b804f.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>有能力支持正版，当然还是支持正版<br><img data-src="https://img-blog.csdnimg.cn/e85e67d43d9a4c129888032b1ef326c7.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>使用邮箱账号去接收，xshell官方的下载地址：<br><span class="exturl" data-url="aHR0cHM6Ly93d3cubmV0c2FyYW5nLmNvbS96aC9mcmVlLWZvci1ob21lLXNjaG9vbC8=">https://www.netsarang.com/zh/free-for-home-school/<i class="fa fa-external-link-alt"></i></span></p>
+<p>当然某功能有阉割，个人使用足以。</p>
+<h4 id="01、XSHELL的使用，配置用户主机"><a href="#01、XSHELL的使用，配置用户主机" class="headerlink" title="01、XSHELL的使用，配置用户主机"></a>01、XSHELL的使用，配置用户主机</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/b02b17f108472071b00e4afa35c3934d.png#" alt="在这里插入图片描述"></p>
+<h4 id="02、XSHELL的使用，配置用户主机名与密码"><a href="#02、XSHELL的使用，配置用户主机名与密码" class="headerlink" title="02、XSHELL的使用，配置用户主机名与密码"></a>02、XSHELL的使用，配置用户主机名与密码</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/99e1d5a355db679753bcbd7cb11bcb63.png#" alt="在这里插入图片描述"></p>
+<h4 id="03、验证主机秘钥"><a href="#03、验证主机秘钥" class="headerlink" title="03、验证主机秘钥"></a>03、验证主机秘钥</h4><p>选择一次性接受，以后每次登陆需要输入用户密码。（自己的服务器，建议选一次性接受比较好）<br>选择永久接受，不用每次输入密码。（虚拟机搭建的环境，怎么方便怎么来）</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/f35dca0df5e2043abac736a70a1d3ef4.png#" alt="在这里插入图片描述"></p>
+<h4 id="04、至此登录XSHELL成功"><a href="#04、至此登录XSHELL成功" class="headerlink" title="04、至此登录XSHELL成功"></a>04、至此登录XSHELL成功</h4><p><img data-src="https://img-blog.csdnimg.cn/img_convert/ca6b72eeaa09af3941231cc2df38fb3d.png#" alt="在这里插入图片描述"></p>
+<p><strong>centos6.5以及centos7的镜像</strong><br>链接：<span class="exturl" data-url="aHR0cHM6Ly9zaGFyZS53ZWl5dW4uY29tLzVsZ3lZdms=">https://share.weiyun.com/5lgyYvk <i class="fa fa-external-link-alt"></i></span><br>密码：wcnrws</p>
+<h2 id="六、搭建lnmpa环境"><a href="#六、搭建lnmpa环境" class="headerlink" title="六、搭建lnmpa环境"></a>六、搭建lnmpa环境</h2><p>lnmpa环境的搭建，可以使用一键命令安装，也可以单独手动配置。<br>linux + Nginx + MySQL（MariaDB）+ php（看需求） + Apache（Tomcat）</p>
+<p>参考lnmp网站的安装，很详细：<br><span class="exturl" data-url="aHR0cHM6Ly9sbm1wLm9yZy9kb3dubG9hZC5odG1s">https://lnmp.org/download.html<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2021/04/26/CentOS7%20Linux%20%E4%BD%BF%E7%94%A8VMware12%E6%90%AD%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/" title="CentOS7 Linux 使用VMware12搭建测试环境">https://blog.cnwangk.top/2021/04/26/CentOS7 Linux 使用VMware12搭建测试环境/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/" rel="prev" title="MySQL连接工具workbench">
+                  <i class="fa fa-angle-left"></i> MySQL连接工具workbench
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/05/25/windows%E4%B8%8Bjdk%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85jre%E6%95%99%E7%A8%8B/" rel="next" title="windows下jdk手动安装jre教程">
+                  windows下jdk手动安装jre教程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2021/04/26/CentOS7%20Linux%20%E4%BD%BF%E7%94%A8VMware12%E6%90%AD%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

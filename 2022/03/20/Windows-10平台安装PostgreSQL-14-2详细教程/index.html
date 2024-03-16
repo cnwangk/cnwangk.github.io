@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Windows 10平台安装postgreSQL 14.2.1，安装步骤很简单，基本上是点击下一步（next）。 使用SQL Shell（psql）进行交互；使用pgAdmin工具进行管理。 tips：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人公众号搜索 Windows 10平台安装PostgreSQL 14.2详细教程。 postgreSQL安装详细教">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Windows 10平台安装PostgreSQL 14.2详细教程">
+<meta property="og:url" content="https://blog.cnwangk.top/2022/03/20/Windows-10%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85PostgreSQL-14-2%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="Windows 10平台安装postgreSQL 14.2.1，安装步骤很简单，基本上是点击下一步（next）。 使用SQL Shell（psql）进行交互；使用pgAdmin工具进行管理。 tips：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人公众号搜索 Windows 10平台安装PostgreSQL 14.2详细教程。 postgreSQL安装详细教">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-29T11:16:45.281Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="PostgreSQL">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2022/03/20/Windows-10%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85PostgreSQL-14-2%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2022/03/20/Windows-10%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85PostgreSQL-14-2%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/","path":"2022/03/20/Windows-10平台安装PostgreSQL-14-2详细教程/","title":"Windows 10平台安装PostgreSQL 14.2详细教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Windows 10平台安装PostgreSQL 14.2详细教程 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#postgreSQL%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">postgreSQL安装详细教程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80postgreSQL-%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.1.</span> <span class="nav-text">一	postgreSQL 安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-%E4%B8%8B%E8%BD%BDpostgreSQL"><span class="nav-number">1.1.1.</span> <span class="nav-text">01 下载postgreSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02Windows-10%E5%AE%89%E8%A3%85postgreSQL-14-2"><span class="nav-number">1.1.2.</span> <span class="nav-text">02	Windows 10安装postgreSQL 14.2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#03postgreSQL-%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.3.</span> <span class="nav-text">03	postgreSQL 安装目录说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8CpostgreSQL-%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">二	postgreSQL 遇到问题解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">01	遇到问题处理方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02%E5%AE%9E%E9%99%85%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.2.</span> <span class="nav-text">02	实际解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E4%BD%BF%E7%94%A8SQL-Shell%EF%BC%88psql%EF%BC%89%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92"><span class="nav-number">1.3.</span> <span class="nav-text">三	使用SQL Shell（psql）进行交互</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01%E4%BD%BF%E7%94%A8select%E8%AF%AD%E5%8F%A5%E9%AA%8C%E8%AF%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">01	使用select语句验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02%E4%BD%BF%E7%94%A8explain%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">1.3.2.</span> <span class="nav-text">02	使用explain进行测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E4%BD%BF%E7%94%A8pgAdmin%E8%BF%9B%E8%A1%8C%E7%AE%A1%E7%90%86"><span class="nav-number">1.4.</span> <span class="nav-text">四	使用pgAdmin进行管理</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/04/26/rockyLinux%E5%88%9D%E4%BD%93%E9%AA%8CPostgreSQL15%E8%AF%A6%E7%BB%86%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" rel="bookmark">
+        <time class="popular-posts-time">2023-04-26</time>
+        <br>
+      rockyLinux初体验PostgreSQL15详细安装教程
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/03/20/Windows-10%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85PostgreSQL-14-2%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Windows 10平台安装PostgreSQL 14.2详细教程 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows 10平台安装PostgreSQL 14.2详细教程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-20 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-20T00:00:00+08:00">2022-03-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-29 19:16:45" itemprop="dateModified" datetime="2023-05-29T19:16:45+08:00">2023-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Windows 10平台安装postgreSQL 14.2.1，安装步骤很简单，基本上是点击下一步（next）。</p>
+<p>使用SQL Shell（psql）进行交互；使用pgAdmin工具进行管理。</p>
+<p><strong>tips</strong>：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人公众号搜索 <span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpVMk16YzBNekUwTmc9PSZtaWQ9MjI0NzQ4Njc5OSZpZHg9MSZzbj1kNTg2OWRjOGQ4ZGY2MmU3MGUxZDU4ODVjNmMwNWYzOCZjaGtzbT1mYzU0ZGQ4YWNiMjM1NDljMTgzMmNhZjI4NDE3MTQ1NDg2ZWZkNzgyNjQ4MzIyY2M2YWZjNDhiYzQ4YTgyYjBkZWUzNTJhNDE2MGYxI3Jk">Windows 10平台安装PostgreSQL 14.2详细教程<i class="fa fa-external-link-alt"></i></span>。</p>
+<h1 id="postgreSQL安装详细教程"><a href="#postgreSQL安装详细教程" class="headerlink" title="postgreSQL安装详细教程"></a>postgreSQL安装详细教程</h1><h2 id="一postgreSQL-安装步骤"><a href="#一postgreSQL-安装步骤" class="headerlink" title="一	postgreSQL 安装步骤"></a>一	postgreSQL 安装步骤</h2><h3 id="01-下载postgreSQL"><a href="#01-下载postgreSQL" class="headerlink" title="01 下载postgreSQL"></a>01 下载postgreSQL</h3><p>Windows版本（64位）postgreSQL 14.2.1下载地址：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZW50ZXJwcmlzZWRiLmNvbS9wb3N0Z3Jlc3FsLXR1dG9yaWFsLXJlc291cmNlcy10cmFpbmluZz91dWlkPWRiNTVlMzJkLWU5ZjAtNGQ3Yy05YWVmLWIxN2QwMTIxMDcwNCZjYW1wYWlnbklkPTcwMTJKMDAwMDAxTmhzelFBQw==">https://www.enterprisedb.com/postgresql-tutorial-resources-training?uuid=db55e32d-e9f0-4d7c-9aef-b17d01210704&campaignId=7012J000001NhszQAC<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>官网</strong>：<span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcv">https://www.postgresql.org<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>官方文档</strong>：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcvZG9jcy8=">https://www.postgresql.org/docs/<i class="fa fa-external-link-alt"></i></span></p>
+<p>最新版本14的PDF下载地址：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcvZmlsZXMvZG9jdW1lbnRhdGlvbi9wZGYvMTQvcG9zdGdyZXNxbC0xNC1BNC5wZGY=">https://www.postgresql.org/files/documentation/pdf/14/postgresql-14-A4.pdf<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="02Windows-10安装postgreSQL-14-2"><a href="#02Windows-10安装postgreSQL-14-2" class="headerlink" title="02	Windows 10安装postgreSQL 14.2"></a>02	Windows 10安装postgreSQL 14.2</h3><p><strong>2.1	安装步骤01</strong></p>
+<p>Setup	—— PostgreSQL</p>
+<p>进入PostgreSQL安装界面</p>
+<p><strong>2.2	安装步骤02</strong></p>
+<p>Installation Directory</p>
+<p><strong>注意</strong>：选择安装目录，推荐安装至D盘或者顺延。</p>
+<p><strong>2.3	安装步骤03</strong></p>
+<p>Select components</p>
+<p><strong>选择需要安装的服务</strong>：</p>
+<ol>
+<li>PostgreSQL Server：数据库（DBMS）服务，<strong>必选项</strong>。</li>
+<li>pgAdmin 4：客户端管理工具，建议勾选。</li>
+<li>Stack Builder：依据需求选择。</li>
+<li>Command Line Tools：命令行工具，交互<strong>必选项</strong>。</li>
+</ol>
+<p><strong>2.4	安装步骤04</strong></p>
+<p>Data Directory</p>
+<p>设置数据库实例化数据存放目录。类似于MySQ初始化生成data目录。</p>
+<p><strong>2.5	安装步骤05</strong></p>
+<p>Set Password</p>
+<p>设置数据库超级用户（postgres）密码。</p>
+<p>如果初始化失败，后续则不会生效。</p>
+<p><strong>2.6	安装步骤06</strong></p>
+<p>Port</p>
+<p>设置默认监听端口（port）：5432</p>
+<p><strong>2.7	安装步骤07</strong></p>
+<p>Advanced Options</p>
+<p>建议选择数据库群组（database cluster），下拉有中文简体可选。</p>
+<p>cluster有集群的意思，但在此处指的是组、群组、国别地区（安装支持的语言）。</p>
+<p><strong>注意</strong>：这一步初始化后生成的data目录是空的，可能是权限问题（<strong>会有警告提示</strong>，导致初始化失败，虽然最终安装完成）。</p>
+<p><strong>2.8	安装步骤08</strong></p>
+<p>Pre Installation Summary</p>
+<p><strong>打印出安装配置信息</strong>，其它数据库厂商（DBMS）提供的可视化界面安装一样会有信息显示，例如Oracle数据库。</p>
+<p><strong>2.9	安装步骤09</strong></p>
+<p>Ready to Install</p>
+<p>到了这一步，真正开始执行安装过程。</p>
+<p>关于遇到的警告问题，会在遇到问题解决方案进行展示说明，并给出个人解决方案。</p>
+<h3 id="03postgreSQL-安装目录说明"><a href="#03postgreSQL-安装目录说明" class="headerlink" title="03	postgreSQL 安装目录说明"></a>03	postgreSQL 安装目录说明</h3><p><strong>3.1	postgreSQL 安装目录重点说明</strong></p>
+<ol>
+<li>bin：bin目录一般存放与数据库服务进行交互的命令脚本。</li>
+<li>data：data目录是初始化完成后生成的数据库文件，包含配置文件postgresql.conf。</li>
+<li>pgAdmin 4 ：存放pgAdmin 4客户端管理工具文件。</li>
+<li>uninstall-postgresql.dat与uninstall-postgresql.exe：提供便捷式卸载。</li>
+</ol>
+<p><strong>3.2	data目录</strong></p>
+<ol>
+<li>主要注意postgresql.conf配置文件，比如配置监听端口（port）和主机（IP）地址。</li>
+</ol>
+<p><strong>3.3	配置文件设置</strong></p>
+<ol>
+<li>listen_addresses：设置监听主机地址，重启服务生效。</li>
+<li>port：设置监听服务默认端口，重启服务生效。</li>
+</ol>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># - Connection Settings -</span></span><br><span class="line"><span class="attr">listen_addresses</span> = <span class="string">&#x27;localhost&#x27;</span>		<span class="comment"># what IP address(es) to listen on;</span></span><br><span class="line">					<span class="comment"># comma-separated list of addresses;</span></span><br><span class="line">					<span class="comment"># defaults to &#x27;localhost&#x27;; use &#x27;*&#x27; for all</span></span><br><span class="line">					<span class="comment"># (change requires restart)</span></span><br><span class="line"><span class="attr">port</span> = <span class="number">5432</span>				<span class="comment"># (change requires restart)</span></span><br><span class="line"><span class="attr">max_connections</span> = <span class="number">100</span>			<span class="comment"># (change requires restart)</span></span><br><span class="line"><span class="comment">#superuser_reserved_connections = 3	# (change requires restart)</span></span><br><span class="line"><span class="comment">#unix_socket_directories = &#x27;&#x27;	# comma-separated list of directories</span></span><br><span class="line">					<span class="comment"># (change requires restart)</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="二postgreSQL-遇到问题解决方案"><a href="#二postgreSQL-遇到问题解决方案" class="headerlink" title="二	postgreSQL 遇到问题解决方案"></a>二	postgreSQL 遇到问题解决方案</h2><h3 id="01遇到问题处理方法"><a href="#01遇到问题处理方法" class="headerlink" title="01	遇到问题处理方法"></a>01	遇到问题处理方法</h3><ol>
+<li><strong>定位问题</strong>：遇到问题别慌，也别急着去使用搜索引擎，先将问题定位好。</li>
+<li>文档：<strong>参考官方文档</strong>。</li>
+<li>善于使用搜索引擎和<strong>StackOverflow</strong>以及<strong>github的Issues</strong>。</li>
+<li>使用浏览器过滤方式：-xx网址或者-site:xx网址。</li>
+</ol>
+<p>例如，<strong>个人安装遇到问题</strong>（Warning）警告：</p>
+<blockquote>
+<p>Problem running  post-install  step. Installation may not complete correctly</p>
+<p>The database cluster installation failed  </p>
+</blockquote>
+<p>我第一时间联想到的是初始化出问题了，<strong>去检查data目录</strong>，果不其然是空的。</p>
+<p>如果你有一些英语底子（说实话，个人基本是靠平时积累的词汇量和有道），一些命令基本上可以猜个八九不离十。</p>
+<p>以前我的同事问我，你是猜的？结果发现还挺准的。后面还有一句话没说出来而已，其实是有一定依据才去试一试的。</p>
+<h3 id="02实际解决方案"><a href="#02实际解决方案" class="headerlink" title="02	实际解决方案"></a>02	实际解决方案</h3><p>个人根据以前使用MySQL（其它数据库）的经验进行判断，结合官方文档进行思考的临时解决方案。</p>
+<p>出现警告后，使用以下方式解决无法启动postgreSQL：</p>
+<ol>
+<li><p>检查data目录是空的（初始化失败了）。</p>
+</li>
+<li><p>使用cmd（管理员身份）执行initdb命令初始化。</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\software\PostgreSQL\14\bin&gt;initdb <span class="string">&quot;D:\software\PostgreSQL\14\data&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>继续在cmd（管理员身份）窗口执行创建用户。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\software\PostgreSQL\14\bin&gt;createuser postgres</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>普通用户身份启动postgreSQL。</li>
+</ol>
+<p>​	   如果没有配置环境变量，注意在<strong>PostgreSQL\14\bin目录下执行postgres命令</strong>。使用这种方式启动服务，<strong>使用Ctrl + c快捷键即可退出服务</strong>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\software\PostgreSQL\14\bin&gt;postgres --config-file=<span class="string">&quot;D:\\software\\PostgreSQL\\14\\data\\postgresql.conf&quot;</span> -D <span class="string">&quot;D:\\software\\PostgreSQL\\14\\data&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>或者使用<code>pg_ctl start</code>命令启动服务（postgreSQL加入path环境变量）。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pg_ctl start -D <span class="string">&quot;D:\software\PostgreSQL\14\data&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>使用<code>pg_ctl stop</code>命令关闭服务。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pg_ctl stop -D <span class="string">&quot;D:\software\PostgreSQL\14\data&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如下是使用<code>pg_ctl</code>命令启动服务，然后使用<code>netstat</code>命令去验证服务是否启动。</p>
+<p>安装后第二天查阅StackOverflow：其实解决方案相差不大，和我思考分方向是一致的，可以参考。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzI0NTM0NTEvcG9zdGdyZXMtaW5zdGFsbGF0aW9uLXRoZS1kYXRhYmFzZS1jbHVzdGVyLWluaXRpYWxpemF0aW9uLWZhaWxlZC1wb3N0Z3Jlc3FsLXZl">https://stackoverflow.com/questions/32453451/postgres-installation-the-database-cluster-initialization-failed-postgresql-ve<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<h2 id="三使用SQL-Shell（psql）进行交互"><a href="#三使用SQL-Shell（psql）进行交互" class="headerlink" title="三	使用SQL Shell（psql）进行交互"></a>三	使用SQL Shell（psql）进行交互</h2><h3 id="01使用select语句验证"><a href="#01使用select语句验证" class="headerlink" title="01	使用select语句验证"></a>01	使用select语句验证</h3><p>进入SQL Shell（psql）交互界面，直接回车即可进入（<strong>前提是服务启动成功</strong>）</p>
+<p>如同在MySQL中，使用select 1直接返回结果，这种方式是不走表的，通过explain分析就可看出。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="02使用explain进行测试"><a href="#02使用explain进行测试" class="headerlink" title="02	使用explain进行测试"></a>02	使用explain进行测试</h3><p>使用explain测试select 1：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain <span class="keyword">select</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="四使用pgAdmin进行管理"><a href="#四使用pgAdmin进行管理" class="headerlink" title="四	使用pgAdmin进行管理"></a>四	使用pgAdmin进行管理</h2><p><strong>01	配置服务名称</strong></p>
+<p><strong>注意</strong>：Name是必填项。</p>
+<p><strong>02	配置连接</strong></p>
+<ol>
+<li>HOST name、address：配置主机名或者IP地址。</li>
+<li>Port：配置连接监听端口（启动服务时，在配置文件设置的端口）。</li>
+<li>Usernam：用户名。</li>
+<li>Password：用户密码。</li>
+</ol>
+<p><strong>03	初次进入pgAdmin需要配置密码</strong></p>
+<p><strong>04	配置完后的界面</strong></p>
+<p>progres和test是自己使用命令创建的：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">createuser progres</span><br><span class="line">createuser test</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>—END—</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2022/03/20/Windows-10%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85PostgreSQL-14-2%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="Windows 10平台安装PostgreSQL 14.2详细教程">https://blog.cnwangk.top/2022/03/20/Windows-10平台安装PostgreSQL-14-2详细教程/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/PostgreSQL/" rel="tag"><i class="fa fa-tag"></i> PostgreSQL</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/17/MySQL%E7%AD%89%E4%B8%BB%E6%B5%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%82%E5%95%86%EF%BC%88DBMS%EF%BC%89-%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E5%9C%B0%E5%9D%80/" rel="prev" title="MySQL等主流数据库厂商（DBMS）--官方文档地址">
+                  <i class="fa fa-angle-left"></i> MySQL等主流数据库厂商（DBMS）--官方文档地址
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/04/07/MySQL%E9%94%81%E9%97%AE%E9%A2%98InnoDB%E9%94%81%EF%BC%9A%E8%A1%8C%E9%94%81%E3%80%81lock%E4%B8%8Elatch%E3%80%81%E5%A4%96%E9%94%AE%E4%B8%8E%E9%94%81%E3%80%81%E9%94%81%E7%AE%97%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/" rel="next" title="MySQL锁问题InnoDB锁：行锁、lock与latch、外键与锁、锁算法以及死锁问题">
+                  MySQL锁问题InnoDB锁：行锁、lock与latch、外键与锁、锁算法以及死锁问题 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2022/03/20/Windows-10%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85PostgreSQL-14-2%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

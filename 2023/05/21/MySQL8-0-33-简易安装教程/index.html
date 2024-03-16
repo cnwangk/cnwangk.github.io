@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="当你看到这篇教程时，MySQL 目前最新GA（稳定）版本可能已经更新到了 MySQL8.0.36 或者更高，MySQL :: MySQL 8.0 Release Notes :: Changes in MySQL 8.0.36 (2024-01-16, General Availability)，创新版 Innovation MySQL :: MySQL 8.3 Release Notes ::">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Windows 11 和 Rocky 9 Linux 初体验 MySQL8.0.33 简易安装教程">
+<meta property="og:url" content="https://blog.cnwangk.top/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="当你看到这篇教程时，MySQL 目前最新GA（稳定）版本可能已经更新到了 MySQL8.0.36 或者更高，MySQL :: MySQL 8.0 Release Notes :: Changes in MySQL 8.0.36 (2024-01-16, General Availability)，创新版 Innovation MySQL :: MySQL 8.3 Release Notes ::">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-21T14:09:58.000Z">
+<meta property="article:modified_time" content="2024-03-13T14:19:59.474Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/","path":"2023/05/21/MySQL8-0-33-简易安装教程/","title":"Windows 11 和 Rocky 9 Linux 初体验 MySQL8.0.33 简易安装教程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Windows 11 和 Rocky 9 Linux 初体验 MySQL8.0.33 简易安装教程 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85-MySQL"><span class="nav-number">1.</span> <span class="nav-text">Windows 平台安装 MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-MySQL"><span class="nav-number">1.1.</span> <span class="nav-text">部署 MySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E6%AD%A5%E4%BD%BF%E7%94%A8-MySQL"><span class="nav-number">1.2.</span> <span class="nav-text">初步使用 MySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">修改密码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E5%B9%B3%E5%8F%B0-Rocky-9-%E5%AE%89%E8%A3%85-MySQL"><span class="nav-number">2.</span> <span class="nav-text">Linux 平台 Rocky 9 安装 MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#binary-package"><span class="nav-number">2.1.</span> <span class="nav-text">binary package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpm-package"><span class="nav-number">2.2.</span> <span class="nav-text">rpm package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yum-%E6%BA%90"><span class="nav-number">2.3.</span> <span class="nav-text">yum 源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#source-package"><span class="nav-number">2.4.</span> <span class="nav-text">source package</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80"><span class="nav-number">3.</span> <span class="nav-text">MySQL官方文档下载地址</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/03/15/MySQL8-0-x-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" rel="bookmark">
+        <time class="popular-posts-time">2023-03-15</time>
+        <br>
+      MySQL8.0.x 简易安装教程
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/01/31/MySQL8-0-28%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%A8%E7%A8%8B%E5%8F%82%E8%80%83MySQL%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3/" rel="bookmark">
+        <time class="popular-posts-time">2022-01-31</time>
+        <br>
+      MySQL8.0.28安装教程全程参考MySQL官方文档
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/12/31/%E8%81%8A%E4%B8%80%E6%9C%9Fmariadb%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" rel="bookmark">
+        <time class="popular-posts-time">2023-12-31</time>
+        <br>
+      聊一期 mariadb 笔记整理
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/03/17/MySQL%E7%AD%89%E4%B8%BB%E6%B5%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%82%E5%95%86%EF%BC%88DBMS%EF%BC%89-%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E5%9C%B0%E5%9D%80/" rel="bookmark">
+        <time class="popular-posts-time">2022-03-17</time>
+        <br>
+      MySQL等主流数据库厂商（DBMS）--官方文档地址
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/" rel="bookmark">
+        <time class="popular-posts-time">2021-04-11</time>
+        <br>
+      MySQL连接工具workbench
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Windows 11 和 Rocky 9 Linux 初体验 MySQL8.0.33 简易安装教程 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows 11 和 Rocky 9 Linux 初体验 MySQL8.0.33 简易安装教程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-21 22:09:58" itemprop="dateCreated datePublished" datetime="2023-05-21T22:09:58+08:00">2023-05-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-13 22:19:59" itemprop="dateModified" datetime="2024-03-13T22:19:59+08:00">2024-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>17 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>当你看到这篇教程时，MySQL 目前最新GA（稳定）版本可能已经更新到了 MySQL8.0.36 或者更高，<span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjAvZW4vbmV3cy04LTAtMzYuaHRtbA==">MySQL :: MySQL 8.0 Release Notes :: Changes in MySQL 8.0.36 (2024-01-16, General Availability)<i class="fa fa-external-link-alt"></i></span>，创新版 Innovation <span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjMvZW4vbmV3cy04LTMtMC5odG1s">MySQL :: MySQL 8.3 Release Notes :: Changes in MySQL 8.3.0 (2024-01-16, Innovation Release)<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>MySQL 文档整理合集（5.6、5.7、8.0、8.1、8.2、8.3）：</p>
+<p>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMWpHa0dhcldaV1ZuelE5c28wRDhtYUE/cHdkPThrZmY=">https://pan.baidu.com/s/1jGkGarWZWVnzQ9so0D8maA?pwd=8kff<i class="fa fa-external-link-alt"></i></span> </p>
+<p>提取码: 8kff </p>
+<p>文档如何食用，请阅读 docs 目录的 ReadME 文件。</p>
+<p>Windows 11 和 Rocky 9 Linux 初体验 MySQL8.0.33 简易安装教程。</p>
+<hr>
+<p>MySQL 8.0 目前最新稳定版本已经更新到了 MySQL 8.0.33，估计下一个稳定版本（大约在今年 7月份）推出。当然，这是我个人根据 MySQL 的发行注记做出的推测。</p>
+<p>本篇总结作为对之前发出的MySQL系列博文 《MySQL8.0.28安装教程全程参考MySQL官方文档》补充说明。</p>
+<p>MySQL 8.0.x 简易安装教程。</p>
+<p><strong>注意</strong>：如果你想在 MySQL 官网获取 8.0.29 ，是找不到资源的。因为出现了重大问题，官网直接移除了下载资源。推荐跳过 MySQL 8.0.29，升级到更高的版本或者使用历史稳定版本。</p>
+<blockquote>
+<p>Important<br>This release is no longer available for download. It was removed due to a critical issue that could cause data in InnoDB<br>tables having added columns to be interpreted incorrectly. Please upgrade to MySQL 8.0.30 instead.</p>
+</blockquote>
+<span id="more"></span>
+
+
+
+<h1 id="Windows-平台安装-MySQL"><a href="#Windows-平台安装-MySQL" class="headerlink" title="Windows 平台安装 MySQL"></a>Windows 平台安装 MySQL</h1><h2 id="部署-MySQL"><a href="#部署-MySQL" class="headerlink" title="部署 MySQL"></a>部署 MySQL</h2><p><strong>Windows install MySQL 8.0.x (Archive zip) 简易安装教程</strong></p>
+<p><strong>友情提示</strong>：从 MySQL 5.7 开始，Archive zip 默认不再提供默认的 my.ini 或者 my.cnf 配置文件，需要手动构建。</p>
+<p><strong>注意</strong>：x 代表使用 MySQL 8.0 某个具体版本，比如我演示：mysql-8.0.33-winx64.zip。</p>
+<ol>
+<li>获取 mysql-8.0.33-winx64.zip：<span class="exturl" data-url="aHR0cHM6Ly9jZG4ubXlzcWwuY29tLy9Eb3dubG9hZHMvTXlTUUwtOC4wL215c3FsLTguMC4zMy13aW54NjQuemlw">https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.33-winx64.zip<i class="fa fa-external-link-alt"></i></span></li>
+<li>解压免安装版 MySQL：<code>unzip mysql-8.0.x-winx64.zip</code></li>
+<li>切换到 MySQL 解压目录：<code>cd mysql-8.0.x-winx64</code></li>
+<li>新增 MySQL 配置文件： <code>my.ini</code>，详细配置可以参考官方文档，或者安装 msi 安装包，复制一份作为参考。</li>
+<li>初始化 MySQL：<code>bin\mysqld --initialize-insecure</code> 或者 <code>bin\mysqld --initialize-insecure --console</code> </li>
+<li>注册 MySQL 服务：<code>bin\mysqld --install MySQL80</code>（将 MySQL 服务注册到 service，可以使用 net 命令进行管理）</li>
+<li>启动 MySQL 服务：<code>net start MySQL80</code> 或者 <code>sc start MySQL80</code></li>
+<li>登录 MySQL 字符终端管理界面：<code>mysql  -uroot  -p</code></li>
+</ol>
+<p><strong>友情提醒</strong>，如果你在 Windows 平台原生无法使用 <code>unzip</code> 命令，请尝试打开 <strong>powershell</strong> 使用 <strong>Expand-Archive</strong> 命令解压。</p>
+<p>示例<strong>解压到默认目录</strong>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Expand-Archive</span> .\mysql<span class="literal">-8</span>.<span class="number">0.33</span><span class="literal">-winx64</span>.zip</span><br></pre></td></tr></table></figure>
+
+
+
+<p>示例<strong>解压到指定目录</strong> <code>D:\work\</code>，使用参数  <code>-DestinationPath</code>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Expand-Archive</span> .\mysql<span class="literal">-8</span>.<span class="number">0.33</span><span class="literal">-winx64</span>.zip <span class="literal">-DestinationPath</span> D:\work\</span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果你想<strong>指定压缩文件路径D:\Downloads\DBMS\MySQL\winx64\mysql-8.0.28-winx64.zip</strong></p>
+<p>可以使用 <strong>-Path</strong> 参数：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Expand-Archive</span> <span class="literal">-Path</span> D:\Downloads\DBMS\MySQL\winx64\mysql<span class="literal">-8</span>.<span class="number">0.33</span><span class="literal">-winx64</span>.zip <span class="literal">-DestinationPath</span> D:\work\</span><br></pre></td></tr></table></figure>
+
+<p><strong>可参考资料</strong>：<span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLmFyY2hpdmUvZXhwYW5kLWFyY2hpdmU/dmlldz1wb3dlcnNoZWxsLTcuNA==">expand-archive<i class="fa fa-external-link-alt"></i></span></p>
+<p>Windows 环境新建 my.ini 做如下设置，指定基本安装目录（basedir）与数据存放目录（datadir）以及端口号（port）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">port=3307</span><br><span class="line">basedir=D:\\mysql-8.0.33-winx64</span><br><span class="line">datadir=D:\\mysql-8.0.33-winx64\\data</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>为了便于演示，我设置 port 端口为 3307 ，登录时通过参数 -P 指定特定端口号</strong>。  </p>
+<p>复现在网上看到的一个问题，如果出现如下问题，如何解决？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PS D:\mysql-8.0.33-winx64&gt; bin\mysqld –initialize-insecure –console</span><br><span class="line">[System] [MY-010116] [Server] D:\mysql-8.0.33-winx64\bin\mysqld.exe (mysqld 8.0.33) starting as process 12860</span><br><span class="line">[Warning] [MY-010091] [Server] </span><br><span class="line">Can<span class="string">&#x27;t create test file D:\mysql-8.0.33-winx64\data\mysqld_tmp_file_case_insensitive_test.lower-test</span></span><br><span class="line"><span class="string">[Warning] [MY-010091] [Server] </span></span><br><span class="line"><span class="string">Can&#x27;</span>t create <span class="built_in">test</span> file D:\mysql-8.0.33-winx64\data\mysqld_tmp_file_case_insensitive_test.lower-test</span><br><span class="line">[ERROR] [MY-013376] [Server] Failed to <span class="built_in">set</span> datadir to <span class="string">&#x27;D:\mysql-8.0.33-winx64\data\&#x27;</span> (OS errno: 2 - No such file or directory)</span><br><span class="line">[ERROR] [MY-010119] [Server] Aborting</span><br><span class="line">[System] [MY-010910] [Server] D:\mysql-8.0.33-winx64\bin\mysqld.exe: Shutdown complete (mysqld 8.0.33)  MySQL Community Server - GPL.</span><br></pre></td></tr></table></figure>
+
+<p>需要检查初始化命令参数是否有缺失：bin\mysqld.exe –initialize-insecure –console，才发现从 Windows powershell 中从文档复制过来的 <code>--</code> 变成了 – 拼接在一起的单横杠。</p>
+<p><strong>注意</strong>：注意细节问题。如果出现初始化 data 目录失败，某某文件、目录无法创建等等问题。有可能是格式显示问题，复制粘贴参数时单 - 中横杠 和 <code>--</code> 双中横杠没有区分开来，如果放在代码块中正常显示。</p>
+<p>如下是示例，初始化 MySQL 方式：</p>
+<ol>
+<li>密码随机：<code>bin\mysqld --initialize</code></li>
+<li>密码置空：<code>bin\mysqld --initialize-insecure</code></li>
+<li>密码置空且将信息打印在字符命令行界面上：<code>bin\mysqld --initialize-insecure --console</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bin\mysqld --initialize  			<span class="comment"># 密码随机</span></span><br><span class="line">bin\mysqld --initialize-insecure 	<span class="comment"># 密码置空</span></span><br><span class="line">bin\mysqld --initialize-insecure --console 	<span class="comment"># 密码置空且将信息打印在字符命令行界面上 </span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<p><strong>友情提示</strong>：打开 CMD 或者 PowerShell 时，请以管理员身份运行，如果没有，安装服务时则会提示权限拒绝，如下所示。</p>
+<p><strong>D:\software\mysql-8.0.33-winx64\bin&gt;mysqld –install MySQL80</strong><br><strong>Install&#x2F;Remove of the Service Denied!</strong></p>
+<p><strong>Windows 11 操作系统中安装 MySQL8.0.33</strong>  (noinstall Archive zip) 步骤</p>
+<p>使用 Windows 自带的终端管理工具，打开 PowerShell：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">PS D:\work&gt; <span class="built_in">cd</span> D:\work\mysql-8.0.33-winx64</span><br><span class="line">PS D:\work\mysql-8.0.33-winx64&gt; .\bin\mysqld --initialize-insecure --console</span><br><span class="line">2023-05-21T07:04:03.420220Z 0 [System] [MY-013169] [Server] D:\work\mysql-8.0.33-winx64\bin\mysqld.exe (mysqld 8.0.33) initializing of server <span class="keyword">in</span> progress as process 13344</span><br><span class="line">2023-05-21T07:04:03.465908Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.</span><br><span class="line">2023-05-21T07:04:03.941998Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.</span><br><span class="line">2023-05-21T07:04:05.242589Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.</span><br><span class="line"></span><br><span class="line">D:\work\mysql-8.0.33-winx64&gt;bin\mysqld --install MySQL80</span><br><span class="line">Service successfully installed.</span><br><span class="line">D:\work\mysql-8.0.33-winx64&gt;net start MySQL80</span><br><span class="line">MySQL80 服务正在启动 .</span><br><span class="line">MySQL80 服务已经启动成功。</span><br><span class="line"></span><br><span class="line">PS D:\work\mysql-8.0.33-winx64&gt; bin\mysql -uroot -p -P 3307</span><br><span class="line">Enter password:</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection <span class="built_in">id</span> is 8</span><br><span class="line">Server version: 8.0.33 MySQL Community Server - GPL</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2023, Oracle and/or its affiliates.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type <span class="string">&#x27;help;&#x27;</span> or <span class="string">&#x27;\h&#x27;</span> <span class="keyword">for</span> <span class="built_in">help</span>. Type <span class="string">&#x27;\c&#x27;</span> to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="初步使用-MySQL"><a href="#初步使用-MySQL" class="headerlink" title="初步使用 MySQL"></a>初步使用 MySQL</h2><p>默认登录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure>
+
+<p>指定 ip 地址以及端口号：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p -h 192.168.245.133 -P 3307</span><br></pre></td></tr></table></figure>
+
+<p>参数含义：</p>
+<ol>
+<li>-u：指定用户名（user）</li>
+<li>-p：指定密码（password）</li>
+<li>-h：指定主机地址（host）</li>
+<li>-P：指定端口号（port）</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">PS D:\work\mysql<span class="number">-8.0</span><span class="number">.33</span><span class="operator">-</span>winx64<span class="operator">&gt;</span> bin\mysql <span class="operator">-</span>uroot <span class="operator">-</span>p <span class="operator">-</span>P <span class="number">3307</span></span><br><span class="line">Enter password:</span><br><span class="line">Welcome <span class="keyword">to</span> the MySQL monitor.  Commands <span class="keyword">end</span> <span class="keyword">with</span> ; <span class="keyword">or</span> \g.</span><br><span class="line">Your MySQL connection id <span class="keyword">is</span> <span class="number">8</span></span><br><span class="line">Server version: <span class="number">8.0</span><span class="number">.33</span> MySQL Community Server <span class="operator">-</span> GPL</span><br><span class="line"></span><br><span class="line">Copyright (c) <span class="number">2000</span>, <span class="number">2023</span>, Oracle <span class="keyword">and</span><span class="operator">/</span><span class="keyword">or</span> its affiliates.</span><br><span class="line"></span><br><span class="line">Oracle <span class="keyword">is</span> a registered trademark <span class="keyword">of</span> Oracle Corporation <span class="keyword">and</span><span class="operator">/</span><span class="keyword">or</span> its</span><br><span class="line">affiliates. Other names may be trademarks <span class="keyword">of</span> their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type <span class="string">&#x27;help;&#x27;</span> <span class="keyword">or</span> <span class="string">&#x27;\h&#x27;</span> <span class="keyword">for</span> help. Type <span class="string">&#x27;\c&#x27;</span> <span class="keyword">to</span> clear the <span class="keyword">current</span> input statement.</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="number">990</span> <span class="operator">+</span> <span class="number">8</span> \G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line"><span class="number">990</span> <span class="operator">+</span> <span class="number">8</span>: <span class="number">998</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">create</span> database study;</span><br><span class="line">Query OK, <span class="number">1</span> <span class="type">row</span> affected (<span class="number">0.01</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> use study;</span><br><span class="line">Database changed</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">create</span> <span class="keyword">table</span> books(books_id <span class="type">int</span> <span class="keyword">primary</span> key,books_name <span class="type">varchar</span>(<span class="number">64</span>),isbn <span class="type">varchar</span>(<span class="number">64</span>),author <span class="type">varchar</span>(<span class="number">33</span>));</span><br><span class="line">Query OK, <span class="number">0</span> <span class="keyword">rows</span> affected (<span class="number">0.02</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> books\G</span><br><span class="line"><span class="keyword">Empty</span> <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">insert</span> <span class="keyword">into</span> books(books_id,books_name,isbn,author) <span class="keyword">values</span>(<span class="number">1001</span>,<span class="string">&#x27;绝世武功秘籍&#x27;</span>,<span class="string">&#x27;22-90-12345&#x27;</span>,<span class="string">&#x27;不详&#x27;</span>);</span><br><span class="line">Query OK, <span class="number">1</span> <span class="type">row</span> affected (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> books\G</span><br><span class="line"><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span> <span class="number">1.</span> <span class="type">row</span> <span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span><span class="operator">*</span></span><br><span class="line">  books_id: <span class="number">1001</span></span><br><span class="line">books_name: 绝世武功秘籍</span><br><span class="line">      isbn: <span class="number">22</span><span class="number">-90</span><span class="number">-12345</span></span><br><span class="line">    author: 不详</span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>检查日志文件</strong> ：data directory host_name.err file.could not open the mysql.plugin table</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">711538Z 0 [System] [MY-013169] [Server] d:\mysql-8.0.33-winx64\bin\mysqld.exe (mysqld 8.0.33) initializing of server <span class="keyword">in</span> progress as process 13908</span><br><span class="line">746579Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.</span><br><span class="line">205845Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.</span><br><span class="line">399260Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.**</span><br><span class="line">020963Z 0 [System] [MY-010116] [Server] D:\mysql-8.0.33-winx64\bin\mysqld (mysqld 8.0.33) starting as process 13756</span><br><span class="line">038677Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.</span><br><span class="line">333181Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.</span><br><span class="line">552785Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.</span><br><span class="line">553344Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported <span class="keyword">for</span> this channel.</span><br><span class="line">583339Z 0 [System] [MY-011333] [Server] X Plugin ready <span class="keyword">for</span> connections. Bind-address: <span class="string">&#x27;::&#x27;</span> port: 33360</span><br><span class="line">583379Z 0 [System] [MY-010931] [Server] D:\mysql-8.0.33-winx64\bin\mysqld: ready <span class="keyword">for</span> connections. Version: <span class="string">&#x27;8.0.33&#x27;</span>  socket: <span class="string">&#x27;&#x27;</span>  port: 3307  MySQL Community Server - GPL.</span><br><span class="line">085937Z 0 [System] [MY-013105] [Server] D:\mysql-8.0.33-winx64\bin\mysqld: Normal shutdown.</span><br><span class="line">812152Z 0 [System] [MY-010910] [Server] D:\mysql-8.0.33-winx64\bin\mysqld: Shutdown complete (mysqld 8.0.33)  MySQL Community Server - GPL.</span><br></pre></td></tr></table></figure>
+
+
+<p>发现问题：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">could not open the mysql.plugin table</span><br></pre></td></tr></table></figure>
+
+<p>尝试解决问题：</p>
+<ol>
+<li>检查配置文件：my.ini</li>
+<li>分析问题，检查初始化和安装服务：<code>mysqld --initialize</code> 或者 <code>mysqld --initialize-insecure --console</code></li>
+<li>移除服务：<code>mysqld --remove MySQL80</code></li>
+<li>移除数据目录：data</li>
+<li>排查问题，再次初始化：<code>mysqld --initialize</code> 或者 <code>mysqld --initialize-insecure --console</code></li>
+<li>再次安装服务：<code>mysqld --install MySQL80</code></li>
+</ol>
+<h2 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h2><p>登录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure>
+
+<p>修改用户密码</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;mypwd@123&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>创建用户 root，主机地址为 localhost</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;mypwd@123&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>创建用户 root，主机地址%，匹配所有</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;mypwd@123&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>授权 root 用户所有权限，即可使远程登录</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> <span class="keyword">WITH</span> <span class="keyword">GRANT</span> OPTION;</span><br></pre></td></tr></table></figure>
+
+<p><strong>刷新权限</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<p>只做简单介绍，更详细设置请参考 MySQL8.0 官方文档第 6 章节 Security：  <span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vOC4wL2VuL2FjY2Vzcy1jb250cm9sLmh0bWw=">6.2 Access Control and Account Management<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="Linux-平台-Rocky-9-安装-MySQL"><a href="#Linux-平台-Rocky-9-安装-MySQL" class="headerlink" title="Linux 平台 Rocky 9 安装 MySQL"></a>Linux 平台 Rocky 9 安装 MySQL</h1><p>Rocky 9 Linux 平台 MySQL 安装方式：</p>
+<ol>
+<li>yum 源：使用 Linux 发行版自带的 yum 工具进行安装。</li>
+<li>rpm 包安装：最为简单，但不灵活，适合初学者使用。</li>
+<li>二进制包（binary package）：编译好的源码包，比 rpm 包更灵活。个人认为是安装多个服务最佳选择。</li>
+<li>源码包（source package）：最灵活，可根据需求编译安装功能，难易度最高。</li>
+<li>docker 形式安装：其实是在容器中安装。</li>
+</ol>
+<p>如下，介绍二进制包、rpm 包、yum 源以及源码包形式 MySQL 简易安装教程。</p>
+<h2 id="binary-package"><a href="#binary-package" class="headerlink" title="binary package"></a>binary package</h2><p><strong>01	binary package：使用 Linux 平台通用的二进制包安装</strong></p>
+<p>获取：mysql-8.0.33-linux-glibc2.28-x86_64.tar.gz</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jZG4ubXlzcWwuY29tLy9Eb3dubG9hZHMvTXlTUUwtOC4wL215c3FsLTguMC4zMy1saW51eC1nbGliYzIuMjgteDg2XzY0LnRhci5neg==">https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.33-linux-glibc2.28-x86_64.tar.gz<i class="fa fa-external-link-alt"></i></span></p>
+<p>解压：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf mysql-8.0.33-linux-glibc2.28-x86_64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>需要安装依赖包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnf install libaio</span><br><span class="line">dnf -y install ncurses-compat-libs</span><br></pre></td></tr></table></figure>
+
+
+
+<p>如下是详细安装步骤：</p>
+<blockquote>
+<p>2.2 Installing MySQL on Unix&#x2F;Linux Using Generic Binaries</p>
+</blockquote>
+<ol>
+<li>创建 mysql 组；</li>
+<li>创建 mysql 用户（没有服务器主机登录权限的用户）； </li>
+<li>切换到 local 目录；</li>
+<li>解压 tar 包 mysql 文件；</li>
+<li>创建软链接，full-path-to-mysql-VERSION-OS 是你解压后 mysql 文件目录名称；</li>
+<li>进入到 mysql 目录；</li>
+<li>创建 mysql-files 目录；</li>
+<li>赋予 mysql 用户 mysql-files 所属目录与所属组为 mysql；</li>
+<li>赋予 mysql-files 权限750；</li>
+<li>初始化并设置用户为 mysql，生成随机密码会打印在字符界面（使用 <code>--initialize-insecure</code> 则设置空密码）；</li>
+<li>启动 ssl_rsa 验证；</li>
+<li>启动 MySQL 服务；</li>
+<li>复制 mysql.server 脚本服务到 Linux 环境 init.d 目录，便于管理。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$&gt; groupadd mysql                </span><br><span class="line">$&gt; useradd -r -g mysql -s /bin/false mysql   </span><br><span class="line">$&gt; <span class="built_in">cd</span> /usr/local                  </span><br><span class="line">$&gt; tar xvf /path/to/mysql-VERSION-OS.tar.xz   </span><br><span class="line">$&gt; <span class="built_in">ln</span> -s full-path-to-mysql-VERSION-OS mysql  </span><br><span class="line">$&gt; <span class="built_in">cd</span> mysql   </span><br><span class="line">$&gt; <span class="built_in">mkdir</span> mysql-files  </span><br><span class="line">$&gt; <span class="built_in">chown</span> mysql:mysql mysql-files </span><br><span class="line">$&gt; <span class="built_in">chmod</span> 750 mysql-files  </span><br><span class="line">$&gt; bin/mysqld --initialize-insecure --user=mysql </span><br><span class="line">$&gt; bin/mysql_ssl_rsa_setup   </span><br><span class="line">$&gt; bin/mysqld_safe --user=mysql &amp; </span><br><span class="line"></span><br><span class="line"><span class="comment">#Next command is optional  </span></span><br><span class="line">$&gt; <span class="built_in">cp</span> support-files/mysql.server /etc/init.d/mysql.server</span><br></pre></td></tr></table></figure>
+
+<p>如果在 RHEL 9 中默认没有安装 chkconfig，没有软连接 &#x2F;etc&#x2F;init.d&#x2F; 目录，请安装 chkconfig 管理工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf -y install chkconfig-1.20-2.el9.x86_64</span><br></pre></td></tr></table></figure>
+
+<p>启动 MySQL 服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysql.server</span><br></pre></td></tr></table></figure>
+
+<p>如果使用 systemctl 启动 MySQL 服务，出现<code>/etc/rc.d/init.d/mysql.server:行239: /usr/local/mysql/bin/my_print_defaults</code>: 权限不够，<code>Starting MySQL ERROR! Couldn&#39;t find MySQL server (/usr/local/mysql/bin/mysqld_safe)</code></p>
+<p><strong>解决方案，配置 MySQL 环境变量</strong>。补充一点，此处只介绍设置全局生效环境变量，需要 root 用户权限，或者使用 sudo 提权。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost mysql]<span class="comment"># systemctl status mysql</span></span><br><span class="line">● mysql.server.service - LSB: start and stop MySQL</span><br><span class="line">     Loaded: loaded (/etc/rc.d/init.d/mysql.server; generated)</span><br><span class="line">     Active: active (exited) since Tue 2023-05-23 16:26:14 CST; 7min ago</span><br><span class="line">       Docs: man:systemd-sysv-generator(8)</span><br><span class="line">        CPU: 12ms</span><br><span class="line"></span><br><span class="line">5月 23 16:26:14 localhost.localdomain systemd[1]: Starting LSB: start and stop MySQL...</span><br><span class="line">5月 23 16:26:14 localhost.localdomain mysql.server[4244]: /etc/rc.d/init.d/mysql.server:行239: /usr/local/mysql/bin/my_print_defaults: 权限不够</span><br><span class="line">5月 23 16:26:14 localhost.localdomain mysql.server[4237]: Starting MySQL ERROR! Couldn<span class="string">&#x27;t find MySQL server (/usr/local/mysql/bin/mysqld_safe)</span></span><br><span class="line"><span class="string">5月 23 16:26:14 localhost.localdomain systemd[1]: Started LSB: start and stop MySQL.</span></span><br></pre></td></tr></table></figure>
+
+
+<p>则做如下设置，编辑：vim &#x2F;etc&#x2F;profile，需要 root 用户权限，或者使用 sudo vim &#x2F;etc&#x2F;profile：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mysql home</span></span><br><span class="line">MYSQL_HOME=/usr/local/mysql</span><br><span class="line">PATH=<span class="variable">$PATH</span>:<span class="variable">$MYSQL_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> MYSQL_HOME PATH</span><br></pre></td></tr></table></figure>
+<p>执行 <code>source /etc/profile</code> 或者 <code>sudo source /etc/profile</code> 命令，环境变量立即生效。</p>
+<p>再次查看 MySQL 服务状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost mysql]<span class="comment"># systemctl status mysql</span></span><br><span class="line">● mysql.server.service - LSB: start and stop MySQL</span><br><span class="line">     Loaded: loaded (/etc/rc.d/init.d/mysql.server; generated)</span><br><span class="line">     Active: active (running) since Tue 2023-05-23 16:40:35 CST; 4s ago</span><br><span class="line">       Docs: man:systemd-sysv-generator(8)</span><br><span class="line">    Process: 5003 ExecStart=/etc/rc.d/init.d/mysql.server start (code=exited, status=0/SUCCESS)</span><br><span class="line">      Tasks: 39 (<span class="built_in">limit</span>: 22833)</span><br><span class="line">     Memory: 370.1M</span><br><span class="line">        CPU: 765ms</span><br><span class="line">     CGroup: /system.slice/mysql.server.service</span><br><span class="line">             ├─5014 /bin/sh /usr/local/mysql/bin/mysqld_safe --datadir=/usr/local/mysql/data --pid-file=/usr/local/mysql/data/localhost.localdo&gt;</span><br><span class="line">             └─5153 /usr/local/mysql/bin/mysqld --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data --plugin-dir=/usr/local/mysql/lib/pl&gt;</span><br><span class="line"></span><br><span class="line">5月 23 16:40:34 localhost.localdomain systemd[1]: Starting LSB: start and stop MySQL...</span><br><span class="line">5月 23 16:40:35 localhost.localdomain mysql.server[5003]: Starting MySQL. SUCCESS!</span><br><span class="line">5月 23 16:40:35 localhost.localdomain systemd[1]: Started LSB: start and stop MySQL.</span><br></pre></td></tr></table></figure>
+
+
+<p>设置开机自启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> mysql.server</span><br></pre></td></tr></table></figure>
+
+<p>当然，你还可以通过这种方式启动与关闭 MySQL 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">support-files/mysql.server start</span><br><span class="line">Starting MySQL.. SUCCESS!</span><br><span class="line"></span><br><span class="line">support-files/mysql.server stop</span><br><span class="line">Shutting down MySQL. SUCCESS!</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>mysql.server</code> 脚本，支持 <code>start|stop|restart|reload|force-reload|status</code> 多种命令操作：</p>
+<ol>
+<li>start：启动服务</li>
+<li>stop：停止服务</li>
+<li>restart：重启服务</li>
+<li>reload：重载服务</li>
+<li>force-reload：强制重载服务</li>
+<li>status：查看服务状态</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost mysql]<span class="comment"># support-files/mysql.server</span></span><br><span class="line">Usage: mysql.server  &#123;start|stop|restart|reload|force-reload|status&#125;  [ MySQL server options ]</span><br></pre></td></tr></table></figure>
+
+
+<p>登录 MySQL 字符命令终端（已经配置好环境变量）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure>
+
+<p>登录 MySQL 字符命令终端（没有环境变量），切换到部署 MySQL 根目录，<code>cd /usr/local/mysql</code>，然后执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/mysql -uroot -p</span><br></pre></td></tr></table></figure>
+
+
+<p>修改用户密码</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;Mypwd@123&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>创建用户root，主机地址为localhost</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;Mypwd@123&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>创建用户root，主机地址%，匹配所有</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;%&#x27;</span> IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;Mypwd@123&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>授权root用户所有权限，即可使远程登录</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> <span class="keyword">WITH</span> <span class="keyword">GRANT</span> OPTION;</span><br></pre></td></tr></table></figure>
+
+<p><strong>刷新权限</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+
+<p>更多权限细化设置请参考 MySQL8.0.x 官方文档第 6 章节 Security。</p>
+<blockquote>
+<p>6.2 Access Control and Account Management</p>
+</blockquote>
+<h2 id="rpm-package"><a href="#rpm-package" class="headerlink" title="rpm package"></a>rpm package</h2><p><strong>02	rpm 包安装</strong></p>
+<p>Rocky 9  Linux 平台以 rpm 包形式安装 MySQL8.0.33。</p>
+<p>获取：下载最新版本的 mysql-8.0.33-1.el9.x86_64.rpm-bundle.tar，将下面介绍的 rpm 包通过解压缩软件提取出来。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf mysql-8.0.33-1.el9.x86_64.rpm-bundle.tar</span><br></pre></td></tr></table></figure>
+
+<p><strong>友情提示</strong>：如今有一部分 Linux 发行版已经将 MariaDB 作为默认数据库软件。如果安装时勾选了数据库软件选项，你可能需要卸载 MariaDB 的依赖库：yum remove mariadb-libs 。</p>
+<blockquote>
+<p>2.5 Installing MySQL on Linux RPM Packages</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">yum remove mariadb-libs</span><br><span class="line">rpm -ivh mysql-community-client-plugins-8.0.33-1.el9.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-common-8.0.33-1.el9.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-icu-data-files-8.0.33-1.el9.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-libs-8.0.33-1.el9.x86_64.rpm</span><br><span class="line">dnf -y install openssl-devel-1:3.0.7-6.el9_2.x86_64</span><br><span class="line">rpm -ivh mysql-community-devel-8.0.33-1.el9.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-client-8.0.33-1.el9.x86_64.rpm</span><br><span class="line">rpm -ivh mysql-community-server-8.0.33-1.el9.x86_64.rpm</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：如果你安装 mysql-community-devel-8.0.33-1.el9.x86_64.rpm 提示依赖检测需要 pkgconfig ( openssl )，做如下操作</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf -y install openssl-devel-1:3.0.7-6.el9_2.x86_64</span><br></pre></td></tr></table></figure>
+
+<p>启动服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysqld</span><br></pre></td></tr></table></figure>
+
+<p>设置开机自启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> mysqld</span><br></pre></td></tr></table></figure>
+
+<p>安装后，默认使用临时随机密码，保存在 &#x2F;var&#x2F;log&#x2F;mysqld.log 文件中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[wzgy@localhost soft]$ sudo grep <span class="string">&#x27;temporary password&#x27;</span> /var/log/mysqld.log</span><br><span class="line">2023-05-21T09:07:15.482313Z 6 [Note] [MY-010454] [Server] A temporary password is generated <span class="keyword">for</span> root@localhost: WT(yyZgUB0xd</span><br></pre></td></tr></table></figure>
+
+<p>登录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure>
+
+<p>修改 root 用户密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;Mypwd@833&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>友情提示</strong>：密码组成规则，必须包含一位<strong>大写字母和特殊符号</strong>，且密码长度<strong>不低于 9 位</strong>。如果密码不符合设置规则，会提醒你当前设置的密码不安全：</p>
+<p><strong>ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</strong></p>
+<p>卸载就比较简单，可以使用 Rocky 9 Linux 自带的 dnf 管理工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dnf remove mysql</span><br><span class="line">dnf remove mysql-community-client-plugins-8.0.33-1.el9.x86_64</span><br><span class="line">dnf remove mysql-community-common-8.0.33-1.el9.x86_64</span><br><span class="line">dnf remove mysql-community-icu-data-files-8.0.33-1.el9.x86_64</span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果你觉得，使用 rpm 包这样安装太繁琐，尤其是缺乏相关依赖包很头疼。可以使用发行版自带的 yum 或者 dnf 工具快速安装。</p>
+<h2 id="yum-源"><a href="#yum-源" class="headerlink" title="yum 源"></a>yum 源</h2><p><strong>03	yum 源安装</strong></p>
+<blockquote>
+<p>Installing MySQL on Linux Using the MySQL Yum Repository</p>
+</blockquote>
+<p>友情提示：Centos 8（RHEL 8） 或者更高版本可以使用 dnf 替代 yum </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. 下载：mysql80-community-release-el9-1.noarch.rpm</span><br><span class="line">   click https://repo.mysql.com//mysql80-community-release-el9-1.noarch.rpm</span><br><span class="line">2. $&gt; sudo yum install platform-and-version-specific-package-name.rpm</span><br><span class="line">3. 基于 EL9 系统安装：$&gt; sudo yum install mysql80-community-release-el9-&#123;version-number&#125;.noarch.rpm</span><br><span class="line">4. 启动 MySQL Server：$&gt; systemctl start mysqld</span><br><span class="line">5. 检测 MySQL Server：$&gt; systemctl status mysqld</span><br><span class="line">6. 登录 mysql：$&gt; mysql -uroot -p</span><br><span class="line">7. 修改密码：$&gt; ALTER USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;MyNewPwd833!&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="source-package"><a href="#source-package" class="headerlink" title="source package"></a>source package</h2><p><strong>04	Source：源码包安装</strong></p>
+<blockquote>
+<p>2.9 Installing MySQL from Source</p>
+</blockquote>
+<ol>
+<li>新增 mysql 管理组</li>
+<li>新增 mysql 用户</li>
+<li>解压 mysql 安装包</li>
+<li>创建 bld 目录</li>
+<li>切换到 bld 目录</li>
+<li>编译安装：cmake .. make make install</li>
+<li>进入源码包安装后的 mysql 目录</li>
+<li>创建目录 mysql-files</li>
+<li>赋予 mysql-files 目录所属组和所属用户为 mysql</li>
+<li>赋予 mysql-files 目录 750 权限</li>
+<li>执行安全命令：<code>bin/mysql_ssl_rsa_setup</code></li>
+<li>启动 mysql 服务：<code>bin/mysqld_safe --user=mysql &amp;</code></li>
+<li>复制 mysql.server 脚本服务到 Linux 环境 init.d 目录，便于管理</li>
+</ol>
+<p>简易安装命令参考如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Preconfiguration setup</span></span><br><span class="line"></span><br><span class="line">$&gt; groupadd mysql</span><br><span class="line">$&gt; useradd -r -g mysql -s /bin/false mysql</span><br><span class="line"></span><br><span class="line"><span class="comment">#Beginning of source-build specific instructions</span></span><br><span class="line"></span><br><span class="line">$&gt; tar zxvf mysql-VERSION.tar.gz</span><br><span class="line">$&gt; <span class="built_in">cd</span> mysql-VERSION</span><br><span class="line">$&gt; <span class="built_in">mkdir</span> bld</span><br><span class="line">$&gt; <span class="built_in">cd</span> bld</span><br><span class="line">$&gt; cmake ..</span><br><span class="line">$&gt; make</span><br><span class="line">$&gt; make install</span><br><span class="line"></span><br><span class="line"><span class="comment">#End of source-build specific instructions</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Postinstallation setup</span></span><br><span class="line"></span><br><span class="line">$&gt; <span class="built_in">cd</span> /usr/local/mysql</span><br><span class="line">$&gt; <span class="built_in">mkdir</span> mysql-files</span><br><span class="line">$&gt; <span class="built_in">chown</span> mysql:mysql mysql-files</span><br><span class="line">$&gt; <span class="built_in">chmod</span> 750 mysql-files</span><br><span class="line">$&gt; bin/mysqld --initialize --user=mysql</span><br><span class="line">$&gt; bin/mysql_ssl_rsa_setup</span><br><span class="line">$&gt; bin/mysqld_safe --user=mysql &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment">#Next command is optional</span></span><br><span class="line"></span><br><span class="line">$&gt; <span class="built_in">cp</span> support-files/mysql.server /etc/init.d/mysql.server</span><br></pre></td></tr></table></figure>
+
+<p>启动服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start mysql.server</span><br></pre></td></tr></table></figure>
+
+<p>设置开机自启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> mysql.server</span><br></pre></td></tr></table></figure>
+
+<p>登录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="MySQL官方文档下载地址"><a href="#MySQL官方文档下载地址" class="headerlink" title="MySQL官方文档下载地址"></a>MySQL官方文档下载地址</h1><p>左侧导航栏有个Download this Manual：MySQL文档下载地址。</p>
+<p>以下给出四个版本下载地址：</p>
+<ol>
+<li><p>MySQL8.2在线文档</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vOC4yL2VuLw==">MySQL :: MySQL 8.2 Reference Manual<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>MySQL8.2文档PDF文件下载地址</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubXlzcWwuY29tL2RvY3MvcmVmbWFuLTguMi1lbi5hNC5wZGY=">downloads.mysql.com&#x2F;docs&#x2F;refman-8.2-en.a4.pdf<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>MySQL8.0在线文档<br><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vOC4wL2Vu">https://dev.mysql.com/doc/refman/8.0/en<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>MySQL8.0文档PDF文件下载地址<br><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubXlzcWwuY29tL2RvY3MvcmVmbWFuLTguMC1lbi5hNC5wZGY=">https://downloads.mysql.com/docs/refman-8.0-en.a4.pdf<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>MySQL5.7在线文档<br><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vNS43L2VuLw==">https://dev.mysql.com/doc/refman/5.7/en/<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>MySQL5.7文档PDF文件下载地址<br><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubXlzcWwuY29tL2RvY3MvcmVmbWFuLTUuNy1lbi5hNC5wZGY=">https://downloads.mysql.com/docs/refman-5.7-en.a4.pdf<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>MySQL5.6在线文档（注：官方已停止维护，在线文档已经移动了，PDF下载地址还可使用）<br><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vNS42L2VuLw==">https://dev.mysql.com/doc/refman/5.6/en/<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>MySQL5.6文档PDF文件下载地址<br><span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubXlzcWwuY29tL2RvY3MvcmVmbWFuLTUuNi1lbi5hNC5wZGY=">https://downloads.mysql.com/docs/refman-5.6-en.a4.pdf<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ol>
+<p><strong>友情提醒</strong>：下载官方文档尽量前往官方网站下载。某网站利用用户上传的资源，却厚着脸皮需要VIP才能下载，对这种行为表示鄙视。当然，也可以在文初获取我个人整理的压缩包组合（不定期更新）。</p>
+<p>以上总结，仅供参考哟！希望对你的学习或者工作有所帮助。</p>
+<p><strong>参考资料</strong>：</p>
+<p>MySQL 官方文档第二章节： <span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vOC4wL2VuL2luc3RhbGxpbmcuaHRtbA==">Chapter 2 Installing and Upgrading MySQL<i class="fa fa-external-link-alt"></i></span></p>
+<p>MySQL8.0.x 官方文档第 6 章节 Security：  <span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vOC4wL2VuL2FjY2Vzcy1jb250cm9sLmh0bWw=">6.2 Access Control and Account Management<i class="fa fa-external-link-alt"></i></span></p>
+<p>Windows 平台解压命令 expand-archive：<span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLmFyY2hpdmUvZXhwYW5kLWFyY2hpdmU/dmlldz1wb3dlcnNoZWxsLTcuNA==">expand-archive<i class="fa fa-external-link-alt"></i></span></p>
+<p>—END—</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="Windows 11 和 Rocky 9 Linux 初体验 MySQL8.0.33 简易安装教程">https://blog.cnwangk.top/2023/05/21/MySQL8-0-33-简易安装教程/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/05/10/vim-9-0-%E6%BA%90%E7%A0%81%E5%8C%85%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/" rel="prev" title="vim 9.0 源码包编译安装">
+                  <i class="fa fa-angle-left"></i> vim 9.0 源码包编译安装
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/10/07/vercel%E8%B7%B3%E5%8F%8D%E8%AF%88%E4%B8%B4%E6%97%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E8%AE%BF%E9%97%AE%E4%B8%AA%E4%BA%BAblog/" rel="next" title="vercel跳反诈临时解决方案">
+                  vercel跳反诈临时解决方案 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="第一篇基础篇，可在博客园，个人公众号以及站内搜索：MySQL数据库与Nacos搭建监控服务。 本篇是个人nacos系列文章第二篇springboot项目集成微服务组件nacos。  前情提要 当你看到此篇文章时，nacos目前最新稳定版本为：2.2.2 (Apr 11, 2023) Latest 版本不在于有多新，在于与当前场景环境匹配正常，稳中求快。万一你用了比较新的版本，遇到问题怎么办？有问题">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SpringBoot应用集成微服务组件Nacos">
+<meta property="og:url" content="https://blog.cnwangk.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="第一篇基础篇，可在博客园，个人公众号以及站内搜索：MySQL数据库与Nacos搭建监控服务。 本篇是个人nacos系列文章第二篇springboot项目集成微服务组件nacos。  前情提要 当你看到此篇文章时，nacos目前最新稳定版本为：2.2.2 (Apr 11, 2023) Latest 版本不在于有多新，在于与当前场景环境匹配正常，稳中求快。万一你用了比较新的版本，遇到问题怎么办？有问题">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9ADUsI.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/03/23/ppwyHDs.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9kLjqx.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9kLOMR.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9kL7iF.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9kLIaT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9kLoIU.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9kLhq0.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9kLHG4.png">
+<meta property="og:image" content="https://s1.ax1x.com/2023/04/20/p9kLqz9.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/1440924/202304/1440924-20230420163226056-1625896026.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/1440924/202304/1440924-20230420163225744-1095188210.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/1440924/202304/1440924-20230420163225861-2052120334.png">
+<meta property="article:published_time" content="2023-04-15T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-28T14:10:34.446Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="nacos">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/04/20/p9ADUsI.png">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/","path":"2023/04/15/SpringBoot应用集成微服务组件Nacos/","title":"SpringBoot应用集成微服务组件Nacos"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SpringBoot应用集成微服务组件Nacos | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#springboot%E4%B8%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6nacos"><span class="nav-number">1.</span> <span class="nav-text">springboot与微服务组件nacos</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nacos%E6%9C%8D%E5%8A%A1%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8"><span class="nav-number">1.1.</span> <span class="nav-text">Nacos服务快速启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STS4-%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="nav-number">1.2.</span> <span class="nav-text">STS4 开发工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">Maven 环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#STS4%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E5%BC%95%E5%85%A5Maven%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.1.</span> <span class="nav-text">STS4开发工具引入Maven配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Maven-Repo%E9%85%8D%E7%BD%AE%E9%98%BF%E9%87%8C%E4%BA%91%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.3.2.</span> <span class="nav-text">Maven Repo配置阿里云镜像源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Springboot%E9%9B%86%E6%88%90nacos%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.4.</span> <span class="nav-text">Springboot集成nacos服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#springboot%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA"><span class="nav-number">1.4.1.</span> <span class="nav-text">springboot项目构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#springboot%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1nacos"><span class="nav-number">1.4.2.</span> <span class="nav-text">springboot集成微服务nacos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nacos%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.3.</span> <span class="nav-text">nacos版本问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#nacos2-0-0%E7%89%88%E6%9C%AC%E5%85%BC%E5%AE%B9%E6%80%A7%E8%AF%B4%E6%98%8E"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">nacos2.0.0版本兼容性说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nacos%E5%8D%87%E7%BA%A7%E6%96%87%E6%A1%A3"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">nacos升级文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nacos%E7%89%88%E6%9C%AC%E4%B8%8Espring-cloud%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">nacos版本与spring cloud对应关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E7%89%88%E6%9C%AC%E5%85%B3%E7%B3%BB"><span class="nav-number">1.4.3.4.</span> <span class="nav-text">组件版本关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%92%E6%9F%A5%E9%94%99%E8%AF%AF"><span class="nav-number">1.4.3.5.</span> <span class="nav-text">排查错误</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#END%E2%80%94"><span class="nav-number">1.5.</span> <span class="nav-text">END—-</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/03/30/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8ENacos%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1/" rel="bookmark">
+        <time class="popular-posts-time">2023-03-30</time>
+        <br>
+      MySQL数据库与Nacos搭建监控服务
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2020/10/30/springboot%E5%88%9D%E4%BD%93%E9%AA%8C/" rel="bookmark">
+        <time class="popular-posts-time">2020-10-30</time>
+        <br>
+      springboot初体验
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/04/19/Nacos-prometheus-grafana/" rel="bookmark">
+        <time class="popular-posts-time">2023-04-19</time>
+        <br>
+      Nacos prometheus grafana
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SpringBoot应用集成微服务组件Nacos | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringBoot应用集成微服务组件Nacos
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-15 23:00:00" itemprop="dateCreated datePublished" datetime="2023-04-15T23:00:00+08:00">2023-04-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-28 22:10:34" itemprop="dateModified" datetime="2023-05-28T22:10:34+08:00">2023-05-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">web开发</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>23 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>第一篇基础篇，可在博客园，个人公众号以及站内搜索：MySQL数据库与Nacos搭建监控服务。</p>
+<p>本篇是个人nacos系列文章第二篇springboot项目集成微服务组件nacos。</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9ADUsI.png"></p>
+<p><strong>前情提要</strong></p>
+<p>当你看到此篇文章时，nacos目前最新稳定版本为：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvbmFjb3MvcmVsZWFzZXMvdGFnLzIuMi4y">2.2.2 (Apr 11, 2023)<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvbmFjb3MvcmVsZWFzZXMvbGF0ZXN0">Latest<i class="fa fa-external-link-alt"></i></span></p>
+<p>版本不在于有多新，在于与当前场景环境匹配正常，稳中求快。万一你用了比较新的版本，遇到问题怎么办？有问题，那就找李元芳吧！开个玩笑。你可以去 nacos 的github仓库issues提问、追问选择解决方案，促进开源社区的和谐发展。</p>
+<p><strong>整体思路，个人nacos系列博文一共分为三篇</strong>：</p>
+<ul>
+<li>基础篇：《MySQL数据库与Nacos搭建监控服务》，Nacos与MySQL基本介绍。</li>
+<li>开发篇：《开发篇：springboot与微服务组件nacos》，从代码开始构建，集成微服务组件。</li>
+<li>运维篇：《运维篇：nacos prometheus grafana》，服务监控篇，主要以Linux发行版为主。</li>
+</ul>
+<p><strong>骚话环节</strong></p>
+<p>一入编程深似海，从此节操是路人。脱发已是常态，致富还需绝顶。</p>
+<p>那天我听说程序员之间还相互鄙视，其中不能忍的终极鄙视：有女朋友的程序员鄙视没有女朋友的程序员。这不能忍，打不过怎么办，问就是加入吧。</p>
+<p>由于是测试环境，使用版本比较新，学当然要学新知识吸收精华，羽化成仙，做那万人敬仰韩天尊。啊，不好意思，扯远了。开个玩笑，我们依旧<strong>使用稳定版本</strong>。此次在Linux发行版操作系统中全程使用root用户进行测试避免权限问题带来的干扰，如果使用普通用户请自行测试提权赋予所有者或者所属组权限。</p>
+<p>骚话不多说，<strong>直接进入今天的主题springboot项目集成微服务组件nacos</strong>。</p>
+<h1 id="springboot与微服务组件nacos"><a href="#springboot与微服务组件nacos" class="headerlink" title="springboot与微服务组件nacos"></a>springboot与微服务组件nacos</h1><p><strong>必备环境，前置条件尽量保持一致</strong>：</p>
+<ul>
+<li>JDK版本： JDK17</li>
+<li>开发工具和项目构建工具：STS4 &amp; Maven3.6</li>
+<li>Springboot版本：Springboot2.7.x</li>
+<li>服务监控三件套：Nacos2.x、Prometheus2.3.x、Grafana9.3.x</li>
+<li>开发测试环境：Linux（centos-stream-9）云服务器或者VMware搭建环境</li>
+</ul>
+<p>你可以了解到的知识：从项目开发构建到线上测试发布，不过，需要具备一点点Java或者其它编程语言基础知识。</p>
+<p><strong>tips</strong>：做实验时请检查是否关安装防火墙管理工具，关闭防火墙服务或者开启相应端口，或者放通云服务器安全组。</p>
+<p><strong>企业中生产环境，唯稳，稳中求快</strong>。</p>
+<p><img data-src="https://s1.ax1x.com/2023/03/23/ppwyHDs.png"></p>
+<h2 id="Nacos服务快速启动"><a href="#Nacos服务快速启动" class="headerlink" title="Nacos服务快速启动"></a>Nacos服务快速启动</h2><p>关于nacos2.2.0相关配置说明以及数据源说明，遇到问题总结，可以参考如下文章：</p>
+<p><a href="https://blog.cnwangk.top/2023/03/30/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8ENacos%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1/">https://blog.cnwangk.top/2023/03/30/MySQL数据库与Nacos搭建监控服务/</a></p>
+<p>使用hexo搭建静态博客网站，感兴趣可以自己搭建一个，利用github pages和cloudflare pages等进行同步。之所以给出上面的链接，因为一篇优质的教程，会持续更新迭代。当然，在个人公众号里面同样可以搜索到相关教程。</p>
+<p><strong>根据个人或者团队开发环境，可以选择框架开发环境：spring、springboot以及springcloud集成nacos</strong>。</p>
+<p><strong>值得注意的地方</strong></p>
+<p>服务器部署nacos服务支持多种场景：</p>
+<ol>
+<li>Nacos原生形式部署。</li>
+<li>Nacos Docker形式部署。</li>
+<li>Nacos Kubernetes形式部署。</li>
+</ol>
+<p>至于用哪种方式，根据实际业务场景分析，选择符合个人或者公司业务场景的最佳方式。</p>
+<p>Nacos支持三种部署模式</p>
+<ul>
+<li>单机模式：用于测试和单机试用。</li>
+<li>集群模式：用于生产环境，确保高可用。</li>
+<li>多集群模式：用于多数据中心场景。</li>
+</ul>
+<p>高可用环境准备</p>
+<ul>
+<li>建议支撑环境：部署JDK，需要 1.8 及其以上版本</li>
+<li>建议硬件配置：2核 CPU &#x2F; 4G 内存 及其以上</li>
+<li>建议软件配置：生产环境 3 个节点 及其以上</li>
+</ul>
+<p>Nacos 依赖 Java 环境来运行。如果您是从代码开始构建并运行Nacos，还需要为此配置 Maven环境，请确保是在以下版本环境中安装使用：</p>
+<p>1、预备环境准备</p>
+<ul>
+<li><p>64 bit OS，支持 Linux&#x2F;Unix&#x2F;Mac&#x2F;Windows，<strong>推荐选用 Linux&#x2F;Unix&#x2F;Mac</strong>。</p>
+</li>
+<li><p>64 bit JDK 1.8+ 。</p>
+</li>
+<li><p>Maven 3.2.x+ 。</p>
+</li>
+</ul>
+<p>2、下载源码或者安装包</p>
+<p>你可以通过<strong>源码</strong>和<strong>发行包</strong>两种方式来获取 Nacos。</p>
+<p><strong>个人推荐</strong>：下载发行包。关于版本，使用稳定版本（<strong>通常有GA标识</strong>），个人习惯使用官方推荐的上一个小版本。有特殊需求可以下载源码包，修改源码重新编译。</p>
+<p>从 Github 获取源码方式，使用<code>git clone</code>命令，<strong>值得注意的是你需要部署Git环境</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/alibaba/nacos.git</span><br><span class="line"><span class="built_in">cd</span> nacos/</span><br><span class="line">mvn -Prelease-nacos -Dmaven.test.skip=<span class="literal">true</span> clean install -U  </span><br><span class="line"><span class="built_in">ls</span> -al distribution/target/</span><br><span class="line">// change the <span class="variable">$version</span> to your actual path</span><br><span class="line"><span class="built_in">cd</span> distribution/target/nacos-server-<span class="variable">$version</span>/nacos/bin</span><br></pre></td></tr></table></figure>
+
+<p>​	</p>
+<p><strong>nacos发行包下载地址</strong>：</p>
+<ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvbmFjb3MvcmVsZWFzZXM=">https://github.com/alibaba/nacos/releases<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvbmFjb3MvcmVsZWFzZXMvdGFnLzIuMS4x">https://github.com/alibaba/nacos/releases/tag/2.1.1<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+<p>下载编译后压缩包方式，您可以从 最新稳定版本 下载 nacos-server-$version.zip 包。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unzip nacos-server-<span class="variable">$version</span>.zip 或者 tar -zxvf nacos-server-<span class="variable">$version</span>.tar.gz</span><br><span class="line"><span class="built_in">cd</span> nacos/bin</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>$version指具体nacos版本号，比如具体版本：nacos-server-2.1.1。</p>
+</li>
+<li><p>Windows平台建议下载以 .zip结尾的压缩包：nacos-server-2.1.1.zip。</p>
+</li>
+<li><p>Linux平台建议下载以 .tar.gz 结尾的压缩包：nacos-server-2.1.1.tar.gz。</p>
+</li>
+</ul>
+<p><strong>3、修改配置文件</strong></p>
+<p><strong>注意</strong>：修改<code>conf</code>目录下的<code>application.properties</code>文件。设置其中的<code>nacos.core.auth.plugin.nacos.token.secret.key</code>值，详情可查看鉴权-自定义密钥：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9uYWNvcy5pby96aC1jbi9kb2NzL3YyL3BsdWdpbi9hdXRoLXBsdWdpbi5odG1s">https://nacos.io/zh-cn/docs/v2/plugin/auth-plugin.html<i class="fa fa-external-link-alt"></i></span></p>
+<blockquote>
+<p>注意，文档中的默认值<code>SecretKey012345678901234567890123456789012345678901234567890123456789</code>和<code>VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=</code>为公开默认值，可用于临时测试，实际使用时请<strong>务必</strong>更换为自定义的其他有效值。</p>
+</blockquote>
+<p><strong>4、启动服务器</strong></p>
+<p><strong>Linux&#x2F;Unix&#x2F;Mac：执行startup.sh脚本</strong><br>启动命令（standalone代表着单机模式运行，非集群模式）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh startup.sh -m standalone</span><br></pre></td></tr></table></figure>
+
+<p>如果您使用的是ubuntu系统，或者运行脚本报错提示[[符号找不到，可尝试如下运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash startup.sh -m standalone</span><br></pre></td></tr></table></figure>
+
+<p><strong>Windows平台：执行startup.cmd脚本</strong><br>启动命令（standalone代表着单机模式运行，非集群模式）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">startup.cmd -m standalone</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>5、关闭服务器</strong></p>
+<p><strong>Linux&#x2F;Unix&#x2F;Mac：执行shutdown.sh脚本</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh shutdown.sh</span><br></pre></td></tr></table></figure>
+
+<p><strong>Windows平台：执行shutdown.cmd脚本</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutdown.cmd</span><br></pre></td></tr></table></figure>
+
+<p>可以在Windows中使用terminal或者cmd命令行运行shutdown.cmd命令，也可以双击shutdown.cmd运行文件。</p>
+<p><strong>以下为个人实战总结，仅供参考</strong></p>
+<p><strong>个人开发以及测试环境</strong>：</p>
+<ul>
+<li>Spring Tool Suite4</li>
+<li>JDK17</li>
+<li>Maven3.6</li>
+<li>Springboot2.7.6</li>
+<li>VMware16 &amp; Linux（Centos-9-Stream）</li>
+</ul>
+<p><strong>关于IDE的选择</strong>：</p>
+<p>有人喜欢使用 IntelliJ IDEA ，有人喜欢用 Vim，有人喜欢用VSCode，还有人就偏爱 eclipse 。开发工具 IDE 的选择，不一定非要和我保持一致。个人开发者可以根据自己的喜好选择，怎么顺手怎么来，主打一个用的舒心。如果是团队开发，最优质的方案是与团队保持一致。</p>
+<p>可能是入坑最开始接触的 IDE 是eclipse，习惯了。个人小项目偶尔会用VSCode，大型项目更趋向于 eclipse 或者 IntelliJ IDEA。</p>
+<h2 id="STS4-开发工具"><a href="#STS4-开发工具" class="headerlink" title="STS4 开发工具"></a>STS4 开发工具</h2><p>支持OS版本，彼时最新版本是4.17.1</p>
+<ul>
+<li>Linux X86_64、Linux ARM_64</li>
+<li>MACOS X86_64、MACOS ARM_64</li>
+<li>WINDOWS X86_64</li>
+</ul>
+<p>官网：<span class="exturl" data-url="aHR0cHM6Ly9zcHJpbmcuaW8vdG9vbHM=">https://spring.io/tools<i class="fa fa-external-link-alt"></i></span></p>
+<p>下载地址：<span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZC5zcHJpbmdzb3VyY2UuY29tL3JlbGVhc2UvU1RTNC80LjE2LjEuUkVMRUFTRS9kaXN0L2U0LjI1L3NwcmluZy10b29sLXN1aXRlLTQtNC4xNi4xLlJFTEVBU0UtZTQuMjUuMC13aW4zMi53aW4zMi54ODZfNjQuc2VsZi1leHRyYWN0aW5nLmphcg==">https://download.springsource.com/release/STS4/4.16.1.RELEASE/dist/e4.25/spring-tool-suite-4-4.16.1.RELEASE-e4.25.0-win32.win32.x86_64.self-extracting.jar<i class="fa fa-external-link-alt"></i></span></p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9kLjqx.png"></p>
+<h2 id="Maven-环境配置"><a href="#Maven-环境配置" class="headerlink" title="Maven 环境配置"></a>Maven 环境配置</h2><h3 id="STS4开发工具引入Maven配置"><a href="#STS4开发工具引入Maven配置" class="headerlink" title="STS4开发工具引入Maven配置"></a>STS4开发工具引入Maven配置</h3><p>依次找到顶部菜单栏：Window—&gt; Preferences—&gt; Maven—&gt;User Settings—&gt;Global Settings &amp; User Settings—&gt;Apply</p>
+<p><strong>配置完记得点击Apply或者Apply and Close</strong></p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9kLOMR.png"></p>
+<h3 id="Maven-Repo配置阿里云镜像源"><a href="#Maven-Repo配置阿里云镜像源" class="headerlink" title="Maven Repo配置阿里云镜像源"></a>Maven Repo配置阿里云镜像源</h3><p>本地maven环境配置conf\settings.xml（使用阿里云镜像地址），<strong>maven版本</strong>：apache-maven-3.6.3</p>
+<p><strong>配置本地repo仓库存储目录</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>D:\Maven\repo<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span>	</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置mirrors</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>aliyunmaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 老版本url --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 新版本url --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;url&gt;https://maven.aliyun.com/repository/public/&lt;/url&gt;--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span>        </span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>阿里云Maven中央仓库为 <span class="exturl" data-url="aHR0cHM6Ly9kZXZvcHMuYWxpeXVuLmNvbS8/Y2hhbm5lbD1tYXZlbi5hbGl5dW4=">阿里云云效<i class="fa fa-external-link-alt"></i></span> 提供的公共代理仓库，帮助研发人员提高研发生产效率，使用阿里云Maven中央仓库作为下载源，速度更快更稳定。</p>
+<table>
+<thead>
+<tr>
+<th align="left">仓库名称</th>
+<th align="left">阿里云仓库地址</th>
+<th align="left">阿里云仓库地址(老版)</th>
+<th align="left">源地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">central</td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL3JlcG9zaXRvcnkvY2VudHJhbA==">https://maven.aliyun.com/repository/central<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL25leHVzL2NvbnRlbnQvcmVwb3NpdG9yaWVzL2NlbnRyYWw=">https://maven.aliyun.com/nexus/content/repositories/central<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9yZXBvMS5tYXZlbi5vcmcvbWF2ZW4yLw==">https://repo1.maven.org/maven2/<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+<tr>
+<td align="left">jcenter</td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL3JlcG9zaXRvcnkvcHVibGlj">https://maven.aliyun.com/repository/public<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL25leHVzL2NvbnRlbnQvcmVwb3NpdG9yaWVzL2pjZW50ZXI=">https://maven.aliyun.com/nexus/content/repositories/jcenter<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cDovL2pjZW50ZXIuYmludHJheS5jb20v">http://jcenter.bintray.com/<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+<tr>
+<td align="left">public</td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL3JlcG9zaXRvcnkvcHVibGlj">https://maven.aliyun.com/repository/public<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL25leHVzL2NvbnRlbnQvZ3JvdXBzL3B1YmxpYw==">https://maven.aliyun.com/nexus/content/groups/public<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left">central仓和jcenter仓的聚合仓</td>
+</tr>
+<tr>
+<td align="left">google</td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL3JlcG9zaXRvcnkvZ29vZ2xl">https://maven.aliyun.com/repository/google<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL25leHVzL2NvbnRlbnQvcmVwb3NpdG9yaWVzL2dvb2dsZQ==">https://maven.aliyun.com/nexus/content/repositories/google<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5nb29nbGUuY29tLw==">https://maven.google.com/<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+<tr>
+<td align="left">gradle-plugin</td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL3JlcG9zaXRvcnkvZ3JhZGxlLXBsdWdpbg==">https://maven.aliyun.com/repository/gradle-plugin<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL25leHVzL2NvbnRlbnQvcmVwb3NpdG9yaWVzL2dyYWRsZS1wbHVnaW4=">https://maven.aliyun.com/nexus/content/repositories/gradle-plugin<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9wbHVnaW5zLmdyYWRsZS5vcmcvbTIv">https://plugins.gradle.org/m2/<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+<tr>
+<td align="left">spring</td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL3JlcG9zaXRvcnkvc3ByaW5n">https://maven.aliyun.com/repository/spring<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL25leHVzL2NvbnRlbnQvcmVwb3NpdG9yaWVzL3NwcmluZw==">https://maven.aliyun.com/nexus/content/repositories/spring<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cDovL3JlcG8uc3ByaW5nLmlvL2xpYnMtbWlsZXN0b25lLw==">http://repo.spring.io/libs-milestone/<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+<tr>
+<td align="left">spring-plugin</td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL3JlcG9zaXRvcnkvc3ByaW5nLXBsdWdpbg==">https://maven.aliyun.com/repository/spring-plugin<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL25leHVzL2NvbnRlbnQvcmVwb3NpdG9yaWVzL3NwcmluZy1wbHVnaW4=">https://maven.aliyun.com/nexus/content/repositories/spring-plugin<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cDovL3JlcG8uc3ByaW5nLmlvL3BsdWdpbnMtcmVsZWFzZS8=">http://repo.spring.io/plugins-release/<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+<tr>
+<td align="left">grails-core</td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL3JlcG9zaXRvcnkvZ3JhaWxzLWNvcmU=">https://maven.aliyun.com/repository/grails-core<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL25leHVzL2NvbnRlbnQvcmVwb3NpdG9yaWVzL2dyYWlscy1jb3Jl">https://maven.aliyun.com/nexus/content/repositories/grails-core<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9yZXBvLmdyYWlscy5vcmcvZ3JhaWxzL2NvcmU=">https://repo.grails.org/grails/core<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+<tr>
+<td align="left">apache snapshots</td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL3JlcG9zaXRvcnkvYXBhY2hlLXNuYXBzaG90cw==">https://maven.aliyun.com/repository/apache-snapshots<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9tYXZlbi5hbGl5dW4uY29tL25leHVzL2NvbnRlbnQvcmVwb3NpdG9yaWVzL2FwYWNoZS1zbmFwc2hvdHM=">https://maven.aliyun.com/nexus/content/repositories/apache-snapshots<i class="fa fa-external-link-alt"></i></span></td>
+<td align="left"><span class="exturl" data-url="aHR0cHM6Ly9yZXBvc2l0b3J5LmFwYWNoZS5vcmcvc25hcHNob3RzLw==">https://repository.apache.org/snapshots/<i class="fa fa-external-link-alt"></i></span></td>
+</tr>
+</tbody></table>
+<p><strong>在线搜索jar包依赖</strong>：<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9tdm4vc2VhcmNo">https://developer.aliyun.com/mvn/search<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="Springboot集成nacos服务"><a href="#Springboot集成nacos服务" class="headerlink" title="Springboot集成nacos服务"></a>Springboot集成nacos服务</h2><p>主要介绍Springboot项目以微服务形式集成nacos，如果使用springmvc或者是普通springboot项目集成nacos服务，可以参考官方文档。<strong>关于版本问题</strong>，我将官方部分（个人感觉初次使用可能用得上，并非全部）文档引入到本次教程。</p>
+<p><strong>tips</strong>：sts个性化注解设置，Window—&gt; Preferences—&gt;Java—&gt;Code Style—&gt;Code Templates—&gt;Comments：Types method</p>
+<p>在集成nacos服务之前，一步一步来，从构建第一个springboot项目开始。</p>
+<h3 id="springboot项目构建"><a href="#springboot项目构建" class="headerlink" title="springboot项目构建"></a>springboot项目构建</h3><p>可能你有疑问，springboot版本如何选择，下图支持最后维护时间可供参考：</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9kL7iF.png"></p>
+<p>目前Springboot官网最新稳定版本是Springboot3.0.5，实际工作中个人使用2.7.x版本，未来主流可能是3.X版本。目前主流依旧是Springboot2.x，更倾向于2.6.x或者2.7.x作为开发构建版本，当然也是以spring官网显示维护时间作为参考。</p>
+<p>项目构建方式有多种，总体上分官网脚手架构建和开发工具构建，此处以官网和STS4为示例。不必纠结，怎么顺手怎么来。</p>
+<ul>
+<li>官网构建：<span class="exturl" data-url="aHR0cHM6Ly9zdGFydC5zcHJpbmcuaW8v">https://start.spring.io/<i class="fa fa-external-link-alt"></i></span> </li>
+<li>STS4开发工具构建</li>
+<li>VSCode 开发工具构建</li>
+<li>IntelliJ IDEA工具构建</li>
+</ul>
+<p><strong>如果官网访问速度缓慢，你还可以通过阿里云脚手架网站构建</strong>：<span class="exturl" data-url="aHR0cHM6Ly9zdGFydC5hbGl5dW4uY29tLw==">https://start.aliyun.com/<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>springboot项目之官网构建</strong></p>
+<p>访问：<span class="exturl" data-url="aHR0cHM6Ly9zdGFydC5zcHJpbmcuaW8v">https://start.spring.io/<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>第一步</strong></p>
+<ol>
+<li>Project：选择Maven作为项目构建方式</li>
+<li>Language：选择Java作为开发语言</li>
+<li>Spring Boot：选择springboot2.7.6稳定版本作为构建版本</li>
+<li>Dependencies：选择pom依赖的jar包</li>
+</ol>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9kLIaT.png"></p>
+<p><strong>第二步</strong></p>
+<ol>
+<li>Project Metadata：项目元数据，Group组名、Artifact工程名、Name项目名称、Description项目描述、Package name包名。</li>
+<li>Packaging：选择Jar作为默认打包方式。</li>
+<li>Java：选择JDK17作为Java项目默认构建版本。</li>
+<li>GENERATE：生成构建项目demo并下载。</li>
+<li>EXPLORE：展示出构建项目结构清单以及文件具体内容。</li>
+</ol>
+<p>以下展示Project Metadata截图以及EXPLORE截图。</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9kLoIU.png"></p>
+<p>EXPLORE：展示项目层次结构</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9kLhq0.png"></p>
+<p><strong>springboot项目之STS4工具构建</strong></p>
+<p>依次选择File–&gt;new–&gt;Spring Starter Project，或者使用快捷键ALT+SHIFT+N。</p>
+<p><strong>配置Project步骤一</strong></p>
+<p>具体含义参考上面官网构建时说明。</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9kLHG4.png"></p>
+<p><strong>配置Project步骤二</strong></p>
+<p>选择springboot版本，以及配置所需要的pom.xml依赖。</p>
+<p>如下图所示，<strong>Spring Boot Version</strong>个人选择的是springboot2.7.6稳定版本作为演示，目前最新稳定版本可选为springboot3.0.5。<strong>Frequently Used</strong>表示官方建议使用到的一些工具，讲几个个人使用过的。</p>
+<p>Lombok用于简化实体类（bean、entity、repository）get、set方法以及log日志打印，个人开发很实用，团队中慎重使用。</p>
+<p>MariaDB Driver是MariaDB数据库驱动，可以看做是MySQL替代产品。Spring Data JPA是对ORM持久化框架Hibernate近一步封装，简化了SQL操作。Spring Data MongoDB是nosql数据库中的一种，其它有Redis，主要用于做缓存使用。Spring Data Redis是nosql数据库中的一种，前面刚好介绍到了。</p>
+<p><strong>搜索框Type to search dependencies</strong>，可以进行检索需要的依赖，也可以展开下面小箭头选择依赖。比如展开下图上的SQL选项，有多种数据库驱动依赖可供选择使用。</p>
+<p><img data-src="https://s1.ax1x.com/2023/04/20/p9kLqz9.png"></p>
+<h3 id="springboot集成微服务nacos"><a href="#springboot集成微服务nacos" class="headerlink" title="springboot集成微服务nacos"></a>springboot集成微服务nacos</h3><p>正式搭建之前，注意项目环境：使用Spring如何集成nacos？使用springboot如何集成nacos？使用springcloud微服务组件如何集成nacos？此处发出了三连问，也许你在使用时也会遇到。不同的环境，可能得到的结果不一样。</p>
+<p>**下面将演示 springboot 项目集成微服务组件 nacos 过程 **。</p>
+<p><strong>1、启动示例</strong></p>
+<p>本地正常启动场景，使用127.0.0.1或者localhost，默认端口：8080。特殊情况在配置文件指定了固定IP地址。例如在application.properties 或者 application.yml 指定IP和端口，两种配置方式保留一种即可。</p>
+<p>示例：application.properties</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server.port</span>=<span class="string">8081</span></span><br><span class="line"><span class="attr">server.address</span>=<span class="string">192.168.1.111</span></span><br></pre></td></tr></table></figure>
+
+<p>示例：application.yml </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8081</span></span><br><span class="line">  <span class="attr">address:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.111</span></span><br></pre></td></tr></table></figure>
+
+<p>springboot启动过程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">  .   ____          _            __ _ _</span><br><span class="line"> /\\ / ___<span class="string">&#x27;_ __ _ _(_)_ __  __ _ \ \ \ \</span></span><br><span class="line"><span class="string">( ( )\___ | &#x27;</span>_ | <span class="string">&#x27;_| | &#x27;</span>_ \/ _` | \ \ \ \</span><br><span class="line"> \\/  ___)| |_)| | | | | || (_| |  ) ) ) )</span><br><span class="line">  <span class="string">&#x27;  |____| .__|_| |_|_| |_\__, | / / / /</span></span><br><span class="line"><span class="string"> =========|_|==============|___/=/_/_/_/</span></span><br><span class="line"><span class="string"> :: Spring Boot ::                (v2.7.6)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2022-10-26 20:13:06.902  INFO 16620 --- [           main] com.test.demo.Application                : Starting Application using Java 17.0.2 on kart with PID 16620 (...)</span></span><br><span class="line"><span class="string">2022-10-26 20:13:08.091  INFO 16620 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string">2022-10-26 20:13:10.260  INFO 16620 --- [           main] c.a.c.n.registry.NacosServiceRegistry    : nacos registry, DEFAULT_GROUP springboot-test 192.168.245.1:8080 register finished</span></span><br><span class="line"><span class="string">2022-10-26 20:13:10.579  INFO 16620 --- [           main] com.test.demo.Application                : Started Application in 4.45 seconds (JVM running for 5.251)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>2、配置pom.xml</strong></p>
+<p> <strong>springbot版本简要说明</strong>：springboot GA(General Availability 表示稳定版本)，各分支最新稳定版本2.3.12、2.4.13、2.5.14、2.6.14、2.7.10、3.0.5</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- springboot GA(最新稳定版本):2.3.12、2.4.13、2.5.14、2.6.14、2.7.10、3.0.5 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- springboot pom.xml parent父类 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.7.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>统一版本管理</strong>：JDK版本：17，spring-cloud-dependencies版本采用2021.0.4，spring-cloud-alibaba-dependencies版本采用：2021.0.4.0，和我保持一致，可以采用springboot2.7.x进行测试使用。目前，如果使用阿里云脚手架构建，springboot版本推荐不高于2.6.13。在nacos系列博文第一篇《MySQL数据库与Nacos搭建监控服务》中有写到如何构建，这里不在赘述。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">java.version</span>&gt;</span>17<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">spring-cloud-dependencies.version</span>&gt;</span>2021.0.4<span class="tag">&lt;/<span class="name">spring-cloud-dependencies.version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">spring-cloud-alibaba-dependencies.version</span>&gt;</span>2021.0.4.0<span class="tag">&lt;/<span class="name">spring-cloud-alibaba-dependencies.version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span>	</span><br></pre></td></tr></table></figure>
+
+<p><strong>pom依赖管理：dependency</strong></p>
+<p>主要注意版本对应：</p>
+<ul>
+<li>微服务：spring cloud依赖</li>
+<li>微服务：spring cloud alibaba依赖</li>
+<li>微服务：nacos config依赖、nacos discovery依赖、bootstrap依赖</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 总包管理 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- spring cloud依赖 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring-cloud-dependencies.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">			    <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">			    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- spring cloud alibaba依赖 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-alibaba-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring-cloud-alibaba-dependencies.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">			    <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">			    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span>	</span><br><span class="line"><span class="comment">&lt;!-- 引入相关依赖 --&gt;</span>	</span><br><span class="line">	<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 微服务 nacos config依赖 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 微服务 nacos discovery依赖 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- 微服务 bootstrap依赖  --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-bootstrap<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span>	</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>3、配置application.properties &amp; application.yml &amp; bootstrap.properties</strong></p>
+<p>如果使用开发环境多配置文件设置，可以使用：dev、prod、test进行区分，使用参数 spring.profiles.active&#x3D;dev 进行指定为开发环境。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># api port</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8080</span></span><br><span class="line"><span class="comment"># 开发环境多配置文件设置：dev、prod、test</span></span><br><span class="line"><span class="attr">spring.profiles.active</span>=<span class="string">dev</span></span><br><span class="line"><span class="comment"># 服务名称</span></span><br><span class="line"><span class="attr">spring.application.name</span>=<span class="string">springboot-test</span></span><br><span class="line"><span class="comment">###################################nacos配置#######################################</span></span><br><span class="line"><span class="comment"># nacos 打开监控 配合普罗米修斯进行监控 官方提供了MySQL初始化sql文件 在conf目录下：nacos-mysql.sql</span></span><br><span class="line"><span class="comment"># 暴露metrics数据</span></span><br><span class="line"><span class="attr">management.endpoints.web.exposure.include</span>=<span class="string">*</span></span><br><span class="line"><span class="comment"># nacos 配置注册远程服务地址&#123;config.server-addr和server-addr&#125;</span></span><br><span class="line"><span class="comment">#spring.cloud.nacos.config.server-addr=192.168.245.132:8848</span></span><br><span class="line"><span class="comment"># nacos 配置注册与发现&#123;discovery.server-addr&#125;</span></span><br><span class="line"><span class="attr">spring.cloud.nacos.discovery.server-addr</span>=<span class="string">192.168.245.132:8848</span></span><br><span class="line"><span class="comment">#spring.cloud.nacos.discovery.namespace=public</span></span><br><span class="line"><span class="attr">spring.cloud.nacos.config.file-extension</span>=<span class="string">properties</span></span><br><span class="line"><span class="comment">###################################nacos配置#######################################</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>bootstrap.properties</strong></p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#bootstrap.properties基础配置</span></span><br><span class="line"><span class="comment">#服务名称</span></span><br><span class="line"><span class="attr">spring.application.name</span>=<span class="string">springboot-test</span></span><br><span class="line"><span class="comment">#暴露config配置服务地址(动态更新)</span></span><br><span class="line"><span class="attr">spring.cloud.nacos.config.server-addr</span>=<span class="string">192.168.245.132:8848</span></span><br><span class="line"><span class="comment">#配置config文件扩展名(properties &amp; yml)</span></span><br><span class="line"><span class="attr">spring.cloud.nacos.config.file-extension</span>=<span class="string">properties</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>4、springboot入口：配置Application.java</strong></p>
+<ul>
+<li>@SpringBootApplication：sringboot启动必备注解</li>
+<li>@EnableDiscoveryClient：用于nacos发现客户端注解</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span>	<span class="comment">//sringboot启动必备注解</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span>  <span class="comment">//用于nacos发现客户端注解</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		SpringApplication.run(Application.class, args);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>TestController类引入测试代码：使用 Spring Cloud 原生注解，开启自动更新。</p>
+<p>单一配置场景，通过@Value注解，配置动态配置获取测试。</p>
+<p>多属性配置场景，可以通过@Autowired 注解注入自定义配置类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RefreshScope</span> <span class="comment">// Spring Cloud 原生注解 开启自动更新</span></span><br><span class="line"><span class="meta">@RequestMapping(value = &quot;/t&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestController</span> &#123;</span><br><span class="line">	<span class="comment">/** 使用动态配置获取测试 --BEGIN-- **/</span></span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;alibaba.config.discovery&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String discovery;</span><br><span class="line">	</span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;alibaba.config.name&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@GetMapping(&quot;/getConfig&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getConfig</span><span class="params">()</span> &#123;</span><br><span class="line">		log.info(<span class="string">&quot;getConfig&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;getConfig&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span> + <span class="string">&quot;发现：&quot;</span> + discovery + <span class="string">&quot;&gt;&gt;&gt;服务名称：&quot;</span> + name;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;custom.config.find&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String find;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;custom.config.say&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String say;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@GetMapping(&quot;/meet&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">meet</span><span class="params">()</span> &#123;</span><br><span class="line">		log.info(<span class="string">&quot;meet&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;meet&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span> + <span class="string">&quot;偶遇老湿：&quot;</span> + find + <span class="string">&quot;&gt;&gt;&gt;你好：&quot;</span> + say;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">/** 使用动态配置获取测试 --END-- **/</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以根据业务情况而定，将多个配置封装到一个类里面，如下所示，新建CustomConf类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * desc:对象配置类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Value</span> </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Component</span> <span class="doctag">@ConfigurationProperties</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;custom&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CustomConf</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> Integer one;</span><br><span class="line">	<span class="keyword">private</span> Integer two;</span><br><span class="line">	<span class="keyword">private</span> Integer three;</span><br><span class="line">	<span class="keyword">private</span> String description;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 此处省略掉了 get set 方法，实际需要补上</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用到注解：</p>
+<ul>
+<li>@Value ：通常情况，使用注解取值。</li>
+<li>@Component ：加入注解，便于被扫描到。</li>
+<li>@ConfigurationProperties：引入配置，通过prefix指定配置前缀。</li>
+</ul>
+<p>在项目中注入：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> CustomConf custom;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/custom&quot;)</span></span><br><span class="line">   <span class="keyword">public</span> String <span class="title function_">custom</span><span class="params">()</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="string">&quot;[custom] &quot;</span> + custom;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>nacos 控制台：新建配置</strong>：springboot-test.properties</p>
+<p><img data-src="https://img2023.cnblogs.com/blog/1440924/202304/1440924-20230420163226056-1625896026.png"></p>
+<p><strong>nacos 控制台：配置详情</strong>：配置的比较随意，参考看看就行</p>
+<p><img data-src="https://img2023.cnblogs.com/blog/1440924/202304/1440924-20230420163225744-1095188210.png"></p>
+<p><strong>运行服务</strong>：</p>
+<ul>
+<li>nohup：代表脱离终端运行</li>
+<li>&amp;：代表放入后台</li>
+<li>-Dspring.profiles.active&#x3D;prod：指定为生产环境</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream <span class="built_in">test</span>]<span class="comment"># nohup java -jar -Dspring.profiles.active=prod /opt/workspace/test/springboot-nacos-cloud-0.0.1-SNAPSHOT.jar  &gt; /opt/</span></span><br><span class="line">workspace/test/springboot-nacos.log 2&gt;&amp;1 &amp;</span><br><span class="line">[1] 4628</span><br></pre></td></tr></table></figure>
+
+<p><strong>测试接口</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.245.132:8082/t/getConfig</span><br></pre></td></tr></table></figure>
+
+<p>你也可以使用curl命令请求：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET http://192.168.245.132:8082/t/getConfig</span><br></pre></td></tr></table></figure>
+
+<p><strong>得到输出结果</strong>：</p>
+<p>getConfig&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;发现：配置&gt;&gt;&gt;服务名称：nacos服务</p>
+<p>查看日志验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tail</span> -n 5 springboot-nacos.log</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img data-src="https://img2023.cnblogs.com/blog/1440924/202304/1440924-20230420163225861-2052120334.png"></p>
+<p>验证成功，getConfig日志打印出来了。</p>
+<p>至此，springboot集成微服务组件nacos联动完成，详细说明可以参考上一篇文章，文初有说明，这里不在赘述。</p>
+<p><strong>实际使用过程中，难免会遇到各种问题，此时不用慌，有详细官方文档可供参考。如下引入了nacos部分文档，解决搭建过程中遇到的问题，提供参考</strong>。</p>
+<h3 id="nacos版本问题"><a href="#nacos版本问题" class="headerlink" title="nacos版本问题"></a>nacos版本问题</h3><p><strong>如果你使用nacos 1.x升级到nacos 2.x版本，建议参考官方兼容性说明与升级文档</strong>。</p>
+<h4 id="nacos2-0-0版本兼容性说明"><a href="#nacos2-0-0版本兼容性说明" class="headerlink" title="nacos2.0.0版本兼容性说明"></a>nacos2.0.0版本兼容性说明</h4><p>兼容性说明：<span class="exturl" data-url="aHR0cHM6Ly9uYWNvcy5pby96aC1jbi9kb2NzL3YyL3VwZ3JhZGluZy8yLjAuMC1jb21wYXRpYmlsaXR5Lmh0bWw=">https://nacos.io/zh-cn/docs/v2/upgrading/2.0.0-compatibility.html<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>目前官网推荐使用nacos2.1.1稳定版</strong>，推荐的上一个稳定版本是2.0.3。</p>
+<p>Nacos2.0版本相比1.X新增了gRPC的通信方式，因此需要增加2个端口。新增端口是在配置的主端口(server.port)基础上，进行一定偏移量自动生成。</p>
+<table>
+<thead>
+<tr>
+<th>端口</th>
+<th>与主端口的偏移量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>9848</td>
+<td>1000</td>
+<td>客户端gRPC请求服务端端口，用于客户端向服务端发起连接和请求</td>
+</tr>
+<tr>
+<td>9849</td>
+<td>1001</td>
+<td>服务端gRPC请求服务端端口，用于服务间同步等</td>
+</tr>
+</tbody></table>
+<p><strong>使用VIP&#x2F;nginx请求时，需要配置成TCP转发，不能配置http2转发，否则连接会被nginx断开。</strong></p>
+<p>客户端拥有相同的计算逻辑，用户如同1.X的使用方式，配置主端口(默认8848)，通过相同的偏移量，计算对应gRPC端口(默认9848)。</p>
+<p>因此<strong>如果客户端和服务端之前存在端口转发或防火墙时，需要对端口转发配置和防火墙配置做相应的调整</strong>。</p>
+<h4 id="nacos升级文档"><a href="#nacos升级文档" class="headerlink" title="nacos升级文档"></a>nacos升级文档</h4><p>升级文档：<span class="exturl" data-url="aHR0cHM6Ly9uYWNvcy5pby96aC1jbi9kb2NzL3YyL3VwZ3JhZGluZy8yLjAuMC11cGdyYWRpbmcuaHRtbA==">https://nacos.io/zh-cn/docs/v2/upgrading/2.0.0-upgrading.html<i class="fa fa-external-link-alt"></i></span></p>
+<h4 id="nacos版本与spring-cloud对应关系"><a href="#nacos版本与spring-cloud对应关系" class="headerlink" title="nacos版本与spring cloud对应关系"></a>nacos版本与spring cloud对应关系</h4><blockquote>
+<p>由于 Spring Boot 3.0，Spring Boot 2.7~2.4 和 2.4 以下版本之间变化较大，目前企业级客户老项目相关 Spring Boot 版本仍停留在 Spring Boot 2.4 以下，为了同时满足存量用户和新用户不同需求，社区以 Spring Boot 3.0 和 2.4 分别为分界线，同时维护 2022.x、2021.x、2.2.x 三个分支迭代。 为了规避相关构建过程中的依赖冲突问题，我们建议可以通过 <span class="exturl" data-url="aHR0cHM6Ly9zdGFydC5hbGl5dW4uY29tLw==">云原生应用脚手架<i class="fa fa-external-link-alt"></i></span> 进行项目创建。</p>
+</blockquote>
+<p><strong>2022.x 分支</strong></p>
+<p>适配 Spring Boot 3.0，Spring Cloud 2022.x 版本及以上的 Spring Cloud Alibaba 版本按从新到旧排列如下表（最新版本用*标记）： (注意，该分支 Spring Cloud Alibaba 版本命名方式进行了调整，未来将对应 Spring Cloud 版本，前三位为 Spring Cloud 版本，最后一位为扩展版本，比如适配 Spring Cloud 2022.0.0 版本对应的 Spring Cloud Alibaba 第一个版本为：2022.0.0.0，第个二版本为：2022.0.0.1，依此类推)</p>
+<table>
+<thead>
+<tr>
+<th>Spring Cloud Alibaba Version</th>
+<th>Spring Cloud Version</th>
+<th>Spring Boot Version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2022.0.0.0-RC*</td>
+<td>Spring Cloud 2022.0.0</td>
+<td>3.0.0</td>
+</tr>
+</tbody></table>
+<p><strong>2021.x 分支</strong></p>
+<p>适配 Spring Boot 2.4，Spring Cloud 2021.x 版本及以上的 Spring Cloud Alibaba 版本按从新到旧排列如下表（最新版本用*标记）： (注意，该分支 Spring Cloud Alibaba 版本命名方式进行了调整，未来将对应 Spring Cloud 版本，前三位为 Spring Cloud 版本，最后一位为扩展版本，比如适配 Spring Cloud 2021.0.1 版本对应的 Spring Cloud Alibaba 第一个版本为：2021.0.1.0，第个二版本为：2021.0.1.1，依此类推)</p>
+<table>
+<thead>
+<tr>
+<th>Spring Cloud Alibaba Version</th>
+<th>Spring Cloud Version</th>
+<th>Spring Boot Version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2021.0.5.0*</td>
+<td>Spring Cloud 2021.0.5</td>
+<td>2.6.13</td>
+</tr>
+<tr>
+<td>2021.0.4.0*</td>
+<td>Spring Cloud 2021.0.4</td>
+<td>2.6.11</td>
+</tr>
+<tr>
+<td>2021.0.1.0</td>
+<td>Spring Cloud 2021.0.1</td>
+<td>2.6.3</td>
+</tr>
+<tr>
+<td>2021.1</td>
+<td>Spring Cloud 2020.0.1</td>
+<td>2.4.2</td>
+</tr>
+</tbody></table>
+<p><strong>2.2.x 分支</strong></p>
+<p>适配 Spring Boot 为 2.4，Spring Cloud Hoxton 版本及以下的 Spring Cloud Alibaba 版本按从新到旧排列如下表（最新版本用*标记）：</p>
+<table>
+<thead>
+<tr>
+<th>Spring Cloud Alibaba Version</th>
+<th>Spring Cloud Version</th>
+<th>Spring Boot Version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2.2.10-RC1*</td>
+<td>Spring Cloud Hoxton.SR12</td>
+<td>2.3.12.RELEASE</td>
+</tr>
+<tr>
+<td>2.2.9.RELEASE*</td>
+<td>Spring Cloud Hoxton.SR12</td>
+<td>2.3.12.RELEASE</td>
+</tr>
+<tr>
+<td>2.2.8.RELEASE</td>
+<td>Spring Cloud Hoxton.SR12</td>
+<td>2.3.12.RELEASE</td>
+</tr>
+<tr>
+<td>2.2.7.RELEASE</td>
+<td>Spring Cloud Hoxton.SR12</td>
+<td>2.3.12.RELEASE</td>
+</tr>
+<tr>
+<td>2.2.6.RELEASE</td>
+<td>Spring Cloud Hoxton.SR9</td>
+<td>2.3.2.RELEASE</td>
+</tr>
+<tr>
+<td>2.2.1.RELEASE</td>
+<td>Spring Cloud Hoxton.SR3</td>
+<td>2.2.5.RELEASE</td>
+</tr>
+<tr>
+<td>2.2.0.RELEASE</td>
+<td>Spring Cloud Hoxton.RELEASE</td>
+<td>2.2.X.RELEASE</td>
+</tr>
+<tr>
+<td>2.1.4.RELEASE</td>
+<td>Spring Cloud Greenwich.SR6</td>
+<td>2.1.13.RELEASE</td>
+</tr>
+<tr>
+<td>2.1.2.RELEASE</td>
+<td>Spring Cloud Greenwich</td>
+<td>2.1.X.RELEASE</td>
+</tr>
+<tr>
+<td>2.0.4.RELEASE(停止维护，建议升级)</td>
+<td>Spring Cloud Finchley</td>
+<td>2.0.X.RELEASE</td>
+</tr>
+<tr>
+<td>1.5.1.RELEASE(停止维护，建议升级)</td>
+<td>Spring Cloud Edgware</td>
+<td>1.5.X.RELEASE</td>
+</tr>
+</tbody></table>
+<h4 id="组件版本关系"><a href="#组件版本关系" class="headerlink" title="组件版本关系"></a>组件版本关系</h4><p><strong>版本说明</strong>：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsaWJhYmEvc3ByaW5nLWNsb3VkLWFsaWJhYmEvd2lraS8lRTclODklODglRTYlOUMlQUMlRTglQUYlQjQlRTYlOTglOEU=">https://github.com/alibaba/spring-cloud-alibaba/wiki/版本说明<i class="fa fa-external-link-alt"></i></span></p>
+<p>每个 Spring Cloud Alibaba 版本及其自身所适配的各组件对应版本如下表所示（注意，Spring Cloud Dubbo 从 2021.0.1.0 起已被移除出主干，不再随主干演进）：</p>
+<table>
+<thead>
+<tr>
+<th>Spring Cloud Alibaba Version</th>
+<th>Sentinel Version</th>
+<th>Nacos Version</th>
+<th>RocketMQ Version</th>
+<th>Dubbo Version</th>
+<th>Seata Version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2021.0.5.0</td>
+<td>1.8.6</td>
+<td>2.2.0</td>
+<td>4.9.4</td>
+<td>~</td>
+<td>1.6.1</td>
+</tr>
+<tr>
+<td>2.2.10-RC1</td>
+<td>1.8.6</td>
+<td>2.2.0</td>
+<td>4.9.4</td>
+<td>~</td>
+<td>1.6.1</td>
+</tr>
+<tr>
+<td>2022.0.0.0-RC1</td>
+<td>1.8.6</td>
+<td>2.2.1-RC</td>
+<td>4.9.4</td>
+<td>~</td>
+<td>1.6.1</td>
+</tr>
+<tr>
+<td>2.2.9.RELEASE</td>
+<td>1.8.5</td>
+<td>2.1.0</td>
+<td>4.9.4</td>
+<td>~</td>
+<td>1.5.2</td>
+</tr>
+<tr>
+<td>2021.0.4.0</td>
+<td>1.8.5</td>
+<td>2.0.4</td>
+<td>4.9.4</td>
+<td>~</td>
+<td>1.5.2</td>
+</tr>
+<tr>
+<td>2.2.8.RELEASE</td>
+<td>1.8.4</td>
+<td>2.1.0</td>
+<td>4.9.3</td>
+<td>~</td>
+<td>1.5.1</td>
+</tr>
+<tr>
+<td>2021.0.1.0</td>
+<td>1.8.3</td>
+<td>1.4.2</td>
+<td>4.9.2</td>
+<td>~</td>
+<td>1.4.2</td>
+</tr>
+<tr>
+<td>2.2.7.RELEASE</td>
+<td>1.8.1</td>
+<td>2.0.3</td>
+<td>4.6.1</td>
+<td>2.7.13</td>
+<td>1.3.0</td>
+</tr>
+<tr>
+<td>2.2.6.RELEASE</td>
+<td>1.8.1</td>
+<td>1.4.2</td>
+<td>4.4.0</td>
+<td>2.7.8</td>
+<td>1.3.0</td>
+</tr>
+<tr>
+<td>2021.1 or 2.2.5.RELEASE or 2.1.4.RELEASE or 2.0.4.RELEASE</td>
+<td>1.8.0</td>
+<td>1.4.1</td>
+<td>4.4.0</td>
+<td>2.7.8</td>
+<td>1.3.0</td>
+</tr>
+<tr>
+<td>2.2.3.RELEASE or 2.1.3.RELEASE or 2.0.3.RELEASE</td>
+<td>1.8.0</td>
+<td>1.3.3</td>
+<td>4.4.0</td>
+<td>2.7.8</td>
+<td>1.3.0</td>
+</tr>
+<tr>
+<td>2.2.1.RELEASE or 2.1.2.RELEASE or 2.0.2.RELEASE</td>
+<td>1.7.1</td>
+<td>1.2.1</td>
+<td>4.4.0</td>
+<td>2.7.6</td>
+<td>1.2.0</td>
+</tr>
+<tr>
+<td>2.2.0.RELEASE</td>
+<td>1.7.1</td>
+<td>1.1.4</td>
+<td>4.4.0</td>
+<td>2.7.4.1</td>
+<td>1.0.0</td>
+</tr>
+<tr>
+<td>2.1.1.RELEASE or 2.0.1.RELEASE or 1.5.1.RELEASE</td>
+<td>1.7.0</td>
+<td>1.1.4</td>
+<td>4.4.0</td>
+<td>2.7.3</td>
+<td>0.9.0</td>
+</tr>
+<tr>
+<td>2.1.0.RELEASE or 2.0.0.RELEASE or 1.5.0.RELEASE</td>
+<td>1.6.3</td>
+<td>1.1.1</td>
+<td>4.4.0</td>
+<td>2.7.3</td>
+<td>0.7.1</td>
+</tr>
+</tbody></table>
+<h4 id="排查错误"><a href="#排查错误" class="headerlink" title="排查错误"></a>排查错误</h4><p><strong>启动时报错<code>Connection is unregistered.</code>或<code>Client not connected,current status:STARTING</code>.</strong></p>
+<p>原因是<strong>客户端gRPC无法和服务端创建连接</strong>，请先使用<code>telnet $&#123;nacos.server.address&#125;:$&#123;nacos.server.grpc.port&#125;</code>进行测试，查看网络是否畅通，服务端端口是否已经正确监听。</p>
+<p><strong>Nacos2.0增加了9848，9849端口来进行GRPC通信，我需要在application.properties中额外配置吗？</strong></p>
+<p>不需要，这两个端口在Nacos2.0内部是通过8848+1000以及8848+1001这种偏移量方式计算出来的，不需要用户额外在配置文件中配置。但如果使用的是docker或存在端口转发方式启动，需要把这两个端口进行配置。</p>
+<p><strong>启动nacos2.0时希望用nginx 代理，9848这个端口怎样处理，要通过nginx暴露出来么？以及docker是否需要映射？</strong></p>
+<p>如果存在防火墙或者nginx端口转发问题，需要进行相应的端口暴露配置。如在nginx中，在已经暴露8848(x)的基础上，需要额外暴露9848（x+1000)。</p>
+<p><strong>解决版本冲突问题时遇到端口未开放</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2022-12-07 20:08:13.792  INFO 17152 --- [t.remote.worker] com.alibaba.nacos.common.remote.client   : [236c02fe-157b-475e-9540-b11bf110f49e_config-0] Fail to connect server, after trying 2 <span class="built_in">times</span>, last try server is &#123;serverIp = <span class="string">&#x27;192.168.245.132&#x27;</span>, server main port = 8858&#125;, error = unknown</span><br><span class="line">2022-12-07 20:08:16.213 ERROR 17152 --- [           main] c.a.n.c.remote.client.grpc.GrpcClient    : Server check fail, please check server 192.168.245.132 ,port 9858 is available , error =&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>分析问题</strong>：检查192.168.245.132服务器的端口9858是否可用。如果参考了上面文档，你会发现我默认端口为8858，nacos2.x使用gRPC通信方式，+1000偏移量检测9858是否可用，由于防火墙或端口转发等原因，需要开发相应端口。</p>
+<p><strong>开放相应端口</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=9858/tcp --permanent</span><br><span class="line">firewall-cmd --zone=public --add-port=9859/tcp --permanent</span><br></pre></td></tr></table></figure>
+
+<p><strong>重载firewall-cmd服务</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看开放的端口</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream nacos-2.0.4]<span class="comment"># firewall-cmd --list-all</span></span><br><span class="line">public (active)</span><br><span class="line">...</span><br><span class="line">ports: 8848/tcp 9001-9010/tcp 8081/tcp 3000/tcp 8082/tcp 8083/tcp 8858/tcp 9858/tcp</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>启动多个nacos server服务导致nacos-server.jar占用 PID 问题</strong></p>
+<p>定位问题：查看nacos.log日志文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2022-12-07 20:19:02,601 INFO Starting Nacos v2.0.3 on Centos9-Stream with PID 34970 (/usr/local/nacos/target/nacos-server.jar started by root <span class="keyword">in</span> /usr/local/nacos-2.0.4)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>参考资料</strong>：</p>
+<ul>
+<li>springboot2.7.x官方文档：<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctYm9vdC9kb2NzLzIuNy4xMC9yZWZlcmVuY2UvcGRmL3NwcmluZy1ib290LXJlZmVyZW5jZS5wZGY=">https://docs.spring.io/spring-boot/docs/2.7.10/reference/pdf/spring-boot-reference.pdf<i class="fa fa-external-link-alt"></i></span></li>
+<li>nacos2.x官方文档：<span class="exturl" data-url="aHR0cHM6Ly9uYWNvcy5pby96aC1jbi9kb2NzL3YyL3F1aWNrc3RhcnQvcXVpY2stc3RhcnQuaHRtbA==">https://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html<i class="fa fa-external-link-alt"></i></span></li>
+<li>prometheus官方文档：<span class="exturl" data-url="aHR0cHM6Ly9wcm9tZXRoZXVzLmlvL2RvY3MvcHJvbWV0aGV1cy8yLjM3L2dldHRpbmdfc3RhcnRlZC8=">https://prometheus.io/docs/prometheus/2.37/getting_started&#x2F;<i class="fa fa-external-link-alt"></i></span></li>
+<li>grafana官方文档：<span class="exturl" data-url="aHR0cHM6Ly9ncmFmYW5hLmNvbS9kb2NzL2dyYWZhbmEvbGF0ZXN0L2dldHRpbmctc3RhcnRlZC8=">https://grafana.com/docs/grafana/latest/getting-started/<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>切记切记，以上总结，仅供参考！别人提供的是思考方向，具体实践还需亲自测试印证。</p>
+<h2 id="END—"><a href="#END—" class="headerlink" title="END—-"></a>END—-</h2><p>静下心来，才发现原来不会的还有很多。</p>
+<p>一分耕耘，一分收获。</p>
+<p>多总结，你会发现，自己的知识宝库越来越丰富。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/" title="SpringBoot应用集成微服务组件Nacos">https://blog.cnwangk.top/2023/04/15/SpringBoot应用集成微服务组件Nacos/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/nacos/" rel="tag"><i class="fa fa-tag"></i> nacos</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/14/hugo%E5%88%9D%E4%BD%93%E9%AA%8C/" rel="prev" title="hugo初体验">
+                  <i class="fa fa-angle-left"></i> hugo初体验
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/17/rockyLinux%E9%95%9C%E5%83%8F%E6%BA%90%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80/" rel="next" title="rockyLinux镜像源下载地址">
+                  rockyLinux镜像源下载地址 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

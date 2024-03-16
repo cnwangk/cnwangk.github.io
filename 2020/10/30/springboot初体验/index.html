@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="还记得那个某课网的两小时入门springboot的课程吗？某师兄的springboot系列教学视频确实是有点东西的，就是骚了一点。结果可想而知，在N年后被某人给举报了，被强制下架了，原因是引起某女学员不适。这门视频教程还是有可取之处的，通俗易懂。  链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1UJFuqEeQ1eAlC3n4SeCmTQ?pwd&#x3D;syi5   提取码: syi5">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="springboot初体验">
+<meta property="og:url" content="https://blog.cnwangk.top/2020/10/30/springboot%E5%88%9D%E4%BD%93%E9%AA%8C/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="还记得那个某课网的两小时入门springboot的课程吗？某师兄的springboot系列教学视频确实是有点东西的，就是骚了一点。结果可想而知，在N年后被某人给举报了，被强制下架了，原因是引起某女学员不适。这门视频教程还是有可取之处的，通俗易懂。  链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1UJFuqEeQ1eAlC3n4SeCmTQ?pwd&#x3D;syi5   提取码: syi5">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923214918825.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020092321500916.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923215054226.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200925141622321.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924125626475.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924125843777.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924130415309.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924130002565.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924130327477.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924130751239.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924131850192.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924131147771.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924133928591.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924133928630.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923214121484.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923213103852.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923213217751.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923213252127.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923213319537.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923213446623.png#pic_center">
+<meta property="article:published_time" content="2020-10-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-28T13:45:00.396Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="springboot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200923214918825.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2020/10/30/springboot%E5%88%9D%E4%BD%93%E9%AA%8C/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2020/10/30/springboot%E5%88%9D%E4%BD%93%E9%AA%8C/","path":"2020/10/30/springboot初体验/","title":"springboot初体验"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>springboot初体验 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-globe fa-fw fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-th fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E7%AF%87"><span class="nav-number">2.1.</span> <span class="nav-text">开发工具篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81SpringTools%E5%AE%98%E7%BD%91%E7%9B%B4%E9%80%9A%E8%BD%A6"><span class="nav-number">2.1.1.</span> <span class="nav-text">一、SpringTools官网直通车</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81eclipse%E5%AE%98%E7%BD%91%E7%9B%B4%E9%80%9A%E8%BD%A6%E3%80%82"><span class="nav-number">2.1.2.</span> <span class="nav-text">二、eclipse官网直通车。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81IDEA%E5%AE%98%E7%BD%91%E7%9B%B4%E9%80%9A%E8%BD%A6%E3%80%82"><span class="nav-number">2.1.3.</span> <span class="nav-text">三、IDEA官网直通车。</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E9%85%8D%E7%BD%AEmaven%E9%95%9C%E5%83%8F"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">1、配置maven镜像</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81spring-boot%E5%AE%98%E7%BD%91%E7%9B%B4%E9%80%9A%E8%BD%A6%E3%80%82"><span class="nav-number">2.1.4.</span> <span class="nav-text">四、spring-boot官网直通车。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E9%80%9A%E8%BF%87spring%E5%AE%98%E7%BD%91%E5%BF%AB%E6%8D%B7%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.1.5.</span> <span class="nav-text">五、通过spring官网快捷创建项目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E8%AF%A6%E7%BB%86%E7%9A%84%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.1.5.1.</span> <span class="nav-text">1、详细的描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E8%AF%A6%E6%83%85%E7%AE%80%E8%BF%B0"><span class="nav-number">2.1.5.2.</span> <span class="nav-text">2、详情简述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E6%89%93%E5%8C%85%E8%BF%90%E8%A1%8Cspringboot%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.1.5.3.</span> <span class="nav-text">3、打包运行springboot项目</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98%E7%AF%87"><span class="nav-number">2.2.</span> <span class="nav-text">六、解决问题篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%8F%91%E7%8E%B0%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.1.</span> <span class="nav-text">1、发现问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%80%9D%E8%80%83%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.2.</span> <span class="nav-text">2、思考问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.2.3.</span> <span class="nav-text">3、解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%E8%AE%B2%E8%A7%A3%E7%AF%87"><span class="nav-number">2.3.</span> <span class="nav-text">实战讲解篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81controller%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8"><span class="nav-number">2.3.1.</span> <span class="nav-text">1、controller的简单使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1%E3%80%81%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%B3%A8%E8%A7%A3"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">1.1、常用的一些注解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81Repository"><span class="nav-number">2.3.2.</span> <span class="nav-text">2、Repository</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1%E3%80%81%E7%AE%80%E4%BB%8B"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">2.1、简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2%E3%80%81%E8%81%94%E7%B3%BB"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">2.2、联系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93jdbc-config-datasource"><span class="nav-number">2.3.3.</span> <span class="nav-text">3、配置数据库jdbc_config_datasource</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E5%A3%B0%E5%93%94%E5%93%94"><span class="nav-number">3.</span> <span class="nav-text">小声哔哔</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2021/07/27/Linux%EF%BC%88%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%EF%BC%89%E9%83%A8%E7%BD%B2VNC%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%B9%B6%E4%B8%94%E4%BD%BF%E7%94%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5/" rel="bookmark">
+        <time class="popular-posts-time">2021-07-27</time>
+        <br>
+      Linux（银河麒麟V10）部署VNC服务端并且使用客户端连接
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" rel="bookmark">
+        <time class="popular-posts-time">2022-02-18</time>
+        <br>
+      DM8 数据库 DTS 迁移工具详细使用教程
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2020/01/03/Linux%E5%85%BB%E6%88%90%E8%BE%BE%E4%BA%BA%E4%B9%8B%E5%85%A5%E9%97%A8%E5%AE%9E%E8%B7%B5%E5%9B%BE%E6%96%87%E8%B6%85%E8%AF%A6%E7%BB%86/" rel="bookmark">
+        <time class="popular-posts-time">2020-01-03</time>
+        <br>
+      Linux养成达人之入门实践图文超详细
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/" rel="bookmark">
+        <time class="popular-posts-time">2023-04-15</time>
+        <br>
+      SpringBoot应用集成微服务组件Nacos
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2021/11/30/CentOS7%20Linux%20%E6%90%AD%E5%BB%BAMySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/" rel="bookmark">
+        <time class="popular-posts-time">2021-11-30</time>
+        <br>
+      CentOS7 Linux 搭建MySQL主从复制
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2020/10/30/springboot%E5%88%9D%E4%BD%93%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="技术偏好：Linux(CentOS | Rocky) | Java | Database(数据库)方向">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="springboot初体验 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          springboot初体验
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-30 00:00:00" itemprop="dateCreated datePublished" datetime="2020-10-30T00:00:00+08:00">2020-10-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-28 21:45:00" itemprop="dateModified" datetime="2023-05-28T21:45:00+08:00">2023-05-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">web开发</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>14 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>还记得那个某课网的两小时入门springboot的课程吗？某师兄的springboot系列教学视频确实是有点东西的，就是骚了一点。结果可想而知，在N年后被某人给举报了，被强制下架了，原因是引起某女学员不适。这门视频教程还是有可取之处的，通俗易懂。</p>
+<blockquote>
+<p>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMVVKRnVxRWVRMWVBbEMzbjRTZUNtVFE/cHdkPXN5aTU=">https://pan.baidu.com/s/1UJFuqEeQ1eAlC3n4SeCmTQ?pwd=syi5<i class="fa fa-external-link-alt"></i></span>   提取码: syi5 </p>
+</blockquote>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我最初是2017年年初开始接触springboot的，那会还是看的某编程网站的视频教程入门的（彼时springmvc还是主流，springboot刚刚进入人们的视线）。如今也打算总结一篇，关于快速入门springboot的图文教程。</p>
+<p>其实网上已经有很多类似的教程了。无外乎图文详解，视频教程。当你看此篇教程时肯定是最新的，距离spring-boot崛起已经有4年了。但是，我还是准备写一篇关于spring-boot的详细教程。记录参考官方文档遇到的坑，也是对自己的一次总结。由于是初体验，会描述的很详细，但是不会太过于深入。会包含开发工具篇，也是为了照顾想入坑的，综合性的全面讲解非常有必要。</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="开发工具篇"><a href="#开发工具篇" class="headerlink" title="开发工具篇"></a>开发工具篇</h2><h3 id="一、SpringTools官网直通车"><a href="#一、SpringTools官网直通车" class="headerlink" title="一、SpringTools官网直通车"></a>一、SpringTools官网直通车</h3><blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zcHJpbmcuaW8vdG9vbHMv">https://spring.io/tools/<i class="fa fa-external-link-alt"></i></span><br>这里就不放项目创建截图了，会在下面的<code>eclipse</code>和<code>IDEA</code>下面放出截图。</p>
+</blockquote>
+<h3 id="二、eclipse官网直通车。"><a href="#二、eclipse官网直通车。" class="headerlink" title="二、eclipse官网直通车。"></a>二、eclipse官网直通车。</h3><p>已经使用<code>eclipse</code>了，可以去下载离线插件包。下图有<code>JavaEE</code>等其它<code>ide</code>的版本，也有历史版本。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZWNsaXBzZS5vcmcvZG93bmxvYWRzL3BhY2thZ2VzLw==">https://www.eclipse.org/downloads/packages/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p><img data-src="https://img-blog.csdnimg.cn/20200923214918825.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>使用<code>sts-eclipse</code>创建项目，与下载插件的<code>eclipse</code>创建方式同理。<br>1.点击<code>File</code>，再点击<code>New</code>，然后点击<code>Spring Starter Project</code>创建项目<br>2.也可以使用快捷键：<code>Alt+Shift+N</code>，然后点击<code>Spring Starter Project</code>创建项目</p>
+<p><strong>创建项目，并配置属性</strong><br><img data-src="https://img-blog.csdnimg.cn/2020092321500916.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><strong>配置项目，选好需要的依赖，并且定好稳定版本</strong></p>
+<p><img data-src="https://img-blog.csdnimg.cn/20200923215054226.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>你看了上面的截图，会发现和下面使用<span class="exturl" data-url="aHR0cHM6Ly9zdGFydC5zcHJpbmcuaW8v">https://start.spring.io/<i class="fa fa-external-link-alt"></i></span>官网去创建项目是不是很类似，只是利用的工具不一样而已。</p>
+<h3 id="三、IDEA官网直通车。"><a href="#三、IDEA官网直通车。" class="headerlink" title="三、IDEA官网直通车。"></a>三、IDEA官网直通车。</h3><p>tips：采用学生邮箱注册账号，永久免费使用旗舰版。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamV0YnJhaW5zLmNvbS9pZGVhL2Rvd25sb2FkLyNzZWN0aW9uPXdpbmRvd3M=">https://www.jetbrains.com/idea/download/#section=windows<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>下载完后，配置<code>maven</code>，<strong>2020版本之前的设置</strong>，<strong>配置阿里云的maven镜像在下面有说明</strong>。</p>
+<p><strong>单个项目生效（settings）</strong><br>01、选中项目test<br>02、右键选择settings，搜索maven</p>
+<p><strong>多项目生效（default settings）</strong><br><img data-src="https://img-blog.csdnimg.cn/20200925141622321.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>01、点击空白处，选择<code>FILE</code> ，找到<code>other settings</code><br>02、选择<code>default settings</code><br>03、找到<code>Build, Execution, Deployment</code>这一栏<br>04、选择<code>Bulid Tools</code>点击展开<br>05、然后配置<code>maven</code>，这样就解决了<code>IDEA</code>一次设置所有新建的<code>maven</code>项目都生效。</p>
+<p><strong>2020版本以及后面的设置</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#后面配置maven同上</span><br><span class="line">File -&gt; new project settings -&gt; settings for new projects</span><br></pre></td></tr></table></figure>
+
+<p>idea的版本不用太新或者比较旧的版本，稳定就行。我个人一直沿用的2017.1的版本，用作测试完全没问题的。<strong>打开IDEA首先显示已经创建过的项目</strong>。<br><img data-src="https://img-blog.csdnimg.cn/20200924125626475.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><strong>进入主界面创建项目方法</strong><br><img data-src="https://img-blog.csdnimg.cn/20200924125843777.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><strong>创建项目</strong></p>
+<p>这里会选择你的启动IDEA默认配置的JDK版本，当然右上角的New可以配置安装其它的JDK版本。<br><img data-src="https://img-blog.csdnimg.cn/20200924130415309.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><strong>进入项目配置文件列表</strong></p>
+<p>我选择的是<code>JDK8</code>版本与我默认使用版本保持一致。你也可以视情况而定，这个并不冲突。第三种创建方式对项目配置列表有的详细的描述，这里就不做过多介绍。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/20200924130002565.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><strong>配置pom依赖</strong></p>
+<p>为了演示需要，我选择了<code>Spring Web</code>选项。<br><img data-src="https://img-blog.csdnimg.cn/20200924130327477.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><strong>配置完后，点击finish创建项目</strong></p>
+<p><strong>project</strong>：项目名</p>
+<p><strong>project location</strong>：工作空间，可以自行选择修改的。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/20200924130751239.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h4 id="1、配置maven镜像"><a href="#1、配置maven镜像" class="headerlink" title="1、配置maven镜像"></a>1、配置maven镜像</h4><p>官方默认的镜像地址是国外的，懂得都懂，龟速前进。配置阿里云的镜像地址，瞬间飞一般的感觉，纵享丝滑。</p>
+<p>配置<code>settings.xml</code>文件，设置<code>repo</code>存储地址。<br><img data-src="https://img-blog.csdnimg.cn/20200924131850192.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>将下面的<strong>阿里云maven镜像地址</strong>配置到<strong>mirrors</strong>中。当然也可以配置到<code>pom.xml</code>文件中，单个项目生效。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span>&gt;</span>alimaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  　　 <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span>        </span><br><span class="line"><span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<p>做完上面的配置后，再配置置自己下载的<code>maven</code>到<code>IDEA</code>中。<code>eclipse</code>配置<code>maven</code>也是大同小异，我就没截图了。</p>
+<p><strong>注意：这里选中项目进行设置，只对单个项目生效的，上面有说明的。</strong></p>
+<p><img data-src="https://img-blog.csdnimg.cn/20200924131147771.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>项目的启动就不做过多截图了，选中<code>DemoApplication.java</code>通过右键点击<code>run</code>运行，项目右上角也有<code>run</code>选项启动。</p>
+<p>或者在控制台使用命令运行，清理后打包再运行。这个命令适用<code>windows</code>平台的<code>CMD</code>控制台以及<code>DIEA</code>自带的<code>Terminal</code>控制台，其它方式请参考官方文档。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package spring-boot:run</span><br></pre></td></tr></table></figure>
+
+<p><strong>项目启动成功的界面</strong></p>
+<p><img data-src="https://img-blog.csdnimg.cn/20200924133928591.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><img data-src="https://img-blog.csdnimg.cn/20200924133928630.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>IDEA这个工具太强大了，里面还有很多快捷键需要你自己摸索熟练的应用。我最喜欢这款软件的原因，是她的自动保存机制真的很nice。</p>
+<p>也不排除有的人就喜欢用eclipse，直到现在我还是用eclipse比较多，可能是先入为主吧，很多快捷键都适应了。由于是初体验，所以花了很大篇幅讲解了利用开发工具创建项目。</p>
+<p><strong>使用何种IDE，视你的实际工作环境而定，没必要纠结。</strong></p>
+<h3 id="四、spring-boot官网直通车。"><a href="#四、spring-boot官网直通车。" class="headerlink" title="四、spring-boot官网直通车。"></a>四、spring-boot官网直通车。</h3><p>进入官网可以看到此时的最新稳定版是2.0版本的：2.3.4.release(release代表稳定版)<br><img data-src="https://img-blog.csdnimg.cn/20200923214121484.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>可以参考官方文档，毕竟最好的自学方式，还是采用官方文档。此时最新稳定版为2.3.4。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zcHJpbmcuaW8vcHJvamVjdHMvc3ByaW5nLWJvb3Q=">https://spring.io/projects/spring-boot<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<h3 id="五、通过spring官网快捷创建项目"><a href="#五、通过spring官网快捷创建项目" class="headerlink" title="五、通过spring官网快捷创建项目"></a>五、通过spring官网快捷创建项目</h3><p><strong>点击开启创建项目之旅</strong>：</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zdGFydC5zcHJpbmcuaW8v">https://start.spring.io/<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<h4 id="1、详细的描述"><a href="#1、详细的描述" class="headerlink" title="1、详细的描述"></a>1、详细的描述</h4><p>以下是截的全图<br><img data-src="https://img-blog.csdnimg.cn/20200923213103852.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h4 id="2、详情简述"><a href="#2、详情简述" class="headerlink" title="2、详情简述"></a>2、详情简述</h4><p><img data-src="https://img-blog.csdnimg.cn/20200923213217751.png#pic_center" alt="在这里插入图片描述"></p>
+<ul>
+<li>Project：采用maven或者其它方式构建</li>
+<li>Language：采用java语言或者其它语言</li>
+</ul>
+<p><img data-src="https://img-blog.csdnimg.cn/20200923213252127.png#pic_center" alt="在这里插入图片描述"></p>
+<ul>
+<li>Dependencies：pom文件依赖，勾上spring-web</li>
+</ul>
+<p><img data-src="https://img-blog.csdnimg.cn/20200923213319537.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<ul>
+<li>Spring Boot版本：2.3.4目前最新稳定版  </li>
+<li>Project Metadata：值得注意的几个点  </li>
+<li>Group：项目组名，例如com.kart </li>
+<li>Artifact：项目名，例如demo </li>
+<li>Description：项目描述  </li>
+<li>Packaging：打包，Jar包或者War包  </li>
+<li>Package name：项目包名，例如com.tcloud.demo. </li>
+<li>Java版本：采用JDK8或者11，具体是实际情况而定</li>
+</ul>
+<p><img data-src="https://img-blog.csdnimg.cn/20200923213446623.png#pic_center" alt="在这里插入图片描述"></p>
+<ul>
+<li>GENERATE CTRL+：点击创建项目</li>
+</ul>
+<h4 id="3、打包运行springboot项目"><a href="#3、打包运行springboot项目" class="headerlink" title="3、打包运行springboot项目"></a>3、打包运行springboot项目</h4><p>windows下面的CMD命令操作我就不做过多描述。习惯了linux下的命令操作，反而不习惯win的命令操作了。使用CMD命令提示符或者win10自带的win_powershell都可以，<strong>以管理员身份运行</strong>。</p>
+<p><strong>切换到D盘</strong>。与linux不同，<code>linux</code><strong>是一个文件系统</strong>。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d: </span><br></pre></td></tr></table></figure>
+
+<p><strong>切换到具体目录</strong>，这点和<code>linux</code>是一样的</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例如 cd 接具体目录</span></span><br><span class="line"><span class="built_in">cd</span> /workspace/demo </span><br></pre></td></tr></table></figure>
+
+<p><strong>mvn命令运行项目</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package spring<span class="literal">-boot</span>:run</span><br></pre></td></tr></table></figure>
+
+
+<p>其实，使用开发工具创建项目和这种模式差不多，区别不大。无论是<code>sts-eclipse</code>，还是<code>IDEA</code>和<code>eclipse</code>创建项目都是大同小异的。创建完后，可以使用eclipse或者IDEA导入（import）项目，只是使用工具创建项目更加方便而已。</p>
+<p><strong>工欲善其事，必先利其器。</strong>    假如创建项目折腾半天，你可能会半途而废。所以上面花了很大的篇幅介绍了各种工具的使用，如何快速创建<code>springboot</code>项目。<strong>开发工具篇</strong>到此就全部介绍完了。<strong>后面衔接解决问题篇</strong>，介绍了我遇到的一些问题，将来你可能也会遇到。</p>
+<h2 id="六、解决问题篇"><a href="#六、解决问题篇" class="headerlink" title="六、解决问题篇"></a>六、解决问题篇</h2><h3 id="1、发现问题"><a href="#1、发现问题" class="headerlink" title="1、发现问题"></a>1、发现问题</h3><p>idea启动spring-boot项目问题</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">No active profile set, falling back to <span class="keyword">default</span> profiles: <span class="keyword">default</span></span><br></pre></td></tr></table></figure>
+<p>可以选择忽略掉，程序运行起来是没问题的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Process finished with exit code <span class="number">0</span> </span><br></pre></td></tr></table></figure>
+<p>翻译：程序执行完毕并退出</p>
+<h3 id="2、思考问题"><a href="#2、思考问题" class="headerlink" title="2、思考问题"></a>2、思考问题</h3><p>应该与spring-boot版本无关。在控制台，使用以下命令执行是没问题的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package spring-boot:run</span><br></pre></td></tr></table></figure>
+<p>所以猜测是不是idea启动与pom文件的某个设置属性有关，由此发现tomcat设置有问题。</p>
+<h3 id="3、解决方案"><a href="#3、解决方案" class="headerlink" title="3、解决方案"></a>3、解决方案</h3><p>万一遇到jar包冲突</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 注意scope的用法，使用mvn命令启动没问题，在idea里点run就出问题 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-tomcat<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 在idea中启动正常执行退出，屏蔽解决问题，scope用法我是很疑惑的 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用eclipse for javaee：启动毫无问题。<strong>使用idea</strong>：<strong>屏蔽掉&lt;! –&lt; scope &gt;provided&lt;&#x2F; scope &gt; –&gt;这个属性</strong>，启动不会退出。</p>
+<p>保留一点悬念。关于<code>scope</code>属性的用法，这里不做描述，请阅读官方文档。<strong>解决问题篇</strong>到此就全部描述完了，后面衔接<strong>具体讲解篇</strong>，会简单的涉及到mvc三层中的<code>controller</code>和<code>dao</code>（<strong>jpa里面就叫repository</strong>）的简单使用。</p>
+<br/>
+
+<h2 id="实战讲解篇"><a href="#实战讲解篇" class="headerlink" title="实战讲解篇"></a>实战讲解篇</h2><h3 id="1、controller的简单使用"><a href="#1、controller的简单使用" class="headerlink" title="1、controller的简单使用"></a>1、controller的简单使用</h3><h4 id="1-1、常用的一些注解"><a href="#1-1、常用的一些注解" class="headerlink" title="1.1、常用的一些注解"></a>1.1、常用的一些注解</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br></pre></td></tr></table></figure>
+<p><strong>作用</strong>：处理http请求</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br></pre></td></tr></table></figure>
+<p><strong>作用</strong>：spring4之后新加的注解，原来返回json数据需要ResponseBody+@Controller配合使用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//（旧版，特殊需求需要用到）</span></span><br><span class="line"><span class="meta">@RequestMapping</span></span><br></pre></td></tr></table></figure>
+<p><strong>作用</strong>：配置url映射</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span></span><br></pre></td></tr></table></figure>
+<p><strong>作用</strong>：以get形式提交，一般用作查询</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span></span><br></pre></td></tr></table></figure>
+<p><strong>作用</strong>：以post方式提交，用于修改或者更新</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PathVariable</span> </span><br></pre></td></tr></table></figure>
+<p><strong>作用</strong>：获取url中的数据</p>
+<p><strong>例如</strong>：   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/hello/&#123;id&#125;&quot;)</span></span><br><span class="line">   <span class="keyword">public</span> String <span class="title function_">Hello</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Integer id)</span>&#123;</span><br><span class="line">   	<span class="keyword">return</span> <span class="string">&quot;id:&quot;</span> + id;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>测试</strong>：默认启动端口为8080，你不改也行，我这里演示需要就改了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//localhost:8081/hello/100  </span></span><br></pre></td></tr></table></figure>
+
+<p><strong>返回结果</strong>：id&#x3D;100</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestParam</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>作用</strong>：获取请求参数的值</p>
+<p><strong>例如</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这样设置,url后必须传ID</span></span><br><span class="line">   <span class="meta">@GetMapping(&quot;/must&quot;)</span></span><br><span class="line">   <span class="keyword">public</span> String <span class="title function_">test</span><span class="params">(<span class="meta">@RequestParam(&quot;id&quot;)</span> Integer id)</span>&#123;</span><br><span class="line">   	<span class="keyword">return</span> <span class="string">&quot;id:&quot;</span> + id;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// 这样设置,url后非必须传ID,可以设置默认值</span></span><br><span class="line">   <span class="meta">@GetMapping(&quot;/normal&quot;)</span></span><br><span class="line">   <span class="keyword">public</span> String <span class="title function_">testNotSetId</span><span class="params">(<span class="meta">@RequestParam(value = &quot;id&quot;,required = false,defaultValue = &quot;0&quot;)</span> </span></span><br><span class="line"><span class="params">   Integer id)</span>&#123;</span><br><span class="line">   	<span class="keyword">return</span> <span class="string">&quot;id:&quot;</span> + id;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>测试</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//localhost:8081/test?id=100</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>返回结果</strong>：id:100</p>
+<h3 id="2、Repository"><a href="#2、Repository" class="headerlink" title="2、Repository"></a>2、Repository</h3><h4 id="2-1、简介"><a href="#2-1、简介" class="headerlink" title="2.1、简介"></a>2.1、简介</h4><p>首先看一看<strong>JPA、Hibernate、MyBatis以及JDBC</strong>的简介。</p>
+<p><strong>JPA</strong></p>
+<p>抽象存储库的实现是Java应用程序框架Spring的领域驱动设计的关键构建块。 透明地支持所有可用的JPA实现，并支持CRUD操作以及方便地执行数据库查询。</p>
+<p><strong>Hibernate</strong></p>
+<p>Hibernate为Java提供了一个开源的对象关系映射框架。版本3.2及更高版本提供了Java 持久化 API的实现。Gavin King创立了Hibernate项目。他代表JBoss参加JSR220，这是负责开发JPA的JCP专家组。这引发了围绕JPA和Hibernate之间关系的持续争议和猜测。Sun Microsystems表示，这些想法来自几个框架，包括Hibernate和Java 数据对象。</p>
+<p><strong>MyBatis</strong><br>是一个Java持久化框架，它通过XML描述符或注解把对象与存储过程或SQL语句关联起来。MyBatis是在Apache许可证 2.0下分发的自由软件，是iBATIS 3.0的分支版本。其维护团队也包含iBATIS的初创成员。</p>
+<p><strong>JDBC</strong><br>Java数据库连接，（Java Database Connectivity，简称JDBC）是Java语言中用来规范客户端程序如何来访问数据库的应用程序接口，提供了诸如查询和更新数据库中数据的方法。JDBC也是Sun Microsystems的商标。JDBC是面向关系型数据库的。</p>
+<p><strong>Spring Data JPA</strong></p>
+<p>参考官方文档，进行学习。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zcHJpbmcuaW8vcHJvamVjdHMvc3ByaW5nLWRhdGEtanBhI2xlYXJu">https://spring.io/projects/spring-data-jpa#learn<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>版本控制</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NwcmluZy1wcm9qZWN0cy9zcHJpbmctZGF0YS1qcGE="> https://github.com/spring-projects/spring-data-jpa<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<p>简单示例</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NwcmluZy1wcm9qZWN0cy9zcHJpbmctZGF0YS1leGFtcGxlcy90cmVlL21hc3Rlci9qcGE=">https://github.com/spring-projects/spring-data-examples/tree/master/jpa<i class="fa fa-external-link-alt"></i></span><br>通过以上给出的jpa的简单示例链接，你可以到github上研究研究。</p>
+</blockquote>
+<p><code>spring</code>官方将<code>jpa</code>集成到了<code>spring</code>容器里面，使用起来更加方便快捷。<br>以下引用了<code>spring</code>官方的描述，有的是自己翻译调整的，可能描述有瑕疵。</p>
+<p>Spring Data JPA是这个庞大家族Spring Data系列的一部分，可轻松实现基于JPA的存储库。 此模块处理对基于JPA的数据访问层的增强支持。 它使构建使用数据访问技术的Spring支持的应用程序变得更加容易。</p>
+<p>实现应用程序的数据访问层已经很长一段时间了。为了执行简单查询以及执行分页和审核，必须编写太多样板代码。Spring Data JPA旨在通过将工作量减少到实际需要的数量来改善数据访问层的实现。作为开发人员，您将编写包括自定义finder方法在内的存储库接口，Spring会自动提供实现。</p>
+<p><strong>Spring Data JDBC</strong></p>
+<p>是这个庞大家族spring-data系列的一部分，对JDBC数据访问进行增强支持，构建更容易。 现在没有提供JPA的缓存，延迟加载。旨在简洁，功能有限，不需要过于复杂的功能。 未来将会回写很多JPA里面支持的其它的功能。</p>
+<h4 id="2-2、联系"><a href="#2-2、联系" class="headerlink" title="2.2、联系"></a>2.2、联系</h4><p><strong>Spring Data JPA、Hibernate、MyBatis</strong>这几个比较火的ORM持久层框架。</p>
+<p><strong>Hibernate和MyBatis</strong>是对JDBC进行了封装，底层实现就是JDBC，阅读源码不难看出。</p>
+<p><strong>Spring DataJPA</strong>是对<strong>Hibernate</strong>进行了封装，使用更加方便。</p>
+<p>了解完上面的一些理论知识之后，可以加深你对orm框架的理解，便于后续的学习。</p>
+<br/>
+
+<h3 id="3、配置数据库jdbc-config-datasource"><a href="#3、配置数据库jdbc-config-datasource" class="headerlink" title="3、配置数据库jdbc_config_datasource"></a>3、配置数据库jdbc_config_datasource</h3><p><strong>采用application.properties文件形式</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#jdbc_config   datasource</span><br><span class="line">spring.datasource.driver-class-name=com.mysql.jdbc.Driver</span><br><span class="line">#autoReconnect=true这个属性表示自动重连，具体以实际开发需求为准。</span><br><span class="line">spring.datasource.url=jdbc:mysql://127.0.0.1:3306/kart?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true</span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=root</span><br><span class="line">配置数据源</span><br><span class="line">#Hikari will use the above plus the following to setup connection pooling</span><br><span class="line">spring.datasource.type=com.zaxxer.hikari.HikariDataSource</span><br></pre></td></tr></table></figure>
+
+<p><strong>采用application.yml文件形式，推荐这种方式配置</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://127.0.0.1:3306/kart?characterEncoding=utf8</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span> </span><br><span class="line">    <span class="attr">password:</span> <span class="number">123456</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">com.zaxxer.hikari.HikariDataSource</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>pom.xml文件相应的也需要配置</strong><br>这里不用设置版本，spring-boot已经为你设置好了。这就是spring-boot的好处，减少配置。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后就是Java代码的书写，当然这里就不贴代码了。留个悬念，自行参考官网的示例。<br><strong>JPA使用起来很方便，推荐去官网学习学习</strong>。</p>
+<h1 id="小声哔哔"><a href="#小声哔哔" class="headerlink" title="小声哔哔"></a>小声哔哔</h1><p>好了，到此为止就是此篇文章的全部内容了，<strong>能看到这里的都是帅哥靓妹啊</strong>！！！善于总结，其乐不穷。<strong>好记性不如烂笔头</strong>，多收集自己第一次尝试的成果，收获也颇丰。<strong>你会发现，自己的知识宝库越来越丰富</strong>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2020/10/30/springboot%E5%88%9D%E4%BD%93%E9%AA%8C/" title="springboot初体验">https://blog.cnwangk.top/2020/10/30/springboot初体验/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/springboot/" rel="tag"><i class="fa fa-tag"></i> springboot</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/08/26/CentOS%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0yum%E6%BA%90/" rel="prev" title="CentOS搭建本地yum源">
+                  <i class="fa fa-angle-left"></i> CentOS搭建本地yum源
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/12/14/Windows10%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8%E7%82%B9%E6%BB%B4%E8%AE%B0%E5%BD%95%EF%BC%9A%E7%A6%81%E7%94%A8%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0/" rel="next" title="Windows10日常使用点滴记录：禁用自动更新">
+                  Windows10日常使用点滴记录：禁用自动更新 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">255k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:26</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2020/10/30/springboot%E5%88%9D%E4%BD%93%E9%AA%8C/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

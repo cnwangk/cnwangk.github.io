@@ -23,41 +23,31 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="给大家推荐一款比较使用的markdown编辑器。换个说法描述更为贴切，其实是一款综合性的开源软件集合，配合其强大的各种插件，作为开发人员的工具也是绰绰有余。我平时用来编辑yaml、xml、sql、Java、或者md文件等等，用起来比较方便。 VSCode官网下载地址 https:&#x2F;&#x2F;code.visualstudio.com&#x2F;Download  支持范围：Windows（7、8、10、11）、Li">
+    <meta name="description" content="前段时间抽空面试了几家。选择其中一家进行面试复盘：软件实施工程师（xxx科技有限公司） 总结：有试岗期的公司，坚决不要去。但不排除有公司确实在试岗通过后将工资算入到试用期，有试岗期就说明该公司不想承担风险。 具体公司名称就不透露了，算是给对方留点颜面。做人留一线，日后好相见。 前前后后聊了40多分钟。 以下是具体过程。">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="VSCode配合插件入门指南">
-<meta property="og:url" content="https://blog.cnwangk.top/2022/01/09/VSCode%E9%85%8D%E5%90%88%E6%8F%92%E4%BB%B6%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:title" content="面试复盘：软件实施工程师，顿悟试岗期美其名曰岗前培训">
+<meta property="og:url" content="https://blog.cnwangk.top/2022/04/06/%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%98%E9%A1%BF%E6%82%9F%E8%AF%95%E5%B2%97%E6%9C%9F%E7%BE%8E%E5%85%B6%E5%90%8D%E6%9B%B0%E5%B2%97%E5%89%8D%E5%9F%B9%E8%AE%AD/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
-<meta property="og:description" content="给大家推荐一款比较使用的markdown编辑器。换个说法描述更为贴切，其实是一款综合性的开源软件集合，配合其强大的各种插件，作为开发人员的工具也是绰绰有余。我平时用来编辑yaml、xml、sql、Java、或者md文件等等，用起来比较方便。 VSCode官网下载地址 https:&#x2F;&#x2F;code.visualstudio.com&#x2F;Download  支持范围：Windows（7、8、10、11）、Li">
+<meta property="og:description" content="前段时间抽空面试了几家。选择其中一家进行面试复盘：软件实施工程师（xxx科技有限公司） 总结：有试岗期的公司，坚决不要去。但不排除有公司确实在试岗通过后将工资算入到试用期，有试岗期就说明该公司不想承担风险。 具体公司名称就不透露了，算是给对方留点颜面。做人留一线，日后好相见。 前前后后聊了40多分钟。 以下是具体过程。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://gitee.com/dywangk/img/raw/master/images/VSCode%E4%B8%8B%E8%BD%BD_proc.jpg">
-<meta property="og:image" content="https://gitee.com/dywangk/img/raw/master/images/VSCode%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%8F%92%E4%BB%B6.png">
-<meta property="og:image" content="https://gitee.com/dywangk/img/raw/master/images/gitee%E6%8F%92%E4%BB%B6_proc.jpg">
-<meta property="og:image" content="https://gitee.com/dywangk/img/raw/master/images/PicGo%E6%8F%92%E4%BB%B6_proc.jpg">
-<meta property="og:image" content="https://gitee.com/dywangk/img/raw/master/images/%E6%8F%92%E4%BB%B6markdown_theme_kit_proc.jpg">
-<meta property="og:image" content="https://gitee.com/dywangk/img/raw/master/images/%E6%8F%92%E4%BB%B6markdown_preview_mermaid_support_proc.jpg">
-<meta property="og:image" content="https://gitee.com/dywangk/img/raw/master/images/%E6%8F%92%E4%BB%B6markdown_preview_enhanced_proc.jpg">
-<meta property="og:image" content="https://gitee.com/dywangk/img/raw/master/images/VSCode%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%8F%92%E4%BB%B6.png">
-<meta property="og:image" content="https://gitee.com/dywangk/img/raw/master/images/VSCode%E4%B8%AD%E6%96%87%E7%89%88%E7%95%8C%E9%9D%A2.png">
-<meta property="og:image" content="https://gitee.com/dywangk/img/raw/master/images/VSCode%E8%BF%9B%E5%85%A5%E8%AE%BE%E7%BD%AE_proc.jpg">
-<meta property="og:image" content="https://gitee.com/dywangk/img/raw/master/images/VSCode%E6%9B%B4%E6%96%B0%E8%AE%BE%E7%BD%AE_proc.jpg">
-<meta property="og:image" content="https://gitee.com/dywangk/img/raw/master/images/VSCode%E8%AE%BE%E7%BD%AE%E5%AD%97%E4%BD%93_proc.jpg">
-<meta property="article:published_time" content="2022-01-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-28T13:45:20.603Z">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-4ccce9ef14998de02c822444c0dd1e31_720w.jpg?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-8ae072a52f1fd6659d66cf28a01d6400_720w.jpg?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-e0b179d8cd4478b73421a36f2ccf34dd_720w.jpg?source=d16d100b">
+<meta property="article:published_time" content="2022-04-06T14:00:09.000Z">
+<meta property="article:modified_time" content="2024-03-27T13:33:33.169Z">
 <meta property="article:author" content="龙腾万里sky">
-<meta property="article:tag" content="VScode">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/dywangk/img/raw/master/images/VSCode%E4%B8%8B%E8%BD%BD_proc.jpg">
+<meta name="twitter:image" content="https://picx.zhimg.com/80/v2-4ccce9ef14998de02c822444c0dd1e31_720w.jpg?source=d16d100b">
 
 
-<link rel="canonical" href="https://blog.cnwangk.top/2022/01/09/VSCode%E9%85%8D%E5%90%88%E6%8F%92%E4%BB%B6%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/">
+<link rel="canonical" href="https://blog.cnwangk.top/2022/04/06/%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%98%E9%A1%BF%E6%82%9F%E8%AF%95%E5%B2%97%E6%9C%9F%E7%BE%8E%E5%85%B6%E5%90%8D%E6%9B%B0%E5%B2%97%E5%89%8D%E5%9F%B9%E8%AE%AD/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2022/01/09/VSCode%E9%85%8D%E5%90%88%E6%8F%92%E4%BB%B6%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/","path":"2022/01/09/VSCode配合插件入门指南/","title":"VSCode配合插件入门指南"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2022/04/06/%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%98%E9%A1%BF%E6%82%9F%E8%AF%95%E5%B2%97%E6%9C%9F%E7%BE%8E%E5%85%B6%E5%90%8D%E6%9B%B0%E5%B2%97%E5%89%8D%E5%9F%B9%E8%AE%AD/","path":"2022/04/06/面试复盘顿悟试岗期美其名曰岗前培训/","title":"面试复盘：软件实施工程师，顿悟试岗期美其名曰岗前培训"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>VSCode配合插件入门指南 | 龙腾万里sky的博客</title>
+<title>面试复盘：软件实施工程师，顿悟试岗期美其名曰岗前培训 | 龙腾万里sky的博客</title>
   
 
 
@@ -144,7 +134,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -157,7 +147,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81VSCODE%E5%B8%B8%E7%94%A8%E7%9A%84%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">1.</span> <span class="nav-text">一、VSCODE常用的快捷键</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81VSCode%E5%BC%BA%E5%A4%A7%E7%9A%84%E6%8F%92%E4%BB%B6%E6%94%AF%E6%8C%81"><span class="nav-number">2.</span> <span class="nav-text">二、VSCode强大的插件支持</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81VSCode%E8%AE%BE%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">三、VSCode设置</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -224,7 +213,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/01/09/VSCode%E9%85%8D%E5%90%88%E6%8F%92%E4%BB%B6%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/04/06/%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%98%E9%A1%BF%E6%82%9F%E8%AF%95%E5%B2%97%E6%9C%9F%E7%BE%8E%E5%85%B6%E5%90%8D%E6%9B%B0%E5%B2%97%E5%89%8D%E5%9F%B9%E8%AE%AD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -237,12 +226,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="VSCode配合插件入门指南 | 龙腾万里sky的博客">
+      <meta itemprop="name" content="面试复盘：软件实施工程师，顿悟试岗期美其名曰岗前培训 | 龙腾万里sky的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          VSCode配合插件入门指南
+          面试复盘：软件实施工程师，顿悟试岗期美其名曰岗前培训
         </h1>
 
         <div class="post-meta-container">
@@ -253,14 +242,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-01-09 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-09T00:00:00+08:00">2022-01-09</time>
+      <time title="创建时间：2022-04-06 22:00:09" itemprop="dateCreated datePublished" datetime="2022-04-06T22:00:09+08:00">2022-04-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-28 21:45:20" itemprop="dateModified" datetime="2023-05-28T21:45:20+08:00">2023-05-28</time>
+      <time title="修改时间：2024-03-27 21:33:33" itemprop="dateModified" datetime="2024-03-27T21:33:33+08:00">2024-03-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -268,7 +257,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+          <a href="/categories/%E9%9D%A2%E7%BB%8F/" itemprop="url" rel="index"><span itemprop="name">面经</span></a>
         </span>
     </span>
 
@@ -286,14 +275,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>650</span>
+      <span>1.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -303,71 +292,69 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>给大家推荐一款比较使用的markdown编辑器。换个说法描述更为贴切，其实是一款综合性的开源软件集合，配合其强大的各种插件，作为开发人员的工具也是绰绰有余。我平时用来编辑yaml、xml、sql、Java、或者md文件等等，用起来比较方便。</p>
-<p><strong>VSCode官网下载地址</strong></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vRG93bmxvYWQ=">https://code.visualstudio.com/Download<i class="fa fa-external-link-alt"></i></span></p>
-<p><img data-src="https://gitee.com/dywangk/img/raw/master/images/VSCode%E4%B8%8B%E8%BD%BD_proc.jpg"></p>
-<p><strong>支持范围</strong>：Windows（7、8、10、11）、Linux（.rpm包、.deb包）、macOS（10.11+）</p>
-<h1 id="一、VSCODE常用的快捷键"><a href="#一、VSCODE常用的快捷键" class="headerlink" title="一、VSCODE常用的快捷键"></a>一、VSCODE常用的快捷键</h1><p>快速进入扩展（这个快捷键是最常用的之一）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl + <span class="built_in">shift</span> + x</span><br></pre></td></tr></table></figure>
-
-<p>运行和调试</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl + <span class="built_in">shift</span> + d</span><br></pre></td></tr></table></figure>
+    <div class="post-body" itemprop="articleBody"><p><strong>前段时间抽空面试了几家。选择其中一家进行面试复盘：软件实施工程师（xxx科技有限公司）</strong></p>
+<p><strong>总结：有试岗期的公司，坚决不要去。但不排除有公司确实在试岗通过后将工资算入到试用期，有试岗期就说明该公司不想承担风险。</strong></p>
+<p>具体公司名称就不透露了，算是给对方留点颜面。做人留一线，日后好相见。</p>
+<p>前前后后聊了40多分钟。</p>
+<p>以下是具体过程。</p>
+<span id="more"></span>
 
 
 
-<p>源代码管理</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl + <span class="built_in">shift</span> + g</span><br></pre></td></tr></table></figure>
-
-<p>搜索</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl + <span class="built_in">shift</span> + f</span><br></pre></td></tr></table></figure>
-
-<p>资源管理器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl + <span class="built_in">shift</span> + e</span><br></pre></td></tr></table></figure>
-
-<p>调试控制台</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl + <span class="built_in">shift</span> + y</span><br></pre></td></tr></table></figure>
-
-<p>查找</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl + f</span><br></pre></td></tr></table></figure>
-
-<p>替换</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl + h</span><br></pre></td></tr></table></figure>
-
-<p>快速打开终端</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl + <span class="built_in">shift</span> + `</span><br></pre></td></tr></table></figure>
-
-<h1 id="二、VSCode强大的插件支持"><a href="#二、VSCode强大的插件支持" class="headerlink" title="二、VSCode强大的插件支持"></a>二、VSCode强大的插件支持</h1><p>1、Chinese（中文简体）Language for pack visual studio code<br>简体中文插件支持，官方提供的插件。虽然中文版看起来怪怪的，但是更符合我们的使用习惯，连github都做中文适配了。</p>
-<p><img data-src="https://gitee.com/dywangk/img/raw/master/images/VSCode%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%8F%92%E4%BB%B6.png"></p>
-<p><strong>2、gitee插件</strong></p>
-<p>介绍gitee插件，是因为访问gitee速度更快，中文支持非常友好。</p>
-<p><img data-src="https://gitee.com/dywangk/img/raw/master/images/gitee%E6%8F%92%E4%BB%B6_proc.jpg"></p>
-<p><strong>3、picgo图床工具插件</strong></p>
-<p>picgo图床工具插件配合gitee或者github、七牛云、腾讯云以及阿里云作为图片仓库（记笔记的好帮手）。</p>
-<p><img data-src="https://gitee.com/dywangk/img/raw/master/images/PicGo%E6%8F%92%E4%BB%B6_proc.jpg"></p>
-<p><strong>4、markdown诸多插件</strong></p>
-<p>VSCode本身就自带了一些插件，不用下载也对markdown原生支持还可以的，也支持预览。在VSCode强大的插件库搜索，诸多markdown插件可供下载使用，比如配置自己喜欢的主题风格以及更加强大的预览和思维导图的支持。</p>
-<p><strong>主题风格插件</strong></p>
-<p><img data-src="https://gitee.com/dywangk/img/raw/master/images/%E6%8F%92%E4%BB%B6markdown_theme_kit_proc.jpg"></p>
-<p><strong>思维导图mermaid插件</strong></p>
-<p><img data-src="https://gitee.com/dywangk/img/raw/master/images/%E6%8F%92%E4%BB%B6markdown_preview_mermaid_support_proc.jpg"></p>
-<p><strong>预览markdown_preview_enhanced插件</strong></p>
-<p><img data-src="https://gitee.com/dywangk/img/raw/master/images/%E6%8F%92%E4%BB%B6markdown_preview_enhanced_proc.jpg"></p>
-<p>插件就介绍这么多，更多好用、实用的插件在于大家去挖掘，这就是开源的魅力所在。</p>
-<h1 id="三、VSCode设置"><a href="#三、VSCode设置" class="headerlink" title="三、VSCode设置"></a>三、VSCode设置</h1><p>中文版界面，需要安装汉化插件，打开扩展搜索Chinese（中文简体）Language for pack visual studio code安装即可。</p>
-<p><img data-src="https://gitee.com/dywangk/img/raw/master/images/VSCode%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%8F%92%E4%BB%B6.png"></p>
-<p>1、依次找到<strong>文件-&gt;首选项-&gt;设置</strong></p>
-<p>安装中文插件后，汉化的还可以，部分界面显示如下：</p>
-<p><img data-src="https://gitee.com/dywangk/img/raw/master/images/VSCode%E4%B8%AD%E6%96%87%E7%89%88%E7%95%8C%E9%9D%A2.png"></p>
-<p><strong>选中文件找到首选项</strong></p>
-<p><img data-src="https://gitee.com/dywangk/img/raw/master/images/VSCode%E8%BF%9B%E5%85%A5%E8%AE%BE%E7%BD%AE_proc.jpg"></p>
-<p><strong>设置更新，建议设置手动更新</strong></p>
-<p>进入设置后，直接搜索更新即可。</p>
-<p><img data-src="https://gitee.com/dywangk/img/raw/master/images/VSCode%E6%9B%B4%E6%96%B0%E8%AE%BE%E7%BD%AE_proc.jpg"></p>
-<p><strong>2、设置字体</strong></p>
-<p>更具各自喜好风格设置，很多都喜欢用<strong>Consolas</strong>这个字体。辨识度比较高，所以很受欢迎。</p>
-<p><img data-src="https://gitee.com/dywangk/img/raw/master/images/VSCode%E8%AE%BE%E7%BD%AE%E5%AD%97%E4%BD%93_proc.jpg"></p>
-<p>好了，整个VSCode的简单入门使用介绍就到此为止。</p>
+<p>刚开始很纳闷，不是直接问工作经历，做过哪些项目。这竟然不是BOSS最关心的地方，难道我遇到贵人呢？还是这个岗位人员流动性很大？</p>
+<p>BOSS上来和我交谈，员工与老板是合作伙伴关系，挺新颖。</p>
+<p>聊了大概15分钟，终于问到我之前实施项目经验过程：步骤（方式方法），办培训班的人数规模。</p>
+<p><strong>这里我简单描述了一些现场实施经验</strong>：</p>
+<ol>
+<li>现场项目部署：应用软件部署，涉及到沟通交流。</li>
+<li>初验阶段：现场调试，以及监理验收，提交开发测试文档。</li>
+<li>试运行阶段：在客户单位部署，让客户体验产品。</li>
+<li>终验阶段：配合监理验收。出具验收报告，客户提供使用总结，可能需要上台演示。</li>
+<li>用户培训阶段：提交用户培训文档，系统操作说明书。</li>
+<li>客户确认签字，标志着终验完成。</li>
+<li>项目回款。</li>
+</ol>
+<p><strong>培训方法</strong>：</p>
+<p>1.线上视频培训，在线教学。</p>
+<p>2.现场大屏幕，在线演示产品基本使用。</p>
+<p>3.出具录制培训视频、PPT演示文稿、DOC文档等等。</p>
+<p>4.补充：多人情况，对有不了解的，一对一辅导。</p>
+<p><strong>我</strong>：熟悉以及亲自部署实施过的数据库如下</p>
+<p>中间穿插了一些SQL之类。</p>
+<p>我也说了（哔哔）很多：</p>
+<p>1.部署实施过Oracle数据库。</p>
+<p>2.部署实施过国产DM8数据库。</p>
+<p>3.部署实施过MySQL数据库，这个也是我最熟悉的。吹了一波牛逼，从基本-开发-优化-架构都有实践过，自己搭建环境测试。</p>
+<p><strong>BOSS</strong>：公司目前使用MySQL，还没达到用Oracle数据程度。</p>
+<p><strong>薪资福利待遇</strong>：</p>
+<p>提到薪资待遇，我明确说明自己手头有几家offer，具体薪资就不透露了。双向选择，BOSS此时开始谈自家公司薪资待遇组成和优势。</p>
+<p>1.五险一金是基本。</p>
+<p>2.强调13薪，后续会调成14薪（其实多一个月薪资是年终奖，有些套路，一再强调是分开的）。</p>
+<p>3.项目提成：按项目金额10%算，中间如果有二次销售也有提成（需要年底上级主管评估）。</p>
+<p>4.补贴：房补、交通补贴、话补之类由于疫情原因取消了。</p>
+<p>我直接好家伙，软件实施工程师经常出差，自己租房很亏，大部分时间在现场驻场。</p>
+<p>聊着聊着，接近尾声了。</p>
+<p><strong>最后引出——试岗期</strong>。</p>
+<p>有一点还是比较良心的，最后BOSS亲自说了有试岗期，至少没在入职以后说。</p>
+<p>此时BOSS忽然来了一句，强调有试岗期。我直接表露出：无需3-4天试岗期，一天就可以看出这个人能不能上手干活。</p>
+<p>有硬实力没必要藏着掖着，没有实际项目经验，我也不会聊这么多。当然，为人处事可以低调，但工作没必要低调，这也是我老东家部门主管对我说过的一句话。源于我在老东家，入职半年的时候直接带了一个新人（其实项目对接），能不能上项目，直接在现场就能体现出来。</p>
+<p>之前遇到过更离谱的，通知入职，所有手续全办齐了，最后和我说有5天试岗期。</p>
+<p>周一是上班第一天，一般会开例会。BOSS开会去了，主动和我握手之后，我撤退了。</p>
+<p><strong>HR锲而不舍</strong></p>
+<p>当天下午HR打了两次电话，最后加了微信。居然问我是不是有什么顾虑，丝毫没意识到试岗期是违法的。</p>
+<p>下面附上聊天记录截图，出于保护双方隐私，做了处理。部分聊天记录也手打出来了。</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-4ccce9ef14998de02c822444c0dd1e31_720w.jpg?source=d16d100b" alt="img"></p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-8ae072a52f1fd6659d66cf28a01d6400_720w.jpg?source=d16d100b" alt="img"></p>
+<p><img data-src="https://pica.zhimg.com/80/v2-e0b179d8cd4478b73421a36f2ccf34dd_720w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>我</strong>：我对试岗期很反感。</p>
+<p><strong>HR</strong>：这个不难理解，…!其实试岗期相当于一个岗前培训，工资也照算。</p>
+<p><strong>我</strong>：据我所知，不存在试岗期这一说法，法律规定（<strong>劳动法</strong>）试用期公司可以根据情况判定对方是否能胜任。麻烦您熟悉一下相关法律，再考虑与我交谈。</p>
+<p><strong>HR</strong>：鉴于你的情况，我刚刚也和早上面试你的领导进行了沟通，你可以直接试用，不需要试岗期。</p>
+<p><strong>HR</strong>：我们领导通过和你的交流，确实是蛮看中你的，同时公司也是非常重视人才。</p>
+<p>好家伙，看了我发的这段，立马改口了。公司重人才，面试你的领导欣赏你，你来公司直接进试用期。</p>
+<p>合着去贵公司，进入试用期是一种馈赠。</p>
+<p>做人留一线，日后好相见。</p>
+<p>—END—</p>
 
     </div>
 
@@ -385,7 +372,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://blog.cnwangk.top/2022/01/09/VSCode%E9%85%8D%E5%90%88%E6%8F%92%E4%BB%B6%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/" title="VSCode配合插件入门指南">https://blog.cnwangk.top/2022/01/09/VSCode配合插件入门指南/</a>
+      <a href="https://blog.cnwangk.top/2022/04/06/%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%98%E9%A1%BF%E6%82%9F%E8%AF%95%E5%B2%97%E6%9C%9F%E7%BE%8E%E5%85%B6%E5%90%8D%E6%9B%B0%E5%B2%97%E5%89%8D%E5%9F%B9%E8%AE%AD/" title="面试复盘：软件实施工程师，顿悟试岗期美其名曰岗前培训">https://blog.cnwangk.top/2022/04/06/面试复盘顿悟试岗期美其名曰岗前培训/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -422,9 +409,6 @@
   </div>
 </div>
 
-          <div class="post-tags">
-              <a href="/tags/VScode/" rel="tag"><i class="fa fa-tag"></i> VScode</a>
-          </div>
 
         
   <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
@@ -435,13 +419,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/01/07/Redis%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5%EF%BC%8C%E7%94%B1%E6%8C%81%E4%B9%85%E5%8C%96%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83/" rel="prev" title="Redis入门到实践，由持久化引发的思考">
-                  <i class="fa fa-angle-left"></i> Redis入门到实践，由持久化引发的思考
+                <a href="/2022/03/20/Windows-10%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85PostgreSQL-14-2%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" rel="prev" title="Windows 10平台安装PostgreSQL 14.2详细教程">
+                  <i class="fa fa-angle-left"></i> Windows 10平台安装PostgreSQL 14.2详细教程
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/" rel="next" title="如何优雅的管理redis">
-                  如何优雅的管理redis <i class="fa fa-angle-right"></i>
+                <a href="/2022/04/07/MySQL%E9%94%81%E9%97%AE%E9%A2%98InnoDB%E9%94%81%EF%BC%9A%E8%A1%8C%E9%94%81%E3%80%81lock%E4%B8%8Elatch%E3%80%81%E5%A4%96%E9%94%AE%E4%B8%8E%E9%94%81%E3%80%81%E9%94%81%E7%AE%97%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/" rel="next" title="MySQL锁问题InnoDB锁：行锁、lock与latch、外键与锁、锁算法以及死锁问题">
+                  MySQL锁问题InnoDB锁：行锁、lock与latch、外键与锁、锁算法以及死锁问题 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
@@ -553,7 +537,7 @@
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2022/01/09/VSCode%E9%85%8D%E5%90%88%E6%8F%92%E4%BB%B6%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2022/04/06/%E9%9D%A2%E8%AF%95%E5%A4%8D%E7%9B%98%E9%A1%BF%E6%82%9F%E8%AF%95%E5%B2%97%E6%9C%9F%E7%BE%8E%E5%85%B6%E5%90%8D%E6%9B%B0%E5%B2%97%E5%89%8D%E5%9F%B9%E8%AE%AD/"}</script>
   <script src="/js/third-party/quicklink.js"></script>
 <script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
 

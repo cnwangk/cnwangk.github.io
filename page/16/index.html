@@ -155,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">100</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -197,6 +197,119 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2021/12/15/MySQL%E5%92%8COracle%E4%B8%BB%E6%B5%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E5%8D%83%E4%B8%87%E7%BA%A7%E5%88%AB%E6%95%B0%E6%8D%AE%E5%A4%A7%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="AI & 过去现在未来">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/15/MySQL%E5%92%8COracle%E4%B8%BB%E6%B5%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E5%8D%83%E4%B8%87%E7%BA%A7%E5%88%AB%E6%95%B0%E6%8D%AE%E5%A4%A7%E8%A1%A8/" class="post-title-link" itemprop="url">MySQL和Oracle主流数据库如何生成千万级别数据大表</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-15 00:00:00" itemprop="dateCreated datePublished" datetime="2021-12-15T00:00:00+08:00">2021-12-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-29 19:16:14" itemprop="dateModified" datetime="2023-05-29T19:16:14+08:00">2023-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>这篇文章可以和我前段时间写的《MySQL开发篇，存储引擎的选择真的很重要吗？》结合参考。</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>还在为面试官问你处理有过百万数据或者千万级数据的经验而烦恼吗？<br>还在为想测试大量数据苦于没有环境而烦恼吗？<br>还在为有了环境，不知如何生成大量数据而烦恼吗？<br>看了这篇文章，这个小伙子有点东西啊！</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="一、MySQL-or-MariaDB随机生成1000w数据"><a href="#一、MySQL-or-MariaDB随机生成1000w数据" class="headerlink" title="一、MySQL or MariaDB随机生成1000w数据"></a>一、MySQL or MariaDB随机生成1000w数据</h2><p>MySQL随机生成1kw条数据相对而言麻烦一点，没有rownum这个字段确实很蛋疼。<br>提供一个思路当然可以采取曾经火遍半边天的Python去随机生成大量数据，然后使用工具或者命令导入到MySQL数据库。<br>其次，还可以在Oracle生成大量数据，然后使用迁移工具转数据到MySQL<br>(当时，偷懒不想写函数和存储过程。我就是用这种方法的，利用DM数据迁移工具即可实现。)</p>
+<h3 id="01-使用工具SQLyog"><a href="#01-使用工具SQLyog" class="headerlink" title="01 使用工具SQLyog"></a>01 使用工具SQLyog</h3><p><strong>创建表tolove</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 创建表tolove **/</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> test.`tolove` (</span><br><span class="line">  `ID` <span class="type">INT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">PRIMARY</span> KEY AUTO_INCREMENT,</span><br><span class="line">  `GIRE_NAME` <span class="type">VARCHAR</span>(<span class="number">64</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `GIRL_AGE` <span class="type">VARCHAR</span>(<span class="number">64</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `CUP_SIZE` <span class="type">VARCHAR</span>(<span class="number">10</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span></span><br><span class="line">) ENGINE<span class="operator">=</span>INNODB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8 <span class="keyword">COLLATE</span><span class="operator">=</span>utf8_bin</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建函数rand_numbe</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/15/MySQL%E5%92%8COracle%E4%B8%BB%E6%B5%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E5%8D%83%E4%B8%87%E7%BA%A7%E5%88%AB%E6%95%B0%E6%8D%AE%E5%A4%A7%E8%A1%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -648,120 +761,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2021/09/09/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="龙腾万里sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="龙腾万里sky的博客">
-      <meta itemprop="description" content="AI & 过去现在未来">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/09/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">Linux服务器挂载硬盘详细教程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-09 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-09T00:00:00+08:00">2021-09-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-28 21:49:28" itemprop="dateModified" datetime="2023-05-28T21:49:28+08:00">2023-05-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">开发运维</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>13 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Linux服务器挂载硬盘详细教程。</p>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文将带来linux下的磁盘管理中的硬盘挂载，Linux操作系统挂载硬盘需要了解的一些知识。这可能是迄今为止介绍的最最最实用的linux硬盘挂载的文章了，比较详细。由于工作原因，平时使用的比较多。主要目的，只是想让更多人的了解到linux下挂载磁盘也不是那么困难。</p>
-<p>有几种常见的文件系统，以前的老牌文件系统ext文件系统(ext2、ext3、ext4)。</p>
-<p>在Redhat7系列还是推荐一款优秀的xfs文件系统，在性能上已经超越了ext文件系统。XFS文件系统是硅谷图形公司（Silicon Graphic Inc，简称SGI）开发的用于IRIX（一个Unix操作系统）的文件系统，后来将其移植到Linux操作系统上。XFS是一个高级日志文件系统，其优势是极具伸缩性，同样也极具健壮性。</p>
-<p>还有一款btrfs（B-tree文件系统通常读作Buffer FS、Better FS、B-tree FS）文件系统同样很优秀，Redhat7安装就自带。<br>btrfs具有很多特性。例如：写快照、快照的快照、内建RAID（通常称为磁盘阵列）、子卷（subvolume），其最核心的理念是设计<br>容错、修复以及易于管理。btrfs最大容量卷为16EB，单个最大文件为16EB。</p>
-<p>须知：本文全程使用的是安装选择语言是简体中文版的，所以看到的汉字显示，请不要惊讶。</p>
-<p><img data-src="https://img-blog.csdnimg.cn/img_convert/5324a76fbd054b60d2769434dc9ef136.png"></p>
-<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>开局一张图，文章全靠编。开个玩笑，纯属逗大家乐一乐。下面的图片，已经点明了本文的核心内容。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/09/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/17/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -786,14 +785,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">257k</span>
+    <span title="站点总字数">258k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:33</span>
+    <span title="站点阅读时长">15:38</span>
   </span>
 </div>
 <div class="busuanzi-count">

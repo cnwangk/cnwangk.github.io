@@ -155,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">100</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -197,6 +197,134 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/02/18/%E8%A7%A3%E5%86%B3Oracle%E6%97%A0%E6%B3%95%E5%88%A0%E9%99%A4oci-dll/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="AI & 过去现在未来">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/18/%E8%A7%A3%E5%86%B3Oracle%E6%97%A0%E6%B3%95%E5%88%A0%E9%99%A4oci-dll/" class="post-title-link" itemprop="url">解决Oracle无法删除oci.dll</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-18 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-18T00:00:00+08:00">2022-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-29 19:18:34" itemprop="dateModified" datetime="2023-05-29T19:18:34+08:00">2023-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>196</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>最近用虚拟机安装Oracle11g测试，遇到了各种问题，就总结了一下。用Google搜索，遇到OCI.DLL无法删除，查到被msdtc服务占用。解决方案，先停止该服务，然后删除OCI.DLL即可。</p>
+<ol>
+<li>卸载的时候，首先停止与Oracle相关的几个服务。</li>
+</ol>
+<p>卸载Oracle11g R2客户端的时候，找到如下路径执行命令，这里对应你安装时的路径（<strong>以管理员运行cmd</strong>）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\app\product\11.2.0\client_1\deinstall\deinstall.bat</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>如果遇到无法删除oci.dll文件，显示被以下程序占用</li>
+</ol>
+<blockquote>
+<p>Distributed Transaction Coordinator Service</p>
+</blockquote>
+<p><strong>究其原因，是msdtc这个服务的启动了，无法删除oci.dll</strong></p>
+<ol start="3">
+<li><p>关闭msdtc服务，<strong>以管理员运行cmd</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net stop msdtc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>恢复服务msdtc</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net start msdtc</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/18/%E8%A7%A3%E5%86%B3Oracle%E6%97%A0%E6%B3%95%E5%88%A0%E9%99%A4oci-dll/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -696,122 +824,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/01/17/Github%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="龙腾万里sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="龙腾万里sky的博客">
-      <meta itemprop="description" content="AI & 过去现在未来">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/17/Github%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/" class="post-title-link" itemprop="url">Github入门与实践</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-17 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-17T00:00:00+08:00">2022-01-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-01 13:12:45" itemprop="dateModified" datetime="2023-09-01T13:12:45+08:00">2023-09-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>13 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>2022最新版github入门教程，教你如何一步步创建自己的github账号并初始化仓库，然后使用git工具配置个人工作环境。配合gitee仓库，作为github的镜像仓库使用。这篇文章很基础，对萌新来说是非常友好的，会持续更新优化。顺带一提，同样将最新的github pages服务的设置一并写入了文档中。</p>
-<p>官方文档：</p>
-<blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLmdpdGh1Yi5jb20vY24vZ2V0LXN0YXJ0ZWQvcXVpY2tzdGFydA==">https://docs.github.com/cn/get-started/quickstart<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>用心作题图，用脚写文档。</p>
-<p>其实这篇文章是对之前的git系列文章的一个补充，毕竟还是需要有人完善最新版的github创建教程，并且使用gitee作为镜像仓库。</p>
-<p>当年也是萌新过来的，自己踩过不少坑，现如今很多教程老化了。为了照顾到新入坑的萌新，近段时间写了一个最新版的创建github账号以及登录的详细教程，并使用gitee作为github的镜像仓库。最后会存放到我新建的demo示例仓库中，并且使用gitee作为图床。</p>
-<p><img data-src="https://img-blog.csdnimg.cn/img_convert/3d30e465bd9afb00d69c1c891d8dacc0.png"></p>
-<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>如下所描述的教程需要事先创建好github和gitee账号。此处会详细讲解github如何创建账号，毕竟这货是纯英文的。对gitee则不会详细介绍如何创建账号，本身就是中文的，比较容易上手。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/17/Github%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/13/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -836,14 +848,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">257k</span>
+    <span title="站点总字数">258k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:33</span>
+    <span title="站点阅读时长">15:38</span>
   </span>
 </div>
 <div class="busuanzi-count">

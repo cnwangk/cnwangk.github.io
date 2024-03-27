@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -338,6 +338,119 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/02/18/Oracle11g%E9%83%A8%E7%BD%B2%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="AI & 过去现在未来">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/18/Oracle11g%E9%83%A8%E7%BD%B2%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" class="post-title-link" itemprop="url">Oracle11g部署注意事项</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-18 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-18T00:00:00+08:00">2022-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-06-01 22:04:42" itemprop="dateModified" datetime="2023-06-01T22:04:42+08:00">2023-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Oracle重新部署注意事项"><a href="#Oracle重新部署注意事项" class="headerlink" title="Oracle重新部署注意事项"></a>Oracle重新部署注意事项</h1><p>Oracle19c下载地址，无需登录，历史版本下载需要登录<br><span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS9jbi9kYXRhYmFzZS90ZWNobm9sb2dpZXMvb3JhY2xlLWRhdGFiYXNlLXNvZnR3YXJlLWRvd25sb2Fkcy5odG1sIzE5Yw==">https://www.oracle.com/cn/database/technologies/oracle-database-software-downloads.html#19c<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>在此页面可以找到官方说明文档</strong><br><span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS9jbi9kYXRhYmFzZS90ZWNobm9sb2dpZXMv">https://www.oracle.com/cn/database/technologies/<i class="fa fa-external-link-alt"></i></span><br><img data-src="https://img-blog.csdnimg.cn/20210717232255235.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#" alt="在这里插入图片描述" style="zoom:50%;"></p>
+<h2 id="一、Oracle11g安装包的准备下载"><a href="#一、Oracle11g安装包的准备下载" class="headerlink" title="一、Oracle11g安装包的准备下载"></a>一、Oracle11g安装包的准备下载</h2><p>官网找历史版本准备服务端<code>Oracle11g R2</code>以及客户端<code>Oracle11g client</code>。<br>　　<br><strong>服务端Oracle11g R2</strong>　　<span class="exturl" data-url="aHR0cDovL2Rvd25sb2FkLm9yYWNsZS5jb20vb3RuL250L29yYWNsZTExZy8xMTIwMTAvd2luNjRfMTFnUjJfZGF0YWJhc2VfMW9mMi56aXA=">http://download.oracle.com/otn/nt/oracle11g/112010/win64_11gR2_database_1of2.zip <i class="fa fa-external-link-alt"></i></span>　　<br>　　<span class="exturl" data-url="aHR0cDovL2Rvd25sb2FkLm9yYWNsZS5jb20vb3RuL250L29yYWNsZTExZy8xMTIwMTAvd2luNjRfMTFnUjJfZGF0YWJhc2VfMm9mMi56aXA=">http://download.oracle.com/otn/nt/oracle11g/112010/win64_11gR2_database_2of2.zip <i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>客户端Oracle11g client</strong><br>客户端文件，就直接从我下面给出的度盘地址获取。　　<br>　　<br>需要下载历史版本，Oracle公司很骚，包括老版本的JDK都需要注册账号登录才能下载。N年前，无需注册登录就可以下载。难道是市场份额少了，开始慌了？下载Oracle数据库历史版本同样需要注册登录，就问骚不骚。懒得吐槽，也无力吐槽，大家都懂得。　<br>　　<br>或者使用我提供的阿里云盘下载地址：<a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/mMV92NTDwNr"><del>https://www.aliyundrive.com/s/mMV92NTDwNr</del> </a></p>
+<p><strong>文件夹虽然可以分享，但读取不到里面的压缩包。目前阿里云盘并不支持zip压缩包以及iso镜像文件的分享，还是给度盘资源。</strong></p>
+<p><strong>度盘资源</strong>：<br>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMTZSamVVQ29iR3ZlQ2VxeUNyVUxzeVE=">https://pan.baidu.com/s/16RjeUCobGveCeqyCrULsyQ<i class="fa fa-external-link-alt"></i></span><br>提取码: iz9g </p>
+<h2 id="二、Oracle11g的安装"><a href="#二、Oracle11g的安装" class="headerlink" title="二、Oracle11g的安装"></a>二、Oracle11g的安装</h2><p>安装过程很简单，大部分是被系统环境折腾安装不上。就算重装，也受注册表的影响。这里推荐使用虚拟机进行测试，VMware虚拟机的快照功能很强大，任你折腾。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/18/Oracle11g%E9%83%A8%E7%BD%B2%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/02/18/Oracle11gR2%E5%AF%86%E7%A0%81%E8%BF%87%E6%9C%9F%E5%A4%84%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -429,119 +542,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/02/18/Oracle11gR2%E5%AF%86%E7%A0%81%E8%BF%87%E6%9C%9F%E5%A4%84%E7%90%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/02/18/Oracle11g%E9%83%A8%E7%BD%B2%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="龙腾万里sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="龙腾万里sky的博客">
-      <meta itemprop="description" content="AI & 过去现在未来">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/18/Oracle11g%E9%83%A8%E7%BD%B2%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" class="post-title-link" itemprop="url">Oracle11g部署注意事项</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-02-18 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-18T00:00:00+08:00">2022-02-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-01 22:04:42" itemprop="dateModified" datetime="2023-06-01T22:04:42+08:00">2023-06-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>8 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Oracle重新部署注意事项"><a href="#Oracle重新部署注意事项" class="headerlink" title="Oracle重新部署注意事项"></a>Oracle重新部署注意事项</h1><p>Oracle19c下载地址，无需登录，历史版本下载需要登录<br><span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS9jbi9kYXRhYmFzZS90ZWNobm9sb2dpZXMvb3JhY2xlLWRhdGFiYXNlLXNvZnR3YXJlLWRvd25sb2Fkcy5odG1sIzE5Yw==">https://www.oracle.com/cn/database/technologies/oracle-database-software-downloads.html#19c<i class="fa fa-external-link-alt"></i></span></p>
-<p><strong>在此页面可以找到官方说明文档</strong><br><span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS9jbi9kYXRhYmFzZS90ZWNobm9sb2dpZXMv">https://www.oracle.com/cn/database/technologies/<i class="fa fa-external-link-alt"></i></span><br><img data-src="https://img-blog.csdnimg.cn/20210717232255235.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#" alt="在这里插入图片描述" style="zoom:50%;"></p>
-<h2 id="一、Oracle11g安装包的准备下载"><a href="#一、Oracle11g安装包的准备下载" class="headerlink" title="一、Oracle11g安装包的准备下载"></a>一、Oracle11g安装包的准备下载</h2><p>官网找历史版本准备服务端<code>Oracle11g R2</code>以及客户端<code>Oracle11g client</code>。<br>　　<br><strong>服务端Oracle11g R2</strong>　　<span class="exturl" data-url="aHR0cDovL2Rvd25sb2FkLm9yYWNsZS5jb20vb3RuL250L29yYWNsZTExZy8xMTIwMTAvd2luNjRfMTFnUjJfZGF0YWJhc2VfMW9mMi56aXA=">http://download.oracle.com/otn/nt/oracle11g/112010/win64_11gR2_database_1of2.zip <i class="fa fa-external-link-alt"></i></span>　　<br>　　<span class="exturl" data-url="aHR0cDovL2Rvd25sb2FkLm9yYWNsZS5jb20vb3RuL250L29yYWNsZTExZy8xMTIwMTAvd2luNjRfMTFnUjJfZGF0YWJhc2VfMm9mMi56aXA=">http://download.oracle.com/otn/nt/oracle11g/112010/win64_11gR2_database_2of2.zip <i class="fa fa-external-link-alt"></i></span></p>
-<p><strong>客户端Oracle11g client</strong><br>客户端文件，就直接从我下面给出的度盘地址获取。　　<br>　　<br>需要下载历史版本，Oracle公司很骚，包括老版本的JDK都需要注册账号登录才能下载。N年前，无需注册登录就可以下载。难道是市场份额少了，开始慌了？下载Oracle数据库历史版本同样需要注册登录，就问骚不骚。懒得吐槽，也无力吐槽，大家都懂得。　<br>　　<br>或者使用我提供的阿里云盘下载地址：<a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/mMV92NTDwNr"><del>https://www.aliyundrive.com/s/mMV92NTDwNr</del> </a></p>
-<p><strong>文件夹虽然可以分享，但读取不到里面的压缩包。目前阿里云盘并不支持zip压缩包以及iso镜像文件的分享，还是给度盘资源。</strong></p>
-<p><strong>度盘资源</strong>：<br>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMTZSamVVQ29iR3ZlQ2VxeUNyVUxzeVE=">https://pan.baidu.com/s/16RjeUCobGveCeqyCrULsyQ<i class="fa fa-external-link-alt"></i></span><br>提取码: iz9g </p>
-<h2 id="二、Oracle11g的安装"><a href="#二、Oracle11g的安装" class="headerlink" title="二、Oracle11g的安装"></a>二、Oracle11g的安装</h2><p>安装过程很简单，大部分是被系统环境折腾安装不上。就算重装，也受注册表的影响。这里推荐使用虚拟机进行测试，VMware虚拟机的快照功能很强大，任你折腾。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/02/18/Oracle11g%E9%83%A8%E7%BD%B2%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -820,7 +820,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:38</span>
+    <span title="站点阅读时长">15:37</span>
   </span>
 </div>
 <div class="busuanzi-count">

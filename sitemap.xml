@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.cnwangk.top/2024/04/05/Windows%E5%B9%B3%E5%8F%B0StableSwarmUI-0-6-1-Beta%E6%96%87%E7%94%9F%E5%9B%BE/</loc>
+    
+    <lastmod>2024-04-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.cnwangk.top/2022/01/31/MySQL8-0-28%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%A8%E7%A8%8B%E5%8F%82%E8%80%83MySQL%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3/</loc>
+    
+    <lastmod>2024-04-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.cnwangk.top/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</loc>
     
     <lastmod>2024-04-05</lastmod>
@@ -14,15 +32,6 @@
     <loc>https://blog.cnwangk.top/2023/03/16/%E9%BE%99%E8%85%BE%E4%B8%87%E9%87%8Csky%E5%B0%8F%E7%AB%99%E5%A4%87%E7%94%A8%E5%9C%B0%E5%9D%80/</loc>
     
     <lastmod>2024-04-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.cnwangk.top/2022/01/31/MySQL8-0-28%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%A8%E7%A8%8B%E5%8F%82%E8%80%83MySQL%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3/</loc>
-    
-    <lastmod>2024-04-01</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -952,14 +961,14 @@
   </url>
   
   <url>
-    <loc>https://blog.cnwangk.top/tags/Rust/</loc>
+    <loc>https://blog.cnwangk.top/tags/MySQL/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.cnwangk.top/tags/MySQL/</loc>
+    <loc>https://blog.cnwangk.top/tags/Rust/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -973,7 +982,7 @@
   </url>
   
   <url>
-    <loc>https://blog.cnwangk.top/tags/github/</loc>
+    <loc>https://blog.cnwangk.top/tags/git/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -981,6 +990,13 @@
   
   <url>
     <loc>https://blog.cnwangk.top/tags/hexo/</loc>
+    <lastmod>2024-04-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.cnwangk.top/tags/github/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -995,13 +1011,6 @@
   
   <url>
     <loc>https://blog.cnwangk.top/tags/htop/</loc>
-    <lastmod>2024-04-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.cnwangk.top/tags/git/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1057,13 +1066,6 @@
   </url>
   
   <url>
-    <loc>https://blog.cnwangk.top/tags/rocky/</loc>
-    <lastmod>2024-04-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.cnwangk.top/tags/redis/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -1071,7 +1073,7 @@
   </url>
   
   <url>
-    <loc>https://blog.cnwangk.top/tags/Ubuntu/</loc>
+    <loc>https://blog.cnwangk.top/tags/rocky/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1079,6 +1081,13 @@
   
   <url>
     <loc>https://blog.cnwangk.top/tags/VScode/</loc>
+    <lastmod>2024-04-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.cnwangk.top/tags/Ubuntu/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1106,14 +1115,14 @@
   </url>
   
   <url>
-    <loc>https://blog.cnwangk.top/tags/docker/</loc>
+    <loc>https://blog.cnwangk.top/tags/StableSwarmUI/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.cnwangk.top/tags/Windows-server/</loc>
+    <loc>https://blog.cnwangk.top/tags/docker/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1127,7 +1136,7 @@
   </url>
   
   <url>
-    <loc>https://blog.cnwangk.top/tags/nginx/</loc>
+    <loc>https://blog.cnwangk.top/tags/Windows-server/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1135,6 +1144,13 @@
   
   <url>
     <loc>https://blog.cnwangk.top/tags/hugo/</loc>
+    <lastmod>2024-04-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.cnwangk.top/tags/nginx/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1162,14 +1178,14 @@
   </url>
   
   <url>
-    <loc>https://blog.cnwangk.top/tags/vim/</loc>
+    <loc>https://blog.cnwangk.top/tags/springboot/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.cnwangk.top/tags/MariaDB/</loc>
+    <loc>https://blog.cnwangk.top/tags/vim/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1183,7 +1199,7 @@
   </url>
   
   <url>
-    <loc>https://blog.cnwangk.top/tags/springboot/</loc>
+    <loc>https://blog.cnwangk.top/tags/MariaDB/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1248,14 +1264,14 @@
   </url>
   
   <url>
-    <loc>https://blog.cnwangk.top/categories/web%E5%BC%80%E5%8F%91/</loc>
+    <loc>https://blog.cnwangk.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.cnwangk.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
+    <loc>https://blog.cnwangk.top/categories/web%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2024-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

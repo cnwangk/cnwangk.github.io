@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -23,12 +23,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="MySQL 文档整理合集（5.6、5.7、8.0、8.1、8.2、8.3、8.4）： 链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1jGkGarWZWVnzQ9so0D8maA?pwd&#x3D;8kff  提取码: 8kff  阅读本篇博文与读者的约定：  关于数据库（角色用户）需要开放哪些权限，需要根据职员的具体职责进行判断。 博文可能存在过时，仅供参考哟。   当你看到这篇教程时，MyS">
+    <meta name="description" content="如果你想支持小站持续发展，可以在文章尾部进行赞赏哟，我将用于小站持续维护以及域名费用。  MySQL 文档整理合集（5.6、5.7、8.0、8.1、8.2、8.3、8.4）： 链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1jGkGarWZWVnzQ9so0D8maA?pwd&#x3D;8kff  提取码: 8kff  阅读本篇博文与读者的约定：  关于数据库（角色用户）需要开放哪些权限，需要根据">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="MySQL8.0.28安装教程全程参考MySQL官方文档">
 <meta property="og:url" content="https://blog.cnwangk.top/2022/01/31/MySQL8-0-28%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%85%A8%E7%A8%8B%E5%8F%82%E8%80%83MySQL%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
-<meta property="og:description" content="MySQL 文档整理合集（5.6、5.7、8.0、8.1、8.2、8.3、8.4）： 链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1jGkGarWZWVnzQ9so0D8maA?pwd&#x3D;8kff  提取码: 8kff  阅读本篇博文与读者的约定：  关于数据库（角色用户）需要开放哪些权限，需要根据职员的具体职责进行判断。 博文可能存在过时，仅供参考哟。   当你看到这篇教程时，MyS">
+<meta property="og:description" content="如果你想支持小站持续发展，可以在文章尾部进行赞赏哟，我将用于小站持续维护以及域名费用。  MySQL 文档整理合集（5.6、5.7、8.0、8.1、8.2、8.3、8.4）： 链接: https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1jGkGarWZWVnzQ9so0D8maA?pwd&#x3D;8kff  提取码: 8kff  阅读本篇博文与读者的约定：  关于数据库（角色用户）需要开放哪些权限，需要根据">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s1.ax1x.com/2022/07/19/j7EO6s.png">
 <meta property="og:image" content="https://s1.ax1x.com/2023/04/04/pp5iLZT.png">
@@ -42,7 +42,7 @@
 <meta property="og:image" content="https://s1.ax1x.com/2023/04/04/pp5FkdO.jpg">
 <meta property="og:image" content="https://s1.ax1x.com/2023/04/04/pp5Flef.jpg">
 <meta property="article:published_time" content="2022-01-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-07T09:39:29.653Z">
+<meta property="article:modified_time" content="2024-05-23T13:00:24.720Z">
 <meta property="article:author" content="龙腾万里sky">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
@@ -304,7 +304,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-07 17:39:29" itemprop="dateModified" datetime="2024-05-07T17:39:29+08:00">2024-05-07</time>
+      <time title="修改时间：2024-05-23 21:00:24" itemprop="dateModified" datetime="2024-05-23T21:00:24+08:00">2024-05-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -347,7 +347,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><img data-src="https://s1.ax1x.com/2022/07/19/j7EO6s.png"></p>
+    <div class="post-body" itemprop="articleBody"><p><strong>如果你想支持小站持续发展，可以在文章尾部进行赞赏哟，我将用于小站持续维护以及域名费用</strong>。</p>
+<p><img data-src="https://s1.ax1x.com/2022/07/19/j7EO6s.png"></p>
 <p>MySQL 文档整理合集（5.6、5.7、8.0、8.1、8.2、8.3、8.4）：</p>
 <p>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMWpHa0dhcldaV1ZuelE5c28wRDhtYUE/cHdkPThrZmY=">https://pan.baidu.com/s/1jGkGarWZWVnzQ9so0D8maA?pwd=8kff<i class="fa fa-external-link-alt"></i></span> </p>
 <p>提取码: 8kff </p>
@@ -941,7 +942,7 @@
 <li>MySQL8.0官方文档：<span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vOC4wL2VuLw==">MySQL8.0官方文档<i class="fa fa-external-link-alt"></i></span></li>
 <li>Windows 平台解压命令 expand-archive：<span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLmFyY2hpdmUvZXhwYW5kLWFyY2hpdmU/dmlldz1wb3dlcnNoZWxsLTcuNA==">expand-archive<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
-<p>MySQL 文档整理合集（5.6、5.7、8.0、、8.1、8.2、8.3，8.4）：</p>
+<p>MySQL 文档整理合集（5.6，5.7；8.0；8.1，8.2，8.3；8.4）：</p>
 <p>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMWpHa0dhcldaV1ZuelE5c28wRDhtYUE/cHdkPThrZmY=">https://pan.baidu.com/s/1jGkGarWZWVnzQ9so0D8maA?pwd=8kff<i class="fa fa-external-link-alt"></i></span> </p>
 <p>提取码: 8kff </p>
 <p>文档如何食用，请阅读 docs 目录的 ReadME 文件。</p>
@@ -1076,14 +1077,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">260k</span>
+    <span title="站点总字数">261k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:47</span>
+    <span title="站点阅读时长">15:48</span>
   </span>
 </div>
 <div class="busuanzi-count">

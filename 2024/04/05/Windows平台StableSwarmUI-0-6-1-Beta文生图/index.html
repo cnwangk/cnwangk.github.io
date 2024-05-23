@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -23,18 +23,18 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="如果有你幸访问本教程，可以看到文初使用 sd_xl_base_1.0.safetensors 模型生成的图片样张。参数如下： 1234567prompt: a photo of a cat,images: 2, seed: 1, steps: 20, cfgscale: 7, variationseed: 1991156077,aspectratio: 1:1, width: 1024, hei">
+    <meta name="description" content="如果你想支持小站持续发展，可以在文章尾部进行赞赏哟，我将用于小站持续维护以及域名费用。  如果有你幸访问本教程，可以看到文初使用 sd_xl_base_1.0.safetensors 模型生成的图片样张。参数如下： 1234567prompt: a photo of a cat,images: 2, seed: 1, steps: 20, cfgscale: 7, variationseed: 1">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Windows平台StableSwarmUI-0.6.1-Beta文生图">
 <meta property="og:url" content="https://blog.cnwangk.top/2024/04/05/Windows%E5%B9%B3%E5%8F%B0StableSwarmUI-0-6-1-Beta%E6%96%87%E7%94%9F%E5%9B%BE/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
-<meta property="og:description" content="如果有你幸访问本教程，可以看到文初使用 sd_xl_base_1.0.safetensors 模型生成的图片样张。参数如下： 1234567prompt: a photo of a cat,images: 2, seed: 1, steps: 20, cfgscale: 7, variationseed: 1991156077,aspectratio: 1:1, width: 1024, hei">
+<meta property="og:description" content="如果你想支持小站持续发展，可以在文章尾部进行赞赏哟，我将用于小站持续维护以及域名费用。  如果有你幸访问本教程，可以看到文初使用 sd_xl_base_1.0.safetensors 模型生成的图片样张。参数如下： 1234567prompt: a photo of a cat,images: 2, seed: 1, steps: 20, cfgscale: 7, variationseed: 1">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s21.ax1x.com/2024/04/05/pFbXXh8.md.png">
 <meta property="og:image" content="https://s21.ax1x.com/2024/04/05/pFqixIJ.png">
 <meta property="og:image" content="https://s21.ax1x.com/2024/04/05/pFbqDld.png">
 <meta property="article:published_time" content="2024-04-05T15:02:53.000Z">
-<meta property="article:modified_time" content="2024-04-06T04:44:08.551Z">
+<meta property="article:modified_time" content="2024-05-23T13:00:46.336Z">
 <meta property="article:author" content="龙腾万里sky">
 <meta property="article:tag" content="StableSwarmUI">
 <meta name="twitter:card" content="summary">
@@ -275,7 +275,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-06 12:44:08" itemprop="dateModified" datetime="2024-04-06T12:44:08+08:00">2024-04-06</time>
+      <time title="修改时间：2024-05-23 21:00:46" itemprop="dateModified" datetime="2024-05-23T21:00:46+08:00">2024-05-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -301,7 +301,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
+      <span>2.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -318,7 +318,8 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p><img data-src="https://s21.ax1x.com/2024/04/05/pFbXXh8.md.png" alt="pFbXXh8.md.png"></p>
+    <div class="post-body" itemprop="articleBody"><p><strong>如果你想支持小站持续发展，可以在文章尾部进行赞赏哟，我将用于小站持续维护以及域名费用</strong>。</p>
+<p><img data-src="https://s21.ax1x.com/2024/04/05/pFbXXh8.md.png" alt="pFbXXh8.md.png"></p>
 <p>如果有你幸访问本教程，可以看到文初使用 <code>sd_xl_base_1.0.safetensors</code> 模型生成的图片样张。参数如下：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">prompt<span class="punctuation">:</span> a photo of a cat<span class="punctuation">,</span></span><br><span class="line">images<span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span> seed<span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span> steps<span class="punctuation">:</span> <span class="number">20</span><span class="punctuation">,</span> cfgscale<span class="punctuation">:</span> <span class="number">7</span><span class="punctuation">,</span> </span><br><span class="line">variationseed<span class="punctuation">:</span> <span class="number">1991156077</span><span class="punctuation">,</span>aspectratio<span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">:</span><span class="number">1</span><span class="punctuation">,</span> </span><br><span class="line">width<span class="punctuation">:</span> <span class="number">1024</span><span class="punctuation">,</span> height<span class="punctuation">:</span> <span class="number">1024</span><span class="punctuation">,</span> </span><br><span class="line">initimagecreativity<span class="punctuation">:</span> <span class="number">0.6</span><span class="punctuation">,</span> refinercontrolpercentage<span class="punctuation">:</span> <span class="number">0.2</span><span class="punctuation">,</span> </span><br><span class="line">refinermethod<span class="punctuation">:</span> PostApply<span class="punctuation">,</span> refinerupscalemethod<span class="punctuation">:</span> pixel-bilinear<span class="punctuation">,</span> </span><br><span class="line">model<span class="punctuation">:</span> OfficialStableDiffusion/sd_xl_base_1<span class="number">.0</span>.safetensors<span class="punctuation">,</span> swarm_version<span class="punctuation">:</span> <span class="number">0.6</span><span class="number">.1</span><span class="number">.0</span><span class="punctuation">,</span> date<span class="punctuation">:</span> <span class="number">2024</span><span class="number">-04</span><span class="number">-05</span><span class="punctuation">,</span> generation_time<span class="punctuation">:</span> <span class="number">2.13</span> (prep) and <span class="number">18.11</span> (gen) seconds</span><br></pre></td></tr></table></figure>
 
@@ -520,14 +521,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">260k</span>
+    <span title="站点总字数">261k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:47</span>
+    <span title="站点阅读时长">15:48</span>
   </span>
 </div>
 <div class="busuanzi-count">

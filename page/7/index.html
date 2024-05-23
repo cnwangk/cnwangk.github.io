@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -197,6 +197,129 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2023/03/11/Hexo%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="AI & 过去现在未来">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/03/11/Hexo%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">Hexo博客优化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-11 22:41:35" itemprop="dateCreated datePublished" datetime="2023-03-11T22:41:35+08:00">2023-03-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-31 23:14:58" itemprop="dateModified" datetime="2024-03-31T23:14:58+08:00">2024-03-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/" itemprop="url" rel="index"><span itemprop="name">静态博客</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>关于 hexo 博客优化一点点思考。money &amp; time 寻找平衡。</p>
+<p>闲暇时间，想起自己很久没维护的hexo + nextjs打造的静态博客网站。访问速度龟速前进，比看小电影还慢。</p>
+<p>一入编程深似海，从此节操是路人。这里是文某人网络三无教程，希望对你有所帮助。</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>静态博客网站老生常谈的两大问题：</p>
+<ol>
+<li>加载静态资源耗时长，使用cdn加速、压缩js、css、html文件，提高体验。</li>
+<li>访问国外网站速度慢，如果科学上网，速度还行。 其实你会发现，优化再优化最终归结到了科学上网，资源在国内访问速度自然没话说。</li>
+</ol>
+<p>做完以上测试（压缩、CDN、套皮、科学上网），可以在Chrome浏览器使用F12进行调试，找到Network，使用快捷键ctrl + r 查看css消耗时间对比，发现main.css加载耗时很长。<br>使用ctrl + f5大刷新：</p>
+<ul>
+<li>套cf（cloudflare）皮：main.css加载时间300ms左右。</li>
+<li>没套皮：main.css加载时间，运气不好，等待超过10s。</li>
+<li>开加速光环：纵享丝滑，同样ms级别，也在300ms左右。</li>
+<li>nginx高性能服务器：访问加载速度一样很丝滑。</li>
+</ul>
+<p><strong>tips</strong>：浏览器有缓存机制，如果f5小刷新没生效，使用ctrl + f5大刷新或者 ctrl + shift + delete清除缓存进行尝试。</p>
+<h2 id="借东风"><a href="#借东风" class="headerlink" title="借东风"></a>借东风</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/03/11/Hexo%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -658,131 +781,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/05/11/rocketmq%E6%B6%88%E6%81%AF%E6%9C%8D%E5%8A%A1%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="龙腾万里sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="龙腾万里sky的博客">
-      <meta itemprop="description" content="AI & 过去现在未来">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/11/rocketmq%E6%B6%88%E6%81%AF%E6%9C%8D%E5%8A%A1%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">rocketmq消息服务入门笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-05-11 22:22:13" itemprop="dateCreated datePublished" datetime="2022-05-11T22:22:13+08:00">2022-05-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-27 21:52:46" itemprop="dateModified" datetime="2024-03-27T21:52:46+08:00">2024-03-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/web%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">web开发</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>948</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>rocketmq日志问题</strong>：随着消息服务持续运行，日志量会越来越大，实际工作中可能会达到20G。当日志占用C盘的90%时，消息服务可能会出现警告，无法接收存储消息。此时应该想方法调整日志存储位置，或者给C盘扩容。</p>
-<p>以前可视化运维管理界面应用程序在项目rocketmq-externals中rocketmq-console目录下：</p>
-<blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwYWNoZS9yb2NrZXRtcS1leHRlcm5hbHMvdHJlZS9tYXN0ZXIvcm9ja2V0bXEtY29uc29sZQ==">https://github.com/apache/rocketmq-externals/tree/master/rocketmq-console<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<p>后面再次使用时才发现仓库改成rocketmq-dashboard了，已经找不到rocketmq-console。</p>
-<p><strong>rocketmq-dashboard可视化运维管理界面源码</strong>：</p>
-<blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FwYWNoZS9yb2NrZXRtcS1kYXNoYm9hcmQ=">https://github.com/apache/rocketmq-dashboard<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<h1 id="rocketmq入门实践"><a href="#rocketmq入门实践" class="headerlink" title="rocketmq入门实践"></a>rocketmq入门实践</h1><p><strong>必备环境</strong>：</p>
-<ol>
-<li>64bit OS，Linux&#x2F;Unix&#x2F;Mac is recommended；(Windows user see guide below)</li>
-<li>64bit JDK 1.8+；</li>
-<li>Maven 3.2.x；如果没有设置指定maven目录，默认下载jar包在C盘.m2目录</li>
-<li>Git；</li>
-<li>4g+ free disk for Broker server</li>
-</ol>
-<h2 id="一、快速入门"><a href="#一、快速入门" class="headerlink" title="一、快速入门"></a>一、快速入门</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/05/11/rocketmq%E6%B6%88%E6%81%AF%E6%9C%8D%E5%8A%A1%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -807,14 +805,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">260k</span>
+    <span title="站点总字数">261k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:47</span>
+    <span title="站点阅读时长">15:48</span>
   </span>
 </div>
 <div class="busuanzi-count">

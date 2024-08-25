@@ -155,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -425,6 +425,120 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2024/04/05/Windows%E5%B9%B3%E5%8F%B0StableSwarmUI-0-6-1-Beta%E6%96%87%E7%94%9F%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="AI & 过去现在未来">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/04/05/Windows%E5%B9%B3%E5%8F%B0StableSwarmUI-0-6-1-Beta%E6%96%87%E7%94%9F%E5%9B%BE/" class="post-title-link" itemprop="url">Windows平台StableSwarmUI-0.6.1-Beta文生图</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-04-05 23:02:53" itemprop="dateCreated datePublished" datetime="2024-04-05T23:02:53+08:00">2024-04-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-08-25 21:08:05" itemprop="dateModified" datetime="2024-08-25T21:08:05+08:00">2024-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>记录更新版本问题，更新目前最新测试版 StableSwarmUI-0.6.4-Beta。</p>
+<p><img data-src="https://pica.zhimg.com/80/v2-ddc407dcbf8458c3d6d0fbee76ae5936_1440w.png" alt="StableSwarmUI-0.6.4-shutdown-server-error.png"></p>
+<p>进入控制台界面，定位错误日志：</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-5ce6babee9c000c4ec09cce001c8a4c9_1440w.png" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">20:37:05.205 [Error] [WebAPI] Error handling API request &#x27;/API/ListConnectedUsers&#x27; for user &#x27;local&#x27;: Internal exception: System.OperationCanceledException: The operation was canceled.</span><br><span class="line">   at System.Threading.CancellationToken.ThrowOperationCanceledException()</span><br><span class="line">   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpResponsePipeWriter.WriteAsync(ReadOnlyMemory`1 source, CancellationToken cancellationToken)</span><br><span class="line">   at StableSwarmUI.Utils.Utilities.YieldJsonOutput(HttpContext context, WebSocket socket, Int32 status, JObject obj) in E:\AI\StableSwarmUI-0.6.2-Beta\src\Utils\Utilities.cs:line 325</span><br><span class="line">   at StableSwarmUI.WebAPI.API.HandleAsyncRequest(HttpContext context) in E:\AI\StableSwarmUI-0.6.2-Beta\src\WebAPI\API.cs:line 136</span><br><span class="line"></span><br><span class="line">20:37:05.271 [Error] [WebAPI] Error handling API request &#x27;/API/GetServerResourceInfo&#x27; for user &#x27;local&#x27;: Internal exception: System.OperationCanceledException: The operation was canceled.</span><br><span class="line">   at System.Threading.CancellationToken.ThrowOperationCanceledException()</span><br><span class="line">   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpResponsePipeWriter.WriteAsync(ReadOnlyMemory`1 source, CancellationToken cancellationToken)</span><br><span class="line">   at StableSwarmUI.Utils.Utilities.YieldJsonOutput(HttpContext context, WebSocket socket, Int32 status, JObject obj) in E:\AI\StableSwarmUI-0.6.2-Beta\src\Utils\Utilities.cs:line 325</span><br><span class="line">   at StableSwarmUI.WebAPI.API.HandleAsyncRequest(HttpContext context) in E:\AI\StableSwarmUI-0.6.2-Beta\src\WebAPI\API.cs:line 136</span><br></pre></td></tr></table></figure>
+
+<p>出现问题原因，日志已经提醒了，可能找不到对应 API 所在路径。由于个人更新版本时出现疏忽，未及时执行更新脚本 update-windows.bat。如果你是 Unix 或者 Linux 平台，请尝试执行 <code>update-linuxmac.sh</code>。</p>
+<p>如果做完以上尝试，依旧存在提醒“无法向服务器发送请求，服务器是否崩溃？”。问题不大，不影响正常</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/04/05/Windows%E5%B9%B3%E5%8F%B0StableSwarmUI-0-6-1-Beta%E6%96%87%E7%94%9F%E5%9B%BE/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2024/03/19/%E9%A9%BE%E9%A9%B6%E8%AF%81%E5%88%B0%E6%9C%9F%E4%BA%86%E6%80%8E%E4%B9%88%E6%8D%A2%E8%AF%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -647,123 +761,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2024/03/03/%E8%BA%AB%E4%BB%BD%E8%AF%81%E5%BC%82%E5%9C%B0%E5%8A%9E%E7%90%86%E6%8C%87%E5%8D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="龙腾万里sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="龙腾万里sky的博客">
-      <meta itemprop="description" content="AI & 过去现在未来">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/03/03/%E8%BA%AB%E4%BB%BD%E8%AF%81%E5%BC%82%E5%9C%B0%E5%8A%9E%E7%90%86%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">身份证异地办理指南</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-03-03 23:14:00" itemprop="dateCreated datePublished" datetime="2024-03-03T23:14:00+08:00">2024-03-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-09 18:51:39" itemprop="dateModified" datetime="2024-03-09T18:51:39+08:00">2024-03-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%94%9F%E6%B4%BB%E7%99%BE%E7%A7%91/" itemprop="url" rel="index"><span itemprop="name">生活百科</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>生活经验分享，身份证（异地）办理指南</strong>。</p>
-<p><img data-src="https://s11.ax1x.com/2024/03/03/pFBBlkR.png" alt="pFBBlkR.png"></p>
-<p>独自一人初次去办理身份证，是不是有点小紧张？</p>
-<p>不用害怕，放松一下，前往当地派出所，可以咨询门前招待人员寻求帮助。</p>
-<p><strong>友情提醒：最好穿上黑色（深色）衣服，捯饬一下发型（理个发），人显得更精神。毕竟身份证一旦办理完成，可能要用个 5 ~ 20 年，或者更久，才会再次办理。</strong>还有另外一种情况，遗失补领。 </p>
-<p>首次申领居民身份证，可以参考公安部发布的这篇文章：</p>
-<blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZ292LmNuL2Z1d3UvMjAxNi0xMS8yNC9jb250ZW50XzUxMzY4NjQuaHRt">https://www.gov.cn/fuwu/2016-11/24/content_5136864.htm<i class="fa fa-external-link-alt"></i></span></p>
-<p>中央政府门户网站</p>
-</blockquote>
-<p><em>本篇文章主要分享身份证过期换领。</em></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/03/03/%E8%BA%AB%E4%BB%BD%E8%AF%81%E5%BC%82%E5%9C%B0%E5%8A%9E%E7%90%86%E6%8C%87%E5%8D%97/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -788,14 +785,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">262k</span>
+    <span title="站点总字数">264k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:52</span>
+    <span title="站点阅读时长">16:01</span>
   </span>
 </div>
 <div class="busuanzi-count">

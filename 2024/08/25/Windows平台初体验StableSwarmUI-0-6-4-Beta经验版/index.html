@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="由于网络原因，国内获取 ComfyUI 以及 SD_Xl_base_1.0 模型可能非常缓慢。 想要丝滑获取，需要魔法或者科学上网。 如果没有条件，也有方法，可以从国内开源镜像站或者大模型社区获取资源。 获取并部署 StableSwarmUI：StableSwarmUI ，彼时最新版本为 StableSwarmUI Release 0.6.4-Beta。你需要 Python 环境，如果你访问 Py">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Windows平台StableSwarmUI-0.6.4-Beta install 经验版">
+<meta property="og:url" content="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E5%88%9D%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="由于网络原因，国内获取 ComfyUI 以及 SD_Xl_base_1.0 模型可能非常缓慢。 想要丝滑获取，需要魔法或者科学上网。 如果没有条件，也有方法，可以从国内开源镜像站或者大模型社区获取资源。 获取并部署 StableSwarmUI：StableSwarmUI ，彼时最新版本为 StableSwarmUI Release 0.6.4-Beta。你需要 Python 环境，如果你访问 Py">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s21.ax1x.com/2024/04/05/pFqixIJ.png">
+<meta property="article:published_time" content="2024-08-25T12:00:08.000Z">
+<meta property="article:modified_time" content="2024-08-25T13:13:03.086Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="StableSwarmUI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s21.ax1x.com/2024/04/05/pFqixIJ.png">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E5%88%9D%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E5%88%9D%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/","path":"2024/08/25/Windows平台初体验StableSwarmUI-0-6-4-Beta经验版/","title":"Windows平台StableSwarmUI-0.6.4-Beta install 经验版"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Windows平台StableSwarmUI-0.6.4-Beta install 经验版 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-solid fa-user-group fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-solid fa-face-smile fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#StableSwarmUI-install-%E7%BB%8F%E9%AA%8C%E7%89%88"><span class="nav-number">1.</span> <span class="nav-text">StableSwarmUI install 经验版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#StableSwarmUI-%E9%85%8D%E7%BD%AE%E5%90%8E%E7%AB%AF"><span class="nav-number">1.1.</span> <span class="nav-text">StableSwarmUI 配置后端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StableSwarmUI-%E5%BF%AB%E6%8D%B7%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC"><span class="nav-number">1.2.</span> <span class="nav-text">StableSwarmUI 快捷安装脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StableSwarmUI-%E5%AE%89%E8%A3%85%E4%B8%8E%E5%90%AF%E5%8A%A8"><span class="nav-number">2.</span> <span class="nav-text">StableSwarmUI 安装与启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sd-xl-base-1-0-%E6%A8%A1%E5%9E%8B%E8%8E%B7%E5%8F%96"><span class="nav-number">3.</span> <span class="nav-text">sd_xl_base_1.0 模型获取</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">AI & 过去现在未来</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">103</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2024/04/05/Windows%E5%B9%B3%E5%8F%B0StableSwarmUI-0-6-1-Beta%E6%96%87%E7%94%9F%E5%9B%BE/" rel="bookmark">
+        <time class="popular-posts-time">2024-04-05</time>
+        <br>
+      Windows平台StableSwarmUI-0.6.1-Beta文生图
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2024/02/02/Windows%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85stable-diffusion-webui-1.7.0%E8%A7%A3%E5%86%B3%E5%B0%91%E5%B7%A5%E5%85%B7%E5%8C%85clip-vit-large-patch14/" rel="bookmark">
+        <time class="popular-posts-time">2024-02-02</time>
+        <br>
+      Windows平台安装stable-diffusion-webui-1.7.0解决少工具包clip-vit-large-patch14
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2024/05/03/Windows11%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" rel="bookmark">
+        <time class="popular-posts-time">2024-05-03</time>
+        <br>
+      Windows11使用记录
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2024/03/13/Windows%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85docker%E6%8C%87%E5%AE%9A%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84/" rel="bookmark">
+        <time class="popular-posts-time">2024-03-13</time>
+        <br>
+      Windows平台安装docker指定安装路径
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E5%88%9D%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="AI & 过去现在未来">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Windows平台StableSwarmUI-0.6.4-Beta install 经验版 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows平台StableSwarmUI-0.6.4-Beta install 经验版
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-08-25 20:00:08 / 修改时间：21:13:03" itemprop="dateCreated datePublished" datetime="2024-08-25T20:00:08+08:00">2024-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>由于网络原因，国内获取 <code>ComfyUI</code> 以及 <code>SD_Xl_base_1.0</code> 模型可能非常缓慢。</p>
+<p>想要丝滑获取，需要魔法或者科学上网。</p>
+<p>如果没有条件，也有方法，可以从国内开源镜像站或者大模型社区获取资源。</p>
+<p>获取并部署 <code>StableSwarmUI</code>：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1N0YWJpbGl0eS1BSS9TdGFibGVTd2FybVVJL3RhZ3M=">StableSwarmUI<i class="fa fa-external-link-alt"></i></span> ，彼时最新版本为 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1N0YWJpbGl0eS1BSS9TdGFibGVTd2FybVVJL3JlbGVhc2VzL3RhZy8wLjYuNC1CZXRh">StableSwarmUI Release 0.6.4-Beta<i class="fa fa-external-link-alt"></i></span>。你需要 <span class="exturl" data-url="aHR0cHM6Ly93d3cucHl0aG9uLm9yZy8=">Python<i class="fa fa-external-link-alt"></i></span> 环境，如果你访问 Python 官网有困难，可以从 <span class="exturl" data-url="aHR0cHM6Ly9weXRob24ucDJocC5jb20v">Python中文网<i class="fa fa-external-link-alt"></i></span> 获取资源。当然也可以从国内各大开源软件镜像网站获取。如果实在有困难，文末我也会给出自己上传的 Windows 平台 <code>Python</code> 安装包。</p>
+<p>我的 <code>Python</code> 环境，仅供参考：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> D:\work&gt; python <span class="literal">-V</span></span><br><span class="line">Python <span class="number">3.10</span>.<span class="number">6</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>关于 zip 压缩文件，如果你没有安装图形解压工具  <span class="exturl" data-url="aHR0cHM6Ly93d3cuNy16aXAub3JnLw==">7-Zip<i class="fa fa-external-link-alt"></i></span> ，也没有安装 <span class="exturl" data-url="aHR0cHM6Ly93d3cuMzYwdG90YWxzZWN1cml0eS5jb20vemgtY24vMzYwemlwLw==">360zip 国际版<i class="fa fa-external-link-alt"></i></span>，可以尝试借助 Windows11 自带的 <span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLmFyY2hpdmUvZXhwYW5kLWFyY2hpdmU/dmlldz1wb3dlcnNoZWxsLTcuNA==">expand-archive<i class="fa fa-external-link-alt"></i></span> 命令解压工具。</p>
+<p>Windows 平台打开 <code>powershell</code> 使用 <strong><span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLmFyY2hpdmUvZXhwYW5kLWFyY2hpdmU/dmlldz1wb3dlcnNoZWxsLTcuNA==">expand-archive<i class="fa fa-external-link-alt"></i></span></strong> 命令解压 <code>StableSwarmUI-0.6.4-Beta</code>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Expand-Archive</span> .\StableSwarmUI<span class="literal">-0</span>.<span class="number">6.4</span><span class="literal">-Beta</span>.zip <span class="literal">-DestinationPath</span> E:\AI\</span><br></pre></td></tr></table></figure>
+
+
+
+<p>进入 <code>StableSwarmUI</code> 根目录：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> E:\AI\StableSwarmUI<span class="literal">-0</span>.<span class="number">6.4</span><span class="literal">-Beta</span>\</span><br></pre></td></tr></table></figure>
+
+
+
+<p>让我们一起愉快的开启 <code>StableSwarmUI</code>  体验之旅吧，在这之前，再次友情提醒安装好 <code>Python</code> 环境哟。</p>
+<span id="more"></span>
+
+
+
+<h2 id="StableSwarmUI-install-经验版"><a href="#StableSwarmUI-install-经验版" class="headerlink" title="StableSwarmUI install 经验版"></a>StableSwarmUI install 经验版</h2><p>由于网络原因，国内获取 <code>ComfyUI</code> 以及 <code>SD_Xl_base_1.0</code> 模型可能非常缓慢。</p>
+<p>想要丝滑获取，需要魔法或者科学上网。</p>
+<p>如果没有条件，也有方法，可以从国内开源镜像站或者大模型社区获取资源。</p>
+<p>以上方法尝试完后，做如下调整。</p>
+<ol>
+<li>必备环境：<code>Python</code>， <code>Git</code> ，  <code>dotnet</code> 。</li>
+<li>获取 <code>StableSwarmUI </code>。</li>
+<li>运行  <code>.\launch-windows.bat</code> 脚本进入引导安装（注：一共 7 步）。</li>
+<li>跳过安装 <code>ComfyUI</code> 步骤，可以后期手动导入。</li>
+<li>跳过安装模型步骤，可以后期手动导入。</li>
+<li><strong>配置后端</strong> <code>ComfyUI</code>（<strong>划重点</strong>），<code>cd .\StableSwarmUI-0.6.4-Beta\StableSwarmUI\dlbackend</code> ，<code>mkdir comfy</code> ，<code>cd comfy</code>，引入  <code>ComfyUI</code>。</li>
+<li><strong>导入模型</strong>（<strong>划重点</strong>）。</li>
+<li>下载并导入模型，手动放入 <code>.\StableSwarmUI-0.6.4-Beta\Models\Stable-Diffusion\OfficialStableDiffusion</code> 路径下。 </li>
+<li>测试访问是否正常，<code>http://localhost:7801</code>，<code>http://localhost:7821</code>。</li>
+</ol>
+<h3 id="StableSwarmUI-配置后端"><a href="#StableSwarmUI-配置后端" class="headerlink" title="StableSwarmUI 配置后端"></a>StableSwarmUI 配置后端</h3><p><strong>着重介绍配置后端</strong> <code>ComfyUI</code>。</p>
+<p>可以使用解压缩工具，也可以使用命令形式解压 <code>ComfyUI_windows_portable_nvidia.7z</code>。值得注意的是，Windows11 原生不支持直接使用命令解压缩 7z 文件，需要额外下载 <span class="exturl" data-url="aHR0cHM6Ly93d3cuNy16aXAub3JnLw==">7-Zip<i class="fa fa-external-link-alt"></i></span> 并配置环境变量以及别名，如何配置，这里不做赘述。有些命令我使用了别名，可以参考 Windows 中的兼容性别名 <span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvc2NyaXB0aW5nL2xlYXJuL3NoZWxsL3VzaW5nLWFsaWFzZXM/dmlldz1wb3dlcnNoZWxsLTcuNA==">使用别名 - PowerShell<i class="fa fa-external-link-alt"></i></span>  说明，比如 <code>cp，copy，Copy-Item</code>。</p>
+<p><strong>第一步</strong>，获取 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NvbWZ5YW5vbnltb3VzL0NvbWZ5VUkvdGFncw==">ComfyUI<i class="fa fa-external-link-alt"></i></span>，当前最新版为 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NvbWZ5YW5vbnltb3VzL0NvbWZ5VUkvcmVsZWFzZXMvZG93bmxvYWQvdjAuMS4yL0NvbWZ5VUlfd2luZG93c19wb3J0YWJsZV9udmlkaWEuN3o=">ComfyUI-0.1.2<i class="fa fa-external-link-alt"></i></span>，引入<code>ComfyUI</code>。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> .\StableSwarmUI<span class="literal">-0</span>.<span class="number">6.4</span><span class="literal">-Beta</span>\StableSwarmUI\dlbackend</span><br><span class="line">mkdir comfy</span><br><span class="line"><span class="built_in">cd</span> comfy</span><br><span class="line"><span class="built_in">cp</span> <span class="literal">-Path</span> <span class="string">&quot;.\ComfyUI_windows_portable_nvidia.7z\ComfyUI_windows_portable\*&quot;</span>  <span class="literal">-Destination</span> <span class="string">&quot;.\StableSwarmUI-0.6.4-Beta\StableSwarmUI\dlbackend\comfy&quot;</span> <span class="literal">-Recurse</span></span><br></pre></td></tr></table></figure>
+
+<p>可以使用 <span class="exturl" data-url="aHR0cHM6Ly93d3cuNy16aXAub3JnLw==">7-Zip<i class="fa fa-external-link-alt"></i></span> 解压 <code>ComfyUI_windows_portable_nvidia.7z</code>。</p>
+<p>切换到 <code>cd .\ComfyUI_windows_portable_nvidia.7z\ComfyUI_windows_portable</code> 目录，复制当前目录所有文件 <code>Ctrl + a，Ctrl + c</code> ，粘贴 <code>Ctrl + v</code> 到 <code>.\StableSwarmUI-0.6.4-Beta\StableSwarmUI\dlbackend\comfy</code> 目录下。</p>
+<p><strong>第二步</strong>，定位到页面顶部导航栏<strong>服务器</strong>模块，点击<strong>后端</strong>。</p>
+<p>新增配置后端 <code>running backend: (0): ComfyUI Self-Starting</code></p>
+<p>参考提示信息，填写启动脚本：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dlbackend/comfy/ComfyUI/main.py</span><br></pre></td></tr></table></figure>
+
+<p>填写额外参数（可以不加，非必传），示例加入参数，会额外在独立窗口访问 ComfyUI：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--windows-standalone-build</span><br></pre></td></tr></table></figure>
+
+
+
+<p>配置完成，<strong>状态处于 enable backed</strong>，点击 save（保存），Restart（重启当前后端服务）。</p>
+<p>再次启动 <code>.\launch-windows.bat</code>，第一次安装（install）<code>ComfyUI</code> 需要一些时间加载，这是正常现象。</p>
+<h3 id="StableSwarmUI-快捷安装脚本"><a href="#StableSwarmUI-快捷安装脚本" class="headerlink" title="StableSwarmUI 快捷安装脚本"></a>StableSwarmUI 快捷安装脚本</h3><p><strong>友情提醒</strong>：Windows 平台还可以使用快捷安装脚本。实际上是将多个必备工具安装步骤融合到一个脚本里面。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\<span class="built_in">install-windows</span>.bat</span><br></pre></td></tr></table></figure>
+
+<p>脚本 <code>.\install-windows.bat</code> 会执行哪些步骤？值得注意的有三个步骤，获取 <code>DotNet.SDK.8</code>、<code>Git</code> 以及  <code>StableSwarmUI</code>。</p>
+<p>获取并安装最新的  <code>DotNet.SDK.8</code>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winget install Microsoft.DotNet.SDK.<span class="number">8</span> <span class="literal">--accept-source-agreements</span> <span class="literal">--accept-package-agreements</span></span><br></pre></td></tr></table></figure>
+
+<p>如果本地已经安装过 <code>DotNet.SDK.8</code> 工具，你可以尝试跳过（屏蔽掉）脚本中的 <code>DotNet.SDK.8</code> 安装步骤。</p>
+<p>获取并安装 <code>Git</code>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winget install <span class="literal">--id</span> Git.Git <span class="literal">-e</span> <span class="literal">--source</span> winget <span class="literal">--accept-source-agreements</span> <span class="literal">--accept-package-agreements</span></span><br></pre></td></tr></table></figure>
+
+<p>如果有一定的开发经验，本地已经安装过 <code>Git</code> 工具，你可以尝试跳过（屏蔽掉）脚本中的 <code>Git</code> 安装步骤。</p>
+<p>获取 <code>StableSwarmUI</code>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/Stability<span class="literal">-AI</span>/StableSwarmUI</span><br></pre></td></tr></table></figure>
+
+
+
+<p>脚本 <code>.\install-windows.bat</code>原始内容：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /d &quot;%~dp0&quot;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">exist</span> StableSwarmUI (</span><br><span class="line">    <span class="built_in">echo</span> StableSwarmUI is already installed <span class="keyword">in</span> this folder. <span class="keyword">If</span> this is incorrect, delete the &#x27;StableSwarmUI&#x27; folder and try again.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">exist</span> StableSwarmUI.sln (</span><br><span class="line">    <span class="built_in">echo</span> StableSwarmUI is already installed <span class="keyword">in</span> this folder. <span class="keyword">If</span> this is incorrect, delete &#x27;StableSwarmUI.sln&#x27; and try again.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">winget install Microsoft.DotNet.SDK.<span class="number">8</span> --accept-source-agreements --accept-package-agreements</span><br><span class="line">winget install --id Git.Git -e --source winget --accept-source-agreements --accept-package-agreements</span><br><span class="line"></span><br><span class="line">git clone https://github.com/Stability-AI/StableSwarmUI</span><br><span class="line"><span class="built_in">cd</span> StableSwarmUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">call</span> .\make-shortcut.bat</span><br><span class="line"><span class="keyword">call</span> .\launch-windows.bat --launch_mode webinstall</span><br><span class="line"></span><br><span class="line"><span class="keyword">IF</span> <span class="variable">%ERRORLEVEL%</span> <span class="keyword">NEQ</span> <span class="number">0</span> ( <span class="built_in">pause</span> )</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="StableSwarmUI-安装与启动"><a href="#StableSwarmUI-安装与启动" class="headerlink" title="StableSwarmUI 安装与启动"></a>StableSwarmUI 安装与启动</h2><p>启动 StableSwarmUI 之前我想介绍一下，个人硬件环境（笔电）。不算太新，不算太老，将将能玩（学习）：</p>
+<ul>
+<li>CPU：R7-7735H（实际上是 R7-6800H的马甲U，苏妈挤了多少次牙膏了，升级命名鬼才）。8 个纯大核 u，平时也够用了。</li>
+<li>显卡(GPU)：NVIDIA GeForce RTX 4060 Laptop GPU, 8.00 GiB</li>
+</ul>
+<p>上了独立显卡，这种搭配，AMD 强劲的核显显得有点浪费了。</p>
+<p>大学新生开学季，怎么套路换电脑？新思路，老爸啊，你儿子想学 Ai，需要高配一丢丢的 N 卡作为生产力。<strong>千万别说是我教的</strong>，问就是生产力需要。 </p>
+<p>有点跑题了，继续 StableSwarmUI 介绍， <strong>目前处于 Beta 版本</strong></p>
+<blockquote>
+<p>A Modular Stable Diffusion Web-User-Interface, with an emphasis on making powertools easily accessible, high performance, and extensibility.</p>
+</blockquote>
+<p>安装与启动，Windows 平台执行 <code>launch-windows.bat</code> 脚本，安装过程可能比较缓慢，也许你需要科学上网。</p>
+<p>Windows 平台执行 <code>launch-windows.bat</code> 脚本，调用 <code>dotnet</code> 过程。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\AI\StableSwarmUI<span class="literal">-0</span>.<span class="number">6.4</span><span class="literal">-Beta</span>&gt; .\launch<span class="literal">-windows</span>.bat</span><br><span class="line">error: 指定的源已添加到可用程序包源的列表中。请提供唯一的源。</span><br><span class="line"></span><br><span class="line">Usage: dotnet nuget add source [<span class="type">arguments</span>] [<span class="type">options</span>]</span><br><span class="line"></span><br><span class="line">Arguments:</span><br><span class="line">  PackageSourcePath  包源的路径。</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  <span class="literal">-n</span>|<span class="literal">--name</span>                       源的名称。</span><br><span class="line">  <span class="literal">-u</span>|<span class="literal">--username</span>                   连接到已验证源时要使用的用户名。</span><br><span class="line">  <span class="literal">-p</span>|<span class="literal">--password</span>                   连接到已验证源时要使用的密码。</span><br><span class="line">  <span class="literal">--store-password-in-clear-text</span>  通过禁用密码加密来启用存储可移植包源凭据。</span><br><span class="line">  <span class="literal">--valid-authentication-types</span>    此源的有效身份验证类型的列表(用逗号分隔)。如果服务器公布 NTLM 或 Negotiate，并且你的凭据必 须使用基本机制发送(例如将 PAT 与本地 Azure DevOps Server 一起使用时)，请将此项设置为 basic。其他有效值包括 negotiate、kerberos、ntlm 和 digest，但这些值很可能没有用。</span><br><span class="line">  <span class="literal">--protocol-version</span>              The NuGet server protocol version to be used. Currently supported versions are <span class="number">2</span> and <span class="number">3</span>. See https://learn.microsoft.com/nuget/api/overview <span class="keyword">for</span> information about the version <span class="number">3</span> protocol. Defaults to <span class="number">2</span> <span class="keyword">if</span> not specified.</span><br><span class="line">  <span class="literal">--configfile</span>                    NuGet 配置文件。如果指定，将仅使用此文件中的设置。如果未指定，则将使用当前目录中的配置文件 的层次结构。有关详细信息，请参阅 https://docs.microsoft.com/nuget/consume<span class="literal">-packages</span>/configuring<span class="literal">-nuget-behavior</span>。</span><br><span class="line">  <span class="literal">-h</span>|<span class="literal">--help</span>                       Show help information</span><br><span class="line"></span><br><span class="line">适用于 .NET MSBuild 版本 <span class="number">17.9</span>.<span class="number">6</span>+a4ecab324</span><br><span class="line">  正在确定要还原的项目…</span><br><span class="line">  已还原 E:\AI\StableSwarmUI<span class="literal">-0</span>.<span class="number">6.4</span><span class="literal">-Beta</span>\src\StableSwarmUI.csproj (用时 <span class="number">2.75</span> sec)。</span><br><span class="line">  StableSwarmUI -&gt; E:\AI\StableSwarmUI<span class="literal">-0</span>.<span class="number">6.4</span><span class="literal">-Beta</span>\src\bin\live_release\StableSwarmUI.dll</span><br><span class="line"></span><br><span class="line">已成功生成。</span><br><span class="line">    <span class="number">0</span> 个警告</span><br><span class="line">    <span class="number">0</span> 个错误</span><br><span class="line"></span><br><span class="line">已用时间 <span class="number">00</span>:<span class="number">00</span>:<span class="number">10.68</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>初次安装</strong>，从官方渠道获取模型比较缓慢，优先访问 <code>https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors</code>，看到报错或者警告信息是正常状态。在国内无法访问进去，可以前往第三方网站或者社区，比如魔搭社区获取他人上传的模型数据。如果你获取 <code>ComfyUI</code> 缓慢，这是正常现象，优先访问 <code>https://github.com/comfyanonymous/ComfyUI</code>，建议使用 BT 工具或者国内大模型社区获取。</p>
+<h2 id="sd-xl-base-1-0-模型获取"><a href="#sd-xl-base-1-0-模型获取" class="headerlink" title="sd_xl_base_1.0 模型获取"></a>sd_xl_base_1.0 模型获取</h2><p><strong>魔搭社区，获取 sd_xl_base_1.0.safetensors</strong></p>
+<p>如果你使用 git 获取，默认你已经部署并配置好 <span class="exturl" data-url="aHR0cHM6Ly9naXQtc2NtLmNvbS8=">Git<i class="fa fa-external-link-alt"></i></span> 环境，可以直接获取完整模型训练仓库 <code>git clone https://www.modelscope.cn/AI-ModelScope/stable-diffusion-xl-base-1.0.git</code>。当然，你也可以点击文件 <span class="exturl" data-url="aHR0cHM6Ly93d3cubW9kZWxzY29wZS5jbi9tb2RlbHMvQUktTW9kZWxTY29wZS9zdGFibGUtZGlmZnVzaW9uLXhsLWJhc2UtMS4wL2ZpbGUvdmlldy9tYXN0ZXIvc2RfeGxfYmFzZV8xLjAuc2FmZXRlbnNvcnM=">sd_xl_base_1.0.safetensors<i class="fa fa-external-link-alt"></i></span>  直接下载。如果急需体验，个人推荐直接下载模型文件。完整模型仓库所占空间较大，存在版本库迭代，每个作者提交同步的内容有所不同。</p>
+<p><strong>如果本地没有模型数据</strong>，需要获取别人培养的模型数据，复制到 StableSwarmUI 指定的 <code>\StableSwarmUI-0.6.4-Beta\Models\Stable-Diffusion\OfficialStableDiffusion</code> 目录。</p>
+<p>传入模型数据后，进入 web UI 界面点击模型，刷新即可看到模型。个人建议，最好还是在服务器功能模块选择服务器信息功能，点击关闭服务（<code>Shutdown Server</code>），然后再次执行 <code>launch-windows.bat</code> 启动 web 应用程序。</p>
+<p>本地启动完成后，会自动跳转到默认设置浏览器，访问 <code>http://localhost:7801</code></p>
+<p>首页展示画面，初体验使用了 <code>sd_xl_base_1.0.safetensors</code> 模型。</p>
+<p>使用 <code>sd_xl_base_1.0.safetensors</code> 模型生成一张猫咪图像：</p>
+<p><img data-src="https://s21.ax1x.com/2024/04/05/pFqixIJ.png" alt="pFqixIJ.png"></p>
+<p>Windows 平台 Python 安装包（Python 2.7.17、Python 3.9.4、Python 3.10.6、Python 3.11.5）： </p>
+<p>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMXVOOGNlT25QVlQzR0FTWU1RU1hVdnc/cHdkPTg4ODg=">https://pan.baidu.com/s/1uN8ceOnPVT3GASYMQSXUvw?pwd=8888<i class="fa fa-external-link-alt"></i></span> </p>
+<p>提取码: 8888 </p>
+<p>最后，以上总结仅供参考哟，希望对你的学习，工作和生活有所帮助。</p>
+<p><strong>参考资料</strong>：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1N0YWJpbGl0eS1BSS9TdGFibGVTd2FybVVJ">StableSwarmUI<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NvbWZ5YW5vbnltb3VzL0NvbWZ5VUk=">ComfyUI<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubW9kZWxzY29wZS5jbi9tb2RlbHM=">魔搭社区 (modelscope.cn)<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLm1hbmFnZW1lbnQvY29weS1pdGVtP3ZpZXc9cG93ZXJzaGVsbC03LjQ=">Copy-Item - PowerShell<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLmFyY2hpdmUvZXhwYW5kLWFyY2hpdmU/dmlldz1wb3dlcnNoZWxsLTcuNA==">Expand-Archive - PowerShell<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>—END—</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="龙腾万里sky 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E5%88%9D%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/" title="Windows平台StableSwarmUI-0.6.4-Beta install 经验版">https://blog.cnwangk.top/2024/08/25/Windows平台初体验StableSwarmUI-0-6-4-Beta经验版/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/StableSwarmUI/" rel="tag"><i class="fa fa-tag"></i> StableSwarmUI</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/06/03/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9C%BA%E6%A2%B0%E9%9D%A9%E5%91%BD%E8%9B%9F%E9%BE%9916K%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/" rel="prev" title="记一次机械革命蛟龙16K使用问题分析">
+                  <i class="fa fa-angle-left"></i> 记一次机械革命蛟龙16K使用问题分析
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">264k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">16:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E5%88%9D%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

@@ -23,27 +23,36 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="由于网络原因，国内获取 ComfyUI 以及 SD_Xl_base_1.0 模型可能非常缓慢。 想要丝滑获取，需要魔法或者科学上网。 如果没有条件，也有方法，可以从国内开源镜像站或者大模型社区获取资源。 获取并部署 StableSwarmUI：StableSwarmUI ，彼时最新版本为 StableSwarmUI Release 0.6.4-Beta。你需要 Python 环境，如果你访问 Py">
+    <meta name="description" content="由于网络原因，国内获取 ComfyUI 以及 SD_Xl_base_1.0 模型可能非常缓慢。 想要丝滑获取，需要魔法或者科学上网。 如果没有条件，也有方法，可以从国内开源镜像站或者大模型社区获取资源。 获取并部署 StableSwarmUI：StableSwarmUI ，彼时最新版本为 StableSwarmUI Release 0.6.4-Beta。你需要 Python 环境，如果你访问 P">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Windows平台StableSwarmUI-0.6.4-Beta install 经验版">
-<meta property="og:url" content="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E5%88%9D%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/index.html">
+<meta property="og:url" content="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
-<meta property="og:description" content="由于网络原因，国内获取 ComfyUI 以及 SD_Xl_base_1.0 模型可能非常缓慢。 想要丝滑获取，需要魔法或者科学上网。 如果没有条件，也有方法，可以从国内开源镜像站或者大模型社区获取资源。 获取并部署 StableSwarmUI：StableSwarmUI ，彼时最新版本为 StableSwarmUI Release 0.6.4-Beta。你需要 Python 环境，如果你访问 Py">
+<meta property="og:description" content="由于网络原因，国内获取 ComfyUI 以及 SD_Xl_base_1.0 模型可能非常缓慢。 想要丝滑获取，需要魔法或者科学上网。 如果没有条件，也有方法，可以从国内开源镜像站或者大模型社区获取资源。 获取并部署 StableSwarmUI：StableSwarmUI ，彼时最新版本为 StableSwarmUI Release 0.6.4-Beta。你需要 Python 环境，如果你访问 P">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s21.ax1x.com/2024/04/05/pFqixIJ.png">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-077e1f3fedbb58aa5b4cf5b3e8b7389e_1440w.png?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-f89e63f7658ea53becd35bcd561196ac_1440w.png?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-a64b971c6eb7c354c2a95ceddb8952b1_1440w.png?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-fe870bba967d6bde945e2ed13b611223_1440w.png">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-346c30cbdfb6b8f326cec91861a946e5_1440w.png">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-a0ed4238071128be15f2b4080e1f7bb6_1440w.png">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-077e1f3fedbb58aa5b4cf5b3e8b7389e_1440w.png?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-0f9f5a30b26260b9d54613450e18e6cc_1440w.png">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-fe870bba967d6bde945e2ed13b611223_1440w.png">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-93a00fc5884abbf2f380c4d2365d04f3_1440w.png?source=d16d100b">
 <meta property="article:published_time" content="2024-08-25T12:00:08.000Z">
-<meta property="article:modified_time" content="2024-08-25T13:13:03.086Z">
+<meta property="article:modified_time" content="2024-08-26T12:19:29.320Z">
 <meta property="article:author" content="龙腾万里sky">
 <meta property="article:tag" content="StableSwarmUI">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s21.ax1x.com/2024/04/05/pFqixIJ.png">
+<meta name="twitter:image" content="https://pic1.zhimg.com/80/v2-077e1f3fedbb58aa5b4cf5b3e8b7389e_1440w.png?source=d16d100b">
 
 
-<link rel="canonical" href="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E5%88%9D%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/">
+<link rel="canonical" href="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E5%88%9D%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/","path":"2024/08/25/Windows平台初体验StableSwarmUI-0-6-4-Beta经验版/","title":"Windows平台StableSwarmUI-0.6.4-Beta install 经验版"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/","path":"2024/08/25/Windows平台体验StableSwarmUI-0-6-4-Beta经验版/","title":"Windows平台StableSwarmUI-0.6.4-Beta install 经验版"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Windows平台StableSwarmUI-0.6.4-Beta install 经验版 | 龙腾万里sky的博客</title>
@@ -231,6 +240,13 @@
       Windows平台安装docker指定安装路径
       </a>
     </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2022/06/30/Windows-%E5%8E%9F%E7%89%88%E9%95%9C%E5%83%8F%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80/" rel="bookmark">
+        <time class="popular-posts-time">2022-06-30</time>
+        <br>
+      Windows 原版镜像下载地址
+      </a>
+    </li>
   </ul>
 
           </div>
@@ -251,7 +267,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E5%88%9D%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -279,9 +295,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-08-25 20:00:08 / 修改时间：21:13:03" itemprop="dateCreated datePublished" datetime="2024-08-25T20:00:08+08:00">2024-08-25</time>
+      <time title="创建时间：2024-08-25 20:00:08" itemprop="dateCreated datePublished" datetime="2024-08-25T20:00:08+08:00">2024-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-08-26 20:19:29" itemprop="dateModified" datetime="2024-08-26T20:19:29+08:00">2024-08-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -307,14 +329,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
+      <span>2.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>8 分钟</span>
+      <span>9 分钟</span>
     </span>
 </div>
 
@@ -324,84 +346,96 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>由于网络原因，国内获取 <code>ComfyUI</code> 以及 <code>SD_Xl_base_1.0</code> 模型可能非常缓慢。</p>
+    <div class="post-body" itemprop="articleBody"><p><img data-src="https://pic1.zhimg.com/80/v2-077e1f3fedbb58aa5b4cf5b3e8b7389e_1440w.png?source=d16d100b" alt="img"></p>
+<p>由于网络原因，国内获取 <code>ComfyUI</code> 以及 <code>SD_Xl_base_1.0</code> 模型可能非常缓慢。</p>
 <p>想要丝滑获取，需要魔法或者科学上网。</p>
 <p>如果没有条件，也有方法，可以从国内开源镜像站或者大模型社区获取资源。</p>
-<p>获取并部署 <code>StableSwarmUI</code>：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1N0YWJpbGl0eS1BSS9TdGFibGVTd2FybVVJL3RhZ3M=">StableSwarmUI<i class="fa fa-external-link-alt"></i></span> ，彼时最新版本为 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1N0YWJpbGl0eS1BSS9TdGFibGVTd2FybVVJL3JlbGVhc2VzL3RhZy8wLjYuNC1CZXRh">StableSwarmUI Release 0.6.4-Beta<i class="fa fa-external-link-alt"></i></span>。你需要 <span class="exturl" data-url="aHR0cHM6Ly93d3cucHl0aG9uLm9yZy8=">Python<i class="fa fa-external-link-alt"></i></span> 环境，如果你访问 Python 官网有困难，可以从 <span class="exturl" data-url="aHR0cHM6Ly9weXRob24ucDJocC5jb20v">Python中文网<i class="fa fa-external-link-alt"></i></span> 获取资源。当然也可以从国内各大开源软件镜像网站获取。如果实在有困难，文末我也会给出自己上传的 Windows 平台 <code>Python</code> 安装包。</p>
-<p>我的 <code>Python</code> 环境，仅供参考：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> D:\work&gt; python <span class="literal">-V</span></span><br><span class="line">Python <span class="number">3.10</span>.<span class="number">6</span></span><br></pre></td></tr></table></figure>
-
-
+<p>获取并部署 StableSwarmUI：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1N0YWJpbGl0eS1BSS9TdGFibGVTd2FybVVJL3RhZ3M=">StableSwarmUI<i class="fa fa-external-link-alt"></i></span> ，彼时最新版本为 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1N0YWJpbGl0eS1BSS9TdGFibGVTd2FybVVJL3JlbGVhc2VzL3RhZy8wLjYuNC1CZXRh">StableSwarmUI Release 0.6.4-Beta<i class="fa fa-external-link-alt"></i></span>。你需要 <span class="exturl" data-url="aHR0cHM6Ly93d3cucHl0aG9uLm9yZy8=">Python<i class="fa fa-external-link-alt"></i></span> 环境，如果你访问 Python 官网有困难，可以从 <span class="exturl" data-url="aHR0cHM6Ly9weXRob24ucDJocC5jb20v">Python中文网<i class="fa fa-external-link-alt"></i></span> 获取资源。当然也可以从国内各大开源软件镜像网站获取。如果实在有困难，文末我也会给出自己上传的 Windows 平台 Python 安装包。</p>
+<p>我的 Python 环境，仅供参考：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS D:\work&gt; python -V</span><br><span class="line">Python 3.10.6</span><br></pre></td></tr></table></figure>
 
 <p>关于 zip 压缩文件，如果你没有安装图形解压工具  <span class="exturl" data-url="aHR0cHM6Ly93d3cuNy16aXAub3JnLw==">7-Zip<i class="fa fa-external-link-alt"></i></span> ，也没有安装 <span class="exturl" data-url="aHR0cHM6Ly93d3cuMzYwdG90YWxzZWN1cml0eS5jb20vemgtY24vMzYwemlwLw==">360zip 国际版<i class="fa fa-external-link-alt"></i></span>，可以尝试借助 Windows11 自带的 <span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLmFyY2hpdmUvZXhwYW5kLWFyY2hpdmU/dmlldz1wb3dlcnNoZWxsLTcuNA==">expand-archive<i class="fa fa-external-link-alt"></i></span> 命令解压工具。</p>
-<p>Windows 平台打开 <code>powershell</code> 使用 <strong><span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLmFyY2hpdmUvZXhwYW5kLWFyY2hpdmU/dmlldz1wb3dlcnNoZWxsLTcuNA==">expand-archive<i class="fa fa-external-link-alt"></i></span></strong> 命令解压 <code>StableSwarmUI-0.6.4-Beta</code>：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Expand-Archive</span> .\StableSwarmUI<span class="literal">-0</span>.<span class="number">6.4</span><span class="literal">-Beta</span>.zip <span class="literal">-DestinationPath</span> E:\AI\</span><br></pre></td></tr></table></figure>
-
-
+<p>Windows 平台打开 <code>powershell</code> 使用 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/powershell/module/microsoft.powershell.archive/expand-archive?view=powershell-7.4"><strong>expand-archive</strong></a> 命令解压 <code>StableSwarmUI-0.6.4-Beta</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expand-Archive .\StableSwarmUI-0.6.4-Beta.zip -DestinationPath E:\AI\</span><br></pre></td></tr></table></figure>
 
 <p>进入 <code>StableSwarmUI</code> 根目录：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> E:\AI\StableSwarmUI<span class="literal">-0</span>.<span class="number">6.4</span><span class="literal">-Beta</span>\</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd E:\AI\StableSwarmUI-0.6.4-Beta\</span><br></pre></td></tr></table></figure>
 
-
-
-<p>让我们一起愉快的开启 <code>StableSwarmUI</code>  体验之旅吧，在这之前，再次友情提醒安装好 <code>Python</code> 环境哟。</p>
+<p>让我们一起愉快的开启 StableSwarmUI  体验之旅吧，在这之前，再次友情提醒安装好 <code>Python</code> 环境哟。</p>
 <span id="more"></span>
 
 
 
-<h2 id="StableSwarmUI-install-经验版"><a href="#StableSwarmUI-install-经验版" class="headerlink" title="StableSwarmUI install 经验版"></a>StableSwarmUI install 经验版</h2><p>由于网络原因，国内获取 <code>ComfyUI</code> 以及 <code>SD_Xl_base_1.0</code> 模型可能非常缓慢。</p>
+<h2 id="StableSwarmUI-install-经验版"><a href="#StableSwarmUI-install-经验版" class="headerlink" title="StableSwarmUI install 经验版"></a>StableSwarmUI install 经验版</h2><p>引导安装默认选择 comfyUI （local）立刻安装到本地 。</p>
+<p><strong>对于有经验的用户，此处可以选择跳过安装 ComfyUI 步骤，后期手动导入</strong>。</p>
+<p>勾选选项：None&#x2F;Custom&#x2F;Choose Later</p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-f89e63f7658ea53becd35bcd561196ac_1440w.png?source=d16d100b" alt="img"></p>
+<p><img data-src="https://picx.zhimg.com/80/v2-a64b971c6eb7c354c2a95ceddb8952b1_1440w.png?source=d16d100b" alt="img"></p>
+<p>由于网络原因，国内获取 <code>ComfyUI</code> 以及 <code>SD_Xl_base_1.0</code> 模型可能非常缓慢。</p>
 <p>想要丝滑获取，需要魔法或者科学上网。</p>
 <p>如果没有条件，也有方法，可以从国内开源镜像站或者大模型社区获取资源。</p>
 <p>以上方法尝试完后，做如下调整。</p>
 <ol>
-<li>必备环境：<code>Python</code>， <code>Git</code> ，  <code>dotnet</code> 。</li>
-<li>获取 <code>StableSwarmUI </code>。</li>
+<li>必备环境：<code>Python</code>，<code>Git</code> ，<code>dotnet</code> 。</li>
+<li>获取 <code>StableSwarmUI</code>。</li>
 <li>运行  <code>.\launch-windows.bat</code> 脚本进入引导安装（注：一共 7 步）。</li>
 <li>跳过安装 <code>ComfyUI</code> 步骤，可以后期手动导入。</li>
 <li>跳过安装模型步骤，可以后期手动导入。</li>
-<li><strong>配置后端</strong> <code>ComfyUI</code>（<strong>划重点</strong>），<code>cd .\StableSwarmUI-0.6.4-Beta\StableSwarmUI\dlbackend</code> ，<code>mkdir comfy</code> ，<code>cd comfy</code>，引入  <code>ComfyUI</code>。</li>
+<li><strong>配置后端</strong> ComfyUI（<strong>划重点</strong>），<code>cd .\StableSwarmUI-0.6.4-Beta\StableSwarmUI\dlbackend</code> ，<code>mkdir comfy</code> ，<code>cd comfy</code>，引入  <code>ComfyUI</code>。</li>
 <li><strong>导入模型</strong>（<strong>划重点</strong>）。</li>
 <li>下载并导入模型，手动放入 <code>.\StableSwarmUI-0.6.4-Beta\Models\Stable-Diffusion\OfficialStableDiffusion</code> 路径下。 </li>
-<li>测试访问是否正常，<code>http://localhost:7801</code>，<code>http://localhost:7821</code>。</li>
+<li>测试访问是否正常，<span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo3ODAx77yMaHR0cDovL2xvY2FsaG9zdDo3ODIx44CC">http://localhost:7801，http://localhost:7821。<i class="fa fa-external-link-alt"></i></span></li>
 </ol>
-<h3 id="StableSwarmUI-配置后端"><a href="#StableSwarmUI-配置后端" class="headerlink" title="StableSwarmUI 配置后端"></a>StableSwarmUI 配置后端</h3><p><strong>着重介绍配置后端</strong> <code>ComfyUI</code>。</p>
-<p>可以使用解压缩工具，也可以使用命令形式解压 <code>ComfyUI_windows_portable_nvidia.7z</code>。值得注意的是，Windows11 原生不支持直接使用命令解压缩 7z 文件，需要额外下载 <span class="exturl" data-url="aHR0cHM6Ly93d3cuNy16aXAub3JnLw==">7-Zip<i class="fa fa-external-link-alt"></i></span> 并配置环境变量以及别名，如何配置，这里不做赘述。有些命令我使用了别名，可以参考 Windows 中的兼容性别名 <span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvc2NyaXB0aW5nL2xlYXJuL3NoZWxsL3VzaW5nLWFsaWFzZXM/dmlldz1wb3dlcnNoZWxsLTcuNA==">使用别名 - PowerShell<i class="fa fa-external-link-alt"></i></span>  说明，比如 <code>cp，copy，Copy-Item</code>。</p>
+<p>正常配置完成，导入 SDXL 模型。图像配置为 1，种子配置为 1。</p>
+<p>设置题词“a photo of a cat”，点击生成。</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-fe870bba967d6bde945e2ed13b611223_1440w.png" alt="img"></p>
+<p>访问 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo3ODIx77yM5a6e6ZmF5LiK5piv6K6/6Zeu5a+86Iiq5qCP5Yqf6IO9KiroiJLpgILlt6XkvZzmtYHnqIvvvIwqKuWmguS4i+Wbvu+8mg==">http://localhost:7821，实际上是访问导航栏功能**舒适工作流程，**如下图：<i class="fa fa-external-link-alt"></i></span></p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-346c30cbdfb6b8f326cec91861a946e5_1440w.png" alt="img"></p>
+<p>值得注意的是，新版本 <code>comfyUI</code> 设置界面有大变化，比较友好：</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-a0ed4238071128be15f2b4080e1f7bb6_1440w.png" alt="img"></p>
+<h3 id="StableSwarmUI-配置后端"><a href="#StableSwarmUI-配置后端" class="headerlink" title="StableSwarmUI 配置后端"></a>StableSwarmUI 配置后端</h3><p><img data-src="https://pic1.zhimg.com/80/v2-077e1f3fedbb58aa5b4cf5b3e8b7389e_1440w.png?source=d16d100b" alt="img"></p>
+<p><strong>着重介绍配置后端</strong> ComfyUI。</p>
+<p>可以使用解压缩工具，也可以使用命令形式解压 <code>ComfyUI_windows_portable_nvidia.7z</code>。值得注意的是，Windows11 原生不支持直接使用命令解压缩 7z 文件，需要额外下载 <span class="exturl" data-url="aHR0cHM6Ly93d3cuNy16aXAub3JnLw==">7-Zip<i class="fa fa-external-link-alt"></i></span> 并配置环境变量以及别名，如何配置，这里不做赘述。有些命令我使用了别名，可以参考 Windows 中的兼容性别名 <span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvc2NyaXB0aW5nL2xlYXJuL3NoZWxsL3VzaW5nLWFsaWFzZXM/dmlldz1wb3dlcnNoZWxsLTcuNA==">使用别名 - PowerShell<i class="fa fa-external-link-alt"></i></span>  说明，比如 <code>cp</code>，<code>copy</code>，<code>Copy-Item</code>。</p>
 <p><strong>第一步</strong>，获取 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NvbWZ5YW5vbnltb3VzL0NvbWZ5VUkvdGFncw==">ComfyUI<i class="fa fa-external-link-alt"></i></span>，当前最新版为 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NvbWZ5YW5vbnltb3VzL0NvbWZ5VUkvcmVsZWFzZXMvZG93bmxvYWQvdjAuMS4yL0NvbWZ5VUlfd2luZG93c19wb3J0YWJsZV9udmlkaWEuN3o=">ComfyUI-0.1.2<i class="fa fa-external-link-alt"></i></span>，引入<code>ComfyUI</code>。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> .\StableSwarmUI<span class="literal">-0</span>.<span class="number">6.4</span><span class="literal">-Beta</span>\StableSwarmUI\dlbackend</span><br><span class="line">mkdir comfy</span><br><span class="line"><span class="built_in">cd</span> comfy</span><br><span class="line"><span class="built_in">cp</span> <span class="literal">-Path</span> <span class="string">&quot;.\ComfyUI_windows_portable_nvidia.7z\ComfyUI_windows_portable\*&quot;</span>  <span class="literal">-Destination</span> <span class="string">&quot;.\StableSwarmUI-0.6.4-Beta\StableSwarmUI\dlbackend\comfy&quot;</span> <span class="literal">-Recurse</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd .\StableSwarmUI-0.6.4-Beta\StableSwarmUI\dlbackend</span><br><span class="line">mkdir comfy</span><br><span class="line">cd comfy</span><br><span class="line">cp -Path &quot;.\ComfyUI_windows_portable_nvidia\ComfyUI_windows_portable\*&quot;  -Destination &quot;.\StableSwarmUI-0.6.4-Beta\StableSwarmUI\dlbackend\comfy&quot; -Recurse</span><br></pre></td></tr></table></figure>
 
-<p>可以使用 <span class="exturl" data-url="aHR0cHM6Ly93d3cuNy16aXAub3JnLw==">7-Zip<i class="fa fa-external-link-alt"></i></span> 解压 <code>ComfyUI_windows_portable_nvidia.7z</code>。</p>
-<p>切换到 <code>cd .\ComfyUI_windows_portable_nvidia.7z\ComfyUI_windows_portable</code> 目录，复制当前目录所有文件 <code>Ctrl + a，Ctrl + c</code> ，粘贴 <code>Ctrl + v</code> 到 <code>.\StableSwarmUI-0.6.4-Beta\StableSwarmUI\dlbackend\comfy</code> 目录下。</p>
+<p>可以使用 <span class="exturl" data-url="aHR0cHM6Ly93d3cuNy16aXAub3JnLw==">7-Zip<i class="fa fa-external-link-alt"></i></span> 解压 ComfyUI_windows_portable_nvidia.7z。</p>
+<p>切换到 <code>cd .\ComfyUI_windows_portable_nvidia.7z\ComfyUI_windows_portable</code> 目录，复制当前目录所有文件 <code>Ctrl + a</code>，<code>Ctrl + c</code> ，粘贴 <code>Ctrl + v</code> 到 <code>.\StableSwarmUI-0.6.4-Beta\StableSwarmUI\dlbackend\comfy</code> 目录下。</p>
 <p><strong>第二步</strong>，定位到页面顶部导航栏<strong>服务器</strong>模块，点击<strong>后端</strong>。</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-0f9f5a30b26260b9d54613450e18e6cc_1440w.png" alt="img"></p>
 <p>新增配置后端 <code>running backend: (0): ComfyUI Self-Starting</code></p>
 <p>参考提示信息，填写启动脚本：</p>
-<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dlbackend/comfy/ComfyUI/main.py</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dlbackend/comfy/ComfyUI/main.py</span><br></pre></td></tr></table></figure>
 
 <p>填写额外参数（可以不加，非必传），示例加入参数，会额外在独立窗口访问 ComfyUI：</p>
-<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--windows-standalone-build</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--windows-standalone-build</span><br></pre></td></tr></table></figure>
 
+<p>配置完成，<strong>状态处于 enable backed</strong>，点击 <code>save</code>（保存），<code>Restart</code>（重启当前后端服务）。</p>
+<p>再次启动 .\launch-windows.bat，第一次安装（install）ComfyUI 需要一些时间加载，这是正常现象。</p>
+<p><strong>导入模型文件。</strong></p>
+<p><strong>如果本地没有模型数据</strong>，需要获取别人培养的模型数据或者基本模型，复制到 StableSwarmUI 指定的 <code>\StableSwarmUI-0.6.4-Beta\Models\Stable-Diffusion\OfficialStableDiffusion</code> 目录。</p>
+<p>Windows powershell 命令形式复制模型到指定目录： </p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> <span class="literal">-Path</span> <span class="string">&quot;.\sd_xl_base_1.0.safetensors&quot;</span>  <span class="literal">-Destination</span> </span><br><span class="line"><span class="string">&quot;.\StableSwarmUI-0.6.4-Beta\StableSwarmUI\Models\Stable-Diffusion\OfficialStableDiffusion&quot;</span> <span class="literal">-Recurse</span></span><br></pre></td></tr></table></figure>
 
-
-<p>配置完成，<strong>状态处于 enable backed</strong>，点击 save（保存），Restart（重启当前后端服务）。</p>
-<p>再次启动 <code>.\launch-windows.bat</code>，第一次安装（install）<code>ComfyUI</code> 需要一些时间加载，这是正常现象。</p>
+<p>导入模型成功，在首页底部导航栏选择“<strong>模型</strong>”，可以查询到 SDXL。</p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-fe870bba967d6bde945e2ed13b611223_1440w.png" alt="img"></p>
 <h3 id="StableSwarmUI-快捷安装脚本"><a href="#StableSwarmUI-快捷安装脚本" class="headerlink" title="StableSwarmUI 快捷安装脚本"></a>StableSwarmUI 快捷安装脚本</h3><p><strong>友情提醒</strong>：Windows 平台还可以使用快捷安装脚本。实际上是将多个必备工具安装步骤融合到一个脚本里面。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\<span class="built_in">install-windows</span>.bat</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\install-windows.bat</span><br></pre></td></tr></table></figure>
 
 <p>脚本 <code>.\install-windows.bat</code> 会执行哪些步骤？值得注意的有三个步骤，获取 <code>DotNet.SDK.8</code>、<code>Git</code> 以及  <code>StableSwarmUI</code>。</p>
-<p>获取并安装最新的  <code>DotNet.SDK.8</code>：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winget install Microsoft.DotNet.SDK.<span class="number">8</span> <span class="literal">--accept-source-agreements</span> <span class="literal">--accept-package-agreements</span></span><br></pre></td></tr></table></figure>
+<p>获取并安装最新的  DotNet.SDK.8：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winget install Microsoft.DotNet.SDK.8 --accept-source-agreements --accept-package-agreements</span><br></pre></td></tr></table></figure>
 
-<p>如果本地已经安装过 <code>DotNet.SDK.8</code> 工具，你可以尝试跳过（屏蔽掉）脚本中的 <code>DotNet.SDK.8</code> 安装步骤。</p>
-<p>获取并安装 <code>Git</code>：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winget install <span class="literal">--id</span> Git.Git <span class="literal">-e</span> <span class="literal">--source</span> winget <span class="literal">--accept-source-agreements</span> <span class="literal">--accept-package-agreements</span></span><br></pre></td></tr></table></figure>
+<p>如果本地已经安装过 <code>DotNet.SDK.8</code> 工具，你可以尝试跳过（屏蔽掉）脚本中的 DotNet.SDK.8 安装步骤。</p>
+<p>获取并安装 Git：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winget install --id Git.Git -e --source winget --accept-source-agreements --accept-package-agreements</span><br></pre></td></tr></table></figure>
 
-<p>如果有一定的开发经验，本地已经安装过 <code>Git</code> 工具，你可以尝试跳过（屏蔽掉）脚本中的 <code>Git</code> 安装步骤。</p>
-<p>获取 <code>StableSwarmUI</code>：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/Stability<span class="literal">-AI</span>/StableSwarmUI</span><br></pre></td></tr></table></figure>
+<p>如果有一定的开发经验，本地已经安装过 Git 工具，你可以尝试跳过（屏蔽掉）脚本中的 Git 安装步骤。</p>
+<p>获取 StableSwarmUI：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/Stability-AI/StableSwarmUI</span><br></pre></td></tr></table></figure>
 
-
-
-<p>脚本 <code>.\install-windows.bat</code>原始内容：</p>
-<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /d &quot;%~dp0&quot;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">exist</span> StableSwarmUI (</span><br><span class="line">    <span class="built_in">echo</span> StableSwarmUI is already installed <span class="keyword">in</span> this folder. <span class="keyword">If</span> this is incorrect, delete the &#x27;StableSwarmUI&#x27; folder and try again.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">exist</span> StableSwarmUI.sln (</span><br><span class="line">    <span class="built_in">echo</span> StableSwarmUI is already installed <span class="keyword">in</span> this folder. <span class="keyword">If</span> this is incorrect, delete &#x27;StableSwarmUI.sln&#x27; and try again.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">winget install Microsoft.DotNet.SDK.<span class="number">8</span> --accept-source-agreements --accept-package-agreements</span><br><span class="line">winget install --id Git.Git -e --source winget --accept-source-agreements --accept-package-agreements</span><br><span class="line"></span><br><span class="line">git clone https://github.com/Stability-AI/StableSwarmUI</span><br><span class="line"><span class="built_in">cd</span> StableSwarmUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">call</span> .\make-shortcut.bat</span><br><span class="line"><span class="keyword">call</span> .\launch-windows.bat --launch_mode webinstall</span><br><span class="line"></span><br><span class="line"><span class="keyword">IF</span> <span class="variable">%ERRORLEVEL%</span> <span class="keyword">NEQ</span> <span class="number">0</span> ( <span class="built_in">pause</span> )</span><br></pre></td></tr></table></figure>
+<p>脚本 <code>.\install-windows.bat</code> 原始内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line"></span><br><span class="line">cd /d &quot;%~dp0&quot;</span><br><span class="line"></span><br><span class="line">if exist StableSwarmUI (</span><br><span class="line">    echo StableSwarmUI is already installed in this folder. If this is incorrect, delete the &#x27;StableSwarmUI&#x27; folder and try again.</span><br><span class="line">    pause</span><br><span class="line">    exit</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">if exist StableSwarmUI.sln (</span><br><span class="line">    echo StableSwarmUI is already installed in this folder. If this is incorrect, delete &#x27;StableSwarmUI.sln&#x27; and try again.</span><br><span class="line">    pause</span><br><span class="line">    exit</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">winget install Microsoft.DotNet.SDK.8 --accept-source-agreements --accept-package-agreements</span><br><span class="line">winget install --id Git.Git -e --source winget --accept-source-agreements --accept-package-agreements</span><br><span class="line"></span><br><span class="line">git clone https://github.com/Stability-AI/StableSwarmUI</span><br><span class="line">cd StableSwarmUI</span><br><span class="line"></span><br><span class="line">call .\make-shortcut.bat</span><br><span class="line">call .\launch-windows.bat --launch_mode webinstall</span><br><span class="line"></span><br><span class="line">IF %ERRORLEVEL% NEQ 0 ( pause )</span><br></pre></td></tr></table></figure>
 
 
 
@@ -414,25 +448,28 @@
 <p>大学新生开学季，怎么套路换电脑？新思路，老爸啊，你儿子想学 Ai，需要高配一丢丢的 N 卡作为生产力。<strong>千万别说是我教的</strong>，问就是生产力需要。 </p>
 <p>有点跑题了，继续 StableSwarmUI 介绍， <strong>目前处于 Beta 版本</strong></p>
 <blockquote>
-<p>A Modular Stable Diffusion Web-User-Interface, with an emphasis on making powertools easily accessible, high performance, and extensibility.</p>
+<p> A Modular Stable Diffusion Web-User-Interface, with an emphasis on making powertools easily accessible, high performance, and extensibility.</p>
 </blockquote>
 <p>安装与启动，Windows 平台执行 <code>launch-windows.bat</code> 脚本，安装过程可能比较缓慢，也许你需要科学上网。</p>
 <p>Windows 平台执行 <code>launch-windows.bat</code> 脚本，调用 <code>dotnet</code> 过程。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> E:\AI\StableSwarmUI<span class="literal">-0</span>.<span class="number">6.4</span><span class="literal">-Beta</span>&gt; .\launch<span class="literal">-windows</span>.bat</span><br><span class="line">error: 指定的源已添加到可用程序包源的列表中。请提供唯一的源。</span><br><span class="line"></span><br><span class="line">Usage: dotnet nuget add source [<span class="type">arguments</span>] [<span class="type">options</span>]</span><br><span class="line"></span><br><span class="line">Arguments:</span><br><span class="line">  PackageSourcePath  包源的路径。</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  <span class="literal">-n</span>|<span class="literal">--name</span>                       源的名称。</span><br><span class="line">  <span class="literal">-u</span>|<span class="literal">--username</span>                   连接到已验证源时要使用的用户名。</span><br><span class="line">  <span class="literal">-p</span>|<span class="literal">--password</span>                   连接到已验证源时要使用的密码。</span><br><span class="line">  <span class="literal">--store-password-in-clear-text</span>  通过禁用密码加密来启用存储可移植包源凭据。</span><br><span class="line">  <span class="literal">--valid-authentication-types</span>    此源的有效身份验证类型的列表(用逗号分隔)。如果服务器公布 NTLM 或 Negotiate，并且你的凭据必 须使用基本机制发送(例如将 PAT 与本地 Azure DevOps Server 一起使用时)，请将此项设置为 basic。其他有效值包括 negotiate、kerberos、ntlm 和 digest，但这些值很可能没有用。</span><br><span class="line">  <span class="literal">--protocol-version</span>              The NuGet server protocol version to be used. Currently supported versions are <span class="number">2</span> and <span class="number">3</span>. See https://learn.microsoft.com/nuget/api/overview <span class="keyword">for</span> information about the version <span class="number">3</span> protocol. Defaults to <span class="number">2</span> <span class="keyword">if</span> not specified.</span><br><span class="line">  <span class="literal">--configfile</span>                    NuGet 配置文件。如果指定，将仅使用此文件中的设置。如果未指定，则将使用当前目录中的配置文件 的层次结构。有关详细信息，请参阅 https://docs.microsoft.com/nuget/consume<span class="literal">-packages</span>/configuring<span class="literal">-nuget-behavior</span>。</span><br><span class="line">  <span class="literal">-h</span>|<span class="literal">--help</span>                       Show help information</span><br><span class="line"></span><br><span class="line">适用于 .NET MSBuild 版本 <span class="number">17.9</span>.<span class="number">6</span>+a4ecab324</span><br><span class="line">  正在确定要还原的项目…</span><br><span class="line">  已还原 E:\AI\StableSwarmUI<span class="literal">-0</span>.<span class="number">6.4</span><span class="literal">-Beta</span>\src\StableSwarmUI.csproj (用时 <span class="number">2.75</span> sec)。</span><br><span class="line">  StableSwarmUI -&gt; E:\AI\StableSwarmUI<span class="literal">-0</span>.<span class="number">6.4</span><span class="literal">-Beta</span>\src\bin\live_release\StableSwarmUI.dll</span><br><span class="line"></span><br><span class="line">已成功生成。</span><br><span class="line">    <span class="number">0</span> 个警告</span><br><span class="line">    <span class="number">0</span> 个错误</span><br><span class="line"></span><br><span class="line">已用时间 <span class="number">00</span>:<span class="number">00</span>:<span class="number">10.68</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">PS E:\AI\StableSwarmUI-0.6.4-Beta&gt; .\launch-windows.bat</span><br><span class="line">error: 指定的源已添加到可用程序包源的列表中。请提供唯一的源。</span><br><span class="line"></span><br><span class="line">Usage: dotnet nuget add source [arguments] [options]</span><br><span class="line"></span><br><span class="line">Arguments:</span><br><span class="line">  PackageSourcePath  包源的路径。</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -n|--name                       源的名称。</span><br><span class="line">  -u|--username                   连接到已验证源时要使用的用户名。</span><br><span class="line">  -p|--password                   连接到已验证源时要使用的密码。</span><br><span class="line">  --store-password-in-clear-text  通过禁用密码加密来启用存储可移植包源凭据。</span><br><span class="line">  --valid-authentication-types    此源的有效身份验证类型的列表(用逗号分隔)。如果服务器公布 NTLM 或 Negotiate，并且你的凭据必 须使用基本机制发送(例如将 PAT 与本地 Azure DevOps Server 一起使用时)，请将此项设置为 basic。其他有效值包括 negotiate、kerberos、ntlm 和 digest，但这些值很可能没有用。</span><br><span class="line">  --protocol-version              The NuGet server protocol version to be used. Currently supported versions are 2 and 3. See https://learn.microsoft.com/nuget/api/overview for information about the version 3 protocol. Defaults to 2 if not specified.</span><br><span class="line">  --configfile                    NuGet 配置文件。如果指定，将仅使用此文件中的设置。如果未指定，则将使用当前目录中的配置文件 的层次结构。有关详细信息，请参阅 https://docs.microsoft.com/nuget/consume-packages/configuring-nuget-behavior。</span><br><span class="line">  -h|--help                       Show help information</span><br><span class="line"></span><br><span class="line">适用于 .NET MSBuild 版本 17.9.6+a4ecab324</span><br><span class="line">  正在确定要还原的项目…</span><br><span class="line">  已还原 E:\AI\StableSwarmUI-0.6.4-Beta\src\StableSwarmUI.csproj (用时 2.75 sec)。</span><br><span class="line">  StableSwarmUI -&gt; E:\AI\StableSwarmUI-0.6.4-Beta\src\bin\live_release\StableSwarmUI.dll</span><br><span class="line"></span><br><span class="line">已成功生成。</span><br><span class="line">    0 个警告</span><br><span class="line">    0 个错误</span><br><span class="line"></span><br><span class="line">已用时间 00:00:10.68</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-<p><strong>初次安装</strong>，从官方渠道获取模型比较缓慢，优先访问 <code>https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors</code>，看到报错或者警告信息是正常状态。在国内无法访问进去，可以前往第三方网站或者社区，比如魔搭社区获取他人上传的模型数据。如果你获取 <code>ComfyUI</code> 缓慢，这是正常现象，优先访问 <code>https://github.com/comfyanonymous/ComfyUI</code>，建议使用 BT 工具或者国内大模型社区获取。</p>
+<p><strong>初次安装</strong>，从官方渠道获取模型比较缓慢，优先访问 <code>https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors</code>，看到报错或者警告信息是正常状态。在国内无法访问进去，可以前往第三方网站或者社区，比如魔搭社区获取他人上传的模型数据。如果你获取 ComfyUI 缓慢，这是正常现象，优先访问 <code>https://github.com/comfyanonymous/ComfyUI</code>，建议使用 BT 工具或者从国内大模型社区获取。</p>
 <h2 id="sd-xl-base-1-0-模型获取"><a href="#sd-xl-base-1-0-模型获取" class="headerlink" title="sd_xl_base_1.0 模型获取"></a>sd_xl_base_1.0 模型获取</h2><p><strong>魔搭社区，获取 sd_xl_base_1.0.safetensors</strong></p>
-<p>如果你使用 git 获取，默认你已经部署并配置好 <span class="exturl" data-url="aHR0cHM6Ly9naXQtc2NtLmNvbS8=">Git<i class="fa fa-external-link-alt"></i></span> 环境，可以直接获取完整模型训练仓库 <code>git clone https://www.modelscope.cn/AI-ModelScope/stable-diffusion-xl-base-1.0.git</code>。当然，你也可以点击文件 <span class="exturl" data-url="aHR0cHM6Ly93d3cubW9kZWxzY29wZS5jbi9tb2RlbHMvQUktTW9kZWxTY29wZS9zdGFibGUtZGlmZnVzaW9uLXhsLWJhc2UtMS4wL2ZpbGUvdmlldy9tYXN0ZXIvc2RfeGxfYmFzZV8xLjAuc2FmZXRlbnNvcnM=">sd_xl_base_1.0.safetensors<i class="fa fa-external-link-alt"></i></span>  直接下载。如果急需体验，个人推荐直接下载模型文件。完整模型仓库所占空间较大，存在版本库迭代，每个作者提交同步的内容有所不同。</p>
+<p>如果你使用 git 获取，默认你已经部署并配置好 <span class="exturl" data-url="aHR0cHM6Ly9naXQtc2NtLmNvbS8=">Git<i class="fa fa-external-link-alt"></i></span> 环境，可以直接获取完整模型训练仓库 <code>git clone https://www.modelscope.cn/AI-ModelScope/stable-diffusion-xl-base-1.0.git</code>。当然，你也可以点击文件 <span class="exturl" data-url="aHR0cHM6Ly93d3cubW9kZWxzY29wZS5jbi9tb2RlbHMvQUktTW9kZWxTY29wZS9zdGFibGUtZGlmZnVzaW9uLXhsLWJhc2UtMS4wL2ZpbGUvdmlldy9tYXN0ZXIvc2RfeGxfYmFzZV8xLjAuc2FmZXRlbnNvcnM=">sd_xl_base_1.0.safetensors<i class="fa fa-external-link-alt"></i></span>  直接下载。</p>
+<p>如果急需体验，个人推荐直接下载模型文件。完整模型仓库所占空间较大，存在版本库迭代，每个作者提交同步的内容有所不同。</p>
 <p><strong>如果本地没有模型数据</strong>，需要获取别人培养的模型数据，复制到 StableSwarmUI 指定的 <code>\StableSwarmUI-0.6.4-Beta\Models\Stable-Diffusion\OfficialStableDiffusion</code> 目录。</p>
-<p>传入模型数据后，进入 web UI 界面点击模型，刷新即可看到模型。个人建议，最好还是在服务器功能模块选择服务器信息功能，点击关闭服务（<code>Shutdown Server</code>），然后再次执行 <code>launch-windows.bat</code> 启动 web 应用程序。</p>
-<p>本地启动完成后，会自动跳转到默认设置浏览器，访问 <code>http://localhost:7801</code></p>
+<p>Windows powershell 命令形式复制模型到指定目录：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> <span class="literal">-Path</span> <span class="string">&quot;.\sd_xl_base_1.0.safetensors&quot;</span>  <span class="literal">-Destination</span> </span><br><span class="line"><span class="string">&quot;.\StableSwarmUI-0.6.4-Beta\StableSwarmUI\Models\Stable-Diffusion\OfficialStableDiffusion&quot;</span> <span class="literal">-Recurse</span></span><br></pre></td></tr></table></figure>
+
+<p>传入模型数据后，进入 web UI 界面点击模型，刷新即可看到模型。个人建议，最好还是在服务器功能模块选择服务器信息功能，点击关闭服务（Shutdown Server），然后再次执行 <code>launch-windows.bat</code> 启动 web 应用程序。</p>
+<p>本地启动完成后，会自动跳转到默认设置浏览器，访问 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo3ODAxLw==">http://localhost:7801<i class="fa fa-external-link-alt"></i></span></p>
 <p>首页展示画面，初体验使用了 <code>sd_xl_base_1.0.safetensors</code> 模型。</p>
 <p>使用 <code>sd_xl_base_1.0.safetensors</code> 模型生成一张猫咪图像：</p>
-<p><img data-src="https://s21.ax1x.com/2024/04/05/pFqixIJ.png" alt="pFqixIJ.png"></p>
+<p><img data-src="https://picx.zhimg.com/80/v2-93a00fc5884abbf2f380c4d2365d04f3_1440w.png?source=d16d100b" alt="img"></p>
+<p>ComfyUI windows 便携版，ComfyUI_0.1.2_windows_portable_nvidia：</p>
+<p>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMWF5S05CRG9nS0JRT25waHlMWnRhQmc/cHdkPTk5OTk=">https://pan.baidu.com/s/1ayKNBDogKBQOnphyLZtaBg?pwd=9999<i class="fa fa-external-link-alt"></i></span> </p>
+<p>提取码: 9999</p>
 <p>Windows 平台 Python 安装包（Python 2.7.17、Python 3.9.4、Python 3.10.6、Python 3.11.5）： </p>
 <p>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMXVOOGNlT25QVlQzR0FTWU1RU1hVdnc/cHdkPTg4ODg=">https://pan.baidu.com/s/1uN8ceOnPVT3GASYMQSXUvw?pwd=8888<i class="fa fa-external-link-alt"></i></span> </p>
 <p>提取码: 8888 </p>
@@ -477,7 +514,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E5%88%9D%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/" title="Windows平台StableSwarmUI-0.6.4-Beta install 经验版">https://blog.cnwangk.top/2024/08/25/Windows平台初体验StableSwarmUI-0-6-4-Beta经验版/</a>
+      <a href="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/" title="Windows平台StableSwarmUI-0.6.4-Beta install 经验版">https://blog.cnwangk.top/2024/08/25/Windows平台体验StableSwarmUI-0-6-4-Beta经验版/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -642,7 +679,7 @@
 
 
   <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E5%88%9D%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/"}</script>
   <script src="/js/third-party/quicklink.js"></script>
 <script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
 

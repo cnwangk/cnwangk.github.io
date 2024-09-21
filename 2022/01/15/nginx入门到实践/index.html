@@ -16,12 +16,12 @@
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="nginx1.21.6测试与使用，nginx下载与安装。nginx作为高性能web服务器配置详解，比较重要的一个参数epoll。nginx静态资源服务器，nginx配置反向代理，nginx配置负载均衡。测试nginx反向代理到Apache（httpd） 和Tomcat。">
 <meta property="og:type" content="blog">
@@ -93,7 +93,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-solid fa-user-group fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-solid fa-face-smile fa-fw"></i>文娱</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-solid fa-user-group fa-fw"></i>links</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-solid fa-face-smile fa-fw"></i>happy</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -309,7 +309,7 @@
 
 <p><strong>1.3、查看nginx服务</strong></p>
 <p>nginx.conf文件中的参数：worker_processes 设置参数值为1，限制只能运行一个工作进程。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看nginx资源占用相关信息</span></span><br><span class="line">d:\work\nginx-1.21.6&gt;tasklist /fi <span class="string">&quot;imagename eq nginx.exe&quot;</span></span><br><span class="line"></span><br><span class="line">映像名称                       PID 会话名              会话<span class="comment">#       内存使用</span></span><br><span class="line">========================= ======== ================ =========== ============</span><br><span class="line">nginx.exe                     4108 Console                    6     11,232 K</span><br><span class="line">nginx.exe                     4144 Console                    6     11,552 K</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看nginx资源占用相关信息</span></span><br><span class="line">d:\work\nginx-1.21.6&gt;tasklist /fi <span class="string">&quot;imagename eq nginx.exe&quot;</span></span><br><span class="line"></span><br><span class="line">映像名称                       PID 会话名              会话#       内存使用</span><br><span class="line">========================= ======== ================ =========== ============</span><br><span class="line">nginx.exe                     4108 Console                    6     11,232 K</span><br><span class="line">nginx.exe                     4144 Console                    6     11,552 K</span><br></pre></td></tr></table></figure>
 
 <p><strong>1.4、配置日志以及默认首页</strong></p>
 <p>在nginx解压目录中nginx-1.21.6\conf目录下打开nginx.conf配置文件，可以根据需求进行配置。此步骤下不做详细讲解，在接下来的配置说明进行详细讲解。</p>
@@ -375,7 +375,7 @@
 <p>Linux下安装nginx，官网给出了便捷方式yum源、apt源等等：<span class="exturl" data-url="aHR0cDovL25naW54Lm9yZy9lbi9saW51eF9wYWNrYWdlcy5odG1s">http://nginx.org/en/linux_packages.html<i class="fa fa-external-link-alt"></i></span></p>
 <p>个人演示使用下载的源码包。Redhat7系列以及Centos7系列安装nginx-1.21.6，目前最新版本。可以使用nginx官方提供的yum源进行安装，或者使用wget命令进行下载安装。个人给出使用tar包（源码包）安装方式，下载到本机然后上传至虚拟机搭建的Linux环境Centos7.5服务器上。</p>
 <h4 id="2-1、安装依赖环境"><a href="#2-1、安装依赖环境" class="headerlink" title="2.1、安装依赖环境"></a>2.1、安装依赖环境</h4><p>安装需要的依赖环境，记住普通用户需要使用sudo提权，root用户则不需要。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># yum install -y gcc pcre pcre-devel openssl openssl-devel gd gd-devel zlib-devel yum-utils</span></span><br><span class="line">[nginx@localhost ~]$ sudo yum install -y gcc pcre pcre-devel openssl openssl-devel gd gd-devel zlib-devel yum-utils</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install -y gcc pcre pcre-devel openssl openssl-devel gd gd-devel zlib-devel yum-utils</span><br><span class="line">[nginx@localhost ~]$ <span class="built_in">sudo</span> yum install -y gcc pcre pcre-devel openssl openssl-devel gd gd-devel zlib-devel yum-utils</span><br></pre></td></tr></table></figure>
 
 <h4 id="2-2、解压安装nginx"><a href="#2-2、解压安装nginx" class="headerlink" title="2.2、解压安装nginx"></a>2.2、解压安装nginx</h4><p>配置可以参考nginx的官方文档，很详细。</p>
 <p><span class="exturl" data-url="aHR0cDovL25naW54Lm9yZy9lbi9kb2NzL2NvbmZpZ3VyZS5odG1s">http://nginx.org/en/docs/configure.html<i class="fa fa-external-link-alt"></i></span></p>
@@ -387,7 +387,7 @@
 <li>参数-v：nginx -v 命令查看nginx中间件的版本；</li>
 <li>参数-V：nginx -V命令查看nginx版本以及系统使用GCC版本、OpenSSL版本和配置的–prefix参数。</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[nginx@localhost ~]$ sudo /usr/local/nginx/sbin/nginx -v</span><br><span class="line">nginx version: nginx/1.21.6</span><br><span class="line">[nginx@localhost ~]$ sudo /usr/local/nginx/sbin/nginx -V</span><br><span class="line">nginx version: nginx/1.21.6</span><br><span class="line">built by gcc 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC) </span><br><span class="line">built with OpenSSL 1.0.2k-fips  26 Jan 2017</span><br><span class="line">TLS SNI support enabled</span><br><span class="line">configure arguments: --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_gzip_static_module --with-http_ssl_module</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[nginx@localhost ~]$ <span class="built_in">sudo</span> /usr/local/nginx/sbin/nginx -v</span><br><span class="line">nginx version: nginx/1.21.6</span><br><span class="line">[nginx@localhost ~]$ <span class="built_in">sudo</span> /usr/local/nginx/sbin/nginx -V</span><br><span class="line">nginx version: nginx/1.21.6</span><br><span class="line">built by gcc 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC) </span><br><span class="line">built with OpenSSL 1.0.2k-fips  26 Jan 2017</span><br><span class="line">TLS SNI support enabled</span><br><span class="line">configure arguments: --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_gzip_static_module --with-http_ssl_module</span><br></pre></td></tr></table></figure>
 
 
 
@@ -397,24 +397,24 @@
 <li>#：带有#前缀符号则是超级管理员用户；</li>
 <li>$：带有$前缀符号则是普通用户。</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#新建用户,使用root用户身份权限新建</span></span><br><span class="line">[root@localhost ~]<span class="comment"># useradd nginx #新建nginx用户 </span></span><br><span class="line">[root@localhost ~]<span class="comment"># passwd nginx  #修改密码</span></span><br><span class="line"><span class="comment">#仅供参考，应该以实际应用场景为准。</span></span><br><span class="line">[root@localhost ~]<span class="comment"># chown -R root:nginx /usr/local/nginx/</span></span><br><span class="line">[root@localhost nginx]<span class="comment"># ls /usr/local/nginx/</span></span><br><span class="line">client_body_temp    conf    fastcgi_temp    html    logs    </span><br><span class="line">proxy_temp  sbin    scgi_temp   uwsgi_temp</span><br><span class="line"><span class="comment">#安装nginx后的目录</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ls /usr/local/nginx/</span></span><br><span class="line">conf  html  logs  sbin</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#新建用户,使用root用户身份权限新建</span></span><br><span class="line">[root@localhost ~]# useradd nginx <span class="comment">#新建nginx用户 </span></span><br><span class="line">[root@localhost ~]# passwd nginx  <span class="comment">#修改密码</span></span><br><span class="line"><span class="comment">#仅供参考，应该以实际应用场景为准。</span></span><br><span class="line">[root@localhost ~]# <span class="built_in">chown</span> -R root:nginx /usr/local/nginx/</span><br><span class="line">[root@localhost nginx]# <span class="built_in">ls</span> /usr/local/nginx/</span><br><span class="line">client_body_temp    conf    fastcgi_temp    html    logs    </span><br><span class="line">proxy_temp  sbin    scgi_temp   uwsgi_temp</span><br><span class="line"><span class="comment">#安装nginx后的目录</span></span><br><span class="line">[root@localhost ~]# <span class="built_in">ls</span> /usr/local/nginx/</span><br><span class="line">conf  html  logs  sbin</span><br></pre></td></tr></table></figure>
 
 <p><strong>授予普通用户nginx管理的权限</strong>。使用<code>visudo</code>或者<code>vim /etc/sudoers</code>，在文件末尾加上<code>nginx ALL=(ALL) /usr/local/nginx/sbin/nginx</code>。作用是给nginx用户使用nginx脚本命令的权限（使用sudo）。给用户的权限范围越精确，用户权限则越小。<strong>在你赋予权限的时候，理应思考是否合理</strong>。开个小玩笑，一不小心将服务器拱手让人了，哈哈。我经常在说的一句话，你能够将Linux的权限玩的明明白白，就已经领先很大一部分人。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># visudo</span></span><br><span class="line"><span class="comment"># vim /etc/sudoers</span></span><br><span class="line">nginx ALL=(ALL) /usr/local/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
 
 <p><strong>启动nginx服务</strong>。root身份则无需提权，以绝对路径形式启动服务。普通用户，则需要使用sudo权限提权管理nginx服务。sudo的用法，可以使用man帮助命令查看。简单的提一下，使用命令visudo添加普通用户，或者编辑&#x2F;etc&#x2F;sudoers文件加入普通用户可执行的命令。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#root身份启动nginx服务</span></span><br><span class="line">[root@localhost ~]<span class="comment"># /usr/local/nginx/sbin/nginx </span></span><br><span class="line"><span class="comment">#普通用户身份启动nginx服务</span></span><br><span class="line">[nginx@localhost ~]$ sudo /usr/local/nginx/sbin/nginx </span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#root身份启动nginx服务</span></span><br><span class="line">[root@localhost ~]# /usr/local/nginx/sbin/nginx </span><br><span class="line"><span class="comment">#普通用户身份启动nginx服务</span></span><br><span class="line">[nginx@localhost ~]$ <span class="built_in">sudo</span> /usr/local/nginx/sbin/nginx </span><br></pre></td></tr></table></figure>
 
 <p><strong>优雅的关闭nginx服务</strong>，实际上找的是nginx.pid文件中存储的pid号。可以通过cat查看&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs&#x2F;nginx.pid。在nginx.conf配置文件中去找到相应的设置，将#注释去掉：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pid        logs/nginx.pid;</span><br><span class="line">[root@localhost ~]<span class="comment"># cat /usr/local/nginx/logs/nginx.pid</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pid        logs/nginx.pid;</span><br><span class="line">[root@localhost ~]# <span class="built_in">cat</span> /usr/local/nginx/logs/nginx.pid</span><br></pre></td></tr></table></figure>
 
 
 
 <p><strong>优雅的关闭nginx服务，nginx -s quit</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># /usr/local/nginx/sbin/nginx -s quit</span></span><br><span class="line">[nginx@localhost ~]$ sudo /usr/local/nginx/sbin/nginx -s quit</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# /usr/local/nginx/sbin/nginx -s quit</span><br><span class="line">[nginx@localhost ~]$ <span class="built_in">sudo</span> /usr/local/nginx/sbin/nginx -s quit</span><br></pre></td></tr></table></figure>
 
 <p><strong>重载nginx服务，nginx -s reload</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># /usr/local/nginx/sbin/nginx -s reload</span></span><br><span class="line">[nginx@localhost ~]$ sudo /usr/local/nginx/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# /usr/local/nginx/sbin/nginx -s reload</span><br><span class="line">[nginx@localhost ~]$ <span class="built_in">sudo</span> /usr/local/nginx/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
 
 
 
@@ -424,7 +424,7 @@
 
 
 <h4 id="2-5、验证nginx服务"><a href="#2-5、验证nginx服务" class="headerlink" title="2.5、验证nginx服务"></a>2.5、验证nginx服务</h4><p>使用netstat命令查看监听到的nginx服务，默认使用的是80端口，一般80是不对外开放的。为了演示，使用firewalld命令开启80端口，然后使用<code>firewall-cmd --reload</code>命令重载防火墙。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># netstat -tlunp | grep nginx</span></span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      7355/nginx: master </span><br><span class="line">[root@localhost ~]<span class="comment"># firewall-cmd --zone=public --add-port=80/tcp --permanent </span></span><br><span class="line">success</span><br><span class="line">[root@localhost ~]<span class="comment"># firewall-cmd --zone=public --add-port=8081/tcp --permanent </span></span><br><span class="line">success</span><br><span class="line">[root@localhost ~]<span class="comment"># firewall-cmd --reload </span></span><br><span class="line">success</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# netstat -tlunp | grep nginx</span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      7355/nginx: master </span><br><span class="line">[root@localhost ~]# firewall-cmd --zone=public --add-port=80/tcp --permanent </span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --zone=public --add-port=8081/tcp --permanent </span><br><span class="line">success</span><br><span class="line">[root@localhost ~]# firewall-cmd --reload </span><br><span class="line">success</span><br></pre></td></tr></table></figure>
 
 <p>使用Chrome浏览器登录nginx，比如我个人使用虚拟环境搭建的，访问即可看到nginx服务启动完毕。即可看到，欢迎访问nginx服务。这个index.html页面默认存放在nginx的安装目录中html目录下。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.245.147/</span><br></pre></td></tr></table></figure>
@@ -600,7 +600,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[nginx@localhost ~]$ <span class="built_in">ls</span> /usr/local/nginx</span><br><span class="line">conf    html    logs    sbin</span><br></pre></td></tr></table></figure>
 
 <h3 id="2、ngin-conf文件的介绍"><a href="#2、ngin-conf文件的介绍" class="headerlink" title="2、ngin.conf文件的介绍"></a>2、ngin.conf文件的介绍</h3><p>初学者在配置nginx.conf文件中的参数时，往往会遇到语法错误，可以<strong>使用nginx提供命令进行检测语法配置</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[nginx@localhost ~]$ sudo /usr/local/nginx/sbin/nginx -t</span><br><span class="line">[nginx@localhost ~]$ sudo /usr/local/nginx/sbin/nginx -t -c /usr/local/nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[nginx@localhost ~]$ <span class="built_in">sudo</span> /usr/local/nginx/sbin/nginx -t</span><br><span class="line">[nginx@localhost ~]$ <span class="built_in">sudo</span> /usr/local/nginx/sbin/nginx -t -c /usr/local/nginx/conf/nginx.conf</span><br></pre></td></tr></table></figure>
 
 <p>语法配置正确，则会有以下提示：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file /usr/local/nginx/conf/nginx.conf <span class="built_in">test</span> is successful</span><br></pre></td></tr></table></figure>
@@ -657,7 +657,7 @@
 
 <p><strong>3.1.2、安装Apache服务</strong></p>
 <p>Redhat系列使用yum命令安装httpd。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum -y install httpd</span><br><span class="line"><span class="comment"># yum -y install httpd</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">sudo</span> yum -y install httpd</span><br><span class="line"><span class="comment"># yum -y install httpd</span></span><br></pre></td></tr></table></figure>
 
 <p>httpd安装后的目录，主要配置文件存放在conf目录下：</p>
 <ul>
@@ -687,13 +687,13 @@
 
 <p><strong>3.2、反向代理到Tomcat</strong></p>
 <p>开启Tomcat服务默认使用端口8080，可以根据实际情况修改。<strong>加入到防火墙规则</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost conf]<span class="comment"># firewall-cmd --zone=public --add-port=8080/tcp --permanent </span></span><br><span class="line">success</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost conf]# firewall-cmd --zone=public --add-port=8080/tcp --permanent </span><br><span class="line">success</span><br></pre></td></tr></table></figure>
 
 <p><strong>重载防火墙</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost conf]<span class="comment"># firewall-cmd --reload </span></span><br><span class="line">success</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost conf]# firewall-cmd --reload </span><br><span class="line">success</span><br></pre></td></tr></table></figure>
 
 <p>原始启动tomcat服务默认server.xml配置的是8080端口，我进行了反向代理使用8081访问。<strong>启动tomcat服务</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost conf]<span class="comment"># /usr/local/apache-tomcat-8.5.49/bin/catalina.sh run &amp;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost conf]# /usr/local/apache-tomcat-8.5.49/bin/catalina.sh run &amp;</span><br></pre></td></tr></table></figure>
 
 <p>加入tomcat服务的ip地址到负载均衡。设置访问Apache服务的权重weight&#x3D;2，访问两个站点3次，其中两次会出现Apache页面，第三次则会出现Apache Tomcat页面。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream <span class="built_in">test</span> &#123;</span><br><span class="line">      server 192.168.245.147:81 weight=2;</span><br><span class="line">      <span class="comment">#server 192.168.245.147;</span></span><br><span class="line">      server 192.168.245.147:8080;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
@@ -713,7 +713,7 @@
 
 <p><strong>1.3、负载均衡基于ip_hash</strong></p>
 <p>ip_hash配置很简单：<span class="exturl" data-url="aHR0cDovL25naW54Lm9yZy9lbi9kb2NzL2h0dHAvbmd4X2h0dHBfdXBzdHJlYW1fbW9kdWxlLmh0bWwjaXBfaGFzaA==">http://nginx.org/en/docs/http/ngx_http_upstream_module.html#ip_hash<i class="fa fa-external-link-alt"></i></span></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置语法</span></span><br><span class="line">Syntax: ip_hash;    Default:    —       Context:    upstream</span><br><span class="line">upstream backend &#123;</span><br><span class="line">    ip_hash;<span class="comment">#加入参数即可</span></span><br><span class="line">    server backend1.example.com;</span><br><span class="line">    server backend2.example.com;</span><br><span class="line">    server backend3.example.com down;</span><br><span class="line">    server backend4.example.com;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置语法</span></span><br><span class="line">Syntax: ip_hash;    Default:    —       Context:    upstream</span><br><span class="line">upstream backend &#123;</span><br><span class="line">    ip_hash;#加入参数即可</span><br><span class="line">    server backend1.example.com;</span><br><span class="line">    server backend2.example.com;</span><br><span class="line">    server backend3.example.com down;</span><br><span class="line">    server backend4.example.com;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><span class="exturl" data-url="aHR0cDovL25naW54Lm9yZy9lbi9kb2NzL2h0dHAvbmd4X2h0dHBfdXBzdHJlYW1fbW9kdWxlLmh0bWwjaXBfaGFzaA==">ip_hash策略<i class="fa fa-external-link-alt"></i></span>：是将前端的访问IP进行hash操作，然后根据hash结果将请求分配给不同的后端节点。可以将这种策略看成一种特殊的轮询策略，每个前端访问IP会固定访问一个后端节点。<strong>优势</strong>：避免考虑前端用户的session在后端多个节点上共享的问题。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#基于ip的hash</span></span><br><span class="line">upstream proxy_demo3&#123;</span><br><span class="line">    ip_hash;</span><br><span class="line">    server 192.168.245.233:8086;</span><br><span class="line">    server 192.168.245.233:8087;</span><br><span class="line">    server 192.168.245.233:8088;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -868,7 +868,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">16:02</span>
+    <span title="站点阅读时长">16:03</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -877,7 +877,7 @@
         <i class="fa fa-user"></i>
       </span>
       <span class="site-uv" title="总访客量">
-        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+        <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
     <span class="post-meta-item" id="busuanzi_container_site_pv">
@@ -885,7 +885,7 @@
         <i class="fa fa-eye"></i>
       </span>
       <span class="site-pv" title="总访问量">
-        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+        <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
 </div>
@@ -896,6 +896,12 @@
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
   <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
@@ -912,13 +918,13 @@
   <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
 
   <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
 
 
-  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
   <script src="/js/third-party/tags/mermaid.js"></script>
 
 
@@ -935,7 +941,7 @@
   <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
   <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2022/01/15/nginx%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5/"}</script>
   <script src="/js/third-party/quicklink.js"></script>
-<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
 
 <script>
 document.addEventListener('page:loaded', () => {
@@ -951,6 +957,7 @@ document.addEventListener('page:loaded', () => {
         'data-category'         : CONFIG.giscus.category,
         'data-category-id'      : CONFIG.giscus.category_id,
         'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
         'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
         'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
         'data-theme'            : CONFIG.giscus.theme,

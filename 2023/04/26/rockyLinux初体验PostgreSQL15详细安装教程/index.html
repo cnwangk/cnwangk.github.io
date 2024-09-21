@@ -16,12 +16,12 @@
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="彼时，PostgreSQL 已经更新到了15.2。在rockyLinux上初体验PostgreSQL15，从部署到测试psql工具，体验基本用法，运用通用数据库管理工具。">
 <meta property="og:type" content="blog">
@@ -106,7 +106,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-solid fa-user-group fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-solid fa-face-smile fa-fw"></i>文娱</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-solid fa-user-group fa-fw"></i>links</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-solid fa-face-smile fa-fw"></i>happy</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -379,19 +379,19 @@
 <p>postgreSQL 下载地址： <span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcvZG93bmxvYWQv">https://www.postgresql.org/download/<i class="fa fa-external-link-alt"></i></span></p>
 <p>示例选择 Linux 发行版<strong>Red Hat&#x2F;Rocky&#x2F;CentOS version 9</strong>（版本），<strong>PostgreSQL Yum</strong>源仓库：<br><span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcvZG93bmxvYWQvbGludXgvcmVkaGF0Lw==">https://www.postgresql.org/download/linux/redhat/<i class="fa fa-external-link-alt"></i></span></p>
 <p><strong>PostgreSQL 快速安装</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span><br><span class="line">sudo dnf -qy module <span class="built_in">disable</span> postgresql</span><br><span class="line">sudo dnf install -y postgresql15-server</span><br><span class="line">sudo /usr/pgsql-15/bin/postgresql-15-setup initdb</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> postgresql-15</span><br><span class="line">sudo systemctl start postgresql-15</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span><br><span class="line"><span class="built_in">sudo</span> dnf -qy module <span class="built_in">disable</span> postgresql</span><br><span class="line"><span class="built_in">sudo</span> dnf install -y postgresql15-server</span><br><span class="line"><span class="built_in">sudo</span> /usr/pgsql-15/bin/postgresql-15-setup initdb</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> postgresql-15</span><br><span class="line"><span class="built_in">sudo</span> systemctl start postgresql-15</span><br></pre></td></tr></table></figure>
 
 
 
 <p><strong>PostgreSQL 详细安装步骤</strong></p>
 <p><strong>PostgreSQL 下载所需要 rpm 依赖包，用于更新（版本库）到最新版本</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span><br></pre></td></tr></table></figure>
 
 <p><strong>PostgreSQL 导入公钥，验证过程，由于网络等原因可能会失败</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf -qy module <span class="built_in">disable</span> postgresql</span><br><span class="line">导入 GPG 公钥 0x442DF0F8:</span><br><span class="line"> Userid: <span class="string">&quot;PostgreSQL RPM Building Project &lt;pgsql-pkg-yum@postgresql.org&gt;&quot;</span></span><br><span class="line"> 指纹: 68C9 E2B9 1A37 D136 FE74 D176 1F16 D2E1 442D F0F8</span><br><span class="line"> 来自: /etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf -qy module <span class="built_in">disable</span> postgresql</span><br><span class="line">导入 GPG 公钥 0x442DF0F8:</span><br><span class="line"> Userid: <span class="string">&quot;PostgreSQL RPM Building Project &lt;pgsql-pkg-yum@postgresql.org&gt;&quot;</span></span><br><span class="line"> 指纹: 68C9 E2B9 1A37 D136 FE74 D176 1F16 D2E1 442D F0F8</span><br><span class="line"> 来自: /etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG</span><br></pre></td></tr></table></figure>
 
 <p><strong>PostgreSQL 安装 postgresql-15 服务</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf install -y postgresql15-server</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf install -y postgresql15-server</span><br></pre></td></tr></table></figure>
 <p>由于网络等原因，<strong>可能安装会比较缓慢</strong>，这里建议更换为国内yum &amp; dnf 源，比如阿里、网易等等都可以。</p>
 <p><strong>比如更换阿里源</strong>：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sed -e <span class="string">&#x27;s|^mirrorlist=|#mirrorlist=|g&#x27;</span> \</span><br><span class="line">    -e <span class="string">&#x27;s|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://mirrors.aliyun.com/rockylinux|g&#x27;</span> \</span><br><span class="line">    -i.bak \</span><br><span class="line">    /etc/yum.repos.d/rocky-*.repo</span><br><span class="line">dnf makecache</span><br></pre></td></tr></table></figure>
@@ -462,14 +462,14 @@
 <li>passwd wzgy：passwd 命令用于修改新增用户密码。</li>
 </ol>
 <p><strong>切换到普用户</strong>，如果没有普通用户，可以创建一个用户用于安装管理postgresql-15：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">su wzgy</span><br><span class="line">sudo systemctl status postgresql-15.service</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">su wzgy</span><br><span class="line"><span class="built_in">sudo</span> systemctl status postgresql-15.service</span><br></pre></td></tr></table></figure>
 <p>参数含义：</p>
 <ol>
 <li>su wzgy：su 命令用切换用户身份。</li>
 <li>sudo：用于提取权限，是一个很有意思的命令。</li>
 </ol>
 <p><strong>netstat 监控 5432 端口</strong>，输出信息如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[wzgy@localhost ~]$ sudo netstat -tlunp | grep 5432</span><br><span class="line">tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      9117/postmaster</span><br><span class="line">tcp6       0      0 ::1:5432                :::*                    LISTEN      9117/postmaster</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[wzgy@localhost ~]$ <span class="built_in">sudo</span> netstat -tlunp | grep 5432</span><br><span class="line">tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      9117/postmaster</span><br><span class="line">tcp6       0      0 ::1:5432                :::*                    LISTEN      9117/postmaster</span><br></pre></td></tr></table></figure>
 
 <p><img data-src="https://s1.ax1x.com/2023/04/25/p9KFHgg.png"></p>
 <p><strong>ps 监控服务命令监控 postmaster服务</strong>：</p>
@@ -505,7 +505,7 @@
 <p><strong>修改配置文件后，记得重启 postgresql 服务</strong>。</p>
 <p>如果你使用其它普通用户创建用户、角色、登录等等操作，会出现如下错误：<br>createuser: 错误: 连接到套接字”&#x2F;var&#x2F;run&#x2F;postgresql&#x2F;.s.PGSQL.5432”上的服务器失败:致命错误:  角色 “root” 不存在。</p>
 <p>如果你不确定有哪些用户，可以使用命令查看：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># cat /etc/passwd | grep postgres</span></span><br><span class="line">postgres:x:26:26:PostgreSQL Server:/var/lib/pgsql:/bin/bash</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# <span class="built_in">cat</span> /etc/passwd | grep postgres</span><br><span class="line">postgres:x:26:26:PostgreSQL Server:/var/lib/pgsql:/bin/bash</span><br></pre></td></tr></table></figure>
 <p><strong>请注意</strong>：有时候为了方便，我直接使用root用户操作，比如我用 cat 和 grep 命令查看postgres用户。</p>
 <p>解决方案，<strong>切换用户为postgres：su postgres</strong>，如果你仔细阅读了官方文档，其实会有启发的。</p>
 <p>登录字符命令操作界面 psql：</p>
@@ -515,7 +515,7 @@
 
 <h3 id="数据库软件-PostgreSQL-交互"><a href="#数据库软件-PostgreSQL-交互" class="headerlink" title="数据库软件 PostgreSQL 交互"></a>数据库软件 PostgreSQL 交互</h3><p>参数 postgres&#x3D;#：登录 PostgreSQL 默认用户前缀名称。</p>
 <p>输入 select version(); 查询版本：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postgres=<span class="comment"># select version();</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postgres=# <span class="keyword">select</span> version();</span><br></pre></td></tr></table></figure>
 <p>输出信息：PostgreSQL 15.2 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 11.3.1 20220421 (Red Hat 11.3.1-2), 64-bit。</p>
 <p>参数含义：</p>
 <ol>
@@ -570,7 +570,7 @@
 <li>\h [NAME]  ：  SQL命令语法上的说明，用*显示全部命令的语法说明。</li>
 </ol>
 <p>最后，善用帮助文档，有助于你快速定位操作命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">postgres=<span class="comment"># \h</span></span><br><span class="line">postgres=<span class="comment"># \?</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">postgres=# \h</span><br><span class="line">postgres=# \?</span><br></pre></td></tr></table></figure>
 <p>示例，我要查询alter具体用法：postgres-# \h alter 。如果你和我一样安装选择语言是中文版的rockyLinux，那么将有友好的中文翻译。</p>
 <p>输出信息比较多：比如alter、create、drop等等DDL（Data Definition Language）语句。</p>
 <p><strong>简单科普</strong>：<br>DDL（Data Definition Language）语句，数据定义语句。主要用于对索引、数据表结构、字段等进行创建、删除以及修改。比如我们常用的关键字主要有：CREATE、DROP、ALTER等等。一般是DBA管理员使用的比较频繁。</p>
@@ -753,7 +753,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">16:02</span>
+    <span title="站点阅读时长">16:03</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -762,7 +762,7 @@
         <i class="fa fa-user"></i>
       </span>
       <span class="site-uv" title="总访客量">
-        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+        <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
     <span class="post-meta-item" id="busuanzi_container_site_pv">
@@ -770,7 +770,7 @@
         <i class="fa fa-eye"></i>
       </span>
       <span class="site-pv" title="总访问量">
-        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+        <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
 </div>
@@ -781,6 +781,12 @@
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
   <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
@@ -797,13 +803,13 @@
   <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
 
   <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
 
 
-  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
   <script src="/js/third-party/tags/mermaid.js"></script>
 
 
@@ -820,7 +826,7 @@
   <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
   <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/04/26/rockyLinux%E5%88%9D%E4%BD%93%E9%AA%8CPostgreSQL15%E8%AF%A6%E7%BB%86%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/"}</script>
   <script src="/js/third-party/quicklink.js"></script>
-<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
 
 <script>
 document.addEventListener('page:loaded', () => {
@@ -836,6 +842,7 @@ document.addEventListener('page:loaded', () => {
         'data-category'         : CONFIG.giscus.category,
         'data-category-id'      : CONFIG.giscus.category_id,
         'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
         'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
         'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
         'data-theme'            : CONFIG.giscus.theme,

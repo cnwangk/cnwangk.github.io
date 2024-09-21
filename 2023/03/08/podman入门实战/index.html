@@ -16,12 +16,12 @@
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="一入编程深似海，从此节操是路人。 最近使用podman，就想着写一篇总结性的笔记，以备后续参考。就如同写代码，不写注释，过了一段时间可能会想这是我写的吗？不会吧，还要理一下逻辑才能读懂，不利于后期维护。 感觉整体体验下来，镜像获取、容器创建、容器监控、容器移除，和docker差不多，感觉可以作为替代品。 什么是podman？  Podman is a utility provided as pa">
 <meta property="og:type" content="blog">
@@ -100,7 +100,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-solid fa-user-group fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-solid fa-face-smile fa-fw"></i>文娱</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-solid fa-user-group fa-fw"></i>links</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-solid fa-face-smile fa-fw"></i>happy</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -355,7 +355,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y podman</span><br></pre></td></tr></table></figure>
 <p>在RHEL9中可以使用yum或者dnf命令安装服务。</p>
 <p><strong>查看podman版本</strong>：podman -v</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream demo]<span class="comment"># podman -v</span></span><br><span class="line">podman version 4.2.0</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream demo]# podman -v</span><br><span class="line">podman version 4.2.0</span><br></pre></td></tr></table></figure>
 
 
 
@@ -363,7 +363,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start podman</span><br></pre></td></tr></table></figure>
 <p>RHEL7以及以上推荐使用systemctl命令去管理服务，使用service命令也是兼容的，用法有些区别。</p>
 <p><strong>设置开机自启</strong>：systemctl enable podman</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream ~]<span class="comment"># systemctl enable podman</span></span><br><span class="line">Created symlink /etc/systemd/system/default.target.wants/podman.service → /usr/lib/systemd/system/podman.service.</span><br><span class="line">[root@Centos9-Stream ~]<span class="comment"># systemctl status podman</span></span><br><span class="line">○ podman.service - Podman API Service</span><br><span class="line">     Loaded: loaded (/usr/lib/systemd/system/podman.service; enabled; vendor preset: disabled)</span><br><span class="line">     Active: inactive (dead) since Sun 2023-02-26 16:56:43 CST; 2min 33s ago</span><br><span class="line">...</span><br><span class="line">2月 26 16:56:38 Centos9-Stream podman[3173]: time=<span class="string">&quot;2023-02-26T16:56:38+08:00&quot;</span> level=info msg=<span class="string">&quot;/usr/bin/podman filtering at log level info&quot;</span></span><br><span class="line">...</span><br><span class="line">2月 26 16:56:43 Centos9-Stream systemd[1]: podman.service: Deactivated successfully.</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream ~]# systemctl <span class="built_in">enable</span> podman</span><br><span class="line">Created symlink /etc/systemd/system/default.target.wants/podman.service → /usr/lib/systemd/system/podman.service.</span><br><span class="line">[root@Centos9-Stream ~]# systemctl status podman</span><br><span class="line">○ podman.service - Podman API Service</span><br><span class="line">     Loaded: loaded (/usr/lib/systemd/system/podman.service; enabled; vendor preset: disabled)</span><br><span class="line">     Active: inactive (dead) since Sun 2023-02-26 16:56:43 CST; 2min 33s ago</span><br><span class="line">...</span><br><span class="line">2月 26 16:56:38 Centos9-Stream podman[3173]: time=<span class="string">&quot;2023-02-26T16:56:38+08:00&quot;</span> level=info msg=<span class="string">&quot;/usr/bin/podman filtering at log level info&quot;</span></span><br><span class="line">...</span><br><span class="line">2月 26 16:56:43 Centos9-Stream systemd[1]: podman.service: Deactivated successfully.</span><br></pre></td></tr></table></figure>
 
 <p>使用命令 systemctl enable podman 设置podman服务开机自启，查看pdoman状态：systemctl status podman，发现由 disabled 转变成了enabled。如果不想开机自启，可以使用禁用命令：systemctl disable podman。</p>
 <h3 id="podman制作本地镜像"><a href="#podman制作本地镜像" class="headerlink" title="podman制作本地镜像"></a>podman制作本地镜像</h3><p>Dockerfile文件作用：个人理解，相当于路标，通过相关命令去指引我们如何前进，构建镜像。</p>
@@ -385,7 +385,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">podman build -f Dockerfile -t springboot:crud-app.jar</span><br></pre></td></tr></table></figure>
 
 <p>查看images，<strong>注意对应上IMAGE ID</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream ~]<span class="comment"># podman images</span></span><br><span class="line">REPOSITORY                 TAG           IMAGE ID      CREATED       SIZE</span><br><span class="line">none				       none			 4f7431dafa0a  2 hours ago   519 MB</span><br><span class="line">docker.io/library/openjdk  17            5e28ba2b4cdb  9 months ago  475 MB</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream ~]# podman images</span><br><span class="line">REPOSITORY                 TAG           IMAGE ID      CREATED       SIZE</span><br><span class="line">none				       none			 4f7431dafa0a  2 hours ago   519 MB</span><br><span class="line">docker.io/library/openjdk  17            5e28ba2b4cdb  9 months ago  475 MB</span><br></pre></td></tr></table></figure>
 <p>通过podman images命令查看images发现REPOSITORY和TAG是none，接下来会继续介绍指定TAG。<br><strong>注意</strong>：podman images 是列出本地存储镜像列表，相当于 podman image list；podman image 是用于管理镜像。</p>
 <p>例如删除镜像:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">podman image <span class="built_in">rm</span> 4f7431dafa0a</span><br><span class="line">podman image <span class="built_in">rm</span> -f 4f7431dafa0a</span><br></pre></td></tr></table></figure>
@@ -397,7 +397,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">podman tag 4f7431dafa0a srpingboot:crud-app.jar</span><br></pre></td></tr></table></figure>
 
 <p>再次查看images，发现REPOSITORY和TAG有内容了。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream ~]<span class="comment"># podman images</span></span><br><span class="line">REPOSITORY                 TAG           IMAGE ID      CREATED       SIZE</span><br><span class="line">localhost/srpingboot       crud-app.jar  4f7431dafa0a  2 hours ago   519 MB</span><br><span class="line">docker.io/library/openjdk  17            5e28ba2b4cdb  9 months ago  475 MB</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream ~]# podman images</span><br><span class="line">REPOSITORY                 TAG           IMAGE ID      CREATED       SIZE</span><br><span class="line">localhost/srpingboot       crud-app.jar  4f7431dafa0a  2 hours ago   519 MB</span><br><span class="line">docker.io/library/openjdk  17            5e28ba2b4cdb  9 months ago  475 MB</span><br></pre></td></tr></table></figure>
 
 
 
@@ -409,11 +409,11 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">podman run -p 8088:8081/tcp --name crud7 -it -d localhost/srpingboot:crud-app java -jar crud-app.jar </span><br></pre></td></tr></table></figure>
 
 <p>查看运行中的服务，使用命令：podman ps</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream dkr]<span class="comment"># podman ps</span></span><br><span class="line">CONTAINER ID  IMAGE                              COMMAND               CREATED      STATUS          PORTS                   NAMES</span><br><span class="line">920899cf9aad  localhost/srpingboot:crud-app.jar  java -jar crud-ap...  2 hours ago  Up 2 hours ago  0.0.0.0:8082-&gt;8081/tcp  crud</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream dkr]# podman ps</span><br><span class="line">CONTAINER ID  IMAGE                              COMMAND               CREATED      STATUS          PORTS                   NAMES</span><br><span class="line">920899cf9aad  localhost/srpingboot:crud-app.jar  java -jar crud-ap...  2 hours ago  Up 2 hours ago  0.0.0.0:8082-&gt;8081/tcp  crud</span><br></pre></td></tr></table></figure>
 
 <p>将8081端口映射到8082上，访问时使用端口是8082。</p>
 <p>列出容器端口映射：podman port crud</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream dkr]<span class="comment"># podman port crud</span></span><br><span class="line">8081/tcp -&gt; 0.0.0.0:8082</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream dkr]# podman port crud</span><br><span class="line">8081/tcp -&gt; 0.0.0.0:8082</span><br></pre></td></tr></table></figure>
 
 <p>例如：访问接口，如果你没有在controller层编写任何代码，访问显示的是404。当然这些并不重要，只需要印证podman（docker）打包本地jar包正常运行就足够了。<br><span class="exturl" data-url="aHR0cDovLzE5Mi4xNjguMjQ1LjEzMjo4MDgyL3RoeW1lbGVhZi9maW5kQ2l0eQ==">http://192.168.245.132:8082/thymeleaf/findCity<i class="fa fa-external-link-alt"></i></span></p>
 <p><a target="_blank" rel="noopener" href="https://imgse.com/i/ppmar79"><img data-src="https://s1.ax1x.com/2023/03/08/ppmar79.png" alt="ppmar79.png"></a></p>
@@ -511,7 +511,7 @@
 <p><span class="exturl" data-url="aHR0cHM6Ly9wb2RtYW4uaW8vZ2V0dGluZy1zdGFydGVkLw==">https://podman.io/getting-started/<i class="fa fa-external-link-alt"></i></span></p>
 <p>此处演示使用 podman 获取 httpd（web中间件Apache服务）。</p>
 <p>搜索命令：podman search ，示例如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream kart]<span class="comment"># podman search httpd --filter=is-official</span></span><br><span class="line">NAME                     DESCRIPTION</span><br><span class="line">docker.io/library/httpd  The Apache HTTP Server Project</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream kart]# podman search httpd --filter=is-official</span><br><span class="line">NAME                     DESCRIPTION</span><br><span class="line">docker.io/library/httpd  The Apache HTTP Server Project</span><br></pre></td></tr></table></figure>
 
 <p><strong>获取 httpd 服务</strong>：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">podman pull docker.io/library/httpd</span><br></pre></td></tr></table></figure>
@@ -703,7 +703,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">16:02</span>
+    <span title="站点阅读时长">16:03</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -712,7 +712,7 @@
         <i class="fa fa-user"></i>
       </span>
       <span class="site-uv" title="总访客量">
-        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+        <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
     <span class="post-meta-item" id="busuanzi_container_site_pv">
@@ -720,7 +720,7 @@
         <i class="fa fa-eye"></i>
       </span>
       <span class="site-pv" title="总访问量">
-        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+        <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
 </div>
@@ -731,6 +731,12 @@
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
   <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
@@ -747,13 +753,13 @@
   <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
 
   <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
 
 
-  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
   <script src="/js/third-party/tags/mermaid.js"></script>
 
 
@@ -770,7 +776,7 @@
   <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
   <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/03/08/podman%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/"}</script>
   <script src="/js/third-party/quicklink.js"></script>
-<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
 
 <script>
 document.addEventListener('page:loaded', () => {
@@ -786,6 +792,7 @@ document.addEventListener('page:loaded', () => {
         'data-category'         : CONFIG.giscus.category,
         'data-category-id'      : CONFIG.giscus.category_id,
         'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
         'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
         'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
         'data-theme'            : CONFIG.giscus.theme,

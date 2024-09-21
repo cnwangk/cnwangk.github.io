@@ -16,12 +16,12 @@
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="我相信有不少小伙伴已经用过eureka，那么问题来了，Nacos是个啥？ 看到这个标题，MySQL数据库与Nacos搭建监控服务，它们有什么关系么？ 其实是Nacos支持连接MySQL，内部已配置好数据源、连接池供我们使用。如果使用其它数据源（比如信创要求，使用达梦数据库比较多），可以通过插件形式适配，模仿MySQL实现方式。具体如何实现，可参考 Nacos 的 github issues。">
 <meta property="og:type" content="blog">
@@ -112,7 +112,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-solid fa-user-group fa-fw"></i>友链</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-solid fa-face-smile fa-fw"></i>文娱</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-solid fa-user-group fa-fw"></i>links</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-solid fa-face-smile fa-fw"></i>happy</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -463,7 +463,7 @@
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### If use MySQL as datasource: </span></span><br><span class="line"><span class="attr">spring.datasource.platform</span>=<span class="string">mysql                                                                         </span></span><br><span class="line"><span class="comment">### Count of DB:                                                                                             </span></span><br><span class="line"><span class="attr">db.num</span>=<span class="string">1                                                                   </span></span><br><span class="line"><span class="comment">### Connect URL of DB:</span></span><br><span class="line"><span class="attr">db.url.0</span>=<span class="string">jdbc:mysql://192.168.245.132:3306/nacos?characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=UTC        </span></span><br><span class="line"><span class="attr">db.user.0</span>=<span class="string">root                                                                                            </span></span><br><span class="line"><span class="attr">db.password.0</span>=<span class="string">mypwd@123        </span></span><br></pre></td></tr></table></figure>
 
 <p>很奇怪的一个问题，第一次使用，只导入初始化sql脚本MySQL数据源：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream ~]<span class="comment"># cat /usr/local/nacos-2.2.0/conf/mysql-schema.sql | mysql -uroot -p nacos</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream ~]# <span class="built_in">cat</span> /usr/local/nacos-2.2.0/conf/mysql-schema.sql | mysql -uroot -p nacos</span><br></pre></td></tr></table></figure>
 
 <p>nacos以单机模式启动：sh startup.sh -m standalone，启动无异常，正常访问。</p>
 <p>MySQL数据库已设置自启，排查数据库正常启动。第二天启动centos-stream-9，再次启动 nacos 服务，出现无法设置数据源，尝试屏蔽数据源配置文件，启动正常。猜测可能是初始化脚本出问题了，执行升级sql脚本：1.4.0-ipv6_support-update.sql，再次启动nacos服务正常。</p>
@@ -578,7 +578,7 @@
 <p><strong>导入数据，执行sql脚本</strong></p>
 <p>关于数据导入，可以使用DB管理工具（MySQL workbench、DBeaver、SQLyog）连接导入，也可以使用cat或者zcat命令导入。</p>
 <p><strong>演示Linux平台使用cat命令导入sql脚本</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream ~]<span class="comment"># cat /usr/local/nacos-2.2.0/conf/mysql-schema.sql | mysql -uroot -p nacos</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream ~]# <span class="built_in">cat</span> /usr/local/nacos-2.2.0/conf/mysql-schema.sql | mysql -uroot -p nacos</span><br></pre></td></tr></table></figure>
 
 <p>原本我也不知道这种用法，联想到以前使用过zabbix监控工具。灵机一动，我也可以将nacos的sql脚本这样导入数据库中。</p>
 <p><strong>查看nacos数据库表</strong>：验证是否导入成功</p>
@@ -624,12 +624,12 @@
 
 <p><strong>执行source命令立即生效</strong>：source &#x2F;etc&#x2F;profile </p>
 <p><strong>查看版本</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream bin]<span class="comment"># mvn --version</span></span><br><span class="line">Apache Maven 3.6.3 (Red Hat 3.6.3-15)</span><br><span class="line">Maven home: /usr/share/maven</span><br><span class="line">Java version: 17.0.4.1, vendor: Oracle Corporation, runtime: /usr/java/jdk17</span><br><span class="line">Default locale: zh_CN, platform encoding: UTF-8</span><br><span class="line">OS name: <span class="string">&quot;linux&quot;</span>, version: <span class="string">&quot;5.14.0-148.el9.x86_64&quot;</span>, <span class="built_in">arch</span>: <span class="string">&quot;amd64&quot;</span>, family: <span class="string">&quot;unix&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream bin]# mvn --version</span><br><span class="line">Apache Maven 3.6.3 (Red Hat 3.6.3-15)</span><br><span class="line">Maven home: /usr/share/maven</span><br><span class="line">Java version: 17.0.4.1, vendor: Oracle Corporation, runtime: /usr/java/jdk17</span><br><span class="line">Default locale: zh_CN, platform encoding: UTF-8</span><br><span class="line">OS name: <span class="string">&quot;linux&quot;</span>, version: <span class="string">&quot;5.14.0-148.el9.x86_64&quot;</span>, <span class="built_in">arch</span>: <span class="string">&quot;amd64&quot;</span>, family: <span class="string">&quot;unix&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>看到以上环境，证明你的Maven环境已经部署好了。</p>
 <p><strong>注意</strong>：默认Maven镜仓库地址很慢，需要更换，推荐阿里云镜像源。</p>
 <p>修改Maven配置文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream bin]<span class="comment"># vim /usr/share/maven/conf/settings.xml</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream bin]# vim /usr/share/maven/conf/settings.xml</span><br></pre></td></tr></table></figure>
 
 <p><strong>修改默认本地仓库存放目录</strong>：找到 <strong>localRepository</strong>，将如下内容开放：</p>
 <p><img data-src="https://s1.ax1x.com/2023/03/22/ppdIn5d.png"></p>
@@ -703,7 +703,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unzip demo.zip</span><br><span class="line"><span class="built_in">cd</span> demo</span><br></pre></td></tr></table></figure>
 
 <p>执行Maven安装命令，这个过程可能有点缓慢，下载jar包越多，越耗时间：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream demo]<span class="comment"># mvn install</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream demo]# mvn install</span><br></pre></td></tr></table></figure>
 
 
 
@@ -755,7 +755,7 @@
 
 
 <p>准备好集成nacos服务的jar包：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream <span class="built_in">test</span>]<span class="comment"># ll springboot-nacos-cloud-0.0.1-SNAPSHOT.jar</span></span><br><span class="line">-rw-rw-r--. 1 kart kart 77534357  2月 12 18:44 springboot-nacos-cloud-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream <span class="built_in">test</span>]# ll springboot-nacos-cloud-0.0.1-SNAPSHOT.jar</span><br><span class="line">-rw-rw-r--. 1 kart kart 77534357  2月 12 18:44 springboot-nacos-cloud-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
 
 <p><strong>运行服务</strong>：</p>
 <ul>
@@ -763,7 +763,7 @@
 <li>&amp;：代表放入后台</li>
 <li><code>-Dspring.profiles.active=prod</code>：指定为生产环境</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream <span class="built_in">test</span>]<span class="comment"># nohup java -jar -Dspring.profiles.active=prod /opt/workspace/test/springboot-nacos-cloud-0.0.1-SNAPSHOT.jar  &gt; /opt/</span></span><br><span class="line">workspace/test/springboot-nacos.log 2&gt;&amp;1 &amp;</span><br><span class="line">[1] 4628</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@Centos9-Stream <span class="built_in">test</span>]# <span class="built_in">nohup</span> java -jar -Dspring.profiles.active=prod /opt/workspace/test/springboot-nacos-cloud-0.0.1-SNAPSHOT.jar  &gt; /opt/</span><br><span class="line">workspace/test/springboot-nacos.log 2&gt;&amp;1 &amp;</span><br><span class="line">[1] 4628</span><br></pre></td></tr></table></figure>
 
 <p>测试接口：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.245.132:8082/t/getConfig</span><br></pre></td></tr></table></figure>
@@ -947,7 +947,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">16:02</span>
+    <span title="站点阅读时长">16:03</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -956,7 +956,7 @@
         <i class="fa fa-user"></i>
       </span>
       <span class="site-uv" title="总访客量">
-        本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+        <span id="busuanzi_value_site_uv"></span>
       </span>
     </span>
     <span class="post-meta-item" id="busuanzi_container_site_pv">
@@ -964,7 +964,7 @@
         <i class="fa fa-eye"></i>
       </span>
       <span class="site-pv" title="总访问量">
-        本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+        <span id="busuanzi_value_site_pv"></span>
       </span>
     </span>
 </div>
@@ -975,6 +975,12 @@
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
   <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up fa-lg"></i>
     <span>0%</span>
@@ -991,13 +997,13 @@
   <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
 
   <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
 
 
-  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js","integrity":"sha256-TtLOdUA8mstPoO6sGvHIGx2ceXrrX4KgIItO06XOn8A="}}</script>
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
   <script src="/js/third-party/tags/mermaid.js"></script>
 
 
@@ -1014,7 +1020,7 @@
   <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
   <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/03/30/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8ENacos%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1/"}</script>
   <script src="/js/third-party/quicklink.js"></script>
-<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
 
 <script>
 document.addEventListener('page:loaded', () => {
@@ -1030,6 +1036,7 @@ document.addEventListener('page:loaded', () => {
         'data-category'         : CONFIG.giscus.category,
         'data-category-id'      : CONFIG.giscus.category_id,
         'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
         'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
         'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
         'data-theme'            : CONFIG.giscus.theme,

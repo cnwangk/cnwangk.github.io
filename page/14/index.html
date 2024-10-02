@@ -206,115 +206,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/01/30/MySQL%E5%BC%80%E5%8F%91%E7%AF%87%EF%BC%8C%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E7%9A%84%E9%80%89%E6%8B%A9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="龙腾万里sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="龙腾万里sky的博客">
-      <meta itemprop="description" content="AI & 过去现在未来">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/30/MySQL%E5%BC%80%E5%8F%91%E7%AF%87%EF%BC%8C%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E7%9A%84%E9%80%89%E6%8B%A9/" class="post-title-link" itemprop="url">MySQL开发篇，存储引擎的选择</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-30 18:52:44" itemprop="dateCreated datePublished" datetime="2022-01-30T18:52:44+08:00">2022-01-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-29 19:16:23" itemprop="dateModified" datetime="2023-05-29T19:16:23+08:00">2023-05-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>11k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>39 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>谁说MySQL查询千万级别的数据很拉跨？我今天就要好好的和你拉拉家常，畅谈到深夜，一起过除夕！这篇文章也是年前的最后一篇，希望能带给大家些许收获，不知不觉查找文档和参考实体书籍就写了这么多，自己都感觉到意外。不禁感慨到，知道的越多，才知道不知道的更多。</p>
-<p>开发人员或者是DBA都应该关注MySQL使用的存储引擎，选择合适存储引擎对你的应用性能提升是明显的。在阅读到本文的时候，肯定是有一定的MySQL或者其它数据库基础的，不然有些地方看着会很费劲。重点地方，我都进行了加粗处理，这样更容易获取关键知识点。</p>
-<p>关于存储引擎，一篇文章也不可能面面俱到，对个人觉得比较重要、于工作有益的方面进行阐述。如果真的去深挖，估计得一本书的篇幅。顺带还介绍一些数据类型选择、字符集设置、索引的使用；视图、存储过程、函数以及触发器啊等等会在下一篇博文进行详细的描述。但本文不会做太详细的叙述。本篇文章以存储引擎的选择为核心，如果有出现瑕疵的地方，希望您能留下宝贵的建议。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/30/MySQL%E5%BC%80%E5%8F%91%E7%AF%87%EF%BC%8C%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E7%9A%84%E9%80%89%E6%8B%A9/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/01/17/Github%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -758,6 +649,121 @@
 
 
 
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/01/12/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8firewalld%E5%92%8Ciptables/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="AI & 过去现在未来">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/12/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8firewalld%E5%92%8Ciptables/" class="post-title-link" itemprop="url">Linux服务器使用firewalld与iptables命令管理防火墙规则</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-12 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-12T00:00:00+08:00">2022-01-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-28 21:51:16" itemprop="dateModified" datetime="2023-05-28T21:51:16+08:00">2023-05-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">开发运维</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Linux服务器使用 firewalld 与 iptables 命令管理防火墙规则：通俗来讲，用于管理开放相应端口，甚至可以通过管理工具进行限流。</p>
+<p><strong>许多不了解的人，认为RHEL7中的防火墙从iptables变成了firewalld。其实不然，无论是iptables还是firewalld都无法提供防火墙功能。他们都只是linux系统中的一个防火墙管理工具，负责生成防火墙规则与内核模块netfilter进行“交流”，真正实现防火墙功能的是内核模块netfilter。</strong></p>
+<p><img data-src="https://s1.ax1x.com/2023/04/04/pp448cq.png" alt="https://s1.ax1x.com/2023/04/04/pp448cq.png"></p>
+<p>iptables与firewalld防火墙管理工具在linux发行版Redhat7系列使用较为广泛。UFW则是在linux发行版Ubuntu下进行管理防火墙的一款管理工具。在选用防火墙工具的时候，运维或者是开发人员往往会纠结使用哪个。这里给出建议，使用iptables工具管理就禁用firewalld，使用firewalld工具管理就禁用iptables，二者选其一即可，避免产生混乱。</p>
+<p>此篇文章不会在原理上做深究，主要以实用性为主，原理可以阅读相关书籍慢慢品味。</p>
+<h2 id="一、Netfilter内核模块"><a href="#一、Netfilter内核模块" class="headerlink" title="一、Netfilter内核模块"></a>一、Netfilter内核模块</h2><p>无论是使用<code>iptables</code>还是<code>firewalld</code>，不妨先了解一下<strong>Netfilter内核模块</strong>。</p>
+<p><strong>什么是Netfilter</strong>：linux操作系统核心层内部的一个数据包处理模块。</p>
+<p><strong>Hook point</strong>：数据包在Netfilter中的挂载点。（PRE_ROUTING INPUT OUTPUT FORWORD POST_ROUTING）</p>
+<h3 id="1、netfilter的体系结构"><a href="#1、netfilter的体系结构" class="headerlink" title="1、netfilter的体系结构"></a>1、netfilter的体系结构</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/12/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8firewalld%E5%92%8Ciptables/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/15/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -789,7 +795,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">16:07</span>
+    <span title="站点阅读时长">16:08</span>
   </span>
 </div>
 <div class="busuanzi-count">

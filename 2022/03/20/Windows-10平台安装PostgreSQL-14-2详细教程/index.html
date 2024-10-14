@@ -23,18 +23,39 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Windows 10平台安装postgreSQL 14.2.1，安装步骤很简单，基本上是点击下一步（next）。 使用SQL Shell（psql）进行交互；使用pgAdmin工具进行管理。 tips：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人公众号搜索 Windows 10平台安装PostgreSQL 14.2详细教程。 postgreSQL安装详细教">
+    <meta name="description" content="Windows 10平台安装postgreSQL 14.2.1，安装步骤很简单，基本上是点击下一步（next）。 使用SQL Shell（psql）进行交互；使用pgAdmin工具进行管理。 tips：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人知乎搜索 Windows 10平台安装PostgreSQL 14.2详细教程 。 postgreSQL安装详细教">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Windows 10平台安装PostgreSQL 14.2详细教程">
 <meta property="og:url" content="https://blog.cnwangk.top/2022/03/20/Windows-10%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85PostgreSQL-14-2%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
-<meta property="og:description" content="Windows 10平台安装postgreSQL 14.2.1，安装步骤很简单，基本上是点击下一步（next）。 使用SQL Shell（psql）进行交互；使用pgAdmin工具进行管理。 tips：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人公众号搜索 Windows 10平台安装PostgreSQL 14.2详细教程。 postgreSQL安装详细教">
+<meta property="og:description" content="Windows 10平台安装postgreSQL 14.2.1，安装步骤很简单，基本上是点击下一步（next）。 使用SQL Shell（psql）进行交互；使用pgAdmin工具进行管理。 tips：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人知乎搜索 Windows 10平台安装PostgreSQL 14.2详细教程 。 postgreSQL安装详细教">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-5755550e2a58b28ec40c7426331f63ef_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-fa9e223824a5a869850bc3adac55f508_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-04f207a7bef46a8ff512a2b3ec12dbb7_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-f55773f858e56b724a99f5f9a3bf5d28_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-1407e82fe1eb8b1b79b2d41d84dc9354_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-6db222f890ab56820dac7ad30d021f8e_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-3479aa463e70e027c12d30743b97b689_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-c67f03ddb2a3fbf6906066488d9d7563_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-6bbc4a37a636ab0a53e5132d3c6e3000_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-2893e0d88cd6bc30ba84568ab4223032_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-28e2b216b7bdc95defca7efc0732f29a_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-dceaa59a690488d931bf68450de2200b_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-e1d6169a104f245c11668dbbf0029f69_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-ec8c1dbdfe48564e7d4fc8eaf168cabf_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-3dc709e2a47f7c39fccf5ce2f91012ba_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-e0c0c61c24885448a91795b523714fe0_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-ea48f10a80ea73348e538aa37c4e27c4_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-fb344637aa28d5890c2cb54df5954b13_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-36326c1ce07a0c8a8a77b9ebcd2bf935_1440w.jpg?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-9a8f7a7ab1382c57f0fbb412598ad634_1440w.jpg?source=d16d100b">
 <meta property="article:published_time" content="2022-03-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-29T11:16:45.281Z">
+<meta property="article:modified_time" content="2024-10-14T03:12:43.231Z">
 <meta property="article:author" content="龙腾万里sky">
 <meta property="article:tag" content="PostgreSQL">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picx.zhimg.com/80/v2-5755550e2a58b28ec40c7426331f63ef_1440w.jpg?source=d16d100b">
 
 
 <link rel="canonical" href="https://blog.cnwangk.top/2022/03/20/Windows-10%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85PostgreSQL-14-2%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/">
@@ -144,7 +165,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#postgreSQL%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">postgreSQL安装详细教程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80postgreSQL-%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.1.</span> <span class="nav-text">一	postgreSQL 安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-%E4%B8%8B%E8%BD%BDpostgreSQL"><span class="nav-number">1.1.1.</span> <span class="nav-text">01 下载postgreSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02Windows-10%E5%AE%89%E8%A3%85postgreSQL-14-2"><span class="nav-number">1.1.2.</span> <span class="nav-text">02	Windows 10安装postgreSQL 14.2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#03postgreSQL-%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.3.</span> <span class="nav-text">03	postgreSQL 安装目录说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8CpostgreSQL-%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">二	postgreSQL 遇到问题解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">01	遇到问题处理方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02%E5%AE%9E%E9%99%85%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.2.</span> <span class="nav-text">02	实际解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E4%BD%BF%E7%94%A8SQL-Shell%EF%BC%88psql%EF%BC%89%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92"><span class="nav-number">1.3.</span> <span class="nav-text">三	使用SQL Shell（psql）进行交互</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01%E4%BD%BF%E7%94%A8select%E8%AF%AD%E5%8F%A5%E9%AA%8C%E8%AF%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">01	使用select语句验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02%E4%BD%BF%E7%94%A8explain%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">1.3.2.</span> <span class="nav-text">02	使用explain进行测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E4%BD%BF%E7%94%A8pgAdmin%E8%BF%9B%E8%A1%8C%E7%AE%A1%E7%90%86"><span class="nav-number">1.4.</span> <span class="nav-text">四	使用pgAdmin进行管理</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#postgreSQL%E5%AE%89%E8%A3%85%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">postgreSQL安装详细教程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-postgreSQL-%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">一    postgreSQL 安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-%E4%B8%8B%E8%BD%BDpostgreSQL"><span class="nav-number">2.1.</span> <span class="nav-text">01 下载postgreSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-Windows-10%E5%AE%89%E8%A3%85postgreSQL-14-2"><span class="nav-number">2.2.</span> <span class="nav-text">02  Windows 10安装postgreSQL 14.2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#03-postgreSQL-%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95%E8%AF%B4%E6%98%8E"><span class="nav-number">2.3.</span> <span class="nav-text">03  postgreSQL 安装目录说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-postgreSQL-%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">二    postgreSQL 遇到问题解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">01  遇到问题处理方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-%E5%AE%9E%E9%99%85%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.2.</span> <span class="nav-text">02  实际解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E4%BD%BF%E7%94%A8SQL-Shell%EF%BC%88psql%EF%BC%89%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92"><span class="nav-number">4.</span> <span class="nav-text">三    使用SQL Shell（psql）进行交互</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-%E4%BD%BF%E7%94%A8select%E8%AF%AD%E5%8F%A5%E9%AA%8C%E8%AF%81"><span class="nav-number">4.1.</span> <span class="nav-text">01  使用select语句验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-%E4%BD%BF%E7%94%A8explain%E8%BF%9B%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">4.2.</span> <span class="nav-text">02  使用explain进行测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-%E4%BD%BF%E7%94%A8pgAdmin%E8%BF%9B%E8%A1%8C%E7%AE%A1%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">四    使用pgAdmin进行管理</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -264,7 +285,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-29 19:16:45" itemprop="dateModified" datetime="2023-05-29T19:16:45+08:00">2023-05-29</time>
+      <time title="修改时间：2024-10-14 11:12:43" itemprop="dateModified" datetime="2024-10-14T11:12:43+08:00">2024-10-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -309,21 +330,25 @@
     
     <div class="post-body" itemprop="articleBody"><p>Windows 10平台安装postgreSQL 14.2.1，安装步骤很简单，基本上是点击下一步（next）。</p>
 <p>使用SQL Shell（psql）进行交互；使用pgAdmin工具进行管理。</p>
-<p><strong>tips</strong>：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人公众号搜索 <span class="exturl" data-url="aHR0cHM6Ly9tcC53ZWl4aW4ucXEuY29tL3M/X19iaXo9TXpVMk16YzBNekUwTmc9PSZtaWQ9MjI0NzQ4Njc5OSZpZHg9MSZzbj1kNTg2OWRjOGQ4ZGY2MmU3MGUxZDU4ODVjNmMwNWYzOCZjaGtzbT1mYzU0ZGQ4YWNiMjM1NDljMTgzMmNhZjI4NDE3MTQ1NDg2ZWZkNzgyNjQ4MzIyY2M2YWZjNDhiYzQ4YTgyYjBkZWUzNTJhNDE2MGYxI3Jk">Windows 10平台安装PostgreSQL 14.2详细教程<i class="fa fa-external-link-alt"></i></span>。</p>
-<h1 id="postgreSQL安装详细教程"><a href="#postgreSQL安装详细教程" class="headerlink" title="postgreSQL安装详细教程"></a>postgreSQL安装详细教程</h1><h2 id="一postgreSQL-安装步骤"><a href="#一postgreSQL-安装步骤" class="headerlink" title="一	postgreSQL 安装步骤"></a>一	postgreSQL 安装步骤</h2><h3 id="01-下载postgreSQL"><a href="#01-下载postgreSQL" class="headerlink" title="01 下载postgreSQL"></a>01 下载postgreSQL</h3><p>Windows版本（64位）postgreSQL 14.2.1下载地址：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZW50ZXJwcmlzZWRiLmNvbS9wb3N0Z3Jlc3FsLXR1dG9yaWFsLXJlc291cmNlcy10cmFpbmluZz91dWlkPWRiNTVlMzJkLWU5ZjAtNGQ3Yy05YWVmLWIxN2QwMTIxMDcwNCZjYW1wYWlnbklkPTcwMTJKMDAwMDAxTmhzelFBQw==">https://www.enterprisedb.com/postgresql-tutorial-resources-training?uuid=db55e32d-e9f0-4d7c-9aef-b17d01210704&campaignId=7012J000001NhszQAC<i class="fa fa-external-link-alt"></i></span></p>
+<p><strong>tips</strong>：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人知乎搜索 <span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80ODQ0NTA5MTM=">Windows 10平台安装PostgreSQL 14.2详细教程<i class="fa fa-external-link-alt"></i></span> 。</p>
+<h2 id="postgreSQL安装详细教程"><a href="#postgreSQL安装详细教程" class="headerlink" title="postgreSQL安装详细教程"></a>postgreSQL安装详细教程</h2><h2 id="一-postgreSQL-安装步骤"><a href="#一-postgreSQL-安装步骤" class="headerlink" title="一    postgreSQL 安装步骤"></a>一    postgreSQL 安装步骤</h2><h3 id="01-下载postgreSQL"><a href="#01-下载postgreSQL" class="headerlink" title="01 下载postgreSQL"></a>01 下载postgreSQL</h3><p>Windows版本（64位）postgreSQL 14.2.1下载地址：</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZW50ZXJwcmlzZWRiLmNvbS9wb3N0Z3Jlc3FsLXR1dG9yaWFsLXJlc291cmNlcy10cmFpbmluZz91dWlkPWRiNTVlMzJkLWU5ZjAtNGQ3Yy05YWVmLWIxN2QwMTIxMDcwNCZjYW1wYWlnbklkPTcwMTJKMDAwMDAxTmhzelFBQw==">https://www.enterprisedb.com/postgresql-tutorial-resources-training?uuid=db55e32d-e9f0-4d7c-9aef-b17d01210704&amp;campaignId=7012J000001NhszQAC<i class="fa fa-external-link-alt"></i></span> </p>
+</blockquote>
 <p><strong>官网</strong>：<span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcv">https://www.postgresql.org<i class="fa fa-external-link-alt"></i></span></p>
 <p><strong>官方文档</strong>：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcvZG9jcy8=">https://www.postgresql.org/docs/<i class="fa fa-external-link-alt"></i></span></p>
-<p>最新版本14的PDF下载地址：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcvZmlsZXMvZG9jdW1lbnRhdGlvbi9wZGYvMTQvcG9zdGdyZXNxbC0xNC1BNC5wZGY=">https://www.postgresql.org/files/documentation/pdf/14/postgresql-14-A4.pdf<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="02Windows-10安装postgreSQL-14-2"><a href="#02Windows-10安装postgreSQL-14-2" class="headerlink" title="02	Windows 10安装postgreSQL 14.2"></a>02	Windows 10安装postgreSQL 14.2</h3><p><strong>2.1	安装步骤01</strong></p>
-<p>Setup	—— PostgreSQL</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcvZG9jcy8=">https://www.postgresql.org/docs/<i class="fa fa-external-link-alt"></i></span> 最新版本14的PDF下载地址：<span class="exturl" data-url="aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcvZmlsZXMvZG9jdW1lbnRhdGlvbi9wZGYvMTQvcG9zdGdyZXNxbC0xNC1BNC5wZGY=">https://www.postgresql.org/files/documentation/pdf/14/postgresql-14-A4.pdf<i class="fa fa-external-link-alt"></i></span> </p>
+</blockquote>
+<h3 id="02-Windows-10安装postgreSQL-14-2"><a href="#02-Windows-10安装postgreSQL-14-2" class="headerlink" title="02  Windows 10安装postgreSQL 14.2"></a>02  Windows 10安装postgreSQL 14.2</h3><p><strong>2.1   安装步骤01</strong></p>
+<p>Setup   —— PostgreSQL</p>
 <p>进入PostgreSQL安装界面</p>
-<p><strong>2.2	安装步骤02</strong></p>
+<p><img data-src="https://picx.zhimg.com/80/v2-5755550e2a58b28ec40c7426331f63ef_1440w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>2.2   安装步骤02</strong></p>
 <p>Installation Directory</p>
 <p><strong>注意</strong>：选择安装目录，推荐安装至D盘或者顺延。</p>
-<p><strong>2.3	安装步骤03</strong></p>
+<p><img data-src="https://pica.zhimg.com/80/v2-fa9e223824a5a869850bc3adac55f508_1440w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>2.3   安装步骤03</strong></p>
 <p>Select components</p>
 <p><strong>选择需要安装的服务</strong>：</p>
 <ol>
@@ -332,53 +357,55 @@
 <li>Stack Builder：依据需求选择。</li>
 <li>Command Line Tools：命令行工具，交互<strong>必选项</strong>。</li>
 </ol>
-<p><strong>2.4	安装步骤04</strong></p>
+<p><img data-src="https://pica.zhimg.com/80/v2-04f207a7bef46a8ff512a2b3ec12dbb7_1440w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>2.4   安装步骤04</strong></p>
 <p>Data Directory</p>
 <p>设置数据库实例化数据存放目录。类似于MySQ初始化生成data目录。</p>
-<p><strong>2.5	安装步骤05</strong></p>
+<p><img data-src="https://picx.zhimg.com/80/v2-f55773f858e56b724a99f5f9a3bf5d28_1440w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>2.5   安装步骤05</strong></p>
 <p>Set Password</p>
 <p>设置数据库超级用户（postgres）密码。</p>
 <p>如果初始化失败，后续则不会生效。</p>
-<p><strong>2.6	安装步骤06</strong></p>
+<p><img data-src="https://picx.zhimg.com/80/v2-1407e82fe1eb8b1b79b2d41d84dc9354_1440w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>2.6   安装步骤06</strong></p>
 <p>Port</p>
 <p>设置默认监听端口（port）：5432</p>
-<p><strong>2.7	安装步骤07</strong></p>
+<p><img data-src="https://picx.zhimg.com/80/v2-6db222f890ab56820dac7ad30d021f8e_1440w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>2.7   安装步骤07</strong></p>
 <p>Advanced Options</p>
 <p>建议选择数据库群组（database cluster），下拉有中文简体可选。</p>
 <p>cluster有集群的意思，但在此处指的是组、群组、国别地区（安装支持的语言）。</p>
 <p><strong>注意</strong>：这一步初始化后生成的data目录是空的，可能是权限问题（<strong>会有警告提示</strong>，导致初始化失败，虽然最终安装完成）。</p>
-<p><strong>2.8	安装步骤08</strong></p>
+<p><img data-src="https://picx.zhimg.com/80/v2-3479aa463e70e027c12d30743b97b689_1440w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>2.8   安装步骤08</strong></p>
 <p>Pre Installation Summary</p>
 <p><strong>打印出安装配置信息</strong>，其它数据库厂商（DBMS）提供的可视化界面安装一样会有信息显示，例如Oracle数据库。</p>
-<p><strong>2.9	安装步骤09</strong></p>
+<p><img data-src="https://picx.zhimg.com/80/v2-c67f03ddb2a3fbf6906066488d9d7563_1440w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>2.9   安装步骤09</strong></p>
 <p>Ready to Install</p>
 <p>到了这一步，真正开始执行安装过程。</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-6bbc4a37a636ab0a53e5132d3c6e3000_1440w.jpg?source=d16d100b" alt="img"></p>
 <p>关于遇到的警告问题，会在遇到问题解决方案进行展示说明，并给出个人解决方案。</p>
-<h3 id="03postgreSQL-安装目录说明"><a href="#03postgreSQL-安装目录说明" class="headerlink" title="03	postgreSQL 安装目录说明"></a>03	postgreSQL 安装目录说明</h3><p><strong>3.1	postgreSQL 安装目录重点说明</strong></p>
+<h3 id="03-postgreSQL-安装目录说明"><a href="#03-postgreSQL-安装目录说明" class="headerlink" title="03  postgreSQL 安装目录说明"></a>03  postgreSQL 安装目录说明</h3><p><strong>3.1   postgreSQL 安装目录重点说明</strong></p>
 <ol>
 <li>bin：bin目录一般存放与数据库服务进行交互的命令脚本。</li>
 <li>data：data目录是初始化完成后生成的数据库文件，包含配置文件postgresql.conf。</li>
 <li>pgAdmin 4 ：存放pgAdmin 4客户端管理工具文件。</li>
 <li>uninstall-postgresql.dat与uninstall-postgresql.exe：提供便捷式卸载。</li>
 </ol>
-<p><strong>3.2	data目录</strong></p>
+<p><img data-src="https://pica.zhimg.com/80/v2-2893e0d88cd6bc30ba84568ab4223032_1440w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>3.2   data目录</strong></p>
 <ol>
 <li>主要注意postgresql.conf配置文件，比如配置监听端口（port）和主机（IP）地址。</li>
 </ol>
-<p><strong>3.3	配置文件设置</strong></p>
+<p><img data-src="https://picx.zhimg.com/80/v2-28e2b216b7bdc95defca7efc0732f29a_1440w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>3.3   配置文件设置</strong></p>
 <ol>
 <li>listen_addresses：设置监听主机地址，重启服务生效。</li>
 <li>port：设置监听服务默认端口，重启服务生效。</li>
 </ol>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># - Connection Settings -</span></span><br><span class="line"><span class="attr">listen_addresses</span> = <span class="string">&#x27;localhost&#x27;</span>		<span class="comment"># what IP address(es) to listen on;</span></span><br><span class="line">					<span class="comment"># comma-separated list of addresses;</span></span><br><span class="line">					<span class="comment"># defaults to &#x27;localhost&#x27;; use &#x27;*&#x27; for all</span></span><br><span class="line">					<span class="comment"># (change requires restart)</span></span><br><span class="line"><span class="attr">port</span> = <span class="number">5432</span>				<span class="comment"># (change requires restart)</span></span><br><span class="line"><span class="attr">max_connections</span> = <span class="number">100</span>			<span class="comment"># (change requires restart)</span></span><br><span class="line"><span class="comment">#superuser_reserved_connections = 3	# (change requires restart)</span></span><br><span class="line"><span class="comment">#unix_socket_directories = &#x27;&#x27;	# comma-separated list of directories</span></span><br><span class="line">					<span class="comment"># (change requires restart)</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h2 id="二postgreSQL-遇到问题解决方案"><a href="#二postgreSQL-遇到问题解决方案" class="headerlink" title="二	postgreSQL 遇到问题解决方案"></a>二	postgreSQL 遇到问题解决方案</h2><h3 id="01遇到问题处理方法"><a href="#01遇到问题处理方法" class="headerlink" title="01	遇到问题处理方法"></a>01	遇到问题处理方法</h3><ol>
+<p><img data-src="https://pica.zhimg.com/80/v2-dceaa59a690488d931bf68450de2200b_1440w.jpg?source=d16d100b" alt="img"></p>
+<h2 id="二-postgreSQL-遇到问题解决方案"><a href="#二-postgreSQL-遇到问题解决方案" class="headerlink" title="二    postgreSQL 遇到问题解决方案"></a>二    postgreSQL 遇到问题解决方案</h2><h3 id="01-遇到问题处理方法"><a href="#01-遇到问题处理方法" class="headerlink" title="01  遇到问题处理方法"></a>01  遇到问题处理方法</h3><ol>
 <li><strong>定位问题</strong>：遇到问题别慌，也别急着去使用搜索引擎，先将问题定位好。</li>
 <li>文档：<strong>参考官方文档</strong>。</li>
 <li>善于使用搜索引擎和<strong>StackOverflow</strong>以及<strong>github的Issues</strong>。</li>
@@ -386,81 +413,75 @@
 </ol>
 <p>例如，<strong>个人安装遇到问题</strong>（Warning）警告：</p>
 <blockquote>
-<p>Problem running  post-install  step. Installation may not complete correctly</p>
-<p>The database cluster installation failed  </p>
+<p> Problem running  post-install  step. Installation may not complete correctly The database cluster installation failed   </p>
 </blockquote>
+<p><img data-src="https://picx.zhimg.com/80/v2-e1d6169a104f245c11668dbbf0029f69_1440w.jpg?source=d16d100b" alt="img"></p>
 <p>我第一时间联想到的是初始化出问题了，<strong>去检查data目录</strong>，果不其然是空的。</p>
 <p>如果你有一些英语底子（说实话，个人基本是靠平时积累的词汇量和有道），一些命令基本上可以猜个八九不离十。</p>
 <p>以前我的同事问我，你是猜的？结果发现还挺准的。后面还有一句话没说出来而已，其实是有一定依据才去试一试的。</p>
-<h3 id="02实际解决方案"><a href="#02实际解决方案" class="headerlink" title="02	实际解决方案"></a>02	实际解决方案</h3><p>个人根据以前使用MySQL（其它数据库）的经验进行判断，结合官方文档进行思考的临时解决方案。</p>
+<h3 id="02-实际解决方案"><a href="#02-实际解决方案" class="headerlink" title="02  实际解决方案"></a>02  实际解决方案</h3><p>个人根据以前使用MySQL（其它数据库）的经验进行判断，结合官方文档进行思考的临时解决方案。</p>
 <p>出现警告后，使用以下方式解决无法启动postgreSQL：</p>
 <ol>
-<li><p>检查data目录是空的（初始化失败了）。</p>
-</li>
-<li><p>使用cmd（管理员身份）执行initdb命令初始化。</p>
-</li>
+<li>检查data目录是空的（初始化失败了）。 </li>
+<li>使用cmd（管理员身份）执行initdb命令初始化。</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\software\PostgreSQL\14\bin&gt;initdb <span class="string">&quot;D:\software\PostgreSQL\14\data&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\software\PostgreSQL\14\bin&gt;initdb &quot;D:\software\PostgreSQL\14\data&quot;</span><br></pre></td></tr></table></figure>
 
-<ol start="3">
+<ol>
 <li>继续在cmd（管理员身份）窗口执行创建用户。</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\software\PostgreSQL\14\bin&gt;createuser postgres</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\software\PostgreSQL\14\bin&gt;createuser postgres</span><br></pre></td></tr></table></figure>
 
-<ol start="4">
+<ol>
 <li>普通用户身份启动postgreSQL。</li>
 </ol>
-<p>​	   如果没有配置环境变量，注意在<strong>PostgreSQL\14\bin目录下执行postgres命令</strong>。使用这种方式启动服务，<strong>使用Ctrl + c快捷键即可退出服务</strong>。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\software\PostgreSQL\14\bin&gt;postgres --config-file=<span class="string">&quot;D:\\software\\PostgreSQL\\14\\data\\postgresql.conf&quot;</span> -D <span class="string">&quot;D:\\software\\PostgreSQL\\14\\data&quot;</span></span><br></pre></td></tr></table></figure>
+<p>​      如果没有配置环境变量，注意在<strong>PostgreSQL\14\bin目录下执行postgres命令</strong>。使用这种方式启动服务，<strong>使用Ctrl + c快捷键即可退出服务</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\software\PostgreSQL\14\bin&gt;postgres --config-file=&quot;D:\\software\\PostgreSQL\\14\\data\\postgresql.conf&quot; -D &quot;D:\\software\\PostgreSQL\\14\\data&quot;</span><br></pre></td></tr></table></figure>
 
-<ol start="5">
-<li>或者使用<code>pg_ctl start</code>命令启动服务（postgreSQL加入path环境变量）。</li>
+<ol>
+<li>或者使用pg_ctl start命令启动服务（postgreSQL加入path环境变量）。</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pg_ctl start -D <span class="string">&quot;D:\software\PostgreSQL\14\data&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pg_ctl start -D &quot;D:\software\PostgreSQL\14\data&quot;</span><br></pre></td></tr></table></figure>
 
-<ol start="6">
-<li>使用<code>pg_ctl stop</code>命令关闭服务。</li>
+<ol>
+<li>使用pg_ctl stop命令关闭服务。</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pg_ctl stop -D <span class="string">&quot;D:\software\PostgreSQL\14\data&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\&gt;pg_ctl stop -D &quot;D:\software\PostgreSQL\14\data&quot;</span><br></pre></td></tr></table></figure>
 
-<p>如下是使用<code>pg_ctl</code>命令启动服务，然后使用<code>netstat</code>命令去验证服务是否启动。</p>
-<p>安装后第二天查阅StackOverflow：其实解决方案相差不大，和我思考分方向是一致的，可以参考。</p>
+<p>如下是使用pg_ctl命令启动服务，然后使用netstat命令去验证服务是否启动。</p>
+<p><img data-src="https://pica.zhimg.com/80/v2-ec8c1dbdfe48564e7d4fc8eaf168cabf_1440w.jpg?source=d16d100b" alt="img"></p>
+<p>安装后第二天查阅StackOverflow：其实解决方案相差不大，和我思考方向是一致的，可以参考。</p>
 <blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzI0NTM0NTEvcG9zdGdyZXMtaW5zdGFsbGF0aW9uLXRoZS1kYXRhYmFzZS1jbHVzdGVyLWluaXRpYWxpemF0aW9uLWZhaWxlZC1wb3N0Z3Jlc3FsLXZl">https://stackoverflow.com/questions/32453451/postgres-installation-the-database-cluster-initialization-failed-postgresql-ve<i class="fa fa-external-link-alt"></i></span></p>
+<p> <span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzI0NTM0NTEvcG9zdGdyZXMtaW5zdGFsbGF0aW9uLXRoZS1kYXRhYmFzZS1jbHVzdGVyLWluaXRpYWxpemF0aW9uLWZhaWxlZC1wb3N0Z3Jlc3FsLXZl">https://stackoverflow.com/questions/32453451/postgres-installation-the-database-cluster-initialization-failed-postgresql-ve<i class="fa fa-external-link-alt"></i></span> </p>
 </blockquote>
-<h2 id="三使用SQL-Shell（psql）进行交互"><a href="#三使用SQL-Shell（psql）进行交互" class="headerlink" title="三	使用SQL Shell（psql）进行交互"></a>三	使用SQL Shell（psql）进行交互</h2><h3 id="01使用select语句验证"><a href="#01使用select语句验证" class="headerlink" title="01	使用select语句验证"></a>01	使用select语句验证</h3><p>进入SQL Shell（psql）交互界面，直接回车即可进入（<strong>前提是服务启动成功</strong>）</p>
+<h2 id="三-使用SQL-Shell（psql）进行交互"><a href="#三-使用SQL-Shell（psql）进行交互" class="headerlink" title="三    使用SQL Shell（psql）进行交互"></a>三    使用SQL Shell（psql）进行交互</h2><h3 id="01-使用select语句验证"><a href="#01-使用select语句验证" class="headerlink" title="01  使用select语句验证"></a>01  使用select语句验证</h3><p>进入SQL Shell（psql）交互界面，直接回车即可进入（<strong>前提是服务启动成功</strong>）</p>
 <p>如同在MySQL中，使用select 1直接返回结果，这种方式是不走表的，通过explain分析就可看出。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 1;</span><br></pre></td></tr></table></figure>
 
+<p><img data-src="https://picx.zhimg.com/80/v2-3dc709e2a47f7c39fccf5ce2f91012ba_1440w.jpg?source=d16d100b" alt="img"></p>
+<h3 id="02-使用explain进行测试"><a href="#02-使用explain进行测试" class="headerlink" title="02  使用explain进行测试"></a>02  使用explain进行测试</h3><p>使用explain测试select 1：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain select 1;</span><br></pre></td></tr></table></figure>
 
-
-
-
-<h3 id="02使用explain进行测试"><a href="#02使用explain进行测试" class="headerlink" title="02	使用explain进行测试"></a>02	使用explain进行测试</h3><p>使用explain测试select 1：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain <span class="keyword">select</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="四使用pgAdmin进行管理"><a href="#四使用pgAdmin进行管理" class="headerlink" title="四	使用pgAdmin进行管理"></a>四	使用pgAdmin进行管理</h2><p><strong>01	配置服务名称</strong></p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-e0c0c61c24885448a91795b523714fe0_1440w.jpg?source=d16d100b" alt="img"></p>
+<h2 id="四-使用pgAdmin进行管理"><a href="#四-使用pgAdmin进行管理" class="headerlink" title="四    使用pgAdmin进行管理"></a>四    使用pgAdmin进行管理</h2><p><strong>01    配置服务名称</strong></p>
 <p><strong>注意</strong>：Name是必填项。</p>
-<p><strong>02	配置连接</strong></p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-ea48f10a80ea73348e538aa37c4e27c4_1440w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>02    配置连接</strong></p>
 <ol>
 <li>HOST name、address：配置主机名或者IP地址。</li>
 <li>Port：配置连接监听端口（启动服务时，在配置文件设置的端口）。</li>
 <li>Usernam：用户名。</li>
 <li>Password：用户密码。</li>
 </ol>
-<p><strong>03	初次进入pgAdmin需要配置密码</strong></p>
-<p><strong>04	配置完后的界面</strong></p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-fb344637aa28d5890c2cb54df5954b13_1440w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>03    初次进入pgAdmin需要配置密码</strong></p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-36326c1ce07a0c8a8a77b9ebcd2bf935_1440w.jpg?source=d16d100b" alt="img"></p>
+<p><strong>04    配置完后的界面</strong></p>
 <p>progres和test是自己使用命令创建的：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">createuser progres</span><br><span class="line">createuser test</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">createuser progres</span><br><span class="line">createuser test</span><br></pre></td></tr></table></figure>
 
-
-
-
-
+<p><img data-src="https://picx.zhimg.com/80/v2-9a8f7a7ab1382c57f0fbb412598ad634_1440w.jpg?source=d16d100b" alt="img"></p>
+<p>以上是本篇教程所有内容，希望能对你的工作与学习有所帮助。</p>
 <p>—END—</p>
 
     </div>

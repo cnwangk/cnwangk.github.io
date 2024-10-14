@@ -23,13 +23,14 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Windows 10平台安装postgreSQL 14.2.1，安装步骤很简单，基本上是点击下一步（next）。 使用SQL Shell（psql）进行交互；使用pgAdmin工具进行管理。 tips：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人知乎搜索 Windows 10平台安装PostgreSQL 14.2详细教程 。 postgreSQL安装详细教">
+    <meta name="description" content="Windows 10平台安装postgreSQL 14.2.1，安装步骤很简单，基本上是点击下一步（next）。 使用SQL Shell（psql）进行交互；使用pgAdmin工具进行管理。 tips：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人知乎搜索 Windows 10平台安装PostgreSQL 14.2详细教程 。">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Windows 10平台安装PostgreSQL 14.2详细教程">
 <meta property="og:url" content="https://blog.cnwangk.top/2022/03/20/Windows-10%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85PostgreSQL-14-2%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
-<meta property="og:description" content="Windows 10平台安装postgreSQL 14.2.1，安装步骤很简单，基本上是点击下一步（next）。 使用SQL Shell（psql）进行交互；使用pgAdmin工具进行管理。 tips：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人知乎搜索 Windows 10平台安装PostgreSQL 14.2详细教程 。 postgreSQL安装详细教">
+<meta property="og:description" content="Windows 10平台安装postgreSQL 14.2.1，安装步骤很简单，基本上是点击下一步（next）。 使用SQL Shell（psql）进行交互；使用pgAdmin工具进行管理。 tips：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人知乎搜索 Windows 10平台安装PostgreSQL 14.2详细教程 。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-5755550e2a58b28ec40c7426331f63ef_1440w.jpg?source=d16d100b">
 <meta property="og:image" content="https://picx.zhimg.com/80/v2-5755550e2a58b28ec40c7426331f63ef_1440w.jpg?source=d16d100b">
 <meta property="og:image" content="https://pica.zhimg.com/80/v2-fa9e223824a5a869850bc3adac55f508_1440w.jpg?source=d16d100b">
 <meta property="og:image" content="https://pica.zhimg.com/80/v2-04f207a7bef46a8ff512a2b3ec12dbb7_1440w.jpg?source=d16d100b">
@@ -51,7 +52,7 @@
 <meta property="og:image" content="https://pic1.zhimg.com/80/v2-36326c1ce07a0c8a8a77b9ebcd2bf935_1440w.jpg?source=d16d100b">
 <meta property="og:image" content="https://picx.zhimg.com/80/v2-9a8f7a7ab1382c57f0fbb412598ad634_1440w.jpg?source=d16d100b">
 <meta property="article:published_time" content="2022-03-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-10-14T03:12:43.231Z">
+<meta property="article:modified_time" content="2024-10-14T03:16:28.380Z">
 <meta property="article:author" content="龙腾万里sky">
 <meta property="article:tag" content="PostgreSQL">
 <meta name="twitter:card" content="summary">
@@ -285,7 +286,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-10-14 11:12:43" itemprop="dateModified" datetime="2024-10-14T11:12:43+08:00">2024-10-14</time>
+      <time title="修改时间：2024-10-14 11:16:28" itemprop="dateModified" datetime="2024-10-14T11:16:28+08:00">2024-10-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -331,6 +332,10 @@
     <div class="post-body" itemprop="articleBody"><p>Windows 10平台安装postgreSQL 14.2.1，安装步骤很简单，基本上是点击下一步（next）。</p>
 <p>使用SQL Shell（psql）进行交互；使用pgAdmin工具进行管理。</p>
 <p><strong>tips</strong>：注意选择安装目录（请不要放到C盘，虚拟机搭建测试环境另说）。如果图片挂了，可以前往个人知乎搜索 <span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC80ODQ0NTA5MTM=">Windows 10平台安装PostgreSQL 14.2详细教程<i class="fa fa-external-link-alt"></i></span> 。</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-5755550e2a58b28ec40c7426331f63ef_1440w.jpg?source=d16d100b" alt="img"></p>
+<span id="more"></span>
+
+
 <h2 id="postgreSQL安装详细教程"><a href="#postgreSQL安装详细教程" class="headerlink" title="postgreSQL安装详细教程"></a>postgreSQL安装详细教程</h2><h2 id="一-postgreSQL-安装步骤"><a href="#一-postgreSQL-安装步骤" class="headerlink" title="一    postgreSQL 安装步骤"></a>一    postgreSQL 安装步骤</h2><h3 id="01-下载postgreSQL"><a href="#01-下载postgreSQL" class="headerlink" title="01 下载postgreSQL"></a>01 下载postgreSQL</h3><p>Windows版本（64位）postgreSQL 14.2.1下载地址：</p>
 <blockquote>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cuZW50ZXJwcmlzZWRiLmNvbS9wb3N0Z3Jlc3FsLXR1dG9yaWFsLXJlc291cmNlcy10cmFpbmluZz91dWlkPWRiNTVlMzJkLWU5ZjAtNGQ3Yy05YWVmLWIxN2QwMTIxMDcwNCZjYW1wYWlnbklkPTcwMTJKMDAwMDAxTmhzelFBQw==">https://www.enterprisedb.com/postgresql-tutorial-resources-training?uuid=db55e32d-e9f0-4d7c-9aef-b17d01210704&amp;campaignId=7012J000001NhszQAC<i class="fa fa-external-link-alt"></i></span> </p>

@@ -16,12 +16,12 @@
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="MySQL优化流程索引问题：MySQL中使用索引典型场景，存在但不能使用索引的场景。 友情提示：在某些情况，你测试的结果可能与我演示有所不同，我省略了查询结果的部分参数。 如果你是从MySQL5.6或者5.7版本过渡到MySQL8.0。学习之前，建议线看官方文档这一1.3 What Is New MySQL8.0 。在做对比的时候，文档中带有Note标识是你应该注意的地方。比如下面这张截图：  M">
 <meta property="og:type" content="blog">
@@ -40,7 +40,6 @@
 
 
 <link rel="canonical" href="https://blog.cnwangk.top/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%B5%81%E7%A8%8B%EF%BC%9A%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E5%85%B8%E5%9E%8B%E5%9C%BA%E6%99%AFAND%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF/">
-
 
 
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%B5%81%E7%A8%8B%EF%BC%9A%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E5%85%B8%E5%9E%8B%E5%9C%BA%E6%99%AFAND%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF/","path":"2022/04/07/MySQL优化流程：使用索引典型场景AND索引失效场景/","title":"MySQL优化流程：使用索引典型场景AND索引失效场景"}</script>
@@ -107,25 +106,25 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup"><div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="搜索..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close" role="button">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div class="search-result-container no-result">
-  <div class="search-result-icon">
-    <i class="fa fa-spinner fa-pulse fa-5x"></i>
-  </div>
-</div>
-
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -187,6 +186,9 @@
       </span>
       <span class="links-of-author-item">
         <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
       </span>
   </div>
   <div class="cc-license animated" itemprop="license">
@@ -871,13 +873,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/04/07/MySQL%E9%94%81%E9%97%AE%E9%A2%98%EF%BC%9AMyISAM%E5%8A%A0%E8%A1%A8%E9%94%81%E3%80%81%E5%B9%B6%E5%8F%91%E6%8F%92%E5%85%A5%E4%BB%A5%E5%8F%8A%E9%94%81%E8%B0%83%E5%BA%A6/" rel="prev" title="MySQL锁问题：MyISAM加表锁、并发插入以及锁调度">
-                  <i class="fa fa-angle-left"></i> MySQL锁问题：MyISAM加表锁、并发插入以及锁调度
+                <a href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9Aoptimize%E3%80%81INSERT%E3%80%81ORDER%20BY%E3%80%81GROUP%20BY%E5%92%8COR%20%E4%BB%A5%E5%8F%8A%E5%88%86%E9%A1%B5%E5%92%8C%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2/" rel="prev" title="MySQL优化方法：optimize、INSERT、ORDER BY、GROUP BY和OR 以及分页和嵌套查询">
+                  <i class="fa fa-angle-left"></i> MySQL优化方法：optimize、INSERT、ORDER BY、GROUP BY和OR 以及分页和嵌套查询
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%B5%81%E7%A8%8B%EF%BC%9A%E5%AE%9A%E4%BD%8D%E4%BD%8E%E6%95%88%E7%8E%87SQL%E3%80%81explain%E5%88%86%E6%9E%90%E3%80%81show%20profile%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8Atrace%E8%BF%BD%E8%B8%AA/" rel="next" title="MySQL优化流程：定位低效率SQL、explain分析、show profile分析以及trace追踪">
-                  MySQL优化流程：定位低效率SQL、explain分析、show profile分析以及trace追踪 <i class="fa fa-angle-right"></i>
+                <a href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7%EF%BC%9ARAND()%E5%92%8CWITH%20ROLLUP%E3%80%81Bit%20GROUP%E4%BB%A5%E5%8F%8A%E5%A4%96%E9%94%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" rel="next" title="MySQL优化技巧：RAND()和WITH ROLLUP、Bit GROUP以及外键注意事项">
+                  MySQL优化技巧：RAND()和WITH ROLLUP、Bit GROUP以及外键注意事项 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
@@ -916,14 +918,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">266k</span>
+    <span title="站点总字数">267k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">16:08</span>
+    <span title="站点阅读时长">16:10</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -979,7 +981,7 @@
 <script src="/js/third-party/search/local-search.js"></script>
 
 
-  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@10.9.0/dist/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@11.4.0/dist/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
   <script src="/js/third-party/tags/mermaid.js"></script>
 
 

@@ -209,115 +209,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9Aoptimize%E3%80%81INSERT%E3%80%81ORDER%20BY%E3%80%81GROUP%20BY%E5%92%8COR%20%E4%BB%A5%E5%8F%8A%E5%88%86%E9%A1%B5%E5%92%8C%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="龙腾万里sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="龙腾万里sky的博客">
-      <meta itemprop="description" content="AI & 过去现在未来">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9Aoptimize%E3%80%81INSERT%E3%80%81ORDER%20BY%E3%80%81GROUP%20BY%E5%92%8COR%20%E4%BB%A5%E5%8F%8A%E5%88%86%E9%A1%B5%E5%92%8C%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2/" class="post-title-link" itemprop="url">MySQL优化方法：optimize、INSERT、ORDER BY、GROUP BY和OR 以及分页和嵌套查询</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-04-07 00:00:00" itemprop="dateCreated datePublished" datetime="2022-04-07T00:00:00+08:00">2022-04-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-25 22:51:42" itemprop="dateModified" datetime="2023-09-25T22:51:42+08:00">2023-09-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>7.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>27 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>主要介绍：MySQL定期分析表、定期优化表；批量（大量）插入数据优化技巧；优化 INSERT、ORDER BY、GROUP BY 语句、优化 OR 条件；优化嵌套查询、分页查询；使用SQL提示。</p>
-<p>只停留在看上面，提升效果甚微。应该带着思考去测试佐证，或者使用（同类书籍）新版本进行对比，这样带来的效果更好。最重要的一环，<strong>养成阅读官方文档</strong>，是一个良好的习惯。能编写官方文档，至少证明他们在这个领域是有很高的造诣，对用法足够熟练。</p>
-<p><strong>tips</strong>：图片资源可能被防盗链（寄）了，可以<strong>右键属性复制地址在地址栏查看</strong>哈。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9Aoptimize%E3%80%81INSERT%E3%80%81ORDER%20BY%E3%80%81GROUP%20BY%E5%92%8COR%20%E4%BB%A5%E5%8F%8A%E5%88%86%E9%A1%B5%E5%92%8C%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%B5%81%E7%A8%8B%EF%BC%9A%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E5%85%B8%E5%9E%8B%E5%9C%BA%E6%99%AFAND%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E5%9C%BA%E6%99%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -547,7 +438,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/04/07/MySQL%E9%94%81%E9%97%AE%E9%A2%98InnoDB%E9%94%81%EF%BC%9A%E8%A1%8C%E9%94%81%E3%80%81lock%E4%B8%8Elatch%E3%80%81%E5%A4%96%E9%94%AE%E4%B8%8E%E9%94%81%E3%80%81%E9%94%81%E7%AE%97%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9Aoptimize%E3%80%81INSERT%E3%80%81ORDER%20BY%E3%80%81GROUP%20BY%E5%92%8COR%20%E4%BB%A5%E5%8F%8A%E5%88%86%E9%A1%B5%E5%92%8C%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -565,7 +456,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/07/MySQL%E9%94%81%E9%97%AE%E9%A2%98InnoDB%E9%94%81%EF%BC%9A%E8%A1%8C%E9%94%81%E3%80%81lock%E4%B8%8Elatch%E3%80%81%E5%A4%96%E9%94%AE%E4%B8%8E%E9%94%81%E3%80%81%E9%94%81%E7%AE%97%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">MySQL锁问题InnoDB锁：行锁、lock与latch、外键与锁、锁算法以及死锁问题</a>
+          <a href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9Aoptimize%E3%80%81INSERT%E3%80%81ORDER%20BY%E3%80%81GROUP%20BY%E5%92%8COR%20%E4%BB%A5%E5%8F%8A%E5%88%86%E9%A1%B5%E5%92%8C%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2/" class="post-title-link" itemprop="url">MySQL优化方法：optimize、INSERT、ORDER BY、GROUP BY和OR 以及分页和嵌套查询</a>
         </h2>
 
         <div class="post-meta-container">
@@ -583,7 +474,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-25 22:50:40" itemprop="dateModified" datetime="2023-09-25T22:50:40+08:00">2023-09-25</time>
+      <time title="修改时间：2023-09-25 22:51:42" itemprop="dateModified" datetime="2023-09-25T22:51:42+08:00">2023-09-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -602,14 +493,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>13k</span>
+      <span>7.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>48 分钟</span>
+      <span>27 分钟</span>
     </span>
 </div>
 
@@ -620,18 +511,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>主要介绍内容有：MySQL锁介绍、InnoDB行锁、lock与latch区别、锁类型、一致性非锁（锁）定读；自增长与锁；外键与锁；锁的算法；阻塞、死锁以及锁升级。</p>
-<p>我可以和面试官多聊几句吗？只是想…<br><strong>MySQL锁介绍以及InnoDB锁问题</strong>。﻿<strong>养成阅读官方文档</strong>，是一个良好的习惯。能编写官方文档，至少证明他们在这个领域是有很高的造诣，对用法足够熟练。</p>
-<p><strong>面试官</strong>：咦，小伙子，又来啦。</p>
-<p><strong>我</strong>：面试官，您好，又见面了。前面确实收获不少，我想……想获取更多的经验。</p>
-<p><strong>面试官</strong>：不错，不错，不错，年纪轻轻，有我当年一半的风范，挺有觉悟。接着上次的话题，继续MySQL锁问题。</p>
-<p><strong>我</strong>：好呀，这次我准备了InnoDB锁一些总结，希望您多多指教。</p>
-<p><strong>面试官</strong>：那，让我们进入今天的话题，一起讨论MySQL锁问题。</p>
-<p><strong>我</strong>：好的，请接着往下看。</p>
+          <p>主要介绍：MySQL定期分析表、定期优化表；批量（大量）插入数据优化技巧；优化 INSERT、ORDER BY、GROUP BY 语句、优化 OR 条件；优化嵌套查询、分页查询；使用SQL提示。</p>
+<p>只停留在看上面，提升效果甚微。应该带着思考去测试佐证，或者使用（同类书籍）新版本进行对比，这样带来的效果更好。最重要的一环，<strong>养成阅读官方文档</strong>，是一个良好的习惯。能编写官方文档，至少证明他们在这个领域是有很高的造诣，对用法足够熟练。</p>
 <p><strong>tips</strong>：图片资源可能被防盗链（寄）了，可以<strong>右键属性复制地址在地址栏查看</strong>哈。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/04/07/MySQL%E9%94%81%E9%97%AE%E9%A2%98InnoDB%E9%94%81%EF%BC%9A%E8%A1%8C%E9%94%81%E3%80%81lock%E4%B8%8Elatch%E3%80%81%E5%A4%96%E9%94%AE%E4%B8%8E%E9%94%81%E3%80%81%E9%94%81%E7%AE%97%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/#more" rel="contents">
+              <a class="btn" href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9Aoptimize%E3%80%81INSERT%E3%80%81ORDER%20BY%E3%80%81GROUP%20BY%E5%92%8COR%20%E4%BB%A5%E5%8F%8A%E5%88%86%E9%A1%B5%E5%92%8C%E5%B5%8C%E5%A5%97%E6%9F%A5%E8%AF%A2/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -765,6 +650,121 @@
 
 
 
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/04/07/MySQL%E9%94%81%E9%97%AE%E9%A2%98InnoDB%E9%94%81%EF%BC%9A%E8%A1%8C%E9%94%81%E3%80%81lock%E4%B8%8Elatch%E3%80%81%E5%A4%96%E9%94%AE%E4%B8%8E%E9%94%81%E3%80%81%E9%94%81%E7%AE%97%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="AI & 过去现在未来">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/07/MySQL%E9%94%81%E9%97%AE%E9%A2%98InnoDB%E9%94%81%EF%BC%9A%E8%A1%8C%E9%94%81%E3%80%81lock%E4%B8%8Elatch%E3%80%81%E5%A4%96%E9%94%AE%E4%B8%8E%E9%94%81%E3%80%81%E9%94%81%E7%AE%97%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">MySQL锁问题InnoDB锁：行锁、lock与latch、外键与锁、锁算法以及死锁问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-07 00:00:00" itemprop="dateCreated datePublished" datetime="2022-04-07T00:00:00+08:00">2022-04-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-25 22:50:40" itemprop="dateModified" datetime="2023-09-25T22:50:40+08:00">2023-09-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>13k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>48 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>主要介绍内容有：MySQL锁介绍、InnoDB行锁、lock与latch区别、锁类型、一致性非锁（锁）定读；自增长与锁；外键与锁；锁的算法；阻塞、死锁以及锁升级。</p>
+<p>我可以和面试官多聊几句吗？只是想…<br><strong>MySQL锁介绍以及InnoDB锁问题</strong>。﻿<strong>养成阅读官方文档</strong>，是一个良好的习惯。能编写官方文档，至少证明他们在这个领域是有很高的造诣，对用法足够熟练。</p>
+<p><strong>面试官</strong>：咦，小伙子，又来啦。</p>
+<p><strong>我</strong>：面试官，您好，又见面了。前面确实收获不少，我想……想获取更多的经验。</p>
+<p><strong>面试官</strong>：不错，不错，不错，年纪轻轻，有我当年一半的风范，挺有觉悟。接着上次的话题，继续MySQL锁问题。</p>
+<p><strong>我</strong>：好呀，这次我准备了InnoDB锁一些总结，希望您多多指教。</p>
+<p><strong>面试官</strong>：那，让我们进入今天的话题，一起讨论MySQL锁问题。</p>
+<p><strong>我</strong>：好的，请接着往下看。</p>
+<p><strong>tips</strong>：图片资源可能被防盗链（寄）了，可以<strong>右键属性复制地址在地址栏查看</strong>哈。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/07/MySQL%E9%94%81%E9%97%AE%E9%A2%98InnoDB%E9%94%81%EF%BC%9A%E8%A1%8C%E9%94%81%E3%80%81lock%E4%B8%8Elatch%E3%80%81%E5%A4%96%E9%94%AE%E4%B8%8E%E9%94%81%E3%80%81%E9%94%81%E7%AE%97%E6%B3%95%E4%BB%A5%E5%8F%8A%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/8/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/10/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -796,7 +796,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">16:10</span>
+    <span title="站点阅读时长">16:11</span>
   </span>
 </div>
 <div class="busuanzi-count">

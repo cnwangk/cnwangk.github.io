@@ -676,7 +676,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%B5%81%E7%A8%8B%EF%BC%9A%E5%AE%9A%E4%BD%8D%E4%BD%8E%E6%95%88%E7%8E%87SQL%E3%80%81explain%E5%88%86%E6%9E%90%E3%80%81show%20profile%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8Atrace%E8%BF%BD%E8%B8%AA/">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95-%E4%BC%98%E5%8C%96%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -694,7 +694,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%B5%81%E7%A8%8B%EF%BC%9A%E5%AE%9A%E4%BD%8D%E4%BD%8E%E6%95%88%E7%8E%87SQL%E3%80%81explain%E5%88%86%E6%9E%90%E3%80%81show%20profile%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8Atrace%E8%BF%BD%E8%B8%AA/" class="post-title-link" itemprop="url">MySQL优化流程：定位低效率SQL、explain分析、show profile分析以及trace追踪</a>
+          <a href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95-%E4%BC%98%E5%8C%96%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">MySQL优化数据库对象</a>
         </h2>
 
         <div class="post-meta-container">
@@ -712,7 +712,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-25 22:50:25" itemprop="dateModified" datetime="2023-09-25T22:50:25+08:00">2023-09-25</time>
+      <time title="修改时间：2023-09-25 22:51:58" itemprop="dateModified" datetime="2023-09-25T22:51:58+08:00">2023-09-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -731,14 +731,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>4.2k</span>
+      <span>2.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>15 分钟</span>
+      <span>9 分钟</span>
     </span>
 </div>
 
@@ -749,18 +749,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>MySQL优化流程SQL优化流程：show status查询SQL执行频率、explain分析、show profile分析和trace追踪。</p>
-<p>﻿<strong>MySQL优化流程——SQL优化流程</strong>。MySQL优化篇（基于MySQL8.0.28测试验证）。</p>
-<p>只停留在看上面，提升效果甚微。应该带着思考去测试佐证，或者使用（同类书籍）新版本进行对比，这样带来的效果更好。最重要的一环，<strong>养成阅读官方文档</strong>，是一个良好的习惯。能编写官方文档，至少证明他们在这个领域是有很高的造诣，对用法足够熟练。</p>
-<p><strong>我</strong>：我可以和您多聊几句吗？<br><strong>面试官</strong>：就你那点小心思，我还不知道吗？面试官微微一笑：一样揍得你鼻青脸肿。</p>
-<p><strong>我</strong>：只是想借点技能过来，多学点总归没坏处。<br><strong>面试官</strong>：小伙子，真不错，年纪轻轻，挺有觉悟的。</p>
-<p><strong>面试官</strong>：对SQL语句优化流程，你了解多少。<br><strong>我</strong>：会那么一丢丢，也总结了一些。</p>
-<p><strong>面试官</strong>：请开始你的表演。<br><strong>我</strong>：很荣幸与你展开讨论，请看继续往下看。</p>
-<p>在对MySQL进行举例并使用到数据库表，大多数情况使用MySQL官方提供的sakila（模拟电影出租信息管理系统）和world数据库，类似于Oracle的scott用户。</p>
+          <p>﻿﻿﻿MySQL优化方法——优化数据库对象</p>
+<p>如果没有进行特别说明，一般是基于MySQL8.0.28进行测试验证。官方文档非常具有参考意义。你可以将这篇博文，当成过度到MySQL8.0的参考资料。<strong>友情提示：经验是用来参考，不是拿来即用</strong>。如果您能看到并分享这篇文章，我很荣幸。如果有误导您的地方，我表示抱歉。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/acf1fd88c4b72660309388d03852a999.png"></p>
 <p><strong>tips</strong>：图片资源可能被防盗链（寄）了，可以<strong>右键属性复制地址在地址栏查看</strong>哈。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%B5%81%E7%A8%8B%EF%BC%9A%E5%AE%9A%E4%BD%8D%E4%BD%8E%E6%95%88%E7%8E%87SQL%E3%80%81explain%E5%88%86%E6%9E%90%E3%80%81show%20profile%E5%88%86%E6%9E%90%E4%BB%A5%E5%8F%8Atrace%E8%BF%BD%E8%B8%AA/#more" rel="contents">
+              <a class="btn" href="/2022/04/07/MySQL%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95-%E4%BC%98%E5%8C%96%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

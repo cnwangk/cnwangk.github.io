@@ -23,16 +23,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="当你看到这篇教程时，MySQL 目前最新GA（稳定）版本可能已经更新到了 MySQL 8.0.41 或者更高，MySQL 8.0 Release Notes Changes in MySQL 8.0.41 (2025-01-21, General Availability)，创新版 Innovation MySQL 9.2 Release Notes Changes in MySQL 9.2.0">
+    <meta name="description" content="当你看到这篇教程时，MySQL 目前最新GA（稳定）版本可能已经更新到了 MySQL 8.0.42 或者更高，  稳定版 MySQL 8.0 Release Notes Changes in MySQL 8.0.42 (2025-04-15, General Availability)， 长期支持版 MySQL 8.4 Release Notes Changes in MySQL 8.4.5 (2">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Windows 11 和 Rocky 9 Linux 初体验 MySQL8.0.33 简易安装教程">
 <meta property="og:url" content="https://blog.cnwangk.top/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
-<meta property="og:description" content="当你看到这篇教程时，MySQL 目前最新GA（稳定）版本可能已经更新到了 MySQL 8.0.41 或者更高，MySQL 8.0 Release Notes Changes in MySQL 8.0.41 (2025-01-21, General Availability)，创新版 Innovation MySQL 9.2 Release Notes Changes in MySQL 9.2.0">
+<meta property="og:description" content="当你看到这篇教程时，MySQL 目前最新GA（稳定）版本可能已经更新到了 MySQL 8.0.42 或者更高，  稳定版 MySQL 8.0 Release Notes Changes in MySQL 8.0.42 (2025-04-15, General Availability)， 长期支持版 MySQL 8.4 Release Notes Changes in MySQL 8.4.5 (2">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pic1.zhimg.com/80/v2-c6c781264f3e22b9cf90d74e4b7f13f0_1440w.webp">
 <meta property="article:published_time" content="2023-05-21T14:09:58.000Z">
-<meta property="article:modified_time" content="2025-02-02T09:02:48.772Z">
+<meta property="article:modified_time" content="2025-04-18T02:42:00.552Z">
 <meta property="article:author" content="龙腾万里sky">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
@@ -146,7 +146,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85-MySQL"><span class="nav-number">1.</span> <span class="nav-text">Windows 平台安装 MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%83%BD%E4%BC%9A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">可能会遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-MySQL"><span class="nav-number">1.2.</span> <span class="nav-text">部署 MySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E6%AD%A5%E4%BD%BF%E7%94%A8-MySQL"><span class="nav-number">1.3.</span> <span class="nav-text">初步使用 MySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">1.4.</span> <span class="nav-text">修改密码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E5%B9%B3%E5%8F%B0-Rocky-9-%E5%AE%89%E8%A3%85-MySQL"><span class="nav-number">2.</span> <span class="nav-text">Linux 平台 Rocky 9 安装 MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#binary-package"><span class="nav-number">2.1.</span> <span class="nav-text">binary package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpm-package"><span class="nav-number">2.2.</span> <span class="nav-text">rpm package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yum-%E6%BA%90"><span class="nav-number">2.3.</span> <span class="nav-text">yum 源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#source-package"><span class="nav-number">2.4.</span> <span class="nav-text">source package</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80"><span class="nav-number">3.</span> <span class="nav-text">MySQL官方文档下载地址</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85-MySQL"><span class="nav-number">1.</span> <span class="nav-text">Windows 平台安装 MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%83%BD%E4%BC%9A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">可能会遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-MySQL"><span class="nav-number">1.2.</span> <span class="nav-text">部署 MySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E6%AD%A5%E4%BD%BF%E7%94%A8-MySQL"><span class="nav-number">1.3.</span> <span class="nav-text">初步使用 MySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">1.4.</span> <span class="nav-text">修改密码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E5%B9%B3%E5%8F%B0-Rocky-9-%E5%AE%89%E8%A3%85-MySQL"><span class="nav-number">2.</span> <span class="nav-text">Linux 平台 Rocky 9 安装 MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#binary-package"><span class="nav-number">2.1.</span> <span class="nav-text">binary package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpm-package"><span class="nav-number">2.2.</span> <span class="nav-text">rpm package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yum-%E6%BA%90"><span class="nav-number">2.3.</span> <span class="nav-text">yum 源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#source-package"><span class="nav-number">2.4.</span> <span class="nav-text">source package</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80"><span class="nav-number">3.</span> <span class="nav-text">MySQL官方文档下载地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -235,10 +235,10 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/2023/03/16/SQL%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%89%AB%E7%9B%B2/" rel="bookmark">
-        <time class="popular-posts-time">2023-03-16</time>
+      <a class="popular-posts-link" href="/2022/03/17/MySQL%E7%AD%89%E4%B8%BB%E6%B5%81%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%82%E5%95%86DBMS%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E5%9C%B0%E5%9D%80/" rel="bookmark">
+        <time class="popular-posts-time">2022-03-17</time>
         <br>
-      SQL基础知识扫盲
+      MySQL等主流数据库厂商DBMS官方文档地址
       </a>
     </li>
   </ul>
@@ -297,7 +297,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-02-02 17:02:48" itemprop="dateModified" datetime="2025-02-02T17:02:48+08:00">2025-02-02</time>
+      <time title="修改时间：2025-04-18 10:42:00" itemprop="dateModified" datetime="2025-04-18T10:42:00+08:00">2025-04-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -340,7 +340,12 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>当你看到这篇教程时，MySQL 目前最新GA（稳定）版本可能已经更新到了 <span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2Rvd25sb2Fkcy9teXNxbC8=">MySQL 8.0.41<i class="fa fa-external-link-alt"></i></span> <strong>或者更高</strong>，<span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjAvZW4vbmV3cy04LTAtNDEuaHRtbA==">MySQL 8.0 Release Notes Changes in MySQL 8.0.41 (2025-01-21, General Availability)<i class="fa fa-external-link-alt"></i></span>，<strong>创新版</strong> Innovation <span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC85LjIvZW4vbmV3cy05LTItMC5odG1s">MySQL 9.2 Release Notes Changes in MySQL 9.2.0 (2025-01-21, Innovation Release)<i class="fa fa-external-link-alt"></i></span>，<strong>长期支持版</strong> <span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjQvZW4vbmV3cy04LTQtNC5odG1s">MySQL 8.4 Release Notes Changes in MySQL 8.4.4 (2025-01-21, LTS Release)<i class="fa fa-external-link-alt"></i></span>。</p>
+    <div class="post-body" itemprop="articleBody"><p>当你看到这篇教程时，MySQL 目前最新GA（稳定）版本可能已经更新到了 <span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2Rvd25sb2Fkcy9teXNxbC8=">MySQL 8.0.42<i class="fa fa-external-link-alt"></i></span> <strong>或者更高</strong>，</p>
+<ul>
+<li><strong>稳定版</strong> <span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjAvZW4vbmV3cy04LTAtNDIuaHRtbA==">MySQL 8.0 Release Notes Changes in MySQL 8.0.42 (2025-04-15, General Availability)<i class="fa fa-external-link-alt"></i></span>，</li>
+<li><strong>长期支持版</strong> <span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjQvZW4vbmV3cy04LTQtNS5odG1s">MySQL 8.4 Release Notes Changes in MySQL 8.4.5 (2025-04-15, LTS Release)<i class="fa fa-external-link-alt"></i></span>，</li>
+<li><strong>创新版</strong> Innovation <span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC85LjMvZW4vbmV3cy05LTMtMC5odG1s">MySQL 9.3 Release Notes Changes in MySQL 9.3.0 (2025-04-15, Innovation Release)<i class="fa fa-external-link-alt"></i></span>。</li>
+</ul>
 <p>MySQL 发行说明：<span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjAvZW4v">mysql-8.0-relnotes<i class="fa fa-external-link-alt"></i></span> 。</p>
 <p><strong>阅读本篇博文与读者的约定</strong>：</p>
 <ol>
@@ -351,7 +356,7 @@
 <span id="more"></span>
 
 <p><strong>如果你想支持小站健康成长，可以在文末进行赞赏哟~~~</strong></p>
-<p>MySQL 文档整理合集（5.6、5.7、8.0.41、8.1、8.2、8.3，8.4.4，9.2.0），定期更新：</p>
+<p>MySQL 文档整理合集（5.5、5.6、5.7，8.0.42，8.4.5，9.3.0），定期更新：</p>
 <p>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMWpHa0dhcldaV1ZuelE5c28wRDhtYUE/cHdkPThrZmY=">https://pan.baidu.com/s/1jGkGarWZWVnzQ9so0D8maA?pwd=8kff<i class="fa fa-external-link-alt"></i></span> </p>
 <p>提取码: 8kff </p>
 <p>文档如何食用，请阅读 docs 目录的 ReadME 文件。</p>
@@ -694,20 +699,20 @@
 <p>MySQL 5.6在线文档（注：官方已停止维护，在线文档已经移动了，PDF下载地址还可使用） </p>
 <p><del><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWZtYW4vNS42L2VuLw==">https://dev.mysql.com/doc/refman/5.6/en/<i class="fa fa-external-link-alt"></i></span></del></p>
 <p>MySQL 5.6文档 PDF 文件下载地址： <span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubXlzcWwuY29tL2RvY3MvcmVmbWFuLTUuNi1lbi5hNC5wZGY=">refman-5.6-en.a4.pdf<i class="fa fa-external-link-alt"></i></span></p>
+<p>MySQL 5.5 文档 PDF 文件下载地址：<span class="exturl" data-url="aHR0cHM6Ly9kb3dubG9hZHMubXlzcWwuY29tL2RvY3MvcmVmbWFuLTUuNS1lbi5hNC5wZGY=">MySQL 5.5 Reference Manual<i class="fa fa-external-link-alt"></i></span></p>
 <p><strong>友情提醒</strong>：下载官方文档尽量前往官方网站下载。某网站利用用户上传的资源，却厚着脸皮需要VIP才能下载，对这种行为表示鄙视。当然，也可以在文初获取我个人整理的压缩包组合（不定期更新）。</p>
 <p>以上总结，仅供参考哟！</p>
 <p>最后，希望对你的学习和工作有所帮助。</p>
-<p><strong>参考资料</strong>：</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC85LjIvZW4vbmV3cy05LTItMC5odG1s">MySQL 9.2 Release Notes Changes in MySQL 9.2.0 (2025-01-21, Innovation Release)<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjQvZW4vbmV3cy04LTQtNC5odG1s">MySQL 8.4 Release Notes Changes in MySQL 8.4.4 (2025-01-21, LTS Release)<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjAvZW4vbmV3cy04LTAtNDEuaHRtbA==">MySQL 8.0 Release Notes Changes in MySQL 8.0.41 (2025-01-21, General Availability)<i class="fa fa-external-link-alt"></i></span></li>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC85LjMvZW4vbmV3cy05LTMtMC5odG1s">MySQL 9.2 Release Notes Changes in MySQL 9.3.0 (2025-04-15, Innovation Release)<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjQvZW4vbmV3cy04LTQtNS5odG1s">MySQL 8.4 Release Notes Changes in MySQL 8.4.5 (2025-04-15, LTS Release)<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjAvZW4vbmV3cy04LTAtNDIuaHRtbA==">MySQL 8.0 Release Notes Changes in MySQL 8.0.42 (2025-04-15, General Availability)<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjAvZW4vbmV3cy04LTAtMjguaHRtbA==">MySQL 8.0 Release Notes Changes in MySQL 8.0.28 (2022-01-18, General Availability)<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjAvZW4vbmV3cy04LTAtMjkuaHRtbA==">MySQL 8.0 Release Notes Changes in MySQL 8.0.29 (2022-04-26, General Availability)<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9kZXYubXlzcWwuY29tL2RvYy9yZWxub3Rlcy9teXNxbC84LjAvZW4vbmV3cy04LTAtMzguaHRtbA==">MySQL 8.0 Release Notes Changes in MySQL 8.0.38 (2024-07-01, General Availability)<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLmFyY2hpdmUvZXhwYW5kLWFyY2hpdmU/dmlldz1wb3dlcnNoZWxsLTcuNA==">Windows 平台解压命令 Expand-Archive<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
-<p>MySQL 文档整理合集（5.6、5.7、8.0.41、8.1、8.2、8.3，8.4.4，9.2.0），定期更新：</p>
+<p>MySQL 文档整理合集（5.5、5.6、5.7，8.0.42，8.4.5，9.3.0），定期更新：</p>
 <p>链接: <span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMWpHa0dhcldaV1ZuelE5c28wRDhtYUE/cHdkPThrZmY=">https://pan.baidu.com/s/1jGkGarWZWVnzQ9so0D8maA?pwd=8kff<i class="fa fa-external-link-alt"></i></span> </p>
 <p>提取码: 8kff </p>
 <p>文档如何食用，请阅读 docs 目录的 ReadME 文件。</p>

@@ -155,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -166,7 +166,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -687,7 +687,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2025/06/09/Gmail%E9%82%AE%E7%AE%B1%E8%AE%BE%E7%BD%AE%E8%BD%AC%E5%8F%91%E9%82%AE%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -705,7 +705,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/" class="post-title-link" itemprop="url">Windows平台体验StableSwarmUI-0.6.4-Beta经验版</a>
+          <a href="/2025/06/09/Gmail%E9%82%AE%E7%AE%B1%E8%AE%BE%E7%BD%AE%E8%BD%AC%E5%8F%91%E9%82%AE%E4%BB%B6/" class="post-title-link" itemprop="url">Google gmail邮箱设置转发邮件</a>
         </h2>
 
         <div class="post-meta-container">
@@ -716,14 +716,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-08-25 20:00:08" itemprop="dateCreated datePublished" datetime="2024-08-25T20:00:08+08:00">2024-08-25</time>
+      <time title="创建时间：2025-06-09 13:36:08" itemprop="dateCreated datePublished" datetime="2025-06-09T13:36:08+08:00">2025-06-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-05-18 20:22:57" itemprop="dateModified" datetime="2025-05-18T20:22:57+08:00">2025-05-18</time>
+      <time title="修改时间：2025-06-11 21:00:14" itemprop="dateModified" datetime="2025-06-11T21:00:14+08:00">2025-06-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -731,7 +731,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+          <a href="/categories/%E7%94%9F%E4%BA%A7%E5%8A%9B/" itemprop="url" rel="index"><span itemprop="name">生产力</span></a>
         </span>
     </span>
 
@@ -742,14 +742,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.6k</span>
+      <span>1.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>9 分钟</span>
+      <span>7 分钟</span>
     </span>
 </div>
 
@@ -760,25 +760,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><img data-src="https://pic1.zhimg.com/80/v2-077e1f3fedbb58aa5b4cf5b3e8b7389e_1440w.png?source=d16d100b" alt="img"></p>
-<p>由于网络原因，国内获取 <code>ComfyUI</code> 以及 <code>SD_Xl_base_1.0</code> 模型可能非常缓慢。</p>
-<p>想要丝滑获取，需要魔法或者科学上网。</p>
-<p>如果没有条件，也有方法，可以从国内开源镜像站或者大模型社区获取资源。</p>
-<p>获取并部署 StableSwarmUI：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1N0YWJpbGl0eS1BSS9TdGFibGVTd2FybVVJL3RhZ3M=">StableSwarmUI<i class="fa fa-external-link-alt"></i></span> ，彼时最新版本为 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1N0YWJpbGl0eS1BSS9TdGFibGVTd2FybVVJL3JlbGVhc2VzL3RhZy8wLjYuNC1CZXRh">StableSwarmUI Release 0.6.4-Beta<i class="fa fa-external-link-alt"></i></span>。你需要 <span class="exturl" data-url="aHR0cHM6Ly93d3cucHl0aG9uLm9yZy8=">Python<i class="fa fa-external-link-alt"></i></span> 环境，如果你访问 Python 官网有困难，可以从 <span class="exturl" data-url="aHR0cHM6Ly9weXRob24ucDJocC5jb20v">Python中文网<i class="fa fa-external-link-alt"></i></span> 获取资源。当然也可以从国内各大开源软件镜像网站获取。如果实在有困难，文末我也会给出自己上传的 Windows 平台 Python 安装包。</p>
-<p>我的 Python 环境，仅供参考：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS D:\work&gt; python -V</span><br><span class="line">Python 3.10.6</span><br></pre></td></tr></table></figure>
-
-<p>关于 zip 压缩文件，如果你没有安装图形解压工具  <span class="exturl" data-url="aHR0cHM6Ly93d3cuNy16aXAub3JnLw==">7-Zip<i class="fa fa-external-link-alt"></i></span> ，也没有安装 <span class="exturl" data-url="aHR0cHM6Ly93d3cuMzYwdG90YWxzZWN1cml0eS5jb20vemgtY24vMzYwemlwLw==">360zip 国际版<i class="fa fa-external-link-alt"></i></span>，可以尝试借助 Windows11 自带的 <span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLmFyY2hpdmUvZXhwYW5kLWFyY2hpdmU/dmlldz1wb3dlcnNoZWxsLTcuNA==">expand-archive<i class="fa fa-external-link-alt"></i></span> 命令解压工具。</p>
-<p>Windows 平台打开 <code>powershell</code> 使用 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/powershell/module/microsoft.powershell.archive/expand-archive?view=powershell-7.4"><strong>expand-archive</strong></a> 命令解压 <code>StableSwarmUI-0.6.4-Beta</code>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expand-Archive .\StableSwarmUI-0.6.4-Beta.zip -DestinationPath E:\AI\</span><br></pre></td></tr></table></figure>
-
-<p>进入 <code>StableSwarmUI</code> 根目录：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd E:\AI\StableSwarmUI-0.6.4-Beta\</span><br></pre></td></tr></table></figure>
-
-<p>让我们一起愉快的开启 StableSwarmUI  体验之旅吧，在这之前，再次友情提醒安装好 <code>Python</code> 环境哟。</p>
+          <p>平时使用 gmail 邮箱，可能需要使用魔法（科学上网）才能正常收发邮件。</p>
+<p>以前，还能使用 QQ 邮箱移动端 App 配置登录 Google gmail 邮箱，正常收发邮件，偶尔也会抽风。</p>
+<p>最近，2025 年 02 月份之后，一直显示收取（更新）失败。期间尝试过关闭 WiFi，切换到流量模式，发现有一段时间可行。又过了一段时间，即便切换到流量模式，无论怎么尝试刷新均以失效告终。</p>
+<p>原本还可以友好的玩耍，结果QQ 邮箱一个劲的提示我，</p>
+<blockquote>
+<p> 服务器连接失败，请稍后重试</p>
+</blockquote>
+<p>我已放弃尝试。</p>
+<p>由于使用 QQ 邮箱再也无法正常收取 gmail 邮件，才想到合理利用邮箱工具的转发功能。</p>
+<p>于是，就诞生了这篇博文。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/#more" rel="contents">
+              <a class="btn" href="/2025/06/09/Gmail%E9%82%AE%E7%AE%B1%E8%AE%BE%E7%BD%AE%E8%BD%AC%E5%8F%91%E9%82%AE%E4%BB%B6/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -825,14 +819,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">267k</span>
+    <span title="站点总字数">269k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">16:11</span>
+    <span title="站点阅读时长">16:18</span>
   </span>
 </div>
 <div class="busuanzi-count">

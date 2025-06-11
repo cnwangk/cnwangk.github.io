@@ -155,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -166,7 +166,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -200,6 +200,128 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="AI & 过去现在未来">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/" class="post-title-link" itemprop="url">Windows平台体验StableSwarmUI-0.6.4-Beta经验版</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-08-25 20:00:08" itemprop="dateCreated datePublished" datetime="2024-08-25T20:00:08+08:00">2024-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-05-18 20:22:57" itemprop="dateModified" datetime="2025-05-18T20:22:57+08:00">2025-05-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img data-src="https://pic1.zhimg.com/80/v2-077e1f3fedbb58aa5b4cf5b3e8b7389e_1440w.png?source=d16d100b" alt="img"></p>
+<p>由于网络原因，国内获取 <code>ComfyUI</code> 以及 <code>SD_Xl_base_1.0</code> 模型可能非常缓慢。</p>
+<p>想要丝滑获取，需要魔法或者科学上网。</p>
+<p>如果没有条件，也有方法，可以从国内开源镜像站或者大模型社区获取资源。</p>
+<p>获取并部署 StableSwarmUI：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1N0YWJpbGl0eS1BSS9TdGFibGVTd2FybVVJL3RhZ3M=">StableSwarmUI<i class="fa fa-external-link-alt"></i></span> ，彼时最新版本为 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1N0YWJpbGl0eS1BSS9TdGFibGVTd2FybVVJL3JlbGVhc2VzL3RhZy8wLjYuNC1CZXRh">StableSwarmUI Release 0.6.4-Beta<i class="fa fa-external-link-alt"></i></span>。你需要 <span class="exturl" data-url="aHR0cHM6Ly93d3cucHl0aG9uLm9yZy8=">Python<i class="fa fa-external-link-alt"></i></span> 环境，如果你访问 Python 官网有困难，可以从 <span class="exturl" data-url="aHR0cHM6Ly9weXRob24ucDJocC5jb20v">Python中文网<i class="fa fa-external-link-alt"></i></span> 获取资源。当然也可以从国内各大开源软件镜像网站获取。如果实在有困难，文末我也会给出自己上传的 Windows 平台 Python 安装包。</p>
+<p>我的 Python 环境，仅供参考：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS D:\work&gt; python -V</span><br><span class="line">Python 3.10.6</span><br></pre></td></tr></table></figure>
+
+<p>关于 zip 压缩文件，如果你没有安装图形解压工具  <span class="exturl" data-url="aHR0cHM6Ly93d3cuNy16aXAub3JnLw==">7-Zip<i class="fa fa-external-link-alt"></i></span> ，也没有安装 <span class="exturl" data-url="aHR0cHM6Ly93d3cuMzYwdG90YWxzZWN1cml0eS5jb20vemgtY24vMzYwemlwLw==">360zip 国际版<i class="fa fa-external-link-alt"></i></span>，可以尝试借助 Windows11 自带的 <span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3Bvd2Vyc2hlbGwvbW9kdWxlL21pY3Jvc29mdC5wb3dlcnNoZWxsLmFyY2hpdmUvZXhwYW5kLWFyY2hpdmU/dmlldz1wb3dlcnNoZWxsLTcuNA==">expand-archive<i class="fa fa-external-link-alt"></i></span> 命令解压工具。</p>
+<p>Windows 平台打开 <code>powershell</code> 使用 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/powershell/module/microsoft.powershell.archive/expand-archive?view=powershell-7.4"><strong>expand-archive</strong></a> 命令解压 <code>StableSwarmUI-0.6.4-Beta</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expand-Archive .\StableSwarmUI-0.6.4-Beta.zip -DestinationPath E:\AI\</span><br></pre></td></tr></table></figure>
+
+<p>进入 <code>StableSwarmUI</code> 根目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd E:\AI\StableSwarmUI-0.6.4-Beta\</span><br></pre></td></tr></table></figure>
+
+<p>让我们一起愉快的开启 StableSwarmUI  体验之旅吧，在这之前，再次友情提醒安装好 <code>Python</code> 环境哟。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/08/25/Windows%E5%B9%B3%E5%8F%B0%E4%BD%93%E9%AA%8CStableSwarmUI-0-6-4-Beta%E7%BB%8F%E9%AA%8C%E7%89%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -645,129 +767,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2024/03/19/%E9%A9%BE%E9%A9%B6%E8%AF%81%E5%88%B0%E6%9C%9F%E4%BA%86%E6%80%8E%E4%B9%88%E6%8D%A2%E8%AF%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="龙腾万里sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="龙腾万里sky的博客">
-      <meta itemprop="description" content="AI & 过去现在未来">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/03/19/%E9%A9%BE%E9%A9%B6%E8%AF%81%E5%88%B0%E6%9C%9F%E4%BA%86%E6%80%8E%E4%B9%88%E6%8D%A2%E8%AF%81/" class="post-title-link" itemprop="url">驾驶证到期了怎么换证</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-03-19 08:00:00" itemprop="dateCreated datePublished" datetime="2024-03-19T08:00:00+08:00">2024-03-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-09 20:05:29" itemprop="dateModified" datetime="2024-05-09T20:05:29+08:00">2024-05-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%94%9F%E6%B4%BB%E7%99%BE%E7%A7%91/" itemprop="url" rel="index"><span itemprop="name">生活百科</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>8 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>驾驶证期满换证流程（异地）。</p>
-<p>前往<strong>指定医院</strong>，完成体检，医院会上传提交体检报告到车管所数据服务中心。发票和纸质体检报告做为凭据自行保留哟。</p>
-<p>异地办理的驾驶证，需要在<strong>交管12123 APP</strong> 选择迁移现居住地，提交<strong>近期 1 寸白底照片</strong>。</p>
-<p><strong>问：</strong>驾驶人期满换证需要经历哪些过程？          </p>
-<p><strong>答：</strong>五个阶段。</p>
-<p>如下所示：</p>
-<ol>
-<li>提交申请阶段。</li>
-<li>受理阶段。</li>
-<li>制证阶段。</li>
-<li>邮件交寄中阶段。</li>
-<li>办理完成阶段。</li>
-</ol>
-<p><strong>问：</strong>正常办理驾驶人期满换证需要多久？          </p>
-<p><strong>答：</strong>一般来说，当天完成体检，第二天可以收到受理办证信息。至于多久可以到手，取决于你是自行前往还是邮寄到手。<strong>以本人为例，当天体检后提交迁移申请，第三天下午收到快递（重庆渝中区），效率挺高的。</strong></p>
-<p><strong>问：</strong>办理驾驶人期满换证需要花费多少钱？          </p>
-<p><strong>答：</strong>根据各地体检收费标准而定。例如，我个人花费 70 元。消费组成，体检费用 50 元，驾驶证工本费 10 元，邮政快递费用 10 元。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/03/19/%E9%A9%BE%E9%A9%B6%E8%AF%81%E5%88%B0%E6%9C%9F%E4%BA%86%E6%80%8E%E4%B9%88%E6%8D%A2%E8%AF%81/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -792,14 +791,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">267k</span>
+    <span title="站点总字数">269k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">16:11</span>
+    <span title="站点阅读时长">16:18</span>
   </span>
 </div>
 <div class="busuanzi-count">

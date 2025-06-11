@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="uhuV0rnYMUWuzeZrPSHxh_QSZ6tM5AWsUD-fXyEVOOc">
+  <meta name="baidu-site-verification" content="codeva-jBfPQBw271">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="平时使用 gmail 邮箱，可能需要使用魔法（科学上网）才能正常收发邮件。 以前，还能使用 QQ 邮箱移动端 App 配置登录 Google gmail 邮箱，正常收发邮件，偶尔也会抽风。 最近，2025 年 02 月份之后，一直显示收取（更新）失败。期间尝试过关闭 WiFi，切换到流量模式，发现有一段时间可行。又过了一段时间，即便切换到流量模式，无论怎么尝试刷新均以失效告终。 原本还可以友好的玩">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Google gmail邮箱设置转发邮件">
+<meta property="og:url" content="https://blog.cnwangk.top/2025/06/09/Gmail%E9%82%AE%E7%AE%B1%E8%AE%BE%E7%BD%AE%E8%BD%AC%E5%8F%91%E9%82%AE%E4%BB%B6/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="平时使用 gmail 邮箱，可能需要使用魔法（科学上网）才能正常收发邮件。 以前，还能使用 QQ 邮箱移动端 App 配置登录 Google gmail 邮箱，正常收发邮件，偶尔也会抽风。 最近，2025 年 02 月份之后，一直显示收取（更新）失败。期间尝试过关闭 WiFi，切换到流量模式，发现有一段时间可行。又过了一段时间，即便切换到流量模式，无论怎么尝试刷新均以失效告终。 原本还可以友好的玩">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-237491316489d8cb00df8525d302f949_1440w.png?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-8dcbb39b7d67a31746d91e8561e065ba_1440w.png?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-db22e81e06a30f504e7ca05b66cba6ba_1440w.png?source=d16d100b">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-a5cdc5353665c721e821a0ea0d7503c4_1440w.png?source=d16d100b">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-8f067ee68f8edfda2bad48d19eb90d5a_1440w.png?source=d16d100b">
+<meta property="article:published_time" content="2025-06-09T05:36:08.000Z">
+<meta property="article:modified_time" content="2025-06-11T13:00:14.519Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="Gmail">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picx.zhimg.com/80/v2-237491316489d8cb00df8525d302f949_1440w.png?source=d16d100b">
+
+
+<link rel="canonical" href="https://blog.cnwangk.top/2025/06/09/Gmail%E9%82%AE%E7%AE%B1%E8%AE%BE%E7%BD%AE%E8%BD%AC%E5%8F%91%E9%82%AE%E4%BB%B6/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2025/06/09/Gmail%E9%82%AE%E7%AE%B1%E8%AE%BE%E7%BD%AE%E8%BD%AC%E5%8F%91%E9%82%AE%E4%BB%B6/","path":"2025/06/09/Gmail邮箱设置转发邮件/","title":"Google gmail邮箱设置转发邮件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Google gmail邮箱设置转发邮件 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="龙腾万里sky的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-solid fa-user-group fa-fw"></i>友链</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-solid fa-face-smile fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gmail-%E8%AE%BE%E7%BD%AE%E8%BD%AC%E5%8F%91"><span class="nav-number">1.</span> <span class="nav-text">Gmail 设置转发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gmail-%E7%A1%AE%E8%AE%A4%E9%82%AE%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">Gmail 确认邮件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%82%AE%E7%AE%B1%E6%94%B6%E4%BB%B6%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">邮箱收件示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#END"><span class="nav-number">4.</span> <span class="nav-text">END</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">AI & 过去现在未来</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2025/06/09/Gmail%E9%82%AE%E7%AE%B1%E8%AE%BE%E7%BD%AE%E8%BD%AC%E5%8F%91%E9%82%AE%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="AI & 过去现在未来">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Google gmail邮箱设置转发邮件 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Google gmail邮箱设置转发邮件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-06-09 13:36:08" itemprop="dateCreated datePublished" datetime="2025-06-09T13:36:08+08:00">2025-06-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-06-11 21:00:14" itemprop="dateModified" datetime="2025-06-11T21:00:14+08:00">2025-06-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%94%9F%E4%BA%A7%E5%8A%9B/" itemprop="url" rel="index"><span itemprop="name">生产力</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>平时使用 gmail 邮箱，可能需要使用魔法（科学上网）才能正常收发邮件。</p>
+<p>以前，还能使用 QQ 邮箱移动端 App 配置登录 Google gmail 邮箱，正常收发邮件，偶尔也会抽风。</p>
+<p>最近，2025 年 02 月份之后，一直显示收取（更新）失败。期间尝试过关闭 WiFi，切换到流量模式，发现有一段时间可行。又过了一段时间，即便切换到流量模式，无论怎么尝试刷新均以失效告终。</p>
+<p>原本还可以友好的玩耍，结果QQ 邮箱一个劲的提示我，</p>
+<blockquote>
+<p> 服务器连接失败，请稍后重试</p>
+</blockquote>
+<p>我已放弃尝试。</p>
+<p>由于使用 QQ 邮箱再也无法正常收取 gmail 邮件，才想到合理利用邮箱工具的转发功能。</p>
+<p>于是，就诞生了这篇博文。</p>
+<span id="more"></span>
+
+
+
+<h2 id="Gmail-设置转发"><a href="#Gmail-设置转发" class="headerlink" title="Gmail 设置转发"></a>Gmail 设置转发</h2><p><img data-src="https://picx.zhimg.com/80/v2-237491316489d8cb00df8525d302f949_1440w.png?source=d16d100b" alt="img"></p>
+<p><strong>转发端</strong>（原始端）：Gmail。</p>
+<p><strong>接收端</strong>：常见的有网易 163 邮箱，QQ 邮箱（Foxmail），或者设置其它支持该项设置的邮箱。</p>
+<p>主要以设置网易 163 邮箱作为转发邮件的接收端，进行示例说明。</p>
+<p>将收到的邮件副本转发给 <span class="exturl" data-url="bWFpbHRvOiYjMTIxOyYjeDZmOyYjeDc1OyYjMTE0OyYjOTU7JiN4NmU7JiN4NjE7JiN4NmQ7JiMxMDE7JiM2NDsmI3gzMTsmIzU0OyYjeDMzOyYjNDY7JiN4NjM7JiMxMTE7JiMxMDk7">&#121;&#x6f;&#x75;&#114;&#95;&#x6e;&#x61;&#x6d;&#101;&#64;&#x31;&#54;&#x33;&#46;&#x63;&#111;&#109;<i class="fa fa-external-link-alt"></i></span>，在收件箱中保留 Gmail 的副本。</p>
+<p>当然，设置完转发邮件的接收端邮箱，<strong>Gmail 副本目前支持 4 种选项</strong>：</p>
+<ul>
+<li>在收件箱中保留 Gmail 的副本。</li>
+<li>将 Gmail 的副本标为已读。</li>
+<li>归档 Gmail 的副本。</li>
+<li>删除 Gmail 的副本。</li>
+</ul>
+<p><strong>提示：通过创建过滤器，还可以只转发部分邮件！</strong></p>
+<p>关于 POP 下载以及 IMAP 访问的设置，不做说明，可以根据自身工作场景需求做对应的设置。</p>
+<p>给出几种邮箱官方网站：</p>
+<ul>
+<li>Gmail 邮箱： <span class="exturl" data-url="aHR0cHM6Ly9tYWlsLmdvb2dsZS5jb20vJUVGJUJDJThDJUU5JTlDJTgwJUU4JUE2JTgxJUU0JUJEJUJGJUU3JTk0JUE4JUU5JUFEJTk0JUU2JUIzJTk1JUVGJUJDJTg4JUU3JUE3JTkxJUU1JUFEJUE2JUU0JUI4JThBJUU3JUJEJTkxJUVGJUJDJTg5">https://mail.google.com/，需要使用魔法（科学上网）<i class="fa fa-external-link-alt"></i></span></li>
+<li>网易 163 邮箱：<span class="exturl" data-url="aHR0cHM6Ly9tYWlsLjE2My5jb20v">https://mail.163.com/<i class="fa fa-external-link-alt"></i></span></li>
+<li>QQ 邮箱：<span class="exturl" data-url="aHR0cHM6Ly93eC5tYWlsLnFxLmNvbS8=">https://wx.mail.qq.com/<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="Gmail-确认邮件"><a href="#Gmail-确认邮件" class="headerlink" title="Gmail 确认邮件"></a>Gmail 确认邮件</h2><p><img data-src="https://pic1.zhimg.com/80/v2-8dcbb39b7d67a31746d91e8561e065ba_1440w.png?source=d16d100b" alt="img"></p>
+<p><strong>如下，以设置转发到网易 163 邮箱为示例，接收到 Gmail 转发确认邮件</strong>。</p>
+<blockquote>
+<p>(Gmail) 转发确认 - 从 <span class="exturl" data-url="bWFpbHRvOiYjeDc5OyYjMTExOyYjeDc1OyYjMTE0OyYjeDVmOyYjeDZlOyYjOTc7JiMxMDk7JiMxMDE7JiM2NDsmI3g2NzsmIzEwOTsmI3g2MTsmI3g2OTsmIzEwODsmI3gyZTsmI3g2MzsmI3g2ZjsmI3g2ZDs=">&#x79;&#111;&#x75;&#114;&#x5f;&#x6e;&#97;&#109;&#101;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;<i class="fa fa-external-link-alt"></i></span> 接收邮件安全浏览模式 ， 发件人： Gmail 小组敬上<span class="exturl" data-url="bWFpbHRvOmZvcndhcmRpbmctbm9yZXBseUBnb29nbGUuY29t">forwarding-noreply@google.com<i class="fa fa-external-link-alt"></i></span>+(定制我的回信邮箱域名，对外沟通更显专业，立即定制) ， 收件人： 我<span class="exturl" data-url="bWFpbHRvOnlvdXJfbmFtZUAxNjMuY29t">your_name@163.com<i class="fa fa-external-link-alt"></i></span>+ ， 时   间：2025 年 05 月 31 日 16:12 (星期六)。</p>
+</blockquote>
+<p>-</p>
+<blockquote>
+<p><span class="exturl" data-url="bWFpbHRvOiYjeDc5OyYjeDZmOyYjeDc1OyYjMTE0OyYjeDVmOyYjeDZlOyYjeDYxOyYjMTA5OyYjMTAxOyYjeDQwOyYjeDY3OyYjeDZkOyYjeDYxOyYjeDY5OyYjMTA4OyYjeDJlOyYjeDYzOyYjMTExOyYjMTA5Ow==">&#x79;&#x6f;&#x75;&#114;&#x5f;&#x6e;&#x61;&#109;&#101;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#109;<i class="fa fa-external-link-alt"></i></span> 已请求自动将邮件转发到您的电子邮件地址 <span class="exturl" data-url="bWFpbHRvOiYjMTIxOyYjMTExOyYjeDc1OyYjMTE0OyYjOTU7JiN4NmU7JiM5NzsmI3g2ZDsmIzEwMTsmIzY0OyYjeDMxOyYjNTQ7JiM1MTsmI3gyZTsmIzk5OyYjeDZmOyYjMTA5Ow==">&#121;&#111;&#x75;&#114;&#95;&#x6e;&#97;&#x6d;&#101;&#64;&#x31;&#54;&#51;&#x2e;&#99;&#x6f;&#109;<i class="fa fa-external-link-alt"></i></span>。 要让 <span class="exturl" data-url="bWFpbHRvOiYjeDc5OyYjMTExOyYjMTE3OyYjeDcyOyYjOTU7JiMxMTA7JiN4NjE7JiN4NmQ7JiN4NjU7JiM2NDsmIzEwMzsmI3g2ZDsmI3g2MTsmIzEwNTsmIzEwODsmI3gyZTsmIzk5OyYjMTExOyYjMTA5Ow==">&#x79;&#111;&#117;&#x72;&#95;&#110;&#x61;&#x6d;&#x65;&#64;&#103;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#109;<i class="fa fa-external-link-alt"></i></span> 自动将邮件转发到您的地址，请点击下面的链接确认请求： <span class="exturl" data-url="aHR0cHM6Ly9tYWlsLXNldHRpbmdzLmdvb2dsZS5jb20vbWFpbC9jb25maXJtX2V4YW1wbGVfdXJs">https://mail-settings.google.com/mail/confirm_example_url<i class="fa fa-external-link-alt"></i></span> 如果您点击链接之后发现链接似乎无效，请将其复制并粘贴到新的浏览器窗口中。 感谢您使用 Gmail！祝好 Gmail 团队</p>
+</blockquote>
+<p>-</p>
+<blockquote>
+<p>如果您未批准此请求，则无需采取任何进一步措施。 除非您点击上面的链接确认此请求，否则 <span class="exturl" data-url="bWFpbHRvOiYjeDc5OyYjMTExOyYjeDc1OyYjMTE0OyYjeDVmOyYjeDZlOyYjOTc7JiMxMDk7JiMxMDE7JiM2NDsmIzEwMzsmI3g2ZDsmIzk3OyYjMTA1OyYjMTA4OyYjNDY7JiM5OTsmIzExMTsmIzEwOTs=">&#x79;&#111;&#x75;&#114;&#x5f;&#x6e;&#97;&#109;&#101;&#64;&#103;&#x6d;&#97;&#105;&#108;&#46;&#99;&#111;&#109;<i class="fa fa-external-link-alt"></i></span> 无法自动将邮件转发到您的电子邮件地址。如果您不小心点击了该链接，但其实并不想让 <span class="exturl" data-url="bWFpbHRvOiYjMTIxOyYjeDZmOyYjMTE3OyYjeDcyOyYjOTU7JiMxMTA7JiN4NjE7JiMxMDk7JiN4NjU7JiM2NDsmIzEwMzsmIzEwOTsmI3g2MTsmI3g2OTsmIzEwODsmI3gyZTsmI3g2MzsmIzExMTsmIzEwOTs=">&#121;&#x6f;&#117;&#x72;&#95;&#110;&#x61;&#109;&#x65;&#64;&#103;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#109;<i class="fa fa-external-link-alt"></i></span> 自动将邮件转发到您的地址，请点击以下链接取消该确认：  <span class="exturl" data-url="aHR0cHM6Ly9tYWlsLXNldHRpbmdzLmdvb2dsZS5jb20vbWFpbC9jYW5jZWxfZXhhbXBsZV91cmw=">https://mail-settings.google.com/mail/cancel_example_url<i class="fa fa-external-link-alt"></i></span> 如需详细了解我们向您发送此邮件的原因，请访问： <span class="exturl" data-url="aHR0cDovL3N1cHBvcnQuZ29vZ2xlLmNvbS9tYWlsL2Jpbi9hbnN3ZXIucHk/YW5zd2VyPTE4NDk3MyZobD16aF9DTiVFMyU4MCU4Mg==">http://support.google.com/mail/bin/answer.py?answer=184973&amp;hl=zh_CN。<i class="fa fa-external-link-alt"></i></span> 请勿回复此邮件。如果您想联系 Google.com 团队，请登录您的账号，点击任意页面顶部的“帮助”。然后，点击帮助中心底部的“与我们联系”。</p>
+</blockquote>
+<p><strong>如果想接受此转发邮件服务，点击确认链接；如果不想接受该服务，则点击取消去人链接。</strong></p>
+<h2 id="邮箱收件示例"><a href="#邮箱收件示例" class="headerlink" title="邮箱收件示例"></a>邮箱收件示例</h2><p>设置转发之后，邮箱收件示例。</p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-db22e81e06a30f504e7ca05b66cba6ba_1440w.png?source=d16d100b" alt="img"></p>
+<p>可以自行拟定内容，发一封邮件进行测试。</p>
+<blockquote>
+<p> 发件人：nick_name <span class="exturl" data-url="bWFpbHRvOnlvdXJfbmFtZUAxNjMuY29t">your_name@163.com<i class="fa fa-external-link-alt"></i></span>+ (由 nick_name+caf_&#x3D;nick_name&#x3D;<span class="exturl" data-url="bWFpbHRvOiYjeDMxOyYjeDM2OyYjNTE7JiN4MmU7JiN4NjM7JiN4NmY7JiN4NmQ7JiM2NDsmIzEwMzsmI3g2ZDsmI3g2MTsmIzEwNTsmI3g2YzsmI3gyZTsmIzk5OyYjMTExOyYjMTA5Ow==">&#x31;&#x36;&#51;&#x2e;&#x63;&#x6f;&#x6d;&#64;&#103;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#99;&#111;&#109;<i class="fa fa-external-link-alt"></i></span> 代发 , <span class="exturl" data-url="aHR0cHM6Ly9oZWxwLm1haWwuMTYzLmNvbS9mYXFEZXRhaWwuZG8/Y29kZT1kN2E1ZGM4NDcxY2QwYzBlOGI0YjhmNGY4ZTQ5OTk4YjM3NDE3M2NmZTkxNzEzMDVmYTFjZTYzMGQ3ZjY3YWMyMGFhYmRjY2JiYWNjZDk0MiZzaWQ9WkxBZHhIUlliY2JnTHNUbmtiWVl6Y2xwVG1TZllCU3MmdWlkPWNuX3dhbmdrQDE2My5jb20maG9zdD1tYWlsLjE2My5jb20mdmVyPWpzNiZmb250ZmFjZT15YWhlaSZzdHlsZT03Jmxhbmc9dW5kZWZpbmVkJmhsPXpoX0NOJnNraW49bGlnaHRibHVlJmNvbG9yPTMzNzBGRg==">帮助<i class="fa fa-external-link-alt"></i></span>) 收件人：nick_name <span class="exturl" data-url="bWFpbHRvOnlvdXJfbmFtZUBnbWFpbC5jb20=">your_name@gmail.com<i class="fa fa-external-link-alt"></i></span>+ 时  间：2025 年 05 月 31 日 16:24 (星期六)</p>
+</blockquote>
+<p>比如，</p>
+<p>标题：<strong>测试转发</strong>，</p>
+<p>内容：测试Gmail邮件转发服务</p>
+<p>当然，也可以等待接收转发过来的邮件。</p>
+<p>-</p>
+<p>再比如，我收到了微软必应Rewards 兑换奖励的邮件，由 Gmail 邮箱转发至我的网易 163 邮箱。</p>
+<p>如果没有提前设置转发邮件，我兑换奖励，还需要使用魔法（科学上网）才能查看邮件，哈哈~</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-a5cdc5353665c721e821a0ea0d7503c4_1440w.png?source=d16d100b" alt="img"></p>
+<p>出于隐私保护，我隐去了部分个人私密数据信息，不影响各位读者观看。</p>
+<p>收到的转发邮件标题、发件人、收件人以及时间：</p>
+<blockquote>
+<p> 看看您的奖励：天猫超市礼品卡 100元 发件人：Microsoft Rewards <span class="exturl" data-url="bWFpbHRvOk1pY3Jvc29mdFJld2FyZHNAZW1haWxub3RpZnkubWljcm9zb2Z0LmNvbQ==">MicrosoftRewards@emailnotify.microsoft.com<i class="fa fa-external-link-alt"></i></span>+ (由 nick_name +caf_&#x3D;your_name&#x3D;<span class="exturl" data-url="bWFpbHRvOiYjNDk7JiM1NDsmI3gzMzsmIzQ2OyYjeDYzOyYjeDZmOyYjMTA5OyYjNjQ7JiN4Njc7JiMxMDk7JiN4NjE7JiMxMDU7JiN4NmM7JiM0NjsmIzk5OyYjMTExOyYjMTA5Ow==">&#49;&#54;&#x33;&#46;&#x63;&#x6f;&#109;&#64;&#x67;&#109;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#109;<i class="fa fa-external-link-alt"></i></span> 代发 , <span class="exturl" data-url="aHR0cHM6Ly9oZWxwLm1haWwuMTYzLmNvbS9mYXFEZXRhaWwuZG8/Y29kZT1kN2E1ZGM4NDcxY2QwYzBlOGI0YjhmNGY4ZTQ5OTk4YjM3NDE3M2NmZTkxNzEzMDVmYTFjZTYzMGQ3ZjY3YWMyMGFhYmRjY2JiYWNjZDk0MiZzaWQ9WkxBZHhIUlliY2JnTHNUbmtiWVl6Y2xwVG1TZllCU3MmdWlkPWNuX3dhbmdrQDE2My5jb20maG9zdD1tYWlsLjE2My5jb20mdmVyPWpzNiZmb250ZmFjZT15YWhlaSZzdHlsZT03Jmxhbmc9dW5kZWZpbmVkJmhsPXpoX0NOJnNraW49bGlnaHRibHVlJmNvbG9yPTMzNzBGRg==">帮助<i class="fa fa-external-link-alt"></i></span>) 收件人：nick_name <span class="exturl" data-url="bWFpbHRvOnlvdXJfbmFtZUBnbWFpbC5jb20=">your_name@gmail.com<i class="fa fa-external-link-alt"></i></span>+ 时  间：2025 年 06 月 01 日 14 : 35 (星期日)</p>
+</blockquote>
+<p>收到的转发邮件具体内容：</p>
+<blockquote>
+<p>好极了！您奖励在这里。 天猫超市为广大网购消费者提供进口食品、食品饮料、粮油副食、美容洗护、家居用品、家庭清洁、母婴用品等所有生活必需品，商品品质100%保证。随时随地，轻松用手机或鼠标逛超市，生活快消品一次性购齐，不用排队、送货上门，还提供7天无理由退货服务。天猫超市，让生活更简单。 天猫超市礼品卡。 </p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>奖励：天猫超市礼品卡 100元</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>订单确认：xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</td>
+</tr>
+<tr>
+<td>兑换网址截止日期：2028-05-12T15:59:59Z</td>
+</tr>
+<tr>
+<td>访问天猫超市礼品卡页面 <span class="exturl" data-url="aHR0cHM6Ly9jaGFvc2hpLnRtYWxsLmNvbS9naWZ0LWNhcmQuaHRt">https://chaoshi.tmall.com/gift-card.htm<i class="fa fa-external-link-alt"></i></span> 登录常用的淘宝账号输入卡号及密码绑定选择产品，使用余额，完成订单在此处查看您的帐户资料。如需额外的帮助，请看一下我们的常见问题解答,或随时联系我们。                                 谢谢您成为会员 — Microsoft</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>本卡在绑定淘宝账号后可在天猫超市购物使用，天猫超市网址：<span class="exturl" data-url="aHR0cDovL2NoYW9zaGkudG1hbGwuY29tLw==">chaoshi.tmall.com<i class="fa fa-external-link-alt"></i></span>。 在天猫超市购物结算时，将优先使用本卡进行支付。 本卡只能在有效期内使用，具体到期时间及余额可登录电脑端账户页面查询。查询网址： <span class="exturl" data-url="aHR0cHM6Ly9jaGFvc2hpLnRtYWxsLmNvbS9naWZ0LWNhcmQuaHRt">https://chaoshi.tmall.com/gift-card.htm<i class="fa fa-external-link-alt"></i></span> 本卡为不记名卡，不挂失，不可提现。使用时请遵守《享淘卡章程》的相关规定 Tmall 中国不是奖励的赞助商，也不是奖励计划的附属机构。所附徽标和其他识别标志为各代表公司和&#x2F;或其附属公司的商标，并由其所有。有关其他条款和条件，请访问每家公司的网站。 请不要回复此邮件。我们不监控这个电子邮件地址，且无法回复发送给它的电子邮件。如果您有任何问题或意见，请<span class="exturl" data-url="aHR0cHM6Ly9nby5taWNyb3NvZnQuY29tL2Z3bGluay8/bGlua2lkPTgyMzY3NQ==">联系我们<i class="fa fa-external-link-alt"></i></span>。 您收到的这条消息来自 Microsoft ，因为您加入了 Microsoft Rewards。Microsoft 尊重您的隐私。请阅读我们的在线<span class="exturl" data-url="aHR0cHM6Ly9nby5taWNyb3NvZnQuY29tL2Z3bGluay8/TGlua0lkPTUyMTgzOQ==">隐私声明<i class="fa fa-external-link-alt"></i></span>。 Microsoft Corporation One Microsoft Way Redmond, WA 98052</p>
+</blockquote>
+<p>当然，你还可以设置使用 QQ 邮箱接收转发邮件。</p>
+<p>接收到确认邮件，点击确认请求即可。</p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-8f067ee68f8edfda2bad48d19eb90d5a_1440w.png?source=d16d100b" alt="img"></p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>以上总结，仅供参考哟！</p>
+<p>如果感兴趣的话，动一动你的小手，点赞关注不迷路~~~</p>
+<p>—END—</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="龙腾万里sky 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.cnwangk.top/2025/06/09/Gmail%E9%82%AE%E7%AE%B1%E8%AE%BE%E7%BD%AE%E8%BD%AC%E5%8F%91%E9%82%AE%E4%BB%B6/" title="Google gmail邮箱设置转发邮件">https://blog.cnwangk.top/2025/06/09/Gmail邮箱设置转发邮件/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Gmail/" rel="tag"><i class="fa fa-tag"></i> Gmail</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/09/30/Windows-terminal-powershell7%E8%A7%A3%E5%86%B3%E8%BE%93%E5%87%BA%E6%89%93%E5%8D%B0%E4%B8%AD%E6%96%87%E6%97%B6%E5%87%BA%E7%8E%B0%E4%B9%B1%E7%A0%81/" rel="prev" title="Windows terminal powershell7 解决输出打印中文时出现乱码">
+                  <i class="fa fa-angle-left"></i> Windows terminal powershell7 解决输出打印中文时出现乱码
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">269k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">16:18</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+      本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+      本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@11.4.0/dist/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2025/06/09/Gmail%E9%82%AE%E7%AE%B1%E8%AE%BE%E7%BD%AE%E8%BD%AC%E5%8F%91%E9%82%AE%E4%BB%B6/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

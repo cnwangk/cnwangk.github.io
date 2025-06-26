@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.aiwanli.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="使用 jekyll 搭建测试环境，先上效果，访问即可体验：https:&#x2F;&#x2F;blog-wangk.pages.dev&#x2F;  絮絮叨叨絮絮叨叨起初，在想自己有一定的 Hexo 使用经验，上手 jekyll 应该很快。实际动手，才发现没有想的那么容易。主要是Ruby、jekyll环境问题，遇到陌生没有接触过的技术，没有耐心阅读官方文档。遇到错误，没有耐心排查。 既然聊到 Hexo，那就简单说一下。如果你尝">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="CentOS-Stream-9 初体验Ruby与jekyll">
-<meta property="og:url" content="https://blog.cnwangk.top/2023/04/09/CentOS-Stream-9-%E5%88%9D%E4%BD%93%E9%AA%8CRuby%E4%B8%8Ejekyll/index.html">
+<meta property="og:url" content="https://blog.aiwanli.top/2023/04/09/CentOS-Stream-9-%E5%88%9D%E4%BD%93%E9%AA%8CRuby%E4%B8%8Ejekyll/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
 <meta property="og:description" content="使用 jekyll 搭建测试环境，先上效果，访问即可体验：https:&#x2F;&#x2F;blog-wangk.pages.dev&#x2F;  絮絮叨叨絮絮叨叨起初，在想自己有一定的 Hexo 使用经验，上手 jekyll 应该很快。实际动手，才发现没有想的那么容易。主要是Ruby、jekyll环境问题，遇到陌生没有接触过的技术，没有耐心阅读官方文档。遇到错误，没有耐心排查。 既然聊到 Hexo，那就简单说一下。如果你尝">
 <meta property="og:locale" content="zh_CN">
@@ -48,10 +48,10 @@
 <meta name="twitter:image" content="https://s1.ax1x.com/2023/04/09/ppbB5Ps.png">
 
 
-<link rel="canonical" href="https://blog.cnwangk.top/2023/04/09/CentOS-Stream-9-%E5%88%9D%E4%BD%93%E9%AA%8CRuby%E4%B8%8Ejekyll/">
+<link rel="canonical" href="https://blog.aiwanli.top/2023/04/09/CentOS-Stream-9-%E5%88%9D%E4%BD%93%E9%AA%8CRuby%E4%B8%8Ejekyll/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2023/04/09/CentOS-Stream-9-%E5%88%9D%E4%BD%93%E9%AA%8CRuby%E4%B8%8Ejekyll/","path":"2023/04/09/CentOS-Stream-9-初体验Ruby与jekyll/","title":"CentOS-Stream-9 初体验Ruby与jekyll"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.aiwanli.top/2023/04/09/CentOS-Stream-9-%E5%88%9D%E4%BD%93%E9%AA%8CRuby%E4%B8%8Ejekyll/","path":"2023/04/09/CentOS-Stream-9-初体验Ruby与jekyll/","title":"CentOS-Stream-9 初体验Ruby与jekyll"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>CentOS-Stream-9 初体验Ruby与jekyll | 龙腾万里sky的博客</title>
@@ -270,7 +270,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2023/04/09/CentOS-Stream-9-%E5%88%9D%E4%BD%93%E9%AA%8CRuby%E4%B8%8Ejekyll/">
+    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2023/04/09/CentOS-Stream-9-%E5%88%9D%E4%BD%93%E9%AA%8CRuby%E4%B8%8Ejekyll/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -553,7 +553,7 @@
 <p><a target="_blank" rel="noopener" href="https://imgse.com/i/pSxU7SU"><img data-src="https://s1.ax1x.com/2023/02/23/pSxU7SU.jpg" alt="pSxU7SU.jpg"></a></p>
 <p>使用过程中，有可能遇到使用 git 提交github仓库，但是页面没有刷新过来。可能你遇到了和我一样的问题，<strong>vercel 同步github pages仓库内容时，Deployments过程中进行 Running Checks失败了，需要手动skip all</strong>。</p>
 <p><img data-src="https://s1.ax1x.com/2023/04/09/ppbBWVg.png"></p>
-<p>个人搭建效果可供参考：<a href="https://blog.cnwangk.top/">https://blog.cnwangk.top</a></p>
+<p>个人搭建效果可供参考：<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNud2FuZ2sudG9wLw==">https://blog.cnwangk.top<i class="fa fa-external-link-alt"></i></span></p>
 <p><strong>cloudflare</strong></p>
 <p>官网：<span class="exturl" data-url="aHR0cHM6Ly93d3cuY2xvdWRmbGFyZXN0YXR1cy5jb20v">https://www.cloudflarestatus.com<i class="fa fa-external-link-alt"></i></span><br>使用cloudflare pages服务，导入github pages服务仓库。与Vercel一样支持CNAME解析（域名映射）。<br><del>个人搭建效果可供参考：<span class="exturl" data-url="aHR0cHM6Ly9jZi5jbndhbmdrLnRvcC8=">https://cf.cnwangk.top<i class="fa fa-external-link-alt"></i></span></del></p>
 <p><a target="_blank" rel="noopener" href="https://imgse.com/i/pSxUIYV"><img data-src="https://s1.ax1x.com/2023/02/23/pSxUIYV.jpg" alt="pSxUIYV.jpg"></a></p>
@@ -615,7 +615,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://blog.cnwangk.top/2023/04/09/CentOS-Stream-9-%E5%88%9D%E4%BD%93%E9%AA%8CRuby%E4%B8%8Ejekyll/" title="CentOS-Stream-9 初体验Ruby与jekyll">https://blog.cnwangk.top/2023/04/09/CentOS-Stream-9-初体验Ruby与jekyll/</a>
+      <a href="https://blog.aiwanli.top/2023/04/09/CentOS-Stream-9-%E5%88%9D%E4%BD%93%E9%AA%8CRuby%E4%B8%8Ejekyll/" title="CentOS-Stream-9 初体验Ruby与jekyll">https://blog.aiwanli.top/2023/04/09/CentOS-Stream-9-初体验Ruby与jekyll/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -793,7 +793,7 @@
 
 
   <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/04/09/CentOS-Stream-9-%E5%88%9D%E4%BD%93%E9%AA%8CRuby%E4%B8%8Ejekyll/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.aiwanli.top/2023/04/09/CentOS-Stream-9-%E5%88%9D%E4%BD%93%E9%AA%8CRuby%E4%B8%8Ejekyll/"}</script>
   <script src="/js/third-party/quicklink.js"></script>
 <script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
 

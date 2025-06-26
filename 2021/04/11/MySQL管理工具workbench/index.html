@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.aiwanli.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="MySQL工具篇介绍——workbench。 MySQL的可视化连接工具还是比较丰富的，大家所熟知的有phpMyAdmin（需要php环境支撑，免费的）；再就是MySQL官方提供的MySQL workbench可视化连接工具，虽然界面很简陋，但胜在是官方提供，功能齐全并且是免费的。其它的还有SQLyog，旗舰正版是收费的，我个人比较喜欢这款工具，用的很趁手；Navicat一样支持MySQL连接，但">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="MySQL连接工具workbench">
-<meta property="og:url" content="https://blog.cnwangk.top/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/index.html">
+<meta property="og:url" content="https://blog.aiwanli.top/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
 <meta property="og:description" content="MySQL工具篇介绍——workbench。 MySQL的可视化连接工具还是比较丰富的，大家所熟知的有phpMyAdmin（需要php环境支撑，免费的）；再就是MySQL官方提供的MySQL workbench可视化连接工具，虽然界面很简陋，但胜在是官方提供，功能齐全并且是免费的。其它的还有SQLyog，旗舰正版是收费的，我个人比较喜欢这款工具，用的很趁手；Navicat一样支持MySQL连接，但">
 <meta property="og:locale" content="zh_CN">
@@ -52,10 +52,10 @@
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/99c9419851161f1d11c0469f94b326b3.png">
 
 
-<link rel="canonical" href="https://blog.cnwangk.top/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/">
+<link rel="canonical" href="https://blog.aiwanli.top/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/","path":"2021/04/11/MySQL管理工具workbench/","title":"MySQL连接工具workbench"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.aiwanli.top/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/","path":"2021/04/11/MySQL管理工具workbench/","title":"MySQL连接工具workbench"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>MySQL连接工具workbench | 龙腾万里sky的博客</title>
@@ -253,7 +253,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/">
+    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -438,7 +438,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://blog.cnwangk.top/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/" title="MySQL连接工具workbench">https://blog.cnwangk.top/2021/04/11/MySQL管理工具workbench/</a>
+      <a href="https://blog.aiwanli.top/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/" title="MySQL连接工具workbench">https://blog.aiwanli.top/2021/04/11/MySQL管理工具workbench/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -616,7 +616,7 @@
 
 
   <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.aiwanli.top/2021/04/11/MySQL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7workbench/"}</script>
   <script src="/js/third-party/quicklink.js"></script>
 <script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
 

@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.aiwanli.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="前言主要以 Windows server2012R2 为主进行介绍，解决实际工作中遇到到的一些问题。 比如服务器 CPU 核心数过高，导致 Oracle 数据库安装时卡在 2% 的情况。 在 Windows 平台，你可以安装 VMware 工具模拟使用 Windows server 达到熟悉的目的。">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Windows_server2012服务器部署Oracle11g：.NET和CPU核心数问题解决方案">
-<meta property="og:url" content="https://blog.cnwangk.top/2021/10/09/Windows_Server2012%E9%83%A8%E7%BD%B2Oracle11g%E6%95%B0%E6%8D%AE%E5%BA%93NET%E7%8E%AF%E5%A2%83%E5%92%8CCPU%E6%A0%B8%E5%BF%83%E6%95%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/index.html">
+<meta property="og:url" content="https://blog.aiwanli.top/2021/10/09/Windows_Server2012%E9%83%A8%E7%BD%B2Oracle11g%E6%95%B0%E6%8D%AE%E5%BA%93NET%E7%8E%AF%E5%A2%83%E5%92%8CCPU%E6%A0%B8%E5%BF%83%E6%95%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
 <meta property="og:description" content="前言主要以 Windows server2012R2 为主进行介绍，解决实际工作中遇到到的一些问题。 比如服务器 CPU 核心数过高，导致 Oracle 数据库安装时卡在 2% 的情况。 在 Windows 平台，你可以安装 VMware 工具模拟使用 Windows server 达到熟悉的目的。">
 <meta property="og:locale" content="zh_CN">
@@ -49,10 +49,10 @@
 <meta name="twitter:image" content="https://picx.zhimg.com/80/v2-fe5ce26ed9df00d5a05d2aa236cb91f0_720w.jpeg?source=d16d100b">
 
 
-<link rel="canonical" href="https://blog.cnwangk.top/2021/10/09/Windows_Server2012%E9%83%A8%E7%BD%B2Oracle11g%E6%95%B0%E6%8D%AE%E5%BA%93NET%E7%8E%AF%E5%A2%83%E5%92%8CCPU%E6%A0%B8%E5%BF%83%E6%95%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
+<link rel="canonical" href="https://blog.aiwanli.top/2021/10/09/Windows_Server2012%E9%83%A8%E7%BD%B2Oracle11g%E6%95%B0%E6%8D%AE%E5%BA%93NET%E7%8E%AF%E5%A2%83%E5%92%8CCPU%E6%A0%B8%E5%BF%83%E6%95%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2021/10/09/Windows_Server2012%E9%83%A8%E7%BD%B2Oracle11g%E6%95%B0%E6%8D%AE%E5%BA%93NET%E7%8E%AF%E5%A2%83%E5%92%8CCPU%E6%A0%B8%E5%BF%83%E6%95%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/","path":"2021/10/09/Windows_Server2012部署Oracle11g数据库NET环境和CPU核心数问题解决方案/","title":"Windows_server2012服务器部署Oracle11g：.NET和CPU核心数问题解决方案"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.aiwanli.top/2021/10/09/Windows_Server2012%E9%83%A8%E7%BD%B2Oracle11g%E6%95%B0%E6%8D%AE%E5%BA%93NET%E7%8E%AF%E5%A2%83%E5%92%8CCPU%E6%A0%B8%E5%BF%83%E6%95%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/","path":"2021/10/09/Windows_Server2012部署Oracle11g数据库NET环境和CPU核心数问题解决方案/","title":"Windows_server2012服务器部署Oracle11g：.NET和CPU核心数问题解决方案"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Windows_server2012服务器部署Oracle11g：.NET和CPU核心数问题解决方案 | 龙腾万里sky的博客</title>
@@ -243,7 +243,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2021/10/09/Windows_Server2012%E9%83%A8%E7%BD%B2Oracle11g%E6%95%B0%E6%8D%AE%E5%BA%93NET%E7%8E%AF%E5%A2%83%E5%92%8CCPU%E6%A0%B8%E5%BF%83%E6%95%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
+    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2021/10/09/Windows_Server2012%E9%83%A8%E7%BD%B2Oracle11g%E6%95%B0%E6%8D%AE%E5%BA%93NET%E7%8E%AF%E5%A2%83%E5%92%8CCPU%E6%A0%B8%E5%BF%83%E6%95%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -398,7 +398,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://blog.cnwangk.top/2021/10/09/Windows_Server2012%E9%83%A8%E7%BD%B2Oracle11g%E6%95%B0%E6%8D%AE%E5%BA%93NET%E7%8E%AF%E5%A2%83%E5%92%8CCPU%E6%A0%B8%E5%BF%83%E6%95%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="Windows_server2012服务器部署Oracle11g：.NET和CPU核心数问题解决方案">https://blog.cnwangk.top/2021/10/09/Windows_Server2012部署Oracle11g数据库NET环境和CPU核心数问题解决方案/</a>
+      <a href="https://blog.aiwanli.top/2021/10/09/Windows_Server2012%E9%83%A8%E7%BD%B2Oracle11g%E6%95%B0%E6%8D%AE%E5%BA%93NET%E7%8E%AF%E5%A2%83%E5%92%8CCPU%E6%A0%B8%E5%BF%83%E6%95%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="Windows_server2012服务器部署Oracle11g：.NET和CPU核心数问题解决方案">https://blog.aiwanli.top/2021/10/09/Windows_Server2012部署Oracle11g数据库NET环境和CPU核心数问题解决方案/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -576,7 +576,7 @@
 
 
   <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2021/10/09/Windows_Server2012%E9%83%A8%E7%BD%B2Oracle11g%E6%95%B0%E6%8D%AE%E5%BA%93NET%E7%8E%AF%E5%A2%83%E5%92%8CCPU%E6%A0%B8%E5%BF%83%E6%95%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.aiwanli.top/2021/10/09/Windows_Server2012%E9%83%A8%E7%BD%B2Oracle11g%E6%95%B0%E6%8D%AE%E5%BA%93NET%E7%8E%AF%E5%A2%83%E5%92%8CCPU%E6%A0%B8%E5%BF%83%E6%95%B0%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"}</script>
   <script src="/js/third-party/quicklink.js"></script>
 <script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
 

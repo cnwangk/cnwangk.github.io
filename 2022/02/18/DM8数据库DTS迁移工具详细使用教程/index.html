@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.aiwanli.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="最近业务上突然有了这种需求，国产化替代，优先选中了国内的噩梦。啊…口误，是国产数据库优秀的代表达梦数据库。寻思着达梦DTS迁移工具的使用，发现具有多种迁移模式。比如支持DM到DM，亦或是Oracle迁移用户数据到DM8。 当然，DM8在Windows下安装很简单，图形化界面，基本就是下一步下一步，注意你安装的路径。Linux下安装稍微麻烦一点，万变不离其宗，只要注意安装过程中需要实例化（初始化DA">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="DM8 数据库 DTS 迁移工具详细使用教程">
-<meta property="og:url" content="https://blog.cnwangk.top/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:url" content="https://blog.aiwanli.top/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
 <meta property="og:description" content="最近业务上突然有了这种需求，国产化替代，优先选中了国内的噩梦。啊…口误，是国产数据库优秀的代表达梦数据库。寻思着达梦DTS迁移工具的使用，发现具有多种迁移模式。比如支持DM到DM，亦或是Oracle迁移用户数据到DM8。 当然，DM8在Windows下安装很简单，图形化界面，基本就是下一步下一步，注意你安装的路径。Linux下安装稍微麻烦一点，万变不离其宗，只要注意安装过程中需要实例化（初始化DA">
 <meta property="og:locale" content="zh_CN">
@@ -57,10 +57,10 @@
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/2ff923a9ea3f4566848dea6934d0cd86.png?x-oss-process=,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1RvbG92ZV9kcmVhbQ==,size_16,color_FFFFFF,t_70#">
 
 
-<link rel="canonical" href="https://blog.cnwangk.top/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
+<link rel="canonical" href="https://blog.aiwanli.top/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/","path":"2022/02/18/DM8数据库DTS迁移工具详细使用教程/","title":"DM8 数据库 DTS 迁移工具详细使用教程"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.aiwanli.top/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/","path":"2022/02/18/DM8数据库DTS迁移工具详细使用教程/","title":"DM8 数据库 DTS 迁移工具详细使用教程"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>DM8 数据库 DTS 迁移工具详细使用教程 | 龙腾万里sky的博客</title>
@@ -279,7 +279,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
+    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -429,7 +429,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://blog.cnwangk.top/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="DM8 数据库 DTS 迁移工具详细使用教程">https://blog.cnwangk.top/2022/02/18/DM8数据库DTS迁移工具详细使用教程/</a>
+      <a href="https://blog.aiwanli.top/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="DM8 数据库 DTS 迁移工具详细使用教程">https://blog.aiwanli.top/2022/02/18/DM8数据库DTS迁移工具详细使用教程/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -607,7 +607,7 @@
 
 
   <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.aiwanli.top/2022/02/18/DM8%E6%95%B0%E6%8D%AE%E5%BA%93DTS%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"}</script>
   <script src="/js/third-party/quicklink.js"></script>
 <script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
 

@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.aiwanli.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="一入编程深似海，从此节操是路人。 最近使用podman，就想着写一篇总结性的笔记，以备后续参考。就如同写代码，不写注释，过了一段时间可能会想这是我写的吗？不会吧，还要理一下逻辑才能读懂，不利于后期维护。 感觉整体体验下来，镜像获取、容器创建、容器监控、容器移除，和docker差不多，感觉可以作为替代品。 什么是podman？  Podman is a utility provided as pa">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="podman入门实战">
-<meta property="og:url" content="https://blog.cnwangk.top/2023/03/08/podman%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:url" content="https://blog.aiwanli.top/2023/03/08/podman%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
 <meta property="og:description" content="一入编程深似海，从此节操是路人。 最近使用podman，就想着写一篇总结性的笔记，以备后续参考。就如同写代码，不写注释，过了一段时间可能会想这是我写的吗？不会吧，还要理一下逻辑才能读懂，不利于后期维护。 感觉整体体验下来，镜像获取、容器创建、容器监控、容器移除，和docker差不多，感觉可以作为替代品。 什么是podman？  Podman is a utility provided as pa">
 <meta property="og:locale" content="zh_CN">
@@ -44,10 +44,10 @@
 <meta name="twitter:image" content="https://s1.ax1x.com/2023/03/08/ppma2p6.png">
 
 
-<link rel="canonical" href="https://blog.cnwangk.top/2023/03/08/podman%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/">
+<link rel="canonical" href="https://blog.aiwanli.top/2023/03/08/podman%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2023/03/08/podman%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/","path":"2023/03/08/podman入门实战/","title":"podman入门实战"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.aiwanli.top/2023/03/08/podman%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/","path":"2023/03/08/podman入门实战/","title":"podman入门实战"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>podman入门实战 | 龙腾万里sky的博客</title>
@@ -238,7 +238,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2023/03/08/podman%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/">
+    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2023/03/08/podman%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -609,7 +609,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://blog.cnwangk.top/2023/03/08/podman%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/" title="podman入门实战">https://blog.cnwangk.top/2023/03/08/podman入门实战/</a>
+      <a href="https://blog.aiwanli.top/2023/03/08/podman%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/" title="podman入门实战">https://blog.aiwanli.top/2023/03/08/podman入门实战/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -787,7 +787,7 @@
 
 
   <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/03/08/podman%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.aiwanli.top/2023/03/08/podman%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/"}</script>
   <script src="/js/third-party/quicklink.js"></script>
 <script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
 

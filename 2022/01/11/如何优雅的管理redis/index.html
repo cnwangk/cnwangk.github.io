@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.aiwanli.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="如何给Redis设置密码，以防止其它未经授权的客户端进行连接呢？怎么知道哪些命令执行的比较慢呢？ 本文将带你熟悉Redis管理方面的知识，包含安全和通信协议等等内容。与此同时，还会介与之紧密相关的第三方管理工具。 上一篇博客Redis入门篇，其实只能作入门指南来看，并没有多少深度，但是对于面试有不少帮助的。标题有噱头才会引起更多爱好者多Redis的探索，进一步走进Redis这个五彩斑斓的世界，进阶">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="如何优雅的管理redis">
-<meta property="og:url" content="https://blog.cnwangk.top/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/index.html">
+<meta property="og:url" content="https://blog.aiwanli.top/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
 <meta property="og:description" content="如何给Redis设置密码，以防止其它未经授权的客户端进行连接呢？怎么知道哪些命令执行的比较慢呢？ 本文将带你熟悉Redis管理方面的知识，包含安全和通信协议等等内容。与此同时，还会介与之紧密相关的第三方管理工具。 上一篇博客Redis入门篇，其实只能作入门指南来看，并没有多少深度，但是对于面试有不少帮助的。标题有噱头才会引起更多爱好者多Redis的探索，进一步走进Redis这个五彩斑斓的世界，进阶">
 <meta property="og:locale" content="zh_CN">
@@ -40,10 +40,10 @@
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/c4f4c6687321a07ddc99bb7f801a7791.png">
 
 
-<link rel="canonical" href="https://blog.cnwangk.top/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/">
+<link rel="canonical" href="https://blog.aiwanli.top/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/","path":"2022/01/11/如何优雅的管理redis/","title":"如何优雅的管理redis"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.aiwanli.top/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/","path":"2022/01/11/如何优雅的管理redis/","title":"如何优雅的管理redis"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>如何优雅的管理redis | 龙腾万里sky的博客</title>
@@ -217,7 +217,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/">
+    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -329,7 +329,7 @@
 <li>禁止保护模式：可以在配置中使用<code>protected-mode no</code>禁止。</li>
 <li>安全：对于生产环境需要确保开启了护盾（防火墙），达到确保可信客户端连接服务器的目的。</li>
 </ul>
-<p>在测试的时候，比如我在Windows下连接我的linux上的Redis服务。为了方便测试，此时临时关闭防护墙firewalld，或者采用<code>firewall-cmd</code>命令加入6379默认端口以及Redis服务，关于防火墙的知识可以参考我之前的文章《<a href="https://blog.cnwangk.top/2022/01/12/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8firewalld%E5%92%8Ciptables/">firewalld与iptables防火墙管理工具</a>》：</p>
+<p>在测试的时候，比如我在Windows下连接我的linux上的Redis服务。为了方便测试，此时临时关闭防护墙firewalld，或者采用<code>firewall-cmd</code>命令加入6379默认端口以及Redis服务，关于防火墙的知识可以参考我之前的文章《<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNud2FuZ2sudG9wLzIwMjIvMDEvMTIvTGludXglRTYlOUMlOEQlRTUlOEElQTElRTUlOTklQTglRTQlQkQlQkYlRTclOTQlQThmaXJld2FsbGQlRTUlOTIlOENpcHRhYmxlcy8=">firewalld与iptables防火墙管理工具<i class="fa fa-external-link-alt"></i></span>》：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#临时关闭防火墙</span></span><br><span class="line">systemctl stop firewalld.service</span><br></pre></td></tr></table></figure>
 
 
@@ -465,7 +465,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://blog.cnwangk.top/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/" title="如何优雅的管理redis">https://blog.cnwangk.top/2022/01/11/如何优雅的管理redis/</a>
+      <a href="https://blog.aiwanli.top/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/" title="如何优雅的管理redis">https://blog.aiwanli.top/2022/01/11/如何优雅的管理redis/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -643,7 +643,7 @@
 
 
   <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.aiwanli.top/2022/01/11/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E7%AE%A1%E7%90%86redis/"}</script>
   <script src="/js/third-party/quicklink.js"></script>
 <script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
 

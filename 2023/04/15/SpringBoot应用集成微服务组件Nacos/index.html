@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
   <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.cnwangk.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.aiwanli.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="第一篇基础篇，可在博客园，个人公众号以及站内搜索：MySQL数据库与Nacos搭建监控服务。 本篇是个人nacos系列文章第二篇springboot项目集成微服务组件nacos。  前情提要 当你看到此篇文章时，nacos目前最新稳定版本为：2.2.2 (Apr 11, 2023) Latest 版本不在于有多新，在于与当前场景环境匹配正常，稳中求快。万一你用了比较新的版本，遇到问题怎么办？有问题">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="SpringBoot应用集成微服务组件Nacos">
-<meta property="og:url" content="https://blog.cnwangk.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/index.html">
+<meta property="og:url" content="https://blog.aiwanli.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
 <meta property="og:description" content="第一篇基础篇，可在博客园，个人公众号以及站内搜索：MySQL数据库与Nacos搭建监控服务。 本篇是个人nacos系列文章第二篇springboot项目集成微服务组件nacos。  前情提要 当你看到此篇文章时，nacos目前最新稳定版本为：2.2.2 (Apr 11, 2023) Latest 版本不在于有多新，在于与当前场景环境匹配正常，稳中求快。万一你用了比较新的版本，遇到问题怎么办？有问题">
 <meta property="og:locale" content="zh_CN">
@@ -51,10 +51,10 @@
 <meta name="twitter:image" content="https://s1.ax1x.com/2023/04/20/p9ADUsI.png">
 
 
-<link rel="canonical" href="https://blog.cnwangk.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/">
+<link rel="canonical" href="https://blog.aiwanli.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.cnwangk.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/","path":"2023/04/15/SpringBoot应用集成微服务组件Nacos/","title":"SpringBoot应用集成微服务组件Nacos"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.aiwanli.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/","path":"2023/04/15/SpringBoot应用集成微服务组件Nacos/","title":"SpringBoot应用集成微服务组件Nacos"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>SpringBoot应用集成微服务组件Nacos | 龙腾万里sky的博客</title>
@@ -266,7 +266,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.cnwangk.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/">
+    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -375,7 +375,7 @@
 <p><strong>企业中生产环境，唯稳，稳中求快</strong>。</p>
 <p><img data-src="https://s1.ax1x.com/2023/03/23/ppwyHDs.png"></p>
 <h2 id="Nacos服务快速启动"><a href="#Nacos服务快速启动" class="headerlink" title="Nacos服务快速启动"></a>Nacos服务快速启动</h2><p>关于nacos2.2.0相关配置说明以及数据源说明，遇到问题总结，可以参考如下文章：</p>
-<p><a href="https://blog.cnwangk.top/2023/03/30/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8ENacos%E6%90%AD%E5%BB%BA%E7%9B%91%E6%8E%A7%E6%9C%8D%E5%8A%A1/">https://blog.cnwangk.top/2023/03/30/MySQL数据库与Nacos搭建监控服务/</a></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNud2FuZ2sudG9wLzIwMjMvMDMvMzAvTXlTUUwlRTYlOTUlQjAlRTYlOEQlQUUlRTUlQkElOTMlRTQlQjglOEVOYWNvcyVFNiU5MCVBRCVFNSVCQiVCQSVFNyU5QiU5MSVFNiU4RSVBNyVFNiU5QyU4RCVFNSU4QSVBMS8=">https://blog.cnwangk.top/2023/03/30/MySQL数据库与Nacos搭建监控服务/<i class="fa fa-external-link-alt"></i></span></p>
 <p>使用hexo搭建静态博客网站，感兴趣可以自己搭建一个，利用github pages和cloudflare pages等进行同步。之所以给出上面的链接，因为一篇优质的教程，会持续更新迭代。当然，在个人公众号里面同样可以搜索到相关教程。</p>
 <p><strong>根据个人或者团队开发环境，可以选择框架开发环境：spring、springboot以及springcloud集成nacos</strong>。</p>
 <p><strong>值得注意的地方</strong></p>
@@ -1053,7 +1053,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://blog.cnwangk.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/" title="SpringBoot应用集成微服务组件Nacos">https://blog.cnwangk.top/2023/04/15/SpringBoot应用集成微服务组件Nacos/</a>
+      <a href="https://blog.aiwanli.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/" title="SpringBoot应用集成微服务组件Nacos">https://blog.aiwanli.top/2023/04/15/SpringBoot应用集成微服务组件Nacos/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -1231,7 +1231,7 @@
 
 
   <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.cnwangk.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.aiwanli.top/2023/04/15/SpringBoot%E5%BA%94%E7%94%A8%E9%9B%86%E6%88%90%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6Nacos/"}</script>
   <script src="/js/third-party/quicklink.js"></script>
 <script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
 

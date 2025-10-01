@@ -155,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">106</span>
+          <span class="site-state-item-count">107</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -166,7 +166,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -200,6 +200,125 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2022/02/12/%E8%A7%A3%E5%86%B3%E4%BD%BF%E7%94%A8git%E9%81%87%E5%88%B0fatal-remote-origin-already-exists/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="AI & 过去现在未来">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/12/%E8%A7%A3%E5%86%B3%E4%BD%BF%E7%94%A8git%E9%81%87%E5%88%B0fatal-remote-origin-already-exists/" class="post-title-link" itemprop="url">解决使用git遇到fatal remote origin already exists</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-12 22:00:00" itemprop="dateCreated datePublished" datetime="2022-02-12T22:00:00+08:00">2022-02-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-27 22:21:12" itemprop="dateModified" datetime="2024-03-27T22:21:12+08:00">2024-03-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%94%9F%E4%BA%A7%E5%8A%9B/" itemprop="url" rel="index"><span itemprop="name">生产力</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>393</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>git解决使用命令遇到fatal: remote origin already exists</p>
+<p>从字面意思上进行分析，连接上远程仓库已经退出。看不懂英文是啥意思也没关系，咱有有道词典借鉴学习。<br>至于为何退出，80%的原因是已经连上远程仓库。当你再次执行远程连接命令时，会出现以上的报错信息，小部分原因是其它问题导致的。</p>
+<p><strong>问题展示</strong><br>【git】使用git遇到<code>fatal: remote origin already exists</code><br><img data-src="https://img-blog.csdnimg.cn/576b13a4d5974f089f33d60679d2c79a.png?x-oss-process=,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6b6Z6IW-5LiH6YeMc2t5,size_20,color_FFFFFF,t_70,g_se,x_16#" alt="在这里插入图片描述"></p>
+<p><strong>1、输入如下命令</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入如下命令 </span></span><br><span class="line">git remote add origin  https://github.com/(user_name)/(app_name).git</span><br></pre></td></tr></table></figure>
+
+<p><strong>2、如果遇到</strong><br>从字面意思上进行分析，连接上远程仓库已经退出。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fatal: remote origin already exists</span><br></pre></td></tr></table></figure>
+
+<p><strong>3、可尝试</strong><br>释放远程仓库连接</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote <span class="built_in">rm</span> origin </span><br></pre></td></tr></table></figure>
+
+<p><strong>4、再输入 如下命令就不会报错了！</strong><br> 执行远程仓库连接命令</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/12/%E8%A7%A3%E5%86%B3%E4%BD%BF%E7%94%A8git%E9%81%87%E5%88%B0fatal-remote-origin-already-exists/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -653,120 +772,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2022/01/15/%E8%A7%A3%E5%8E%8B%E8%BD%AF%E4%BB%B6%E5%93%AA%E4%B8%AA%E5%A5%BD%E7%94%A8-7z%E5%92%8C360zip%E5%9B%BD%E9%99%85%E7%89%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="龙腾万里sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="龙腾万里sky的博客">
-      <meta itemprop="description" content="AI & 过去现在未来">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/15/%E8%A7%A3%E5%8E%8B%E8%BD%AF%E4%BB%B6%E5%93%AA%E4%B8%AA%E5%A5%BD%E7%94%A8-7z%E5%92%8C360zip%E5%9B%BD%E9%99%85%E7%89%88/" class="post-title-link" itemprop="url">解压软件哪个好用:7z和360zip国际版</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-15 19:46:15" itemprop="dateCreated datePublished" datetime="2022-01-15T19:46:15+08:00">2022-01-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-27 22:20:51" itemprop="dateModified" datetime="2024-03-27T22:20:51+08:00">2024-03-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%94%9F%E4%BA%A7%E5%8A%9B/" itemprop="url" rel="index"><span itemprop="name">生产力</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>652</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在实际的工作中，解压缩软件哪款比较实用，相信很多人都搜索过也同样收集过。今天我就介绍一些个人认为比较实用的，当然有些解压缩软件外观简洁并且优美。</p>
-<p>简洁的外观，实用性高，往往受众群体还可以。那么，简洁而优美的外观并且无广告，往往是吸引人关注的。曾经使用过WinRAR，但是体验不是很友好。后来用了一段时间的2345好压，起初还是很好用的。可惜后来膨胀了，广告和捆绑越来越多。转而寻找能搭配简洁的7z的解压缩软件，最终找到了360zip国际版。</p>
-<p>日常就喜欢折腾，寻找简洁实用的小工具。</p>
-<p><img data-src="https://img-blog.csdnimg.cn/img_convert/4be7f1c19898165fcd31361086dd452d.png"></p>
-<h1 id="一、7z"><a href="#一、7z" class="headerlink" title="一、7z"></a>一、7z</h1><p>7z正如官网描述的一样，是一款自由软件，业界良心。</p>
-<h2 id="1、7z的官网地址"><a href="#1、7z的官网地址" class="headerlink" title="1、7z的官网地址"></a>1、7z的官网地址</h2><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuNy16aXAub3JnLw==">https://www.7-zip.org/<i class="fa fa-external-link-alt"></i></span></p>
-<p>同时支持64位的X64和32位的X86，并且还支持64位的ARM架构，目前最新版的为21.07。</p>
-<p><img data-src="https://img-blog.csdnimg.cn/img_convert/97449b9f9b37d6378a163dcd9241cca2.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/15/%E8%A7%A3%E5%8E%8B%E8%BD%AF%E4%BB%B6%E5%93%AA%E4%B8%AA%E5%A5%BD%E7%94%A8-7z%E5%92%8C360zip%E5%9B%BD%E9%99%85%E7%89%88/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/15/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -791,14 +796,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">270k</span>
+    <span title="站点总字数">272k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">16:24</span>
+    <span title="站点阅读时长">16:30</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.aiwanli.top/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</loc>
+    <loc>https://blog.aiwanli.top/2025/11/06/%E8%81%94%E6%83%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%94%B5%E8%84%91v370%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E9%81%87%E5%88%B0%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E7%A1%AC%E4%BB%B6%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
     
     <lastmod>2025-11-07</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/2025/11/06/%E8%81%94%E6%83%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%94%B5%E8%84%91v370%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E9%81%87%E5%88%B0%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E7%A1%AC%E4%BB%B6%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/</loc>
+    <loc>https://blog.aiwanli.top/2023/05/21/MySQL8-0-33-%E7%AE%80%E6%98%93%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</loc>
     
     <lastmod>2025-11-07</lastmod>
     
@@ -1064,6 +1064,13 @@
 
   
   <url>
+    <loc>https://blog.aiwanli.top/tags/jekyll/</loc>
+    <lastmod>2025-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.aiwanli.top/tags/Linux/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -1078,13 +1085,6 @@
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/jekyll/</loc>
-    <lastmod>2025-11-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.aiwanli.top/tags/MySQL/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -1092,7 +1092,7 @@
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/Gmail/</loc>
+    <loc>https://blog.aiwanli.top/tags/hexo/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1113,14 +1113,14 @@
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/hexo/</loc>
+    <loc>https://blog.aiwanli.top/tags/Java/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/Java/</loc>
+    <loc>https://blog.aiwanli.top/tags/Gmail/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1169,6 +1169,13 @@
   </url>
   
   <url>
+    <loc>https://blog.aiwanli.top/tags/workbench/</loc>
+    <lastmod>2025-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.aiwanli.top/tags/SQL/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -1183,7 +1190,7 @@
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/workbench/</loc>
+    <loc>https://blog.aiwanli.top/tags/rocky/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1197,7 +1204,7 @@
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/rocky/</loc>
+    <loc>https://blog.aiwanli.top/tags/Ubuntu/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1211,7 +1218,21 @@
   </url>
   
   <url>
+    <loc>https://blog.aiwanli.top/tags/PostgreSQL/</loc>
+    <lastmod>2025-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.aiwanli.top/tags/powershell/</loc>
+    <lastmod>2025-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.aiwanli.top/tags/JDK/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1225,20 +1246,6 @@
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/Ubuntu/</loc>
-    <lastmod>2025-11-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.aiwanli.top/tags/PostgreSQL/</loc>
-    <lastmod>2025-11-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.aiwanli.top/tags/Windows-11/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -1246,14 +1253,14 @@
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/StableSwarmUI/</loc>
+    <loc>https://blog.aiwanli.top/tags/stable-diffusion-webui/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/JDK/</loc>
+    <loc>https://blog.aiwanli.top/tags/StableSwarmUI/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1274,35 +1281,7 @@
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/stable-diffusion-webui/</loc>
-    <lastmod>2025-11-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.aiwanli.top/tags/Z-Library/</loc>
-    <lastmod>2025-11-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.aiwanli.top/tags/npm/</loc>
-    <lastmod>2025-11-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.aiwanli.top/tags/nginx/</loc>
-    <lastmod>2025-11-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.aiwanli.top/tags/hugo/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1316,7 +1295,28 @@
   </url>
   
   <url>
+    <loc>https://blog.aiwanli.top/tags/hugo/</loc>
+    <lastmod>2025-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.aiwanli.top/tags/npm/</loc>
+    <lastmod>2025-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.aiwanli.top/tags/podman/</loc>
+    <lastmod>2025-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.aiwanli.top/tags/nginx/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1351,13 +1351,6 @@
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/MariaDB/</loc>
-    <lastmod>2025-11-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.aiwanli.top/tags/%E8%BE%93%E5%85%A5%E6%B3%95/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -1372,20 +1365,6 @@
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/eclipse/</loc>
-    <lastmod>2025-11-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.aiwanli.top/tags/360zip/</loc>
-    <lastmod>2025-11-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.aiwanli.top/tags/xshell/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -1393,7 +1372,28 @@
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/%E8%BA%AB%E4%BB%BD%E8%AF%81/</loc>
+    <loc>https://blog.aiwanli.top/tags/eclipse/</loc>
+    <lastmod>2025-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.aiwanli.top/tags/MariaDB/</loc>
+    <lastmod>2025-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.aiwanli.top/tags/sublime-text/</loc>
+    <lastmod>2025-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.aiwanli.top/tags/360zip/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1414,13 +1414,20 @@
   </url>
   
   <url>
-    <loc>https://blog.aiwanli.top/tags/sublime-text/</loc>
+    <loc>https://blog.aiwanli.top/tags/%E8%BA%AB%E4%BB%BD%E8%AF%81/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
 
+  
+  <url>
+    <loc>https://blog.aiwanli.top/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc>
+    <lastmod>2025-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
   <url>
     <loc>https://blog.aiwanli.top/categories/%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4/</loc>
@@ -1431,13 +1438,6 @@
   
   <url>
     <loc>https://blog.aiwanli.top/categories/web%E5%BC%80%E5%8F%91/</loc>
-    <lastmod>2025-11-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.aiwanli.top/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2025-11-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

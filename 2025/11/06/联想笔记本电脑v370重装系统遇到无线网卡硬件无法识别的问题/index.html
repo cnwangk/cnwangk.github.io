@@ -23,31 +23,37 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.aiwanli.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="联想笔记本电脑 v370 重装系统遇到无线网卡硬件无法识别的问题。 最近，一直在折腾家里那台十四年前（2011 年购买）的老笔电（笔记本电脑），联想 V370。 起初，我还怀疑可能是自己前几次拆机把无线网卡插坏了？我一直奉行安全操作（离电），卸下电池。然后，又开始折腾，拆机检查排线，也没看见哪里有明显损坏。">
+    <meta name="description" content="解决联想笔记本电脑 v370 重装系统遇到无线网卡硬件无法识别的问题。 使用 Windows 10 Enterprise LTSC 2021，可以很好的识别无线网卡驱动。 使用  Windows7 旗舰版 2011（2019），需要手动辅助扫描浏览本地驱动文件。 最近，一直在折腾家里那台十四年前（2011 年购买）的老笔电（笔记本电脑），联想 V370。 起初，我还怀疑可能是自己前几次拆机把无线网">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="联想笔记本电脑 v370 重装系统遇到无线网卡硬件无法识别的问题">
+<meta property="og:title" content="联想 v370 重装系统 Windows10 Enterprise LTSC 2021">
 <meta property="og:url" content="https://blog.aiwanli.top/2025/11/06/%E8%81%94%E6%83%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%94%B5%E8%84%91v370%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E9%81%87%E5%88%B0%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E7%A1%AC%E4%BB%B6%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="龙腾万里sky的博客">
-<meta property="og:description" content="联想笔记本电脑 v370 重装系统遇到无线网卡硬件无法识别的问题。 最近，一直在折腾家里那台十四年前（2011 年购买）的老笔电（笔记本电脑），联想 V370。 起初，我还怀疑可能是自己前几次拆机把无线网卡插坏了？我一直奉行安全操作（离电），卸下电池。然后，又开始折腾，拆机检查排线，也没看见哪里有明显损坏。">
+<meta property="og:description" content="解决联想笔记本电脑 v370 重装系统遇到无线网卡硬件无法识别的问题。 使用 Windows 10 Enterprise LTSC 2021，可以很好的识别无线网卡驱动。 使用  Windows7 旗舰版 2011（2019），需要手动辅助扫描浏览本地驱动文件。 最近，一直在折腾家里那台十四年前（2011 年购买）的老笔电（笔记本电脑），联想 V370。 起初，我还怀疑可能是自己前几次拆机把无线网">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pica.zhimg.com/80/v2-35d6d5dd5d163261c98874b935fe1f5d_1440w.png?source=ccfced1a">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-7af3fb149c5d274b9b445a9fd4def8a4_1440w.png?source=ccfced1a">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-40662348ae5faf735ad64540d335ba94_1440w.png?source=ccfced1a">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-395ed1a139c8ddf766f6895f4763928b_1440w.png?source=ccfced1a">
 <meta property="og:image" content="https://picx.zhimg.com/80/v2-4cd64448e87f89055af1fd2028d3b36c_1440w.png?source=ccfced1a">
 <meta property="og:image" content="https://picx.zhimg.com/80/v2-1707c73b7dad397a0db43b73c08a2530_1440w.png?source=ccfced1a">
 <meta property="og:image" content="https://picx.zhimg.com/80/v2-80614358c205afd437145dedf81e2972_1440w.png?source=ccfced1a">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-cd1ddf5e4593a6b9293eff6c39d044ad_1440w.png?source=ccfced1a">
+<meta property="og:image" content="https://picx.zhimg.com/80/v2-a1d1521d3593b65c6fd72d7c516cfcaa_1440w.png?source=ccfced1a">
 <meta property="article:published_time" content="2025-11-06T11:00:00.000Z">
-<meta property="article:modified_time" content="2025-11-07T13:09:36.919Z">
+<meta property="article:modified_time" content="2025-11-09T03:11:21.653Z">
 <meta property="article:author" content="龙腾万里sky">
-<meta property="article:tag" content="机械革命蛟龙16K">
+<meta property="article:tag" content="联想v370">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://picx.zhimg.com/80/v2-4cd64448e87f89055af1fd2028d3b36c_1440w.png?source=ccfced1a">
+<meta name="twitter:image" content="https://pica.zhimg.com/80/v2-35d6d5dd5d163261c98874b935fe1f5d_1440w.png?source=ccfced1a">
 
 
 <link rel="canonical" href="https://blog.aiwanli.top/2025/11/06/%E8%81%94%E6%83%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%94%B5%E8%84%91v370%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E9%81%87%E5%88%B0%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E7%A1%AC%E4%BB%B6%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.aiwanli.top/2025/11/06/%E8%81%94%E6%83%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%94%B5%E8%84%91v370%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E9%81%87%E5%88%B0%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E7%A1%AC%E4%BB%B6%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/","path":"2025/11/06/联想笔记本电脑v370重装系统遇到无线网卡硬件无法识别的问题/","title":"联想笔记本电脑 v370 重装系统遇到无线网卡硬件无法识别的问题"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.aiwanli.top/2025/11/06/%E8%81%94%E6%83%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%94%B5%E8%84%91v370%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E9%81%87%E5%88%B0%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E7%A1%AC%E4%BB%B6%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/","path":"2025/11/06/联想笔记本电脑v370重装系统遇到无线网卡硬件无法识别的问题/","title":"联想 v370 重装系统 Windows10 Enterprise LTSC 2021"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>联想笔记本电脑 v370 重装系统遇到无线网卡硬件无法识别的问题 | 龙腾万里sky的博客</title>
+<title>联想 v370 重装系统 Windows10 Enterprise LTSC 2021 | 龙腾万里sky的博客</title>
   
 
 
@@ -148,7 +154,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows7-%E6%97%97%E8%88%B0%E7%89%88"><span class="nav-number">1.</span> <span class="nav-text">Windows7 旗舰版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows7-%E6%97%97%E8%88%B0%E7%89%88-2011"><span class="nav-number">1.1.</span> <span class="nav-text">Windows7 旗舰版 2011</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows7-%E6%97%97%E8%88%B0%E7%89%88-2019"><span class="nav-number">1.2.</span> <span class="nav-text">Windows7 旗舰版 2019</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows10-Enterprise-LTSC-2021"><span class="nav-number">2.</span> <span class="nav-text">Windows10 Enterprise  LTSC 2021</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows7-%E6%97%97%E8%88%B0%E7%89%88"><span class="nav-number">1.</span> <span class="nav-text">Windows7 旗舰版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2011"><span class="nav-number">1.1.</span> <span class="nav-text">2011</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2019"><span class="nav-number">1.2.</span> <span class="nav-text">2019</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows10-Enterprise-LTSC-2021"><span class="nav-number">2.</span> <span class="nav-text">Windows10 Enterprise LTSC 2021</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -174,7 +180,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -231,12 +237,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="联想笔记本电脑 v370 重装系统遇到无线网卡硬件无法识别的问题 | 龙腾万里sky的博客">
+      <meta itemprop="name" content="联想 v370 重装系统 Windows10 Enterprise LTSC 2021 | 龙腾万里sky的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          联想笔记本电脑 v370 重装系统遇到无线网卡硬件无法识别的问题
+          联想 v370 重装系统 Windows10 Enterprise LTSC 2021
         </h1>
 
         <div class="post-meta-container">
@@ -254,7 +260,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-11-07 21:09:36" itemprop="dateModified" datetime="2025-11-07T21:09:36+08:00">2025-11-07</time>
+      <time title="修改时间：2025-11-09 11:11:21" itemprop="dateModified" datetime="2025-11-09T11:11:21+08:00">2025-11-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -280,14 +286,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.5k</span>
+      <span>2.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
+      <span>8 分钟</span>
     </span>
 </div>
 
@@ -297,14 +303,40 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>联想笔记本电脑 v370 重装系统遇到无线网卡硬件无法识别的问题。</p>
+    <div class="post-body" itemprop="articleBody"><p>解决联想笔记本电脑 v370 重装系统遇到无线网卡硬件无法识别的问题。</p>
+<p>使用 Windows 10 Enterprise LTSC 2021，可以很好的识别无线网卡驱动。</p>
+<p>使用  Windows7 旗舰版 2011（2019），需要手动辅助扫描浏览本地驱动文件。</p>
 <p>最近，一直在折腾家里那台十四年前（2011 年购买）的老笔电（笔记本电脑），联想 V370。</p>
 <p>起初，我还怀疑可能是自己前几次拆机把无线网卡插坏了？我一直奉行安全操作（离电），卸下电池。然后，又开始折腾，拆机检查排线，也没看见哪里有明显损坏。</p>
 <span id="more"></span>
 
-
-
-<h2 id="Windows7-旗舰版"><a href="#Windows7-旗舰版" class="headerlink" title="Windows7 旗舰版"></a>Windows7 旗舰版</h2><h3 id="Windows7-旗舰版-2011"><a href="#Windows7-旗舰版-2011" class="headerlink" title="Windows7 旗舰版 2011"></a>Windows7 旗舰版 2011</h3><p><strong>Windows7 旗舰版 2011</strong>，Windows 7 Ultimate with Service Pack 1 (x64) - DVD (Chinese-Simplified)。发布时间，2011-05-12。<strong>可以正常识别无线网卡（硬件）</strong>。</p>
+<p>驱动从获取到安装过程有三大步骤：</p>
+<ol>
+<li>获取驱动程序（推荐从官方网站获取）。</li>
+<li>解压驱动程序。</li>
+<li>安装驱动程序。</li>
+</ol>
+<p>极有可能在执行安装驱动程序过程中出现意外，解压完驱动程序，安装过程没有执行。</p>
+<p>意外有哪些可能性，系统没有识别，进程直接被后台 kill 掉了。</p>
+<p>此时，可以采取快速打开设备管理器，通过手动浏览扫描解压后的驱动程序。</p>
+<p>使用命令形式打开设备管理器，可以是如下方式：</p>
+<ul>
+<li>win + r 打开运行，执行 <code>devmgmt.msc</code>。</li>
+<li>访问 CMD，执行 <code>devmgmt.msc</code>。</li>
+<li>访问 PowerShell，执行 <code>devmgmt.msc</code>。</li>
+</ul>
+<p>方法有多种，采用最适合自己的那一种即可（用的顺手，且系统支持）。</p>
+<h2 id="Windows7-旗舰版"><a href="#Windows7-旗舰版" class="headerlink" title="Windows7 旗舰版"></a>Windows7 旗舰版</h2><h3 id="2011"><a href="#2011" class="headerlink" title="2011"></a>2011</h3><p>最近安装 Windows7 旗舰版 2011，也出现了无限卡驱动程序解压后无法正常执行安装。我选择访问设备管理器，查看有哪些未知设备，然后手动浏览计算机已经解压的驱动程序文件。</p>
+<p>Windows7 旗舰版，设备管理器，浏览计算机上的驱动程序文件。</p>
+<p><img data-src="https://pica.zhimg.com/80/v2-35d6d5dd5d163261c98874b935fe1f5d_1440w.png?source=ccfced1a" alt="img"></p>
+<p>等待设别管理器扫描完成，无线网络适配器设备“Intel(R) WiFi Link 1000 BGN”已经正常加载出来。</p>
+<p>显示适配器，Intel(R) HD Graphics Family（核显），NVIDIA GeForce 410M（独显），Windows7 很容易就打上驱动程序。</p>
+<p><strong>使用 Windows10 Enterprise LTSC 2021，困扰了我好几天，死活安装不上 NVIDIA GeForce 410M（独显）</strong>。</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-7af3fb149c5d274b9b445a9fd4def8a4_1440w.png?source=ccfced1a" alt="img"></p>
+<p>无线网卡驱动程序正常安装，访问网络适配器，可以看到如下界面。</p>
+<p>Windows7 旗舰版，控制面板，网络和 Internet，网络连接。</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-40662348ae5faf735ad64540d335ba94_1440w.png?source=ccfced1a" alt="img"></p>
+<p><strong>Windows7 旗舰版 2011</strong>，Windows 7 Ultimate with Service Pack 1 (x64) - DVD (Chinese-Simplified)。发布时间，2011-05-12。<strong>可以正常识别无线网卡（硬件）</strong>。</p>
 <p>使用 Windows7 旗舰版 2011 ，如果开的程序比较少，功耗大概 2 ~ 3 w 之间。</p>
 <p>联想 V370 原始自带  Windows7 家庭版 2011，所以使用重装或者升级到  Windows7 旗舰版 2011 无需担心任何兼容性问题。</p>
 <p>联想 V370 Windows7 64-bit 原始驱动程序列表如下：</p>
@@ -314,23 +346,24 @@
 <li>Lenovo V370 系列 Intel 显卡驱动，版本：8.15.10.2266。</li>
 <li>Lenovo V370 系列 NVIDIA 显卡驱动，版本： 8.17.12.8590。</li>
 <li>Lenovo V370 系列网卡驱动，版本：7.021.0531.2010。</li>
-<li>无线网卡（网络控制器）设备驱动，版本：14.2.0.10&#x2F;9.2.0.115&#x2F;5.100.82.15。</li>
+<li>无线网卡（网络控制器）设备驱动，版本：14.2.0.10⁄9.2.0.115⁄5.100.82.15。</li>
 <li>Broadcom 博通蓝牙 Bluetooth 驱动，版本：6.4.0.1200。</li>
 <li>Serial ATA Advanced Host Controller Interface 串行 ATA 高级主控接口，版本：10.0.0.1046。</li>
 <li>Realtek读卡器设备驱动，版本：6.1.7600.10001。</li>
-<li>Touchpad 触控板驱动程序，版本：8.0.4.4&#x2F;15.2.7.0。</li>
+<li>Touchpad 触控板驱动程序，版本：8.0.4.4⁄15.2.7.0。</li>
 <li>Lenovo V370_V470系列指纹识别软件，版本：7.0.67.0。</li>
 <li>Lenovo V370_V470系列指纹识别驱动，版本：3.0.10.4。</li>
-<li>内置摄像头驱动，版本：6.1.7600.83&#x2F;2.16.23.3&#x2F;1.10.1209.1&#x2F;13.10.1201.1。</li>
+<li>内置摄像头驱动，版本：6.1.7600.83⁄2.16.23.3⁄1.10.1209.1⁄13.10.1201.1。</li>
 <li>Intel IRST英特尔快速存储技术（Intel Rapid Storage Technology），版本：10.5.1.1001。</li>
 <li>Intel MEI英特尔管理引擎接口（Intel Management Engine Interface），版本：7.0.0.1144。</li>
 <li>联想电源管理软件（Lenovo Energy Management），版本：6.0.1.6。</li>
 </ol>
-<p>发布时间集中在 2019 年 08 月 21 日 ~ 2019 年 09 月 20 日。</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-395ed1a139c8ddf766f6895f4763928b_1440w.png?source=ccfced1a" alt="img"></p>
+<p>Lenovo V370 驱动软件下载 Windows7 64-bit 驱动列表 </p>
+<p>驱动程序最后更新，发布时间集中在 2019 年 08 月 21 日 ~ 2019 年 09 月 20 日。</p>
 <p>…</p>
-<p>使用联想官方提供的原版驱动即可，</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9uZXdzdXBwb3J0Lmxlbm92by5jb20uY24vZHJpdmVMaXN0Lmh0bWw/ZnJvbXNvdXJjZT1kcml2ZUxpc3Qmc2VsbmFtZT1MZW5vdm8lMjBWMzcw">联想驱动列表<i class="fa fa-external-link-alt"></i></span>。</p>
-<p><strong>注意了，只安装驱动，不建议安装联想提供的其它应用管理软件</strong>。  </p>
+<p>使用联想官方提供的原版驱动即可，<span class="exturl" data-url="aHR0cHM6Ly9uZXdzdXBwb3J0Lmxlbm92by5jb20uY24vZHJpdmVMaXN0Lmh0bWw/ZnJvbXNvdXJjZT1kcml2ZUxpc3Qmc2VsbmFtZT1MZW5vdm8lMjBWMzcw">联想驱动列表<i class="fa fa-external-link-alt"></i></span>。</p>
+<p><strong>注意了，只安装驱动，不建议安装联想提供的其它应用管理软件</strong>。</p>
 <p>比如：</p>
 <ol>
 <li>一键恢复（Lenovo Onekey Recovery），</li>
@@ -340,41 +373,52 @@
 <li>联想服务通（PC Carer），</li>
 <li>联想通行证服务（LPS）。</li>
 </ol>
-<h3 id="Windows7-旗舰版-2019"><a href="#Windows7-旗舰版-2019" class="headerlink" title="Windows7 旗舰版 2019"></a>Windows7 旗舰版 2019</h3><p><strong>Windows7 旗舰版 2019</strong> ，Windows 7 Ultimate with Service Pack 1 (7601.24214) (x64) - DVD (English)。发布时间，2019-02-14。<strong>无法识别网线网卡（硬件），个人感觉是系统不适配，导致无法识别</strong>。目前，我也懒得折腾，有时间再折腾。</p>
+<h3 id="2019"><a href="#2019" class="headerlink" title="2019"></a>2019</h3><p><strong>Windows7 旗舰版 2019</strong> ，Windows 7 Ultimate with Service Pack 1 (7601.24214) (x64) - DVD (English)。发布时间，2019-02-14。<strong>无法识别网线网卡（硬件），个人感觉是系统不适配，导致无法识别</strong>。目前，我也懒得折腾，有时间再折腾。</p>
 <p>值得注意的是，需要手动安装语言包，</p>
 <p>Windows 7 Service Pack 1 Language Pack (x64) - DVD (Multilanguage)。</p>
 <p>当然，你也可以尝试安装 Windows 7 SP1 x64 简体中文语言包。</p>
 <p>期间，我尝试了各种方式。使用联想官方电脑管家，第三方驱动精灵以及驱动大师，均没效果。我还纳闷，安装驱动精灵还能蓝屏重启。反倒意外的检测出使用联想电脑管家进行升级 NVIDIA 驱动，出现异常，还原官方提供的第一版驱动才恢复正常。</p>
-<h2 id="Windows10-Enterprise-LTSC-2021"><a href="#Windows10-Enterprise-LTSC-2021" class="headerlink" title="Windows10 Enterprise  LTSC 2021"></a><strong>Windows10 Enterprise</strong>  <strong>LTSC 2021</strong></h2><p><strong>Windows10 Enterprise</strong>  <strong>LTSC 2021</strong>，Windows 10 Enterprise LTSC 2021 (x64) - DVD (Chinese-Simplified)。发布时间，2021-11-17。<strong>可以正常识别无线网卡（硬件）</strong>。</p>
-<p>安装 <strong>Windows10 Enterprise LTSC 2021</strong>，有一些小问题。开机引导过程中，出现蓝屏，没有任何代码提示，挺蛋疼。不管了，强制重启，开机 CPU 100% 占用，蓝屏卡在收集 0% 界面。没办法，继续强制关机，重启。开始使用安全模式进行自动引导修复，显示删除了一些更新。最后，终于可以正常进入系统桌面。老电脑使用新系统，难点就在找驱动。</p>
+<p>起初认为是系统不适配，后来经过多次尝试各种方法。发现，也有可能是无线网卡驱动程序解压后无法正常执行安装，需要手动执行扫描驱动程序。</p>
+<h2 id="Windows10-Enterprise-LTSC-2021"><a href="#Windows10-Enterprise-LTSC-2021" class="headerlink" title="Windows10 Enterprise LTSC 2021"></a><strong>Windows10 Enterprise</strong> <strong>LTSC 2021</strong></h2><p><strong>Windows10 Enterprise</strong> <strong>LTSC 2021</strong>，Windows 10 Enterprise LTSC 2021 (x64) - DVD (Chinese-Simplified)。发布时间，2021-11-17。<strong>可以正常识别无线网卡（硬件）</strong>。</p>
+<p>安装 <strong>Windows10 Enterprise LTSC 2021</strong>，有一些小问题。开机引导过程中，出现蓝屏，没有任何代码提示，挺蛋疼。不管了，强制重启，开机 CPU 100% 占用，蓝屏卡在收集 0% 界面。没办法，继续强制关机，重启。开始使用安全模式进行自动引导修复，显示删除了一些更新。最后，终于可以正常进入系统桌面。老电脑使用新系统，难点就在找驱动。<strong>困扰了我好几天，死活安装不上 NVIDIA GeForce 410M（独显）</strong>。我还以为是独显寄了，亦或是哪根排线没接好。又重新安装回 Windows7 旗舰版 2011，看独显是不是真寄了。</p>
+<p>如果你完整的看完了整篇博文，会发现，我那独显没有寄。</p>
+<p>…</p>
 <p>使用 Windows10 Enterprise LTSC 2021，可以看出来此时 CPU 功耗很高。</p>
-<p>彼时还未安装 <code>Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx</code></p>
+<p>彼时还未安装 <code>Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx</code>。</p>
 <p><img data-src="https://picx.zhimg.com/80/v2-4cd64448e87f89055af1fd2028d3b36c_1440w.png?source=ccfced1a" alt="img"></p>
 <p>使用感受，Windows10 Enterprise LTSC 2021 居然比 Windows 7 Ultimate with Service Pack 1 (x64) 体验更流畅。</p>
 <p>老笔电使用 <strong>Windows 10 Enterprise LTSC 2021</strong>功耗逆天。有可能是我哪方面的设置没调好，也有可能是官方的 bug。</p>
 <p>wsappx（Appx deployment services（AppXSVC）），感觉它在帮我烤机。</p>
 <p><img data-src="https://picx.zhimg.com/80/v2-1707c73b7dad397a0db43b73c08a2530_1440w.png?source=ccfced1a" alt="img"></p>
-<p>这个 wasppx（Appx deployment services（AppXSVC））服务是一尊大佛，感觉自己在烤机。检索相关解决方案，还真有解决办法  。</p>
-<p><code>Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx </code>占用空间不大，我直接解压到 C 盘根目录，使用 <code>Add-AppxPackage</code> 命令进行安装。 关于安装包，我参考的文章链接有提供，我就不在赘述。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Add-AppxPackage -path C:\Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx</span><br></pre></td></tr></table></figure>
+<p>这个 wasppx（Appx deployment services（AppXSVC））服务是一尊大佛，感觉自己在烤机。检索相关解决方案，还真有解决办法   。</p>
+<p><code>Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx</code> 占用空间不大，我直接解压到 C 盘根目录，使用 <code>Add-AppxPackage</code> 命令进行安装。 关于安装包，我参考的文章链接有提供，我就不在赘述。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Add-AppxPackage</span> <span class="literal">-path</span> C:\Microsoft.VCLibs.<span class="number">140.00</span>_14.<span class="number">0.30704</span>.<span class="number">0</span>_x64__8wekyb3d8bbwe.Appx</span><br></pre></td></tr></table></figure>
 
 <p>经过一番设置，功耗最终稳定在 5 w 左右，终于恢复正常。</p>
 <p><img data-src="https://picx.zhimg.com/80/v2-80614358c205afd437145dedf81e2972_1440w.png?source=ccfced1a" alt="img"></p>
-<p>wasppx（Appx deployment services（AppXSVC）），它终于安静了。</p>
+<p>wasppx（Appx deployment services（AppXSVC）），它终于安静了</p>
 <p>…</p>
-<p>…</p>
-<p>吐槽：联想官方提供的驱动管理软件，不更新，还不给用。更新了，也提醒当前系统比较老旧，还是不给用。即便使用最新”<span class="exturl" data-url="aHR0cHM6Ly9tZXRhLmJveC5sZW5vdm8uY29tL3YvbGluay92aWV3Lzc1ZmIwZmZhYTk2MDRiZmFiMjhhNDFiMmY2YzVmYTVi">联想新驱动安装工具<i class="fa fa-external-link-alt"></i></span>“，点击检测也会导致系统卡死（Windows10 Enterprise LTSC 2021），重启无法进入系统。</p>
+<p>吐槽：联想官方提供的驱动管理软件，不更新，还不给用。更新了，也提醒当前系统比较老旧，还是不给用。即便使用最新”<span class="exturl" data-url="aHR0cHM6Ly9tZXRhLmJveC5sZW5vdm8uY29tL3YvbGluay92aWV3Lzc1ZmIwZmZhYTk2MDRiZmFiMjhhNDFiMmY2YzVmYTVi">联想新驱动安装工具<i class="fa fa-external-link-alt"></i></span> “，点击检测也会导致系统卡死（Windows10 Enterprise LTSC 2021），重启无法进入系统。</p>
+<p>即便联想官方网站可以查看看到相关资料，但作用不大。</p>
+<p>Lenovo V370  驱动和软件下载 Windows10 64-bit 联想驱动专用（重要），联想驱动管理（智能匹配，一键安装）。</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-cd1ddf5e4593a6b9293eff6c39d044ad_1440w.png?source=ccfced1a" alt="img"></p>
+<p>猜测，联想官方大概率不再维护（支持）老笔电 V370 的驱动更新。</p>
 <p>…</p>
 <p>Windows10 Enterprise LTSC 2021 对于联想v370 有些吃力，CPU 以及磁盘占用有些高。值得注意的是，独显驱动 NVIDIA GeForce 410M 存在兼容性问题。</p>
 <p>其它版本 Windows 系统，暂未尝试。</p>
 <p>…</p>
 <p>原始屏幕出现过一次问题，出现虚线，联想售后免费换了一块新屏幕。屏幕四周白边，不知道是排线问题，或者是接口出有问题，亦或是屏幕漏液以及被大力出奇迹。也有可能时间久了，屏幕受潮？</p>
 <p>…</p>
-<p>第 N 次拆机的时候，我翻车了。没注意到电池底部那颗隐藏螺丝，大力出奇迹把固定在键盘的螺柱掰下来了，导致键盘偏瘫，有几个按键寄了。</p>
+<p>第 N 次拆机的时候，我翻车了。没注意到电池底部那颗隐藏螺丝，大力出奇迹把固定在键盘的螺柱掰下来了，导致键盘偏瘫，有十七个按键寄了。联想 v370 没有小键盘区域，我去拼夕夕看了看，原版键盘大概在 30 ~ 35 原之间。我感觉，有点小贵。有一说一，原厂键盘，手感真不错。比我2023 年 5999 入手的游戏本自带键盘手感好得多。</p>
+<p>我那款薄膜键盘也才 35 左右。</p>
+<p>使用 keyboard test utility 进行测试。</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-a1d1521d3593b65c6fd72d7c516cfcaa_1440w.png?source=ccfced1a" alt="img"></p>
 <p>啊哈哈~~~</p>
 <p>…</p>
+<p>—END—</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
 <li><span class="exturl" data-url="aHR0cHM6Ly9uZXdzdXBwb3J0Lmxlbm92by5jb20uY24vZHJpdmVMaXN0Lmh0bWw/ZnJvbXNvdXJjZT1kcml2ZUxpc3Qmc2VsbmFtZT1MZW5vdm8lMjBWMzcw">联想驱动列表<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9pa25vdy5sZW5vdm8uY29tLmNuL2RldGFpbC80MTkzNzk=">Lenovo Quick Fix：驱动安装工具-联想知识库<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly93d3cuaXR0ZWwuY24vYXJjaGl2ZXMvNjE0Mi5odG1s">Win10 wsappx 进程CPU 占用高 解决方法-IT技术之家<i class="fa fa-external-link-alt"></i></span></li>
 <li><span class="exturl" data-url="aHR0cHM6Ly9iYnMua2FmYW4uY24vdGhyZWFkLTIyMjE2OTUtMS0xLmh0bWw=">win10LTSC2021正式发布（修复bug方法）windows区_软件区_卡饭论坛<i class="fa fa-external-link-alt"></i></span></li>
 </ol>
@@ -410,7 +454,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://blog.aiwanli.top/2025/11/06/%E8%81%94%E6%83%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%94%B5%E8%84%91v370%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E9%81%87%E5%88%B0%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E7%A1%AC%E4%BB%B6%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/" title="联想笔记本电脑 v370 重装系统遇到无线网卡硬件无法识别的问题">https://blog.aiwanli.top/2025/11/06/联想笔记本电脑v370重装系统遇到无线网卡硬件无法识别的问题/</a>
+      <a href="https://blog.aiwanli.top/2025/11/06/%E8%81%94%E6%83%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%94%B5%E8%84%91v370%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E9%81%87%E5%88%B0%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E7%A1%AC%E4%BB%B6%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/" title="联想 v370 重装系统 Windows10 Enterprise LTSC 2021">https://blog.aiwanli.top/2025/11/06/联想笔记本电脑v370重装系统遇到无线网卡硬件无法识别的问题/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -458,7 +502,7 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/%E6%9C%BA%E6%A2%B0%E9%9D%A9%E5%91%BD%E8%9B%9F%E9%BE%9916K/" rel="tag"><i class="fa fa-tag"></i> 机械革命蛟龙16K</a>
+              <a href="/tags/%E8%81%94%E6%83%B3v370/" rel="tag"><i class="fa fa-tag"></i> 联想v370</a>
           </div>
 
         
@@ -514,7 +558,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">16:39</span>
+    <span title="站点阅读时长">16:42</span>
   </span>
 </div>
 <div class="busuanzi-count">

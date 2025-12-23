@@ -155,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-count">111</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -166,7 +166,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -200,6 +200,122 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2020/01/16/Linux%E9%A2%84%E9%98%B2%E5%88%A9%E7%94%A8ssh%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E7%94%A8%E6%88%B7%EF%BC%9A%E8%BF%87%E6%BB%A4%E8%AF%95%E5%9B%BE%E9%9D%9E%E6%B3%95%E7%99%BB%E5%BD%95IP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="AI & 过去现在未来">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/01/16/Linux%E9%A2%84%E9%98%B2%E5%88%A9%E7%94%A8ssh%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E7%94%A8%E6%88%B7%EF%BC%9A%E8%BF%87%E6%BB%A4%E8%AF%95%E5%9B%BE%E9%9D%9E%E6%B3%95%E7%99%BB%E5%BD%95IP/" class="post-title-link" itemprop="url">Linux预防利用ssh暴力破解用户：过滤试图非法登录IP</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-01-16 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-16T00:00:00+08:00">2020-01-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-28 21:44:43" itemprop="dateModified" datetime="2023-05-28T21:44:43+08:00">2023-05-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">开发运维</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>843</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>之前买的腾讯云服务器，总是收到提醒被其它的<code>ip</code>攻击试图破解。实在是忍无可忍，自己在网上参考了一篇教程，就总结了下，防止<code>ssh</code>暴力破解<code>linux</code>用户，将试图入侵的ip达到一定次数就放入黑名单中。</p>
+<p>分配文件基本权限时核心原则：<strong>在最小权限情况下能实现要求即可</strong>。</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="一、通过awk命令记录黑名单"><a href="#一、通过awk命令记录黑名单" class="headerlink" title="一、通过awk命令记录黑名单"></a>一、通过awk命令记录黑名单</h2><p>awk命令的使用可以参考菜鸟教程，下面给出链接。</p>
+<blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS9saW51eC9saW51eC1jb21tLWF3ay5odG1s">https://www.runoob.com/linux/linux-comm-awk.html<i class="fa fa-external-link-alt"></i></span></p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /var/log/secure | awk <span class="string">&#x27;/Failed/&#123;print $(NF-3)&#125;&#x27;</span> | <span class="built_in">sort</span>|uniq <span class="literal">-c</span></span><br><span class="line">| awk <span class="string">&#x27;&#123;print $2&quot;=&quot;$1;&#125;&#x27;</span> &gt; /opt/black_ip/black.list</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、过滤出登录错误超过指定次数的ip"><a href="#二、过滤出登录错误超过指定次数的ip" class="headerlink" title="二、过滤出登录错误超过指定次数的ip"></a>二、过滤出登录错误超过指定次数的ip</h2><p>编辑脚本：<code>vim /usr/local/bin/secure_ssh.sh</code></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /bin/bash</span></span><br><span class="line"><span class="built_in">cat</span> /var/log/secure | awk <span class="string">&#x27;/Failed/&#123;print $(NF-3)&#125;&#x27;</span> | <span class="built_in">sort</span>|uniq <span class="literal">-c</span></span><br><span class="line">| awk <span class="string">&#x27;&#123;print $2&quot;=&quot;$1;&#125;&#x27;</span> &gt; /opt/black_ip/black.list</span><br><span class="line"><span class="comment"># DEFINE=1，代表你设置的允许尝试登录次数为1次，根据自己的需求设置</span></span><br><span class="line">DEFINE=<span class="string">&quot;1&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `cat /opt/black_ip/black.list`</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   IP=`echo <span class="variable">$i</span>|awk <span class="operator">-F</span>= <span class="string">&#x27;&#123;print $1&#125;&#x27;</span>` <span class="comment"># 过滤的ip地址</span></span><br><span class="line">   NUM=`echo <span class="variable">$i</span>|awk <span class="operator">-F</span>= <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>` <span class="comment"># 过滤的ip尝试登录的次数</span></span><br><span class="line">   <span class="keyword">if</span> [[ <span class="variable">$</span>&#123;<span class="type">NUM</span>&#125; -<span class="type">gt</span> <span class="variable">$</span>&#123;<span class="type">DEFINE</span>&#125; ]]; then</span><br><span class="line">        grep <span class="variable">$IP</span> /etc/hosts.deny &gt; /dev/null </span><br><span class="line">        <span class="keyword">if</span> [ <span class="variable">$</span>? -<span class="type">gt</span> <span class="number">0</span> ];then</span><br><span class="line">        	 <span class="comment"># 你可以把你常用的ip放入host.allow文件白名单，hosts.deny对应的就是黑名单</span></span><br><span class="line">             <span class="built_in">echo</span> <span class="string">&quot;sshd:<span class="variable">$IP:deny</span>&quot;</span> &gt;&gt; /etc/hosts.deny </span><br><span class="line">        fi</span><br><span class="line">    fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/16/Linux%E9%A2%84%E9%98%B2%E5%88%A9%E7%94%A8ssh%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E7%94%A8%E6%88%B7%EF%BC%9A%E8%BF%87%E6%BB%A4%E8%AF%95%E5%9B%BE%E9%9D%9E%E6%B3%95%E7%99%BB%E5%BD%95IP/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -672,118 +788,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2017/01/01/Java%E7%89%88hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="龙腾万里sky">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="龙腾万里sky的博客">
-      <meta itemprop="description" content="AI & 过去现在未来">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 龙腾万里sky的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/01/01/Java%E7%89%88hello-world/" class="post-title-link" itemprop="url">程序人生：人生中的第一个 Java 应用程序 hello world</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2017-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2017-01-01T00:00:00+08:00">2017-01-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-28 21:39:34" itemprop="dateModified" datetime="2023-05-28T21:39:34+08:00">2023-05-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/web%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">web开发</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>626</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>算是开个人 blog 第一篇博文。</p>
-<p>程序人生：人生中的第一个Java应用程序 hello java！</p>
-<p>开局一张图，程序全靠编：</p>
-<p><img data-src="https://s1.ax1x.com/2023/05/15/p92J3q0.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/01/01/Java%E7%89%88hello-world/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/21/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/21/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/23/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -813,7 +819,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">16:46</span>
+    <span title="站点阅读时长">16:48</span>
   </span>
 </div>
 <div class="busuanzi-count">

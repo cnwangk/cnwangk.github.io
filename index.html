@@ -155,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-count">112</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -166,7 +166,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -209,7 +209,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2025/12/23/%E9%BE%99%E8%8A%AFLoong64%E6%AD%A3%E5%BC%8F%E7%BA%B3%E5%85%A5Debian14/">
+    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2026/04/30/%E8%AE%B0%E4%B8%80%E6%AC%A1%20Windows11%2025H2%20%E7%B3%BB%E7%BB%9F%E5%B4%A9%E6%BA%83%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -230,7 +230,7 @@
           
               <span class="post-sticky-flag" title="置顶">
                 <i class="fa fa-thumbtack"></i>
-              </span><a href="/2025/12/23/%E9%BE%99%E8%8A%AFLoong64%E6%AD%A3%E5%BC%8F%E7%BA%B3%E5%85%A5Debian14/" class="post-title-link" itemprop="url">龙芯 Loong64 正式纳入 Debian14，转正</a>
+              </span><a href="/2026/04/30/%E8%AE%B0%E4%B8%80%E6%AC%A1%20Windows11%2025H2%20%E7%B3%BB%E7%BB%9F%E5%B4%A9%E6%BA%83%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">记一次 Windows11 25H2 系统崩溃卡死问题分析</a>
         </h2>
 
         <div class="post-meta-container">
@@ -241,14 +241,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-23 13:00:00" itemprop="dateCreated datePublished" datetime="2025-12-23T13:00:00+08:00">2025-12-23</time>
+      <time title="创建时间：2026-04-30 22:07:54" itemprop="dateCreated datePublished" datetime="2026-04-30T22:07:54+08:00">2026-04-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-12-30 16:39:35" itemprop="dateModified" datetime="2025-12-30T16:39:35+08:00">2025-12-30</time>
+      <time title="修改时间：2026-05-05 21:28:43" itemprop="dateModified" datetime="2026-05-05T21:28:43+08:00">2026-05-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -267,7 +267,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>554</span>
+      <span>599</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -285,14 +285,22 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>来自知乎的冷门热榜问题，龙芯 Loong64 正式纳入 Debian14，对国产 CPU 生态发展有何意义？</p>
-<h3 id="整理资料"><a href="#整理资料" class="headerlink" title="整理资料"></a>整理资料</h3><p>花了一点点时间，整理一些相关信息供各位读者参考。</p>
-<p>loong64 is now an official architecture：</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9saXN0cy5kZWJpYW4ub3JnL2RlYmlhbi1kZXZlbC1hbm5vdW5jZS8yMDI1LzEyL21zZzAwMDA0Lmh0bWw=">https://lists.debian.org/debian-devel-announce/2025/12/msg00004.html<i class="fa fa-external-link-alt"></i></span> [1] ，</p>
-<p><img data-src="https://pic1.zhimg.com/80/v2-2464e2b8b590a6bc361efa17d96928fd_1440w.webp?source=2c26e567" alt="img"></p>
+          <p>关于笔记本电脑开机花屏系统崩溃卡死，我最近也遇到了相同的问题。</p>
+<p>Windows11 25H2 4 月份更新小概率导致开机登录界面花屏系统崩溃卡死，强制重启可以解决问题，但问题得不到根治 。</p>
+<p>关于 Windows11 25H2 4月份更新，我怀疑过 usb2.0 驱动不适配，因为我的笔记本电脑机械革命蛟龙16K 左侧的 usb2.0 偶尔出现断触现象，也怀疑过 AMD 驱动不适配的问题。</p>
+<p>即便我把驱动从 AMD 25.x 升级到 AMD26.3.1，依旧存在usb2.0 偶尔出现断触现象，小概率导致开机登录界面花屏崩溃卡死。</p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-19014878b6004eb03e76da309d103f4c_1440w.webp?source=2c26e567" alt="img"></p>
+<p>以前，两年也遇不到一次 Windows11 开机界面崩溃卡死花屏。自从更新 Windows11 25H2 4 月份更新(KB5083769、KB5082417) ，小概率导致开机登录界面花屏。</p>
+<ol>
+<li>2026-04 安全更新(KB5083769) (26200.8246)，于 ‎2026&#x2F;‎4&#x2F;‎16 成功安装。</li>
+<li>2026-04 .NET Framework 安全更新 (KB5082417)，于 ‎2026&#x2F;‎4&#x2F;‎16 成功安装 。短短一周，出现了三次开机登录界面花屏的现象。</li>
+</ol>
+<p>尚不得知，是否由于 Windows11 更新之后导致显卡驱动不适配导致的 bug。</p>
+<p>通过执行 <code>Eventvwr.msc</code>，快速访问 Windows11 事件查看器，根据 Windows 错误日志发现问题。</p>
+<p><img data-src="https://picx.zhimg.com/80/v2-c357b7a502d0b00053a38ae7b3b42909_1440w.webp?source=2c26e567" alt="img"></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2025/12/23/%E9%BE%99%E8%8A%AFLoong64%E6%AD%A3%E5%BC%8F%E7%BA%B3%E5%85%A5Debian14/#more" rel="contents">
+              <a class="btn" href="/2026/04/30/%E8%AE%B0%E4%B8%80%E6%AC%A1%20Windows11%2025H2%20%E7%B3%BB%E7%BB%9F%E5%B4%A9%E6%BA%83%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -485,7 +493,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-12-18 10:58:22" itemprop="dateModified" datetime="2025-12-18T10:58:22+08:00">2025-12-18</time>
+      <time title="修改时间：2026-05-05 21:20:37" itemprop="dateModified" datetime="2026-05-05T21:20:37+08:00">2026-05-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -814,14 +822,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">277k</span>
+    <span title="站点总字数">278k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">16:49</span>
+    <span title="站点阅读时长">16:51</span>
   </span>
 </div>
 <div class="busuanzi-count">

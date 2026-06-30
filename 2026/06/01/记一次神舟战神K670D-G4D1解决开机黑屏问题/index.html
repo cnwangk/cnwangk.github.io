@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="wOKED0JESV6yrM_U6Ly7lwezxWB3cJ-lA8RGxDX9pm4">
+  <meta name="baidu-site-verification" content="codeva-KtcFKxmTOk">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-mac-osx.css">
+  <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.aiwanli.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.21.1","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="我给自己埋了一个坑，CPU 硅脂涂抹稍微厚了一点点。 自己用的时候完全没问题，2023 年更换新笔电，测试没问题才把旧笔电寄回家备用。由于旧笔电三年多没有开过机，结果某天开机风扇在转吹出热风，电源指示灯亮但屏幕黑屏。  我寻思，难道 CPU 有问题？硅脂过厚或者没压好。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="记一次神舟战神K670D-G4D1 解决开机黑屏问题、换U与重装系统 Windows10 Enterprise LTSC 2021 21H2">
+<meta property="og:url" content="https://blog.aiwanli.top/2026/06/01/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%A5%9E%E8%88%9F%E6%88%98%E7%A5%9EK670D-G4D1%E8%A7%A3%E5%86%B3%E5%BC%80%E6%9C%BA%E9%BB%91%E5%B1%8F%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="龙腾万里sky的博客">
+<meta property="og:description" content="我给自己埋了一个坑，CPU 硅脂涂抹稍微厚了一点点。 自己用的时候完全没问题，2023 年更换新笔电，测试没问题才把旧笔电寄回家备用。由于旧笔电三年多没有开过机，结果某天开机风扇在转吹出热风，电源指示灯亮但屏幕黑屏。  我寻思，难道 CPU 有问题？硅脂过厚或者没压好。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-5cdd12c854475e525f815665ba691bdb_1440w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-ef99dc0b3e4b38c080f50a586b2b147c_1440w.jpg">
+<meta property="og:image" content="https://pica.zhimg.com/v2-3bcfd53dc6309154fd3fbf7b4e808dd6_1440w.jpg">
+<meta property="og:image" content="https://picx.zhimg.com/v2-f34af58558a011dd07f17863e5adeadf_1440w.jpg">
+<meta property="og:image" content="https://pica.zhimg.com/v2-3398aaf7ddaf8bda7addb2eb2f891ab6_1440w.jpg">
+<meta property="og:image" content="https://pica.zhimg.com/v2-6cc71d9385b0d73ad54462f20d38adba_1440w.jpg">
+<meta property="og:image" content="https://picx.zhimg.com/v2-9621ec035843e38603c42c664bc64a51_1440w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-a64dc7a1c90aa12c6e832fc51c51f592_1440w.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-6db867ea2c92327da2097c880c49baf9_1440w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-e44da8baf0673468ae9850c3c63c1652_1440w.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-f26085279c0c24cc18d838b99d24d073_1440w.jpg">
+<meta property="og:image" content="https://picx.zhimg.com/v2-7d0747348501af9ed7987a5244e7fdf3_1440w.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-efdba4db0720bc05b27581bc54f0e655_1440w.jpg">
+<meta property="article:published_time" content="2026-06-01T12:46:50.000Z">
+<meta property="article:modified_time" content="2026-06-30T13:34:55.091Z">
+<meta property="article:author" content="龙腾万里sky">
+<meta property="article:tag" content="神舟战神K670D-G4D1">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic4.zhimg.com/v2-5cdd12c854475e525f815665ba691bdb_1440w.jpg">
+
+
+<link rel="canonical" href="https://blog.aiwanli.top/2026/06/01/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%A5%9E%E8%88%9F%E6%88%98%E7%A5%9EK670D-G4D1%E8%A7%A3%E5%86%B3%E5%BC%80%E6%9C%BA%E9%BB%91%E5%B1%8F%E9%97%AE%E9%A2%98/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.aiwanli.top/2026/06/01/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%A5%9E%E8%88%9F%E6%88%98%E7%A5%9EK670D-G4D1%E8%A7%A3%E5%86%B3%E5%BC%80%E6%9C%BA%E9%BB%91%E5%B1%8F%E9%97%AE%E9%A2%98/","path":"2026/06/01/记一次神舟战神K670D-G4D1解决开机黑屏问题/","title":"记一次神舟战神K670D-G4D1 解决开机黑屏问题、换U与重装系统 Windows10 Enterprise LTSC 2021 21H2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>记一次神舟战神K670D-G4D1 解决开机黑屏问题、换U与重装系统 Windows10 Enterprise LTSC 2021 21H2 | 龙腾万里sky的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="龙腾万里sky的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">龙腾万里sky的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">养得胸中一种恬静</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-solid fa-user-group fa-fw"></i>友链</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-happy"><a href="/happy/" rel="section"><i class="fa fa-solid fa-face-smile fa-fw"></i>文娱</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E7%90%86%E7%A1%85%E8%84%82"><span class="nav-number">1.</span> <span class="nav-text">清理硅脂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2-CPU"><span class="nav-number">2.</span> <span class="nav-text">更换 CPU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%94%81-CPU-%E5%80%8D%E9%A2%91"><span class="nav-number">3.</span> <span class="nav-text">解锁 CPU 倍频</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F-Windows10-Enterprise-LTSC-2021-21H2"><span class="nav-number">4.</span> <span class="nav-text">重装系统 Windows10 Enterprise LTSC 2021 21H2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2-cmos-%E7%94%B5%E6%B1%A0"><span class="nav-number">5.</span> <span class="nav-text">更换 cmos 电池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="龙腾万里sky"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">龙腾万里sky</p>
+  <div class="site-description" itemprop="description">AI & 过去现在未来</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">114</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cnwangk"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9oYndr" title="Zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;hbwk"><i class="fab fa-zhihu fa-fw"></i>Zhihu</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmR5d2FuZ2tAZ21haWwuY29t" title="E-Mail → mailto:dywangk@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2025/11/06/%E8%81%94%E6%83%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%94%B5%E8%84%91v370%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E9%81%87%E5%88%B0%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E7%A1%AC%E4%BB%B6%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E7%9A%84%E9%97%AE%E9%A2%98/" rel="bookmark">
+        <time class="popular-posts-time">2025-11-06</time>
+        <br>
+      联想 v370 重装系统 Windows10 Enterprise LTSC 2021
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.aiwanli.top/2026/06/01/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%A5%9E%E8%88%9F%E6%88%98%E7%A5%9EK670D-G4D1%E8%A7%A3%E5%86%B3%E5%BC%80%E6%9C%BA%E9%BB%91%E5%B1%8F%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="龙腾万里sky">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="龙腾万里sky的博客">
+      <meta itemprop="description" content="AI & 过去现在未来">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="记一次神舟战神K670D-G4D1 解决开机黑屏问题、换U与重装系统 Windows10 Enterprise LTSC 2021 21H2 | 龙腾万里sky的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          记一次神舟战神K670D-G4D1 解决开机黑屏问题、换U与重装系统 Windows10 Enterprise LTSC 2021 21H2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-06-01 20:46:50" itemprop="dateCreated datePublished" datetime="2026-06-01T20:46:50+08:00">2026-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-06-30 21:34:55" itemprop="dateModified" datetime="2026-06-30T21:34:55+08:00">2026-06-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/3C%E6%95%B0%E7%A0%81%E4%B8%80%E8%B5%B7%E6%92%A9/" itemprop="url" rel="index"><span itemprop="name">3C数码一起撩</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>我给自己埋了一个坑，CPU 硅脂涂抹稍微厚了一点点。</p>
+<p>自己用的时候完全没问题，2023 年更换新笔电，测试没问题才把旧笔电寄回家备用。由于旧笔电三年多没有开过机，结果某天开机风扇在转吹出热风，电源指示灯亮但屏幕黑屏。</p>
+<p><img data-src="https://pic4.zhimg.com/v2-5cdd12c854475e525f815665ba691bdb_1440w.jpg" alt="img"></p>
+<p>我寻思，难道 CPU 有问题？硅脂过厚或者没压好。</p>
+<span id="more"></span>
+
+
+
+<h2 id="清理硅脂"><a href="#清理硅脂" class="headerlink" title="清理硅脂"></a>清理硅脂</h2><p>原来的硅脂薄薄的一层，后来我更换的硅脂比购买的笔记本电脑原始硅脂厚了至少 2~3 倍。</p>
+<p>忘记保留更换硅脂后的图片，使用2023 年左右拍的图片作为说明（彼时硅脂快干成粉末状）。</p>
+<p>G4560，使用五年，第一次拆机更换硅脂，干成粉末了。</p>
+<p><img data-src="https://pic3.zhimg.com/v2-ef99dc0b3e4b38c080f50a586b2b147c_1440w.jpg" alt="img"></p>
+<p>旧笔电（笔记本电脑）又放家里三年没用过，开机屏幕不亮。我排查过固态硬盘、内存条，均没问题。猜测，有可能 CPU 过热导致黑屏。于是，拆机刮掉一部分硅脂，轻松秒杀。</p>
+<p>G4560，用的时间不久（很少拆机），成色显得很新。</p>
+<p><img data-src="https://pica.zhimg.com/v2-3bcfd53dc6309154fd3fbf7b4e808dd6_1440w.jpg" alt="img"></p>
+<p>拆机的时候，CPU 散热模组黏的很紧。起初，我还纳闷散热效果不佳，是不是买的硅脂太垃圾（7.5 元&#x2F;1g），或者涂少了。有一说一，笔电使用桌面端 U，模具不行，散热够呛。结果发现，硅脂不是涂的越厚越好，反而薄薄一层均匀导热即可。D 面进风，两侧出风，通过散热模组热管将热量导出，最后由风扇向外排。</p>
+<p>最初拆下来的 G4560 最多作为备用，寻思着，还得换 U。</p>
+<h2 id="更换-CPU"><a href="#更换-CPU" class="headerlink" title="更换 CPU"></a>更换 CPU</h2><p>以前购买的 i5-8400 散片，刷完 BIOS 以及屏蔽针脚，依旧有点小毛病，散热压的有点勉强。由于后来没怎么使用，顺手把 i5-8400 散片出掉。如果当时换的是 i3-8100，只需刷 BIOS，无需屏蔽针脚。使用 i5-8400，需要 BIOS 以及屏蔽针脚，即便不屏蔽针脚，也影响不大。屏蔽针脚，只为不影响回血。</p>
+<p>后来，我又重新更换为 i5-7500，二手大概 120 元左右，成色好一点的大概在 150 元左右。</p>
+<p><img data-src="https://picx.zhimg.com/v2-f34af58558a011dd07f17863e5adeadf_1440w.jpg" alt="img"></p>
+<p>拆下来的 G4560，看了一眼小黄鱼&#x2F;某宝&#x2F;拼夕夕二手只值 15 元。索性被我当钥匙扣使用，哈哈。如果手里有合适的闲置配件，其实可以当做 NAS 使用。当然，还可以亮机用。再怎么拉跨，G4560 也有一个能用的核显。</p>
+<p>风险与性价比相辅相成。</p>
+<p>如果你有关注过贴吧准系统吧，会发现有不少 DIY 用户通过刷 BIOS 以及屏蔽针脚，更换更高规格的 CPU，性价比拉满。比如 i3-8350K 需要刷BIOS，以及 i7-8700 ES（qn8h）需要刷 BIOS 以及屏蔽针脚。如果刷 BIOS ，注意仔细阅读原作者的说明文档，避免刷错，导致变砖。</p>
+<p>目前，不建议折腾准系统，性价比不高，也没太大的意义。</p>
+<p>更换 CPU，再次刷回神船（蓝天）原版 BIOS，发现 CPU 睿频不正常。</p>
+<p>于是乎，开始排查问题，考虑到有可能受限于 BIOS，存在 CPU 锁倍频问题。</p>
+<h2 id="解锁-CPU-倍频"><a href="#解锁-CPU-倍频" class="headerlink" title="解锁 CPU 倍频"></a>解锁 CPU 倍频</h2><p>关于 CPU 锁倍频的问题。</p>
+<p>如果遇到 CPU 单核与全核睿频上不去（锁倍频），大概率原始 BIOS 与 EC 版本受限，导致频率被锁。Intel CPU 可以借助 ThrottleStop 解锁突破限制。</p>
+<p>如果你正在使用 ThrottleStop ，需要了解一些风险。</p>
+<p><img data-src="https://pica.zhimg.com/v2-3398aaf7ddaf8bda7addb2eb2f891ab6_1440w.jpg" alt="img"></p>
+<p>如下所示，通过 ThrottleStop 解锁突破睿频限制。</p>
+<p>使用 FurMark CPU burner 测试 CPU 单核。</p>
+<p><img data-src="https://pica.zhimg.com/v2-6cc71d9385b0d73ad54462f20d38adba_1440w.jpg" alt="img"></p>
+<p>使用 Prime95 测试CPU多核。</p>
+<p><img data-src="https://picx.zhimg.com/v2-9621ec035843e38603c42c664bc64a51_1440w.jpg" alt="img"></p>
+<p>至此，我心中的部分疑惑也得到解除。</p>
+<p>值得注意的是，ThrottleStop 有一定的局限性，目前好像只支持 iU（Intel CPU）。</p>
+<p>关于 ThrottleStop ，我截取了几张图，感兴趣可以前往 [<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMDQ0MzcyNjk3Mjc5MzYyOTgyI3JlZl8x">1]<i class="fa fa-external-link-alt"></i></span>ThrottleStop 官网了解详细用法。</p>
+<p>ThrottleStop Turbo FIVR Control ，</p>
+<p><img data-src="https://pic3.zhimg.com/v2-a64dc7a1c90aa12c6e832fc51c51f592_1440w.jpg" alt="img"></p>
+<p>ThrottleStop Turbo Limits，</p>
+<p><img data-src="https://pic4.zhimg.com/v2-6db867ea2c92327da2097c880c49baf9_1440w.jpg" alt="img"></p>
+<p>ThrottleStop9.7 &amp; TS Bench，</p>
+<p><img data-src="https://pic3.zhimg.com/v2-e44da8baf0673468ae9850c3c63c1652_1440w.jpg" alt="img"></p>
+<p>比如神舟战神K670D-G4D1，初始 BIOS 版本 1.05.08TSZ，EC 版本 1.05.07 。 不管你使用哪种工具检测，CPU 最大倍频锁死在 34 ~ 35 之间。我尝试使用过 [<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMDQ0MzcyNjk3Mjc5MzYyOTgyI3JlZl8y">2]<i class="fa fa-external-link-alt"></i></span>CPU-Z、[<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMDQ0MzcyNjk3Mjc5MzYyOTgyI3JlZl8z">3]<i class="fa fa-external-link-alt"></i></span>Prime95、[<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMDQ0MzcyNjk3Mjc5MzYyOTgyI3JlZl80">4]<i class="fa fa-external-link-alt"></i></span>FurMark 以及 [<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yMDQ0MzcyNjk3Mjc5MzYyOTgyI3JlZl81">5]<i class="fa fa-external-link-alt"></i></span>AIDA64 等等工具狠狠的宠幸 CPU。</p>
+<p>使用 i5-7500，我打算用来安装 Windows7，Windows10 Enterprise LTSC 2021 仅仅用于体验。</p>
+<h2 id="重装系统-Windows10-Enterprise-LTSC-2021-21H2"><a href="#重装系统-Windows10-Enterprise-LTSC-2021-21H2" class="headerlink" title="重装系统 Windows10 Enterprise LTSC 2021 21H2"></a>重装系统 Windows10 Enterprise LTSC 2021 21H2</h2><p>原系统密码不记得了，懒得折腾。顺带重装 Windows10 Enterprise LTSC 2021 21H2，开机内存占用比 Windows11 少 14% 左右，巴适得很。</p>
+<p>用的还挺顺手。由于 Microsoft Windows 官方精简了许多组件，开机占用内存确实很少，大概在 1.2GB 左右。</p>
+<p>Intel 7代 U 旧版本核显驱动 21.20.16.4550，屏幕亮度可以正常调节。值得注意的是，牙膏厂（Intel）7 代核显驱动某一个版本（31.x，不记得具体版本，应该不是最新版本）有概率出现屏幕亮度无法调节的问题，也有可能是我记错了。。</p>
+<p>我又尝试访问 Intel 官网并安装 Intel 7代 U 最新的核显驱动 31.0.101.2141，屏幕亮度无法调节的问题又解决了。</p>
+<p>如果你和我一样安装并使用 Windows10 Enterprise LTSC 2021 21H2。值得注意的是，初始版本有一个小 bug，导致老款 CPU 100% 占用（新款 CPU 没有试过，尚不知道会出现什么 bug），功耗很高。可以手动下载安装补丁包</p>
+<p><code>Microsoft.VCLibs.140.00_14.0.30704.0_x64__8wekyb3d8bbwe.Appx</code> 解决此问题。</p>
+<p>i5-7500 + GTX 1050，轻度办公娱乐，完全没问题。</p>
+<p><img data-src="https://pic4.zhimg.com/v2-f26085279c0c24cc18d838b99d24d073_1440w.jpg" alt="img"></p>
+<p>个人习惯使用 PE 工具，简单省事。主要使用微PE 2.x，简洁无广子。当然，你也可以考虑使用 rufus 、ventoy 或者 iventoy。</p>
+<p>如果你考虑使用 Windows10 1809 ，此版本存在一个 bug，</p>
+<p>重装系统，进入系统引导界面选择地理位置存在卡死问题，使用输入法也会出现卡死问题。</p>
+<p>解决方法，使用快捷键 <code>shift + f10</code> 调出 <code>cmd</code> 命令窗口，输入命令 <code>taskmgr</code> 进入任务管理器，寻找到微软拼音输入法应用程序进程名[6]<code>Microsoft IME</code>，结束即可。</p>
+<p>唉，我居然忘记了 Windows10 1809 还存在这样一个 bug。</p>
+<h2 id="更换-cmos-电池"><a href="#更换-cmos-电池" class="headerlink" title="更换 cmos 电池"></a>更换 cmos 电池</h2><p>卸下笔电电池，再次拆机。力大出奇迹，固定笔电主板 cmos CR2032 纽扣电池塑料卡扣被我掰断了一个小角。</p>
+<p><img data-src="https://picx.zhimg.com/v2-7d0747348501af9ed7987a5244e7fdf3_1440w.jpg" alt="img"></p>
+<p>原本很简单的一个操作，只需要往后推（或者往里挤）就可以轻松取下 cmos 电池。结果，我的麒麟指发作。好在缺一个角，不影响固定。</p>
+<p>重新安装 cmos CR2032 纽扣电池，再次轻松秒杀。原系统密码不记得了，懒得折腾。</p>
+<p>开机，看到 Windows 系统提示</p>
+<blockquote>
+<p>The CMOS battery is bad or was recently replaced.(If you cont inue to see this message, consult the system user ‘s guide for more information.)<br>Press Enter（OK）</p>
+</blockquote>
+<p>，难道 CR2032 纽扣电池寄了或者没电？8 年多，也该没电了。索性购买新电池，直接更换。</p>
+<p>拆开后盖，更换 cmos CR2032 纽扣电池，Windows 系统再次提示</p>
+<blockquote>
+<p>The CMOS battery is bad or was recently replaced.(If you cont inue to see this message, consult the system user ‘s guide for more information.)<br>Press Enter（OK）</p>
+</blockquote>
+<p>，根据提示，按回车键（Enter），重启之后正常进入系统。再次测试重启，系统正常。</p>
+<p>我那颗独显，8 年没有更换过硅脂。也不是我想更换硅脂，主要我拿那两颗滑丝的固定螺丝没办法。其实，主要玩跑跑卡丁车，GPU 没啥压力，哈哈。</p>
+<p>啊，我还需要给 NVIDIA GTX1050 4G laptop 显卡（GPU） 更换硅脂。</p>
+<p>吐槽：神船笔电出厂，显卡（GPU）散热模组有两颗银白色固定螺丝滑丝。我也纳闷，滑丝的两颗螺丝该怎么拧下来，无语。。</p>
+<p>原本 PH00 螺丝刀头即可正常拧下螺丝。但是，滑丝的螺丝不得行。我挨个尝试使用 PH00&#x2F;PH0&#x2F;Y1&#x2F;PH1 四种型号，结果 Y1 刚好可以拧下滑丝的螺丝。</p>
+<p><img data-src="https://pic4.zhimg.com/v2-efdba4db0720bc05b27581bc54f0e655_1440w.jpg" alt="img"></p>
+<p>通过更换好几种型号的螺丝刀头，费了老大的劲，终于把滑丝的两颗螺丝成功拧下来。</p>
+<p>对于不熟悉的模具，最好参考同类（同型号）产品拆机视频。</p>
+<p>拆机需谨慎，力大有风险。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><p>[^]ThrottleStop</p>
+<p> <span class="exturl" data-url="aHR0cHM6Ly93d3cudGVjaHBvd2VydXAuY29tL2Rvd25sb2FkL3RlY2hwb3dlcnVwLXRocm90dGxlc3RvcC8=">https://www.techpowerup.com/download/techpowerup-throttlestop/<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>[^]CPU-Z</p>
+<p> <span class="exturl" data-url="aHR0cHM6Ly93d3cuY3B1aWQuY29tL3NvZnR3YXJlcy9jcHUtei5odG1s">https://www.cpuid.com/softwares/cpu-z.html<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>[^]Prime95</p>
+<p> <span class="exturl" data-url="aHR0cHM6Ly9wcmltZTk1Lm5ldC9kb3dubG9hZC8=">https://prime95.net/download/<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>[^]FurMark</p>
+<p> <span class="exturl" data-url="aHR0cHM6Ly93d3cuZ2Vla3MzZC5jb20vZnVybWFyay8=">https://www.geeks3d.com/furmark/<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>[^]AIDA64</p>
+<p> <span class="exturl" data-url="aHR0cHM6Ly93d3cuYWlkYTY0LmNvbS9kb3dubG9hZHM=">https://www.aida64.com/downloads<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>[^]Microsoft简体中文 IME </p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9zdXBwb3J0Lm1pY3Jvc29mdC5jb20vemgtY24vd2luZG93cy9taWNyb3NvZnQlRTclQUUlODAlRTQlQkQlOTMlRTQlQjglQUQlRTYlOTYlODctaW1lLTliOTYyYTNiLTJmYTQtNGYzNy04MTFjLWIxODg2MzIwZGQ3Mg==">https://support.microsoft.com/zh-cn/windows/microsoft%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-ime-9b962a3b-2fa4-4f37-811c-b1886320dd72<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ol>
+<p>—END—</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="龙腾万里sky 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>龙腾万里sky
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.aiwanli.top/2026/06/01/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%A5%9E%E8%88%9F%E6%88%98%E7%A5%9EK670D-G4D1%E8%A7%A3%E5%86%B3%E5%BC%80%E6%9C%BA%E9%BB%91%E5%B1%8F%E9%97%AE%E9%A2%98/" title="记一次神舟战神K670D-G4D1 解决开机黑屏问题、换U与重装系统 Windows10 Enterprise LTSC 2021 21H2">https://blog.aiwanli.top/2026/06/01/记一次神舟战神K670D-G4D1解决开机黑屏问题/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://www.zhihu.com/people/hbwk">
+            <span class="icon">
+              <i class="fab fa-zhihu"></i>
+            </span>
+
+            <span class="label">Zhihu</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%A5%9E%E8%88%9F%E6%88%98%E7%A5%9EK670D-G4D1/" rel="tag"><i class="fa fa-tag"></i> 神舟战神K670D-G4D1</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/05/16/%E5%85%B3%E4%BA%8E%E3%80%8C%E4%BD%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E6%94%BE%E5%BC%83%E4%BA%86%E6%90%9C%E7%8B%97%E8%BE%93%E5%85%A5%E6%B3%95%EF%BC%9F%E3%80%8D%E5%9B%9E%E7%AD%94%E7%9A%84%E8%87%B4%E6%AD%89%E5%A3%B0%E6%98%8E/" rel="prev" title="关于「你为什么放弃了搜狗输入法？」回答的致歉声明">
+                  <i class="fa fa-angle-left"></i> 关于「你为什么放弃了搜狗输入法？」回答的致歉声明
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2017 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Copyright © 龙腾万里sky. All Rights Reserved.</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">283k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:08</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+      本站访客数：  <span id="busuanzi_value_site_uv"></span> 人次
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+      本站总访问量： <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZw==">NexT.Gemini</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Nud2FuZ2s=" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://unpkg.com/mermaid@11.4.0/dist/mermaid.min.js","integrity":"sha256-G8ouPAnw4zzMbnAenHnVz6h9XpKbNdOkrqTh7AadyHs="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://unpkg.com/quicklink@2.3.0/dist/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://blog.aiwanli.top/2026/06/01/%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%A5%9E%E8%88%9F%E6%88%98%E7%A5%9EK670D-G4D1%E8%A7%A3%E5%86%B3%E5%BC%80%E6%9C%BA%E9%BB%91%E5%B1%8F%E9%97%AE%E9%A2%98/"}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"cnwangk/blog-talk","repo_id":"R_kgDOJg6bLQ","category":"Announcements","category_id":"DIC_kwDOJg6bLc4CWXpT","mapping":"pathname","strict":0,"reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous","input_position":"bottom","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-strict'           : CONFIG.giscus.strict,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>
